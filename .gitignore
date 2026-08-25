@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.sqlite3-journal
+.env
+.DS_Store
+/media/
+/staticfiles/
+*.log
+.idea/
+.vscode/
+
+# ห้าม commit ข้อสอบลิขสิทธิ์
+/data/past_papers/
+*.pdf
