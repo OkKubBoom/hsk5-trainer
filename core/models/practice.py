@@ -1,5 +1,8 @@
 """การฝึกจริง — เซสชันรายวัน คำตอบ สรุปรายวัน ข้อสอบจำลอง งานเขียน"""
+from datetime import timedelta
+
 from django.db import models
+from django.utils import timezone
 
 from .base import ErrorCode, Section, TimeStamped
 from .content import AudioClip, Question
@@ -23,6 +26,13 @@ class DrillSession(TimeStamped):
         default=dict, blank=True, verbose_name="ส่วนผสมที่ใช้จริง",
         help_text='เช่น {"due": 20, "wrong": 12, "new": 8} — เก็บไว้เพื่อย้อนดูว่าวันนั้นระบบเลือกยังไง',
     )
+    # คิวข้อสอบเก็บในฐานข้อมูล ไม่ใช่ใน session ของเบราว์เซอร์
+    # เพื่อให้ปิดเครื่องแล้วกลับมาทำต่อจากข้อเดิมได้ และเปลี่ยนเครื่องก็ยังต่อได้
+    queue = models.JSONField(
+        default=list, blank=True, verbose_name="คิวข้อที่ล็อกไว้",
+        help_text='เช่น [{"kind": "vocab", "id": 12, "source": "due"}]',
+    )
+    position = models.PositiveSmallIntegerField(default=0, verbose_name="ทำถึงข้อที่")
 
     class Meta:
         verbose_name = "เซสชันฝึก"
@@ -36,6 +46,14 @@ class DrillSession(TimeStamped):
     @property
     def accuracy(self):
         return (self.correct / self.answered) if self.answered else None
+
+    @property
+    def is_finished(self):
+        return self.finished_at is not None
+
+    @property
+    def remaining(self):
+        return max(0, len(self.queue or []) - self.position)
 
     @property
     def minutes(self):
@@ -129,6 +147,23 @@ class MockExam(TimeStamped):
     writing = models.PositiveSmallIntegerField(default=0, verbose_name="เขียน")
     notes = models.TextField(blank=True, verbose_name="บันทึก")
 
+    # ── ทำในระบบ (ไม่ใช่กรอกคะแนนจากกระดาษ) ──
+    # เก็บชุดคำถามไว้กับตัวสอบ เพื่อให้ทำต่อได้เมื่อปิดเบราว์เซอร์ และย้อนดูได้ว่าเจอข้อไหนบ้าง
+    section = models.CharField(
+        max_length=16, choices=Section.choices, blank=True, verbose_name="พาร์ทที่จำลอง",
+    )
+    queue = models.JSONField(default=list, blank=True, verbose_name="ชุดคำถาม")
+    answers = models.JSONField(
+        default=dict, blank=True, verbose_name="คำตอบที่เลือก",
+        help_text='{"<question_id>": "ข้อความตัวเลือก"}',
+    )
+    flagged = models.JSONField(default=list, blank=True, verbose_name="ข้อที่ปักธง")
+    started_at = models.DateTimeField(null=True, blank=True, db_index=True, verbose_name="เริ่มทำ")
+    finished_at = models.DateTimeField(null=True, blank=True, verbose_name="ส่งเมื่อ")
+    time_limit_minutes = models.PositiveSmallIntegerField(default=45, verbose_name="เวลาที่ให้ (นาที)")
+    correct_count = models.PositiveSmallIntegerField(default=0, verbose_name="ตอบถูกกี่ข้อ")
+    auto_submitted = models.BooleanField(default=False, verbose_name="หมดเวลาแล้วส่งอัตโนมัติ")
+
     class Meta:
         verbose_name = "ข้อสอบจำลอง"
         verbose_name_plural = "ข้อสอบจำลอง"
@@ -145,6 +180,48 @@ class MockExam(TimeStamped):
     def passed(self):
         threshold = self.spec.pass_score if self.spec else 180
         return self.total >= threshold
+
+    # ── สำหรับข้อสอบจำลองที่ทำในระบบ ──
+
+    @property
+    def question_count(self):
+        return len(self.queue or [])
+
+    @property
+    def answered_count(self):
+        return len(self.answers or {})
+
+    @property
+    def is_running(self):
+        return bool(self.started_at) and not self.finished_at
+
+    @property
+    def deadline(self):
+        if not self.started_at:
+            return None
+        return self.started_at + timedelta(minutes=self.time_limit_minutes)
+
+    @property
+    def seconds_left(self):
+        if not self.deadline:
+            return 0
+        return max(0, int((self.deadline - timezone.now()).total_seconds()))
+
+    @property
+    def is_expired(self):
+        return self.is_running and self.seconds_left <= 0
+
+    @property
+    def score_percent(self):
+        if not self.question_count:
+            return None
+        return round(self.correct_count / self.question_count * 100)
+
+    @property
+    def minutes_used(self):
+        if not (self.started_at and self.finished_at):
+            return None
+        return max(1, round((self.finished_at - self.started_at).total_seconds() / 60))
 
 
 class DictationAttempt(TimeStamped):

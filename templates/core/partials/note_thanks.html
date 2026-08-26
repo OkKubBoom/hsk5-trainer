@@ -1,0 +1,15 @@
+<div class="ai-notice verified">
+  <div class="row" style="gap:var(--s1);align-items:flex-start">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ready)" stroke-width="2.5" stroke-linecap="round" style="flex:none;margin-top:2px"><path d="M20 6 9 17l-5-5"/></svg>
+    <div class="stack" style="gap:2px">
+      <b style="font-size:var(--t-sm)">ส่งแล้ว ขอบคุณ</b>
+      <span class="muted">
+        {% if note.body %}
+          เจ้าของระบบจะตรวจแล้วเอาคำอธิบายของคุณมาใช้แทนของ AI
+        {% else %}
+          บันทึกไว้แล้วว่าข้อนี้ต้องตรวจ
+        {% endif %}
+      </span>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@ prod : Postgres ผ่าน DATABASE_URL, DEBUG=0
 """
 from pathlib import Path
 import os
+import sys
 
 import dj_database_url
 from dotenv import load_dotenv
@@ -92,9 +93,16 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
+# ตอนรันเทสต์ยังไม่ได้ collectstatic — ถ้าใช้ manifest storage เทสต์ที่ render
+# เทมเพลตจะพังด้วย "Missing staticfiles manifest entry" ซึ่งไม่เกี่ยวกับสิ่งที่กำลังทดสอบ
+TESTING = "test" in sys.argv
+
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage" if TESTING
+        else "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    },
 }
 
 MEDIA_URL = "media/"
@@ -102,7 +110,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_URL = "/admin/login/"
+LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/"
 
 # ── ค่าเฉพาะของโดเมนนี้ ──────────────────────────────────

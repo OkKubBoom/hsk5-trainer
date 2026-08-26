@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}ประวัติการฝึก · HSK5 Trainer{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:6px">
+  <span class="eyebrow">ประวัติการฝึก</span>
+  <h1>ย้อนดูว่าวันนั้นทำอะไรไป</h1>
+  <p class="muted">หนึ่งวันมีได้ชุดเดียว — เลือกวันที่เพื่อดูข้อที่ทำและคำตอบที่เลือกไว้</p>
+</div>
+
+<form method="get" class="row" style="gap:10px;flex-wrap:wrap;align-items:flex-end">
+  <div class="stack" style="gap:5px">
+    <label for="date-pick" class="muted">เลือกวันที่</label>
+    <input id="date-pick" type="date" name="date" value="{{ picked }}"
+           style="padding:11px 14px;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-family:inherit">
+  </div>
+  <button class="btn sm" type="submit" style="height:44px">ดูวันนี้</button>
+</form>
+
+{% if days %}
+<div class="stack" style="gap:8px">
+  <span class="eyebrow">วันที่เคยฝึก</span>
+  <div class="row" style="gap:6px;flex-wrap:wrap">
+    {% for d in days %}
+      <a class="chip {% if session and d.date == session.started_at.date %}on{% endif %}"
+         style="min-width:auto;padding:0 12px"
+         href="?date={{ d.date|date:'Y-m-d' }}"
+         title="ตอบ {{ d.answered }} ข้อ{% if d.accuracy %} · แม่น {{ d.accuracy }}%{% endif %}">
+        {{ d.date|date:"j M" }}
+        {% if d.accuracy %}<span style="opacity:.7;margin-left:5px">{{ d.accuracy }}%</span>{% endif %}
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if session %}
+  <div class="stats">
+    <div class="stat"><b>{{ session.answered }}</b><span>ตอบไป</span></div>
+    <div class="stat"><b>{{ session.correct }}</b><span>ถูก</span></div>
+    <div class="stat"><b>{% if session.accuracy %}{{ session.accuracy|floatformat:0 }}%{% else %}—{% endif %}</b><span>ความแม่น</span></div>
+    <div class="stat"><b>{{ session.minutes }}</b><span>นาทีที่ใช้</span></div>
+  </div>
+
+  <div class="row" style="gap:10px;flex-wrap:wrap">
+    <span class="pill {% if session.is_finished %}ok{% else %}warn{% endif %}">
+      {% if session.is_finished %}ทำจบแล้ว{% else %}ค้างอยู่ เหลืออีก {{ session.remaining }} ข้อ{% endif %}
+    </span>
+    <span class="muted">{{ session.started_at|date:"j F Y · H:i น." }}</span>
+    {% if not session.is_finished and session.started_at.date == today %}
+      <a class="btn sm" href="{% url 'drill_run' %}" style="margin-left:auto">ทำต่อจากข้อที่ค้าง</a>
+    {% endif %}
+  </div>
+
+  {% if answers %}
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>#</th><th>ข้อ</th><th>คุณตอบ</th><th>ผล</th><th>เวลา</th></tr>
+      </thead>
+      <tbody>
+        {% for a in answers %}
+        <tr>
+          <td class="cell-rank"><span class="rank">{{ forloop.counter }}</span></td>
+          <td class="cell-word" data-label="ข้อ">
+            {% if a.card %}
+              <span class="zh" style="font-size:1.15rem">{{ a.card.vocab.hanzi }}</span>
+              <span class="mono muted" style="margin-left:8px">{{ a.card.vocab.pinyin }}</span>
+            {% elif a.question %}
+              <span class="zh">{{ a.question.prompt_zh|truncatechars:44 }}</span>
+            {% else %}
+              <span class="muted">—</span>
+            {% endif %}
+          </td>
+          <td data-label="คุณตอบ">
+            <span class="{% if not a.is_correct %}zh{% endif %}" style="{% if not a.is_correct %}color:var(--missing){% endif %}">{{ a.given|truncatechars:44|default:"—" }}</span>
+          </td>
+          <td data-label="ผล">
+            {% if a.is_correct %}
+              <span class="pill ok">ถูก</span>
+            {% else %}
+              <span class="pill bad">ผิด</span>
+            {% endif %}
+          </td>
+          <td class="num muted" data-label="เวลา">{{ a.elapsed_ms|floatformat:0|default:0 }} มิลลิวินาที</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="note">วันนี้ยังไม่ได้ตอบข้อไหน</div>
+  {% endif %}
+
+{% else %}
+  <div class="card stack" style="align-items:center;text-align:center;padding:40px 22px">
+    <h3>ยังไม่มีประวัติของวันนั้น</h3>
+    <p class="muted">เลือกวันอื่นจากปุ่มด้านบน หรือเริ่มชุดของวันนี้</p>
+    <a class="btn" href="{% url 'drill_start' %}">เริ่มชุดวันนี้</a>
+  </div>
+{% endif %}
+
+{% endblock %}

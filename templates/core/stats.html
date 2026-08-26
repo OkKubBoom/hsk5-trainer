@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}สถิติ · HSK5 Trainer{% endblock %}
+{% block content %}
+<div class="stack" style="gap:6px">
+  <span class="eyebrow">ความคืบหน้าของ {{ learner.user.first_name|default:learner.user.username }}</span>
+  <h1>ไปถึงไหนแล้ว</h1>
+</div>
+
+{% if not learner.has_baseline %}
+<div class="note warn">
+  ยังไม่ได้วัดคะแนนฐานจากข้อสอบเก่าจับเวลาจริง — ตัวเลขคาดการณ์วันสอบยังเชื่อไม่ได้
+</div>
+{% endif %}
+
+<div class="stats">
+  <div class="stat"><b>{% if accuracy %}{{ accuracy }}%{% else %}—{% endif %}</b><span>ความแม่น 14 ชุดหลัง</span></div>
+  <div class="stat"><b>{{ answered }}</b><span>ข้อที่ตอบไปแล้ว</span></div>
+  <div class="stat"><b>{{ cards_total }}</b><span>การ์ดในระบบ</span></div>
+  <div class="stat"><b>{{ due_now }}</b><span>ถึงกำหนดตอนนี้</span></div>
+</div>
+
+{% if causes %}
+<div class="card stack">
+  <h3>ผิดเพราะอะไรบ่อยที่สุด</h3>
+  <div class="stack" style="gap:12px">
+    {% for c in causes %}
+    <div class="stack" style="gap:3px">
+      <div class="row"><span class="mono" style="color:var(--missing);min-width:34px">{{ c.n }}</span><span class="grow">{{ c.label }}</span></div>
+      <p class="muted" style="font-size:.84rem">{{ c.advice }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if mock.times %}
+<div class="card stack">
+  <div class="row">
+    <h3 class="grow">จำลองสอบ {{ mock.times }} ครั้ง</h3>
+    {% if mock.trend %}
+      <span class="pill {% if mock.trend > 0 %}ok{% else %}warn{% endif %}">
+        {% if mock.trend > 0 %}+{% endif %}{{ mock.trend }} จากครั้งก่อน
+      </span>
+    {% endif %}
+  </div>
+  <div class="row" style="gap:var(--s4);flex-wrap:wrap">
+    <span class="stack" style="gap:0"><b class="mono" style="font-size:var(--t-h2)">{{ mock.latest }}</b><span class="muted">ล่าสุด</span></span>
+    <span class="stack" style="gap:0"><b class="mono" style="font-size:var(--t-h2)">{{ mock.best }}</b><span class="muted">ดีที่สุด</span></span>
+    <span class="stack" style="gap:0"><b class="mono" style="font-size:var(--t-h2)">{{ mock.average }}</b><span class="muted">เฉลี่ย</span></span>
+    <a class="btn ghost sm" href="{% url 'mock_home' %}" style="margin-left:auto;width:auto">ดูประวัติ</a>
+  </div>
+  <p class="muted">คะแนนพาร์ทอ่าน เต็ม 100 — คิดเป็น 1 ใน 3 ของคะแนนข้อสอบจริง</p>
+</div>
+{% endif %}
+
+<div class="card stack">
+  <h3>ชุดล่าสุด</h3>
+  {% if sessions %}
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>วันที่</th><th>ตอบ</th><th>ถูก</th><th>ความแม่น</th><th>นาที</th></tr></thead>
+      <tbody>
+        {% for s in sessions %}
+        <tr>
+          <td class="num">{{ s.started_at|date:"j M" }}</td>
+          <td class="num">{{ s.answered }}</td>
+          <td class="num">{{ s.correct }}</td>
+          <td class="num">{% if s.accuracy %}{{ s.accuracy|floatformat:0 }}%{% else %}—{% endif %}</td>
+          <td class="num">{{ s.minutes }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">ยังไม่มีชุดที่ทำเสร็จ — <a href="{% url 'drill_start' %}">เริ่มชุดแรก</a></p>
+  {% endif %}
+</div>
+{% endblock %}

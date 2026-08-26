@@ -1,0 +1,29 @@
+{% if page.paginator.num_pages > 1 %}
+<nav class="pager" aria-label="แบ่งหน้า">
+  {% if page.has_previous %}
+    <a href="?{{ querystring }}&page=1" title="หน้าแรก">«</a>
+    <a href="?{{ querystring }}&page={{ page.previous_page_number }}">ก่อนหน้า</a>
+  {% else %}
+    <span class="pg off">«</span><span class="pg off">ก่อนหน้า</span>
+  {% endif %}
+
+  {% for n in page.paginator.page_range %}
+    {% if n == page.number %}
+      <span class="pg now">{{ n }}</span>
+    {% elif n > page.number|add:-3 and n < page.number|add:3 %}
+      <a href="?{{ querystring }}&page={{ n }}">{{ n }}</a>
+    {% elif n == 1 or n == page.paginator.num_pages %}
+      <a href="?{{ querystring }}&page={{ n }}">{{ n }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if page.has_next %}
+    <a href="?{{ querystring }}&page={{ page.next_page_number }}">ถัดไป</a>
+    <a href="?{{ querystring }}&page={{ page.paginator.num_pages }}" title="หน้าสุดท้าย">»</a>
+  {% else %}
+    <span class="pg off">ถัดไป</span><span class="pg off">»</span>
+  {% endif %}
+
+  <span class="pg info">ทั้งหมด {{ page.paginator.count }} รายการ</span>
+</nav>
+{% endif %}

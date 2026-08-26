@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}เข้าสู่ระบบ · HSK5 Trainer{% endblock %}
+{% block guest_content %}
+<div style="max-width:420px;margin:8vh auto 0" class="stack">
+  <div class="stack" style="gap:6px">
+    <span class="eyebrow">HSK5 Trainer</span>
+    <h1>เข้าสู่ระบบ</h1>
+    <p class="muted">ฝึกวันละชุด ระบบเลือกให้เองว่าวันนี้ควรเจออะไร</p>
+  </div>
+
+  <form method="post" class="card stack">
+    {% csrf_token %}
+    {% if form.errors %}
+      <div class="note" style="border-left-color:var(--missing)">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง ลองอีกครั้ง</div>
+    {% endif %}
+    <div class="stack" style="gap:6px">
+      <label for="id_username">ชื่อผู้ใช้</label>
+      {{ form.username }}
+    </div>
+    <div class="stack" style="gap:6px">
+      <label for="id_password">รหัสผ่าน</label>
+      {{ form.password }}
+    </div>
+    <button class="btn" type="submit">เข้าสู่ระบบ</button>
+  </form>
+</div>
+{% endblock %}

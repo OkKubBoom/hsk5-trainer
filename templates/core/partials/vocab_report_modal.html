@@ -1,0 +1,42 @@
+{# กล่องแย้งคำแปล — ใช้ร่วมกันทุกหน้าที่แสดงข้อมูลคำศัพท์จาก AI
+   หน้าที่ include ต้องมี x-data ที่ประกาศตัวแปร report ไว้ #}
+<div x-show="report" x-cloak @click="report = null"
+     style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30"></div>
+<div x-show="report" x-cloak @keydown.window.escape="report = null" class="report-modal">
+  <template x-if="report">
+    <form :hx-post="'/vocab/' + report.id + '/note/'" hx-target="this" hx-swap="outerHTML"
+          class="stack" style="gap:var(--s2)">
+      {% csrf_token %}
+      <div class="row" style="gap:var(--s1);align-items:baseline">
+        <span class="zh" style="font-size:var(--t-h2)" x-text="report.hanzi"></span>
+        <span class="mono muted" x-text="report.pinyin"></span>
+        <button type="button" class="btn ghost sm" style="width:auto;margin-left:auto" @click="report = null">ปิด</button>
+      </div>
+
+      <div class="stack" style="gap:2px">
+        <span class="wlab" x-text="report.label || 'คำแปลปัจจุบัน (จาก AI)'"></span>
+        <span x-text="report.meaning"></span>
+      </div>
+
+      <div class="stack" style="gap:var(--s-half)">
+        <span class="wlab">คุณตรวจแล้วพบว่า</span>
+        <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+          <label class="radio-chip"><input type="radio" name="verdict" value="wrong" checked> ผิด</label>
+          <label class="radio-chip"><input type="radio" name="verdict" value="confirmed"> ถูกแล้ว</label>
+        </div>
+      </div>
+
+      <div class="stack" style="gap:var(--s-half)">
+        <label>สิ่งที่ถูกต้อง <span class="muted">(ถ้ามี)</span></label>
+        <textarea name="body" rows="3" placeholder="พิมพ์คำแปลหรือคำอธิบายที่ถูก ถ้ารู้"></textarea>
+      </div>
+
+      <div class="stack" style="gap:var(--s-half)">
+        <label>ได้ข้อมูลมาจากไหน</label>
+        <input type="text" name="source" placeholder="เช่น ครูที่สอน · พจนานุกรม · หนังสือหน้า 42">
+      </div>
+
+      <div><button class="btn sm" type="submit" style="width:auto">ส่งให้เจ้าของระบบ</button></div>
+    </form>
+  </template>
+</div>

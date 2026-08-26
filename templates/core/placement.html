@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}วัดระดับ · HSK5 Trainer{% endblock %}
+{% block content %}
+<div x-data="{ started: Date.now() }" class="stack">
+
+  <div class="stack" style="gap:6px">
+    <div class="row">
+      <span class="eyebrow grow">แบบวัดระดับ</span>
+      <span class="mono muted">{{ answered }} / {{ total }}</span>
+    </div>
+    <div class="bar"><div style="width:{% widthratio answered total 100 %}%"></div></div>
+  </div>
+
+  <div class="card stack" style="gap:22px">
+    <div class="stack" style="gap:4px;align-items:center;padding:18px 0 6px">
+      <span class="zh" style="font-size:3.2rem;line-height:1.1">{{ vocab.hanzi }}</span>
+      <span class="mono muted">{{ vocab.pinyin }}</span>
+      <span class="pill accent" style="margin-top:6px">HSK{{ vocab.hsk_level }}</span>
+    </div>
+
+    <div class="choices">
+      {% for choice in question.choices %}
+      <form method="post" action="{% url 'placement_answer' test.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="vocab_id" value="{{ vocab.pk }}">
+        <input type="hidden" name="given" value="{{ choice }}">
+        <input type="hidden" name="elapsed_ms" :value="Date.now() - started">
+        <button class="choice" type="submit">
+          <span class="key">{{ forloop.counter0|add:65|stringformat:"c" }}</span>
+          <span>{{ choice }}</span>
+        </button>
+      </form>
+      {% endfor %}
+    </div>
+
+    <form method="post" action="{% url 'placement_answer' test.pk %}">
+      {% csrf_token %}
+      <input type="hidden" name="vocab_id" value="{{ vocab.pk }}">
+      <input type="hidden" name="unknown" value="1">
+      <input type="hidden" name="elapsed_ms" :value="Date.now() - started">
+      <button class="btn ghost" type="submit" style="width:100%;border-style:dashed">ยังไม่รู้คำนี้</button>
+    </form>
+  </div>
+
+  <p class="muted">
+    ตอบตามที่รู้จริง ไม่ต้องเดา — กด "ยังไม่รู้" ผลจะแม่นกว่า และระบบจะจัดคำใหม่ต่อวันให้พอดีกับคุณ
+  </p>
+</div>
+{% endblock %}

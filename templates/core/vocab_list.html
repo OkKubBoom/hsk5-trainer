@@ -1,0 +1,163 @@
+{% extends "base.html" %}{% load hsk %}
+{% block title %}คลังคำศัพท์ HSK{{ level }} · HSK5 Trainer{% endblock %}
+{% block content %}
+<div x-data="{ showMeaning: true, showHanzi: true, filters: false, report: null }" class="stack">
+
+  <div class="stack" style="gap:6px">
+    <span class="eyebrow">คลังคำศัพท์</span>
+    <h1>คำศัพท์ HSK{{ level }}</h1>
+  </div>
+
+  <form method="get" class="stack" style="gap:10px">
+    <input type="hidden" name="level" value="{{ level }}">
+    <input type="hidden" name="sort" value="{{ sort }}">
+    <div class="search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" name="q" value="{{ query }}" class="grow"
+             placeholder="ค้นด้วยตัวอักษรจีน พินอิน หรือคำแปลไทย เช่น 影响 · yingxiang · ส่งผล">
+      {% if query %}<a class="muted" href="?level={{ level }}&sort={{ sort }}" style="text-decoration:none">ล้าง</a>{% endif %}
+    </div>
+  </form>
+
+  <button type="button" class="filter-toggle" @click="filters = !filters" :aria-expanded="filters">
+    <span>ตัวกรอง · HSK{{ level }}{% if found_values %} · พบ {{ found_values|length }} ค่า{% endif %}</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" :style="filters && 'transform:rotate(180deg)'"><path d="m6 9 6 6 6-6"/></svg>
+  </button>
+
+  <div class="filter-body stack" :data-collapsed="!filters">
+  <div class="row" style="flex-wrap:wrap;gap:10px">
+    <div class="row" style="gap:5px;flex-wrap:wrap">
+      {% for lv, n in levels %}
+        <a class="pill {% if lv == level %}accent{% endif %}"
+           style="text-decoration:none;{% if lv != level %}border:1px solid var(--line);color:var(--ink-2){% endif %}"
+           href="?level={{ lv }}&sort={{ sort }}{% if query %}&q={{ query }}{% endif %}">HSK{{ lv }} <span class="mono muted">{{ n }}</span></a>
+      {% endfor %}
+    </div>
+    <div class="row" style="margin-left:auto;gap:14px;flex-wrap:wrap">
+      <label class="row" style="gap:7px;cursor:pointer"><input type="checkbox" x-model="showMeaning"> เห็นคำแปล</label>
+      <label class="row" style="gap:7px;cursor:pointer"><input type="checkbox" x-model="showHanzi"> เห็นตัวอักษร</label>
+    </div>
+  </div>
+
+  <div class="row" style="gap:6px;flex-wrap:wrap">
+    <span class="muted" style="font-size:.82rem">เรียงตาม</span>
+    {% for key, label in sorts %}
+      <a class="pill {% if key == sort %}accent{% endif %}"
+         style="text-decoration:none;{% if key != sort %}border:1px solid var(--line);color:var(--ink-2){% endif %}"
+         href="?level={{ level }}&sort={{ key }}{% if query %}&q={{ query }}{% endif %}">{{ label }}</a>
+    {% endfor %}
+  </div>
+
+  {% include "core/partials/found_filter.html" %}
+  </div>
+
+  {% if page.paginator.count %}
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>#</th><th>คำ</th><th>pinyin</th><th>ความหมาย</th><th>พบในข้อสอบ</th><th>คำแปล</th></tr>
+      </thead>
+      <tbody>
+        {% for w in page %}
+        {% with rank=forloop.counter0|add:page.start_index %}
+        <tr>
+          <td class="cell-rank"><span class="{{ rank|rank_class }}">{{ rank }}</span></td>
+          <td class="cell-word" data-label="คำ"><span class="zh" style="font-size:1.2rem" :class="showHanzi ? '' : 'hidden-cell'">{{ w.hanzi }}</span></td>
+          <td class="num muted" data-label="pinyin">{{ w.pinyin }}</td>
+          <td data-label="ความหมาย"><span :class="showMeaning ? '' : 'hidden-cell'">{{ w.meaning_th|truncatechars:70 }}</span></td>
+          <td data-label="พบในข้อสอบ">
+            <span class="dots" title="พบใน {{ w.exam_papers_count }} จาก 9 ชุด">
+              {% for on in w.exam_papers_count|paper_dots %}<i class="{% if on %}on{% endif %}"></i>{% endfor %}
+              <span class="n">{{ w.exam_papers_count }}/9</span>
+            </span>
+          </td>
+          <td data-label="คำแปล">
+            {% if "human_verified" in w.tags %}
+              <span class="pill ok" title="มีคนตรวจยืนยันคำแปลนี้แล้ว">ตรวจแล้ว</span>
+            {% else %}
+              <button type="button" class="flagbtn {% if 'disputed' in w.tags %}on{% endif %}"
+                      @click="report = {id: {{ w.pk }}, hanzi: '{{ w.hanzi|escapejs }}', pinyin: '{{ w.pinyin|escapejs }}', meaning: '{{ w.meaning_th|escapejs }}'}"
+                      title="คำแปลนี้มาจาก AI — กดถ้าเห็นว่าผิด">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 21V4h11l-1 3 1 3H4"/></svg>
+                {% if 'disputed' in w.tags %}มีคนแย้ง{% else %}แย้ง{% endif %}
+              </button>
+            {% endif %}
+          </td>
+        </tr>
+        {% endwith %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row list-tools">
+    {% include "core/partials/per_page.html" %}
+    <span class="muted grow" style="text-align:right;font-size:.82rem">
+      {{ page.start_index }}–{{ page.end_index }} จาก {{ page.paginator.count }}
+    </span>
+  </div>
+
+  {% include "core/partials/pager.html" %}
+  {% else %}
+  <div class="card empty">
+    <h3>ไม่เจอคำที่ค้น</h3>
+    <p class="muted">ลองพิมพ์สั้นลง หรือเปลี่ยนระดับ HSK ด้านบน — คำที่ค้นอาจอยู่คนละระดับ</p>
+    <a class="btn ghost" href="?level={{ level }}&sort={{ sort }}">ล้างการค้นหา</a>
+  </div>
+  {% endif %}
+
+  <p class="muted" style="font-size:.82rem">
+    แถบจุดคือจำนวนชุดข้อสอบ (จาก 9 ชุด) ที่พบคำนี้ · ปิดคำแปลหรือปิดตัวอักษรเพื่อทดสอบตัวเองสองทาง
+  </p>
+
+  <div class="note" style="border-left-color:var(--missing)">
+    <span class="ai-star">✱✱✱</span>
+    <b>คำแปลไทยทั้งหมดเขียนโดย AI ยังไม่มีครูตรวจ</b> —
+    เจอคำไหนที่แปลแปลกๆ กดปุ่ม "แย้ง" ท้ายแถวได้เลย ถ้าถามครูมาแล้วก็พิมพ์คำแปลที่ถูกส่งมาด้วย
+    ระบบจะเอาไปแทนที่ของ AI เมื่อเจ้าของระบบกดรับ
+  </div>
+
+  {# ─── กล่องแย้งคำแปล ─── #}
+  <div x-show="report" x-cloak @click="report = null"
+       style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30"></div>
+  <div x-show="report" x-cloak @keydown.window.escape="report = null"
+       class="report-modal">
+    <template x-if="report">
+      <form hx-post="" :hx-post="'/vocab/' + report.id + '/note/'"
+            hx-target="this" hx-swap="outerHTML" class="stack" style="gap:var(--s2)">
+        {% csrf_token %}
+        <div class="row" style="gap:var(--s1);align-items:baseline">
+          <span class="zh" style="font-size:var(--t-h2)" x-text="report.hanzi"></span>
+          <span class="mono muted" x-text="report.pinyin"></span>
+          <button type="button" class="btn ghost sm" style="width:auto;margin-left:auto" @click="report = null">ปิด</button>
+        </div>
+
+        <div class="stack" style="gap:2px">
+          <span class="wlab">คำแปลปัจจุบัน (จาก AI)</span>
+          <span x-text="report.meaning"></span>
+        </div>
+
+        <div class="stack" style="gap:var(--s-half)">
+          <span class="wlab">คุณตรวจแล้วพบว่า</span>
+          <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+            <label class="radio-chip"><input type="radio" name="verdict" value="wrong" checked> แปลผิด</label>
+            <label class="radio-chip"><input type="radio" name="verdict" value="confirmed"> ถูกแล้ว</label>
+          </div>
+        </div>
+
+        <div class="stack" style="gap:var(--s-half)">
+          <label for="vocab-body">คำแปลที่ถูกต้อง <span class="muted">(ถ้ามี)</span></label>
+          <textarea id="vocab-body" name="body" rows="2" placeholder="พิมพ์คำแปลที่ถูก ถ้ารู้"></textarea>
+        </div>
+
+        <div class="stack" style="gap:var(--s-half)">
+          <label for="vocab-source">ได้ข้อมูลมาจากไหน</label>
+          <input id="vocab-source" type="text" name="source" placeholder="เช่น ครูที่สอน · พจนานุกรม · หนังสือหน้า 42">
+        </div>
+
+        <div><button class="btn sm" type="submit" style="width:auto">ส่งให้เจ้าของระบบ</button></div>
+      </form>
+    </template>
+  </div>
+</div>
+{% endblock %}

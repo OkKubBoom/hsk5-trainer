@@ -10,6 +10,8 @@
   practice     DrillSession, AnswerRecord, DailyRecord, MockExam,
                DictationAttempt, WritingSubmission, WritingFeedback
   diagnostics  ErrorLog
+  placement    PlacementTest, PlacementAnswer
+  feedback     ExplanationNote — คนตรวจคำอธิบายของ AI
 """
 from .base import ErrorCode, Provenance, Section, SourceType, Standard, TimeStamped
 from .users import LearnerProfile, Role, User
@@ -24,6 +26,8 @@ from .practice import (
     MockExam, WritingFeedback, WritingSubmission,
 )
 from .diagnostics import ErrorLog
+from .placement import PlacementAnswer, PlacementTest
+from .feedback import ExplanationNote, NoteStatus, NoteVerdict
 
 __all__ = [
     "ErrorCode", "Provenance", "Section", "SourceType", "Standard", "TimeStamped",
@@ -35,4 +39,6 @@ __all__ = [
     "DrillSession", "AnswerRecord", "DailyRecord", "MockExam",
     "DictationAttempt", "WritingSubmission", "WritingFeedback",
     "ErrorLog",
+    "PlacementTest", "PlacementAnswer",
+    "ExplanationNote", "NoteVerdict", "NoteStatus",
 ]

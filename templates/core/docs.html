@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% block title %}ที่มาข้อมูล · HSK5 Trainer{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:6px">
+  <span class="eyebrow">ที่มาข้อมูลและวิธีคิด</span>
+  <h1>ตัวเลขในระบบนี้มาจากไหน</h1>
+  <p class="muted" style="max-width:66ch">
+    ทุกอย่างที่ระบบบอกคุณต้องตรวจย้อนกลับได้ถึงต้นทาง หน้านี้บอกว่าข้อมูลมาจากแหล่งไหน
+    ผ่านการตรวจอะไรมาบ้าง เชื่อได้แค่ไหน และที่สำคัญที่สุด — <b>เก็งข้อสอบด้วยหลักอะไร</b>
+  </p>
+</div>
+
+<div class="row" style="gap:6px;flex-wrap:wrap">
+  <a class="pill accent" style="text-decoration:none;padding:6px 14px" href="#method">หลักการเก็งข้อสอบ</a>
+  <a class="pill" style="text-decoration:none;padding:6px 14px;border:1px solid var(--line);color:var(--ink-2)" href="#sources">แหล่งข้อมูล</a>
+  <a class="pill" style="text-decoration:none;padding:6px 14px;border:1px solid var(--line);color:var(--ink-2)" href="#files">ไฟล์ต้นฉบับ</a>
+  <a class="pill" style="text-decoration:none;padding:6px 14px;border:1px solid var(--line);color:var(--ink-2)" href="#quality">คุณภาพและข้อจำกัด</a>
+</div>
+
+<!-- ══════════ หลักการเก็งข้อสอบ ══════════ -->
+<div id="method" class="card stack" style="gap:20px;border-left:3px solid var(--accent)">
+  <div class="stack" style="gap:5px">
+    <span class="eyebrow">สำคัญที่สุดในหน้านี้</span>
+    <h2>หลักการเก็งข้อสอบ</h2>
+  </div>
+
+  <div class="stack" style="gap:8px">
+    <h3>หลักข้อเดียวที่ทั้งหมดยืนอยู่บนนี้</h3>
+    <p style="color:var(--ink-2)">
+      <b>ไม่เดาว่าอะไรจะออก แต่ดูว่าอะไรเคยออกจริง</b> — ระบบไม่ได้ใช้ความเห็นของ AI หรือของครูคนไหน
+      ในการบอกว่าคำไหนสำคัญ แต่นับจากข้อสอบจริง 9 ชุดที่แยกโครงสร้างออกมาแล้วทีละข้อ
+      ถ้าตัวเลขบอกว่าคำนี้โผล่ 8 ใน 9 ชุด นั่นคือข้อเท็จจริงที่ตรวจย้อนได้ ไม่ใช่การคาดเดา
+    </p>
+  </div>
+
+  <div class="stack" style="gap:10px">
+    <h3>ขั้นตอนการนับ</h3>
+    <div class="stack" style="gap:9px">
+      <div class="row" style="gap:12px;align-items:flex-start">
+        <span class="rank top">1</span>
+        <div class="stack" style="gap:2px">
+          <b>แยกข้อสอบเป็นชิ้นๆ</b>
+          <span class="muted">แปลง PDF ทั้ง 9 ชุดเป็นข้อมูลมีโครงสร้าง — แยกโจทย์ ตัวเลือก A-D บทอ่าน สคริปต์ฟัง และเฉลย ออกจากกันทีละข้อ</span>
+        </div>
+      </div>
+      <div class="row" style="gap:12px;align-items:flex-start">
+        <span class="rank top">2</span>
+        <div class="stack" style="gap:2px">
+          <b>ตัดสิ่งที่ไม่ใช่เนื้อหาข้อสอบทิ้งก่อนนับ</b>
+          <span class="muted">
+            คำประกาศเปิดห้องสอบ คำสั่ง («请选出正确答案») และข้อตัวอย่าง («例如») ซ้ำทุกชุด
+            ถ้าไม่ตัด คำอย่าง 正确 กับ 答案 จะติดอันดับต้นๆ ทั้งที่ไม่ใช่คำที่ออกสอบ
+          </span>
+        </div>
+      </div>
+      <div class="row" style="gap:12px;align-items:flex-start">
+        <span class="rank top">3</span>
+        <div class="stack" style="gap:2px">
+          <b>ตัดคำภาษาจีนด้วยเครื่อง</b>
+          <span class="muted">ภาษาจีนไม่เว้นวรรค ใช้ jieba ตัดคำโดยใส่ลิสต์ทางการ 2,496 คำเข้าไปช่วย เพื่อไม่ให้ตัดคำผิด</span>
+        </div>
+      </div>
+      <div class="row" style="gap:12px;align-items:flex-start">
+        <span class="rank">4</span>
+        <div class="stack" style="gap:2px">
+          <b>นับแยกว่าคำนั้นอยู่ตรงไหนของข้อสอบ</b>
+          <span class="muted">อยู่ในโจทย์ ในตัวเลือก ในบทอ่าน หรือในสคริปต์ฟัง — และเทียบกับเฉลยจริงว่าเป็น <b>คำตอบที่ถูก</b> หรือเป็น <b>ตัวลวง</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stack" style="gap:8px;padding-top:16px;border-top:1px solid var(--line)">
+    <h3>ทำไมเรียงตาม "จำนวนชุด" ไม่ใช่ "จำนวนครั้ง"</h3>
+    <p style="color:var(--ink-2)">
+      นี่คือจุดที่การเก็งข้อสอบส่วนใหญ่พลาด สมมติคำว่า <span class="zh">兔子</span> (กระต่าย) โผล่ 29 ครั้ง —
+      ฟังดูสำคัญมาก แต่พอดูจริงมันโผล่ในชุดเดียว เพราะเป็นตัวละครของบทอ่านเรื่องเดียว
+      โอกาสที่ชุดหน้าจะมีกระต่ายอีกไม่ได้สูงเลย
+    </p>
+    <p style="color:var(--ink-2)">
+      กลับกัน <span class="zh">个人</span> โผล่ครบ <b>9 จาก 9 ชุด</b> — แปลว่าไม่ว่าจะเจอชุดไหนก็ต้องเจอคำนี้
+      <b>จำนวนชุดที่พบจึงเป็นตัวชี้วัดหลัก</b> ส่วนจำนวนครั้งเป็นตัวประกอบ
+    </p>
+  </div>
+
+  <div class="stack" style="gap:8px;padding-top:16px;border-top:1px solid var(--line)">
+    <h3>ทำไมต้องแยก "เฉลย" ออกจาก "ตัวลวง"</h3>
+    <p style="color:var(--ink-2)">
+      คำที่โผล่บ่อยไม่ได้แปลว่าเป็นคำตอบบ่อย <span class="zh">发展</span> ถูกใช้เป็นตัวเลือกหลอก 12 ครั้ง
+      แต่<b>ไม่เคยเป็นคำตอบที่ถูกเลยสักครั้ง</b> — ข้อมูลแบบนี้เอาไปใช้ได้ตรงๆ ว่าเห็นคำนี้ในตัวเลือกแล้วอย่าเพิ่งรีบเลือกเพราะคุ้นตา
+    </p>
+  </div>
+
+  <div class="stack" style="gap:8px;padding-top:16px;border-top:1px solid var(--line)">
+    <h3>กลุ่มคำใกล้เคียงมาจากข้อสอบ ไม่ใช่จากการจับคู่เอง</h3>
+    <p style="color:var(--ink-2)">
+      พาร์ทอ่านตอนแรก (ข้อ 46-60) คือข้อสอบแยกคำใกล้เคียงล้วน — <b>15 ข้อจาก 45 ข้อของพาร์ทอ่าน</b>
+      ตัวเลือกทั้ง 4 ของแต่ละข้อคือกลุ่มคำที่ <b>ผู้ออกข้อสอบยืนยันเองว่าสับสนกันได้</b>
+      ระบบจึงดึงกลุ่มพวกนี้มาตรงๆ {{ counts.groups }} กลุ่ม แทนที่จะให้ AI เดาว่าคำไหนคล้ายคำไหน
+    </p>
+  </div>
+
+  <div class="note warn">
+    <b>สิ่งที่หลักการนี้ทำไม่ได้</b> — ข้อสอบ 9 ชุดคือกลุ่มตัวอย่างเล็ก ใช้<b>จัดลำดับ</b>ว่าควรเรียนอะไรก่อนได้
+    แต่ใช้<b>ตัดทิ้ง</b>ไม่ได้ คำที่ไม่เคยพบในทั้ง 9 ชุดยังออกสอบได้เสมอ การเก็งคือการจัดลำดับความเร่งด่วน
+    ไม่ใช่การย่อขอบเขตการเรียน
+  </div>
+</div>
+
+<!-- ══════════ แหล่งข้อมูล ══════════ -->
+<div id="sources" class="stack">
+  <h2>แหล่งข้อมูล</h2>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>ข้อมูล</th><th>แหล่งที่มา</th><th>สิทธิ์การใช้</th></tr></thead>
+      <tbody>
+        <tr>
+          <td data-label="ข้อมูล"><b>ลิสต์คำศัพท์ทางการ</b><br><span class="muted">HSK 2.0 ปี 2012 · 2,496 คำ</span></td>
+          <td data-label="แหล่งที่มา">
+            <a href="https://github.com/glxxyz/hskhsk.com" target="_blank" rel="noopener">glxxyz/hskhsk.com</a>
+            และ <a href="https://hsk.academy" target="_blank" rel="noopener">hsk.academy</a>
+            <br><span class="muted">สองแหล่งอิสระ ตรงกัน 100%</span>
+          </td>
+          <td data-label="สิทธิ์"><span class="pill ok">ใช้ได้เสรี</span></td>
+        </tr>
+        <tr>
+          <td data-label="ข้อมูล"><b>ความหมายภาษาอังกฤษ</b></td>
+          <td data-label="แหล่งที่มา">
+            <a href="https://www.mdbg.net/chinese/dictionary?page=cedict" target="_blank" rel="noopener">CC-CEDICT</a>
+            <br><span class="muted">พจนานุกรมจีน-อังกฤษเปิด 124,954 รายการ</span>
+          </td>
+          <td data-label="สิทธิ์"><span class="pill ok">CC BY-SA 4.0</span><br><span class="muted">ต้องให้เครดิต</span></td>
+        </tr>
+        <tr>
+          <td data-label="ข้อมูล"><b>เสียงอ่านทางการ</b></td>
+          <td data-label="แหล่งที่มา">เอกสาร 大纲 HSK ระดับ 5 (ไฟล์ปี 2018)<br><span class="muted">ใช้เฉพาะเสียงอ่าน ไม่ใช้เป็นลิสต์คำ — ดูเหตุผลด้านล่าง</span></td>
+          <td data-label="สิทธิ์"><span class="pill warn">อ้างอิงเท่านั้น</span></td>
+        </tr>
+        <tr>
+          <td data-label="ข้อมูล"><b>เส้นขีด · ตัวเต็ม · รากคำ</b></td>
+          <td data-label="แหล่งที่มา"><a href="https://www.unicode.org/charts/unihan.html" target="_blank" rel="noopener">Unihan Database (Unicode)</a></td>
+          <td data-label="สิทธิ์"><span class="pill ok">ใช้ได้เสรี</span></td>
+        </tr>
+        <tr>
+          <td data-label="ข้อมูล"><b>ความถี่คำในภาษาจริง</b></td>
+          <td data-label="แหล่งที่มา">SUBTLEX-CH (Cai &amp; Brysbaert 2010)<br><span class="muted">คลังบทบรรยายภาพยนตร์ 33.5 ล้านตัวอักษร</span></td>
+          <td data-label="สิทธิ์"><span class="pill warn">งานวิชาการ</span></td>
+        </tr>
+        <tr>
+          <td data-label="ข้อมูล"><b>ข้อสอบจริง 9 ชุด</b><br><span class="muted">H51001-H51005 · H51327 · H51328 · H51330 · H51332</span></td>
+          <td data-label="แหล่งที่มา">ข้อสอบตัวอย่างทางการที่เจ้าของระบบมีอยู่</td>
+          <td data-label="สิทธิ์"><span class="pill bad">ลิขสิทธิ์</span><br><span class="muted">ใช้ฝึกส่วนตัวเท่านั้น ห้ามเข้าเวอร์ชันขาย</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>บทเรียนที่ต้องบันทึกไว้</b> — ตอนแรกระบบใช้ลิสต์คำจากแหล่งเดียว
+    (<a href="https://github.com/drkameleon/complete-hsk-vocabulary" target="_blank" rel="noopener">drkameleon/complete-hsk-vocabulary</a>)
+    พอเทียบกับอีก 4 แหล่งจึงพบว่าเป็น <b>ร่างปี 2010 ไม่ใช่ฉบับทางการปี 2012</b> —
+    ขาดคำที่ออกสอบจริงไป 120 คำ (เช่น <span class="zh">熬夜 · 网络 · 媒体 · 梦想</span>)
+    และมีคำที่ย้ายไป HSK6 แล้วปนอยู่ 174 คำ ถ้าเชื่อแหล่งเดียวจะสร้างฐานข้อมูลผิดทั้งชุดโดยไม่รู้ตัว
+  </div>
+
+  <div class="note warn">
+    <b>ทำไมไฟล์ 大纲 ปี 2018 ใช้เป็นลิสต์คำไม่ได้</b> — ข้อมูลในไฟล์บอกว่าเป็นฉบับที่ถูกแก้มาแล้ว
+    และเนื้อในไม่มีคำยุคใหม่อย่าง <span class="zh">网络 · 媒体</span> เลย ทั้งยังมีคำที่มาตรฐาน 2012
+    ย้ายขึ้น HSK6 ไปแล้ว จึงใช้ได้เฉพาะเสียงอ่าน ซึ่งตรงกับฐานข้อมูลของเรา 97.6% และช่วยแก้ให้ 52 คำ
+  </div>
+</div>
+
+<!-- ══════════ ไฟล์ต้นฉบับ ══════════ -->
+<div id="files" class="stack">
+  <h2>ไฟล์ต้นฉบับในเครื่อง</h2>
+  <p class="muted">ทุกไฟล์เปิดอ่านได้ ตรวจย้อนได้ ไม่มีอะไรซ่อนอยู่ในโค้ด</p>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>ไฟล์</th><th>คืออะไร</th></tr></thead>
+      <tbody>
+        <tr><td data-label="ไฟล์" class="mono">data/vocab/hsk5_merged.json</td><td data-label="คืออะไร">คำศัพท์ 2,496 คำฉบับรวม พร้อมหลักฐานจากข้อสอบรายคำ</td></tr>
+        <tr><td data-label="ไฟล์" class="mono">data/vocab/needs_review.json</td><td data-label="คืออะไร">คำที่ต้องให้ครูตรวจ เรียงตามความรุนแรง</td></tr>
+        <tr><td data-label="ไฟล์" class="mono">data/vocab/QUALITY_REPORT.md</td><td data-label="คืออะไร">รายงานว่าตรวจอะไรไปบ้าง เชื่อได้แค่ไหน</td></tr>
+        <tr><td data-label="ไฟล์" class="mono">data/vocab/phase1_A1_lists.json</td><td data-label="คืออะไร">ลิสต์คำจากทั้ง 5 แหล่ง พร้อมรายการที่ขัดกัน 348 รายการ</td></tr>
+        <tr><td data-label="ไฟล์" class="mono">data/exam_corpus/H510xx.json</td><td data-label="คืออะไร">ข้อสอบ 9 ชุดที่แยกโครงสร้างแล้ว <span class="pill bad">ลิขสิทธิ์</span></td></tr>
+        <tr><td data-label="ไฟล์" class="mono">data/exam_corpus/levels_frequency.json</td><td data-label="คืออะไร">ความถี่คำแยกระดับ HSK1-6 หลังตัดคำสั่งข้อสอบออก</td></tr>
+        <tr><td data-label="ไฟล์" class="mono">data/exam_corpus/synonym_sets.json</td><td data-label="คืออะไร">กลุ่มคำใกล้เคียงที่ดึงจากตัวเลือกจริง</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="stack" style="gap:6px">
+    <h3>เครื่องมือที่ใช้ประมวลผล</h3>
+    <p class="muted">
+      <b class="mono">pdfminer.six</b> แกะข้อความจาก PDF ·
+      <b class="mono">jieba</b> ตัดคำภาษาจีน ·
+      <b class="mono">pypinyin</b> ตรวจเสียงอ่านด้วยเครื่อง — ไม่ใช้ความจำของ AI ตัดสินเรื่องเสียงอ่าน
+    </p>
+  </div>
+</div>
+
+<!-- ══════════ คุณภาพ ══════════ -->
+<div id="quality" class="stack">
+  <h2>คุณภาพและข้อจำกัด</h2>
+
+  <div class="stats">
+    <div class="stat"><b>{{ counts.vocab }}</b><span>คำในระบบตอนนี้</span></div>
+    <div class="stat"><b>{{ counts.vocab_with_exam }}</b><span>คำที่พบในข้อสอบจริง</span></div>
+    <div class="stat"><b>{{ counts.questions_active }}</b><span>ข้อสอบที่พร้อมใช้</span></div>
+    <div class="stat"><b>{{ counts.groups }}</b><span>กลุ่มคำใกล้เคียง</span></div>
+  </div>
+
+  <div class="card stack">
+    <h3>สิ่งที่ต้องรู้ก่อนเชื่อข้อมูลนี้ 100%</h3>
+    <div class="stack" style="gap:12px">
+      <div class="stack" style="gap:2px">
+        <b>ยังไม่มีเจ้าของภาษาตรวจ</b>
+        <span class="muted">ที่เขียนว่า "ตรวจแล้ว" หมายถึงตรวจด้วยพจนานุกรมและเครื่องมือ ไม่ใช่มีครูภาษาจีนนั่งอ่านทีละคำ</span>
+      </div>
+      <div class="stack" style="gap:2px">
+        <b>ความหมายไทยผ่านภาษาอังกฤษเป็นตัวกลาง</b>
+        <span class="muted">ไม่มีพจนานุกรมจีน-ไทยในกระบวนการ จึงมีโอกาสเพี้ยนจากการแปลสองต่อ</span>
+      </div>
+      <div class="stack" style="gap:2px">
+        <b>สุ่มตรวจลึกแล้วพบผิดจริง 2.4% เกินเกณฑ์ 2% ที่ตั้งไว้</b>
+        <span class="muted">คำที่ยังต้องให้ครูตรวจถูกกันออกจากระบบไว้แล้ว {{ counts.vocab_flagged|default:"305" }} คำ ไม่ถูกนำมาสอน</span>
+      </div>
+      <div class="stack" style="gap:2px">
+        <b>พาร์ทฟังยังใช้ไม่ได้</b>
+        <span class="muted">ข้อสอบพาร์ทฟัง {{ counts.questions_draft }} ข้อถูกพักไว้เพราะยังไม่มีไฟล์เสียง — ถ้าปล่อยให้ทำจะถูกนับว่าผิดทั้งที่ไม่มีอะไรให้ฟัง</span>
+      </div>
+      <div class="stack" style="gap:2px">
+        <b>คำพยางค์เดียวถูกนับต่ำกว่าจริง</b>
+        <span class="muted">ตัวตัดคำมักรวมคำพยางค์เดียวเข้ากับคำข้างเคียงเป็นคำประสม ตัวเลขของคำสั้นจึงต่ำกว่าความจริง</span>
+      </div>
+      <div class="stack" style="gap:2px">
+        <b>สคริปต์ฟังมีแค่ 5 จาก 9 ชุด</b>
+        <span class="muted">สถิติฝั่งพาร์ทฟังจึงเอียงไปทางชุดที่มีสคริปต์</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

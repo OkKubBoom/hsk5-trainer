@@ -55,6 +55,31 @@ class VocabItem(Provenance, TimeStamped):
         help_text='เช่น ["conn", "idiom"] — conn = คำเชื่อมที่ใช้ในเรียงความ',
     )
 
+    # หลักฐานจากข้อสอบจริง 9 ชุด — เก็บเป็นคอลัมน์ที่เรียงลำดับได้ ไม่ใช่ข้อความ
+    # เพราะหน้า "เก็งข้อสอบ" ต้องเรียงคำตามความน่าจะออกสอบ
+    exam_papers_count = models.PositiveSmallIntegerField(
+        default=0, db_index=True, verbose_name="พบในกี่ชุด",
+        help_text="จำนวนชุดข้อสอบ (จาก 9 ชุด) ที่พบคำนี้ — ตัวชี้วัดหลักว่าคำไหนต้องรู้",
+    )
+    exam_occurrences = models.PositiveIntegerField(default=0, verbose_name="พบทั้งหมดกี่ครั้ง")
+    exam_as_answer = models.PositiveSmallIntegerField(default=0, verbose_name="เป็นเฉลยกี่ครั้ง")
+    exam_as_distractor = models.PositiveSmallIntegerField(default=0, verbose_name="เป็นตัวลวงกี่ครั้ง")
+    exam_evidence = models.JSONField(
+        default=dict, blank=True, verbose_name="รายละเอียดจากข้อสอบ",
+        help_text='เช่น {"papers": ["H51001"], "sections": {"reading": 12}}',
+    )
+
+    # การจับคู่คำ — สิ่งที่ข้อสอบ 选词填空 ถามจริง ไม่ใช่ชนิดของคำ
+    # เช่น 采取 ต้องคู่กับ 措施/方法 · รู้ว่าเป็นกริยาอย่างเดียวตอบข้อสอบไม่ได้
+    collocations = models.JSONField(
+        default=list, blank=True, verbose_name="คำที่จับคู่กันบ่อย",
+        help_text='เช่น ["采取措施", "采取行动"]',
+    )
+    confusable_with = models.JSONField(
+        default=list, blank=True, verbose_name="คำที่สับสนกันได้",
+        help_text='เช่น [{"hanzi": "私人", "how_to_tell": "...", "seen_together_in_exam": true}]',
+    )
+
     example_zh = models.CharField(max_length=255, blank=True, verbose_name="ประโยคตัวอย่าง")
     example_th = models.CharField(max_length=255, blank=True, verbose_name="แปลประโยค")
     audio = models.ForeignKey(
@@ -69,7 +94,10 @@ class VocabItem(Provenance, TimeStamped):
         constraints = [
             models.UniqueConstraint(fields=["hanzi", "standard"], name="uniq_vocab_hanzi_standard"),
         ]
-        indexes = [models.Index(fields=["hsk_level", "frequency_rank"])]
+        indexes = [
+            models.Index(fields=["hsk_level", "frequency_rank"]),
+            models.Index(fields=["-exam_papers_count", "-exam_occurrences"]),
+        ]
 
     def __str__(self):
         return f"{self.hanzi} ({self.pinyin})"

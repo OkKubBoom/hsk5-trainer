@@ -1,0 +1,199 @@
+{% load static %}<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1E6B5D">
+  <title>{% block title %}HSK5 Trainer{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=4">
+  <script src="{% static 'js/alpine-collapse.min.js' %}" defer></script>
+  <script src="{% static 'js/alpine.min.js' %}" defer></script>
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+{% if user.is_authenticated %}
+{% with g=nav_group|default:"" %}
+<div class="app{% if focus_mode %} focus{% endif %}" x-data="{ more: false }">
+
+  {# ───────── แถบข้างซ้าย: เดสก์ท็อป ───────── #}
+  <aside class="sidebar">
+    <a class="brand" href="{% url 'home' %}">
+      <span class="brand-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 5h16"/><path d="M12 5v14"/><path d="M7 10c1.6 3.2 3.1 5.4 5 7"/><path d="M17 10c-1.6 3.2-3.1 5.4-5 7"/></svg>
+      </span>
+      HSK5 Trainer
+    </a>
+
+    <div class="navgroup">
+      <span class="navgroup-label">ฝึก</span>
+      <a class="navlink {% if nav == 'home' %}on{% endif %}" href="{% url 'home' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        วันนี้
+      </a>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup-label">คลังความรู้</span>
+      <a class="navlink {% if nav == 'vocab' %}on{% endif %}" href="{% url 'vocab_list' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><path d="M8 7h7"/><path d="M8 11h7"/></svg>
+        คลังคำศัพท์
+      </a>
+      <a class="navlink {% if nav == 'grammar' %}on{% endif %}" href="{% url 'grammar' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4v16"/><path d="M18 4v16"/><path d="M6 12h12"/><path d="M9 8h6"/><path d="M9 16h6"/></svg>
+        คำเชื่อม &amp; จับคู่คำ
+      </a>
+      <a class="navlink {% if nav == 'writing' %}on{% endif %}" href="{% url 'word_order' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h7"/><path d="m17 14 3 3-3 3"/></svg>
+        ฝึกเรียงคำ
+      </a>
+      <a class="navlink {% if nav == 'mock' %}on{% endif %}" href="{% url 'mock_home' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3h6l1 3H8z"/><rect x="4" y="6" width="16" height="15" rx="2"/><path d="M9 12h6"/><path d="M9 16h4"/></svg>
+        จำลองสอบ
+      </a>
+      <a class="navlink {% if nav == 'predict' %}on{% endif %}" href="{% url 'predict' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l5-5 4 4 8-8"/><path d="M16 8h4v4"/></svg>
+        เก็งข้อสอบ
+      </a>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup-label">ผลการเรียน</span>
+      <a class="navlink {% if nav == 'stats' %}on{% endif %}" href="{% url 'stats' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-6"/></svg>
+        สถิติ
+      </a>
+      <a class="navlink {% if nav == 'progress' %}on{% endif %}" href="{% url 'group_progress' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
+        ความคืบหน้ากลุ่ม
+      </a>
+      <a class="navlink {% if nav == 'history' %}on{% endif %}" href="{% url 'history' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        ประวัติ
+      </a>
+    </div>
+
+    {% if user.is_superuser or user.role == 'admin' %}
+    <div class="navgroup">
+      <span class="navgroup-label">ผู้ดูแลระบบ</span>
+      <a class="navlink {% if nav == 'users' %}on{% endif %}" href="{% url 'user_admin' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+        จัดการผู้ใช้
+      </a>
+      <a class="navlink {% if nav == 'review' %}on{% endif %}" href="{% url 'explanation_review' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
+        ตรวจคำอธิบาย
+      </a>
+    </div>
+    {% endif %}
+
+    <div class="sidebar-foot navgroup">
+      <a class="userbox {% if nav == 'profile' %}on{% endif %}" href="{% url 'profile' %}">
+        <span class="avatar">{{ user.first_name|default:user.username|slice:":1" }}</span>
+        <span class="userbox-text">
+          <b>{{ user.first_name|default:user.username }}</b>
+          {% if user.learner_profile %}
+            <span class="muted">สอบ {{ user.learner_profile.target_exam_date|date:"j M Y" }}</span>
+          {% else %}
+            <span class="muted">{{ user.get_role_display|default:"ผู้ใช้" }}</span>
+          {% endif %}
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-left:auto;opacity:.5"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+      <a class="navlink {% if nav == 'docs' %}on{% endif %}" href="{% url 'docs' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5"/><path d="M12 8h.01"/></svg>
+        ที่มาข้อมูล
+      </a>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="navlink" style="width:100%;border:none;background:transparent;font-family:inherit;cursor:pointer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+          ออกจากระบบ
+        </button>
+      </form>
+    </div>
+  </aside>
+
+  <div class="main">
+    {# ───────── แถบบน: มือถือ ───────── #}
+    <header class="topbar-m">
+      <a class="brand" href="{% url 'home' %}" style="font-size:1rem">
+        <span class="brand-mark" style="width:24px;height:24px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 5h16"/><path d="M12 5v14"/><path d="M7 10c1.6 3.2 3.1 5.4 5 7"/><path d="M17 10c-1.6 3.2-3.1 5.4-5 7"/></svg>
+        </span>
+        {% block mobile_title %}HSK5 Trainer{% endblock %}
+      </a>
+      <button type="button" class="avatar avatar-btn" @click="more = true"
+              aria-label="บัญชีของฉัน">{{ user.first_name|default:user.username|slice:":1" }}</button>
+    </header>
+
+    <main>
+      <div class="wrap stack">
+        {% if messages %}{% for m in messages %}<div class="note">{{ m }}</div>{% endfor %}{% endif %}
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+  </div>
+
+  {# ───────── แถบล่าง: มือถือ ───────── #}
+  <nav class="tabbar" aria-label="เมนูหลัก">
+    <a class="tabitem {% if nav == 'home' %}on{% endif %}" href="{% url 'home' %}">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      ฝึก
+    </a>
+    <a class="tabitem {% if nav == 'vocab' or nav == 'grammar' or nav == 'predict' %}on{% endif %}" href="{% url 'vocab_list' %}">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><path d="M8 7h7"/><path d="M8 11h7"/></svg>
+      คลัง
+    </a>
+    <a class="tabitem {% if nav == 'stats' or nav == 'history' %}on{% endif %}" href="{% url 'stats' %}">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-6"/></svg>
+      ผล
+    </a>
+    <button type="button" class="tabitem {% if nav == 'docs' %}on{% endif %}" @click="more = true" aria-label="เมนูเพิ่มเติม">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+      เพิ่มเติม
+    </button>
+  </nav>
+
+  {# ───────── แผงเพิ่มเติม ───────── #}
+  <div x-show="more" x-cloak @click="more = false" @keydown.window.escape="more = false"
+       style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:20"></div>
+  <div x-show="more" x-cloak x-transition.opacity
+       style="position:fixed;left:0;right:0;bottom:0;z-index:21;background:var(--surface);border-radius:16px 16px 0 0;padding:var(--s3) var(--s3) calc(var(--s3) + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(0,0,0,.2)">
+    <div class="row" style="margin-bottom:var(--s2)">
+      <span class="avatar" style="width:44px;height:44px;font-size:var(--t-lead)">{{ user.first_name|default:user.username|slice:":1" }}</span>
+      <a class="userbox-text grow" href="{% url 'profile' %}" style="text-decoration:none;color:inherit">
+        <b>{{ user.first_name|default:user.username }}</b>
+        {% if user.learner_profile %}
+          <span class="muted">สอบ {{ user.learner_profile.target_exam_date|date:"j M Y" }}</span>
+        {% endif %}
+      </a>
+      <button type="button" class="btn ghost sm" @click="more = false" style="width:auto">ปิด</button>
+    </div>
+    <div class="navgroup">
+      <a class="navlink" href="{% url 'profile' %}">โปรไฟล์ของฉัน</a>
+      <a class="navlink" href="{% url 'group_progress' %}">ความคืบหน้ากลุ่ม</a>
+      <a class="navlink" href="{% url 'grammar' %}">คำเชื่อม &amp; จับคู่คำ</a>
+      <a class="navlink" href="{% url 'word_order' %}">ฝึกเรียงคำ</a>
+      <a class="navlink" href="{% url 'mock_home' %}">จำลองสอบ</a>
+      <a class="navlink" href="{% url 'predict' %}">เก็งข้อสอบ</a>
+      <a class="navlink" href="{% url 'history' %}">ประวัติการฝึก</a>
+      <a class="navlink" href="{% url 'docs' %}">ที่มาข้อมูล</a>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="navlink" style="width:100%;border:none;background:transparent;font-family:inherit;cursor:pointer">ออกจากระบบ</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endwith %}
+{% else %}
+<main>
+  <div class="wrap stack">{% block guest_content %}{% endblock %}</div>
+</main>
+{% endif %}
+</body>
+</html>

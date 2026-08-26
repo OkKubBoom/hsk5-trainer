@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}ผลวัดระดับ · HSK5 Trainer{% endblock %}
+{% block content %}
+<div class="stack" style="gap:6px">
+  <span class="eyebrow">ผลวัดระดับ · {{ test.finished_at|date:"j M Y" }}</span>
+  <h1>ตอนนี้คุณอยู่ตรงนี้</h1>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>{{ result.known_vocab_estimate }}</b><span>คำที่ประเมินว่ารู้แล้ว</span></div>
+  <div class="stat"><b>{{ result.remaining_to_2500 }}</b><span>คำที่ยังเหลือถึง 2,500</span></div>
+  <div class="stat"><b>{{ result.suggested_new_words_per_day }}</b><span>คำใหม่ต่อวันที่ควรเป็น</span></div>
+  <div class="stat"><b>HSK{{ result.start_level }}</b><span>ระดับที่ควรเริ่มอุด</span></div>
+</div>
+
+<div class="card stack">
+  <h3>แยกตามระดับ</h3>
+  <div class="stack" style="gap:12px">
+    {% for row in levels %}
+    <div class="stack" style="gap:5px">
+      <div class="row">
+        <span class="grow">HSK{{ row.level }}</span>
+        <span class="mono muted">ถูก {{ row.correct }}/{{ row.asked }}</span>
+        <span class="pill {% if row.rate >= 0.85 %}ok{% elif row.rate >= 0.6 %}warn{% else %}bad{% endif %}">{{ row.verdict }}</span>
+      </div>
+      <div class="bar"><div style="width:{{ row.rate|floatformat:2|slice:'2:' }}%"></div></div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="note">
+  ระบบตั้งค่าให้แล้ว — คำใหม่วันละ <b>{{ result.suggested_new_words_per_day }} คำ</b>
+  คำนวณจากคำที่ยังเหลือ {{ result.remaining_to_2500 }} คำ หารด้วยวันที่ใช้ได้จริงถึงวันสอบ
+  (เผื่อช่วงหยุดคำใหม่ก่อนสอบและวันที่ทำไม่ไหวไว้ 20% แล้ว)
+</div>
+
+{% if result.unknown_pressed %}
+<p class="muted">กด "ยังไม่รู้" ไป {{ result.unknown_pressed }} คำ — นับเป็นคำที่ต้องเรียนใหม่ ไม่ใช่ตอบผิด</p>
+{% endif %}
+
+<div class="row">
+  <a class="btn" href="{% url 'drill_start' %}">เริ่มชุดฝึกเลย</a>
+  <a class="btn ghost" href="{% url 'home' %}">กลับหน้าแรก</a>
+</div>
+{% endblock %}

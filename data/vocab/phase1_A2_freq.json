@@ -1,0 +1,9998 @@
+{
+ "source": {
+  "primary": {
+   "name": "SUBTLEX-CH-WF (Cai & Brysbaert 2010, PLoS ONE)",
+   "corpus": "ซับไตเติลภาพยนตร์/ซีรีส์จีน 6,243 เรื่อง ~33.5 ล้านอักษร, 99,121 คำ",
+   "obtained_from": "https://raw.githubusercontent.com/leonsilicon/subtlex-ch-wf/main/SUBTLEX-CH-WF.json (mirror ของไฟล์ทางการจาก crr.ugent.be ซึ่ง ณ วันดึงเข้าถึงไม่ได้)",
+   "size_bytes": 16297902,
+   "license": "แจกฟรีเพื่อการวิจัย (research use) — ไม่พบเงื่อนไข commercial ชัดเจน จึงตั้ง commercial_safe=False จนกว่าจะยืนยัน",
+   "fields_used": [
+    "Word",
+    "W/million",
+    "rank (ลำดับในไฟล์ เรียงตาม WCount)"
+   ],
+   "retrieved": "2026-08-25"
+  },
+  "secondary_fill": {
+   "name": "FrequencyWords / OpenSubtitles 2018 zh_cn (hermitdave)",
+   "obtained_from": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/zh_cn/zh_cn_full.txt",
+   "size_bytes": 8307909,
+   "license": "repo: MIT; ข้อมูลจาก OpenSubtitles corpus",
+   "note": "ใช้เติมเฉพาะ 9 คำที่ SUBTLEX ไม่มี — entry เหล่านั้นมี field 'source':'opensubtitles2018' และไม่มี per_million",
+   "retrieved": "2026-08-25"
+  },
+  "failed": {
+   "leeds": "corpus.leeds.ac.uk เชื่อมต่อไม่ได้ (timeout)",
+   "crr_ugent": "crr.ugent.be หน้า SUBTLEX-CH คืน 404",
+   "bcc": "ไม่พบ mirror BCC_LEX ที่เชื่อถือได้บน GitHub"
+  },
+  "coverage": {
+   "total_vocab": 2491,
+   "subtlex_matched": 2480,
+   "opensubtitles_fill": 9,
+   "unmatched": [
+    "不客气",
+    "系领带"
+   ]
+  },
+  "spearman_vs_existing_frequency_rank": 0.9237
+ },
+ "ranks": {
+  "的": {
+   "corpus_rank": 1,
+   "per_million": 50155.13
+  },
+  "了": {
+   "corpus_rank": 5,
+   "per_million": 28210.53
+  },
+  "我": {
+   "corpus_rank": 2,
+   "per_million": 50147.83
+  },
+  "是": {
+   "corpus_rank": 4,
+   "per_million": 28253.52
+  },
+  "你": {
+   "corpus_rank": 3,
+   "per_million": 39629.27
+  },
+  "在": {
+   "corpus_rank": 7,
+   "per_million": 12811.05
+  },
+  "不": {
+   "corpus_rank": 6,
+   "per_million": 20543.44
+  },
+  "有": {
+   "corpus_rank": 11,
+   "per_million": 8618.15
+  },
+  "他": {
+   "corpus_rank": 8,
+   "per_million": 11853.78
+  },
+  "这": {
+   "corpus_rank": 12,
+   "per_million": 8554.9
+  },
+  "个": {
+   "corpus_rank": 29,
+   "per_million": 5184
+  },
+  "和": {
+   "corpus_rank": 33,
+   "per_million": 4483.86
+  },
+  "人": {
+   "corpus_rank": 24,
+   "per_million": 5810.26
+  },
+  "我们": {
+   "corpus_rank": 9,
+   "per_million": 11080.02
+  },
+  "好": {
+   "corpus_rank": 10,
+   "per_million": 9977.13
+  },
+  "一": {
+   "corpus_rank": 21,
+   "per_million": 6069.96
+  },
+  "会": {
+   "corpus_rank": 14,
+   "per_million": 7927.17
+  },
+  "都": {
+   "corpus_rank": 28,
+   "per_million": 5294.71
+  },
+  "上": {
+   "corpus_rank": 45,
+   "per_million": 3409.33
+  },
+  "来": {
+   "corpus_rank": 27,
+   "per_million": 5519.32
+  },
+  "很": {
+   "corpus_rank": 22,
+   "per_million": 5979.28
+  },
+  "去": {
+   "corpus_rank": 31,
+   "per_million": 4860.53
+  },
+  "她": {
+   "corpus_rank": 19,
+   "per_million": 6600.39
+  },
+  "想": {
+   "corpus_rank": 20,
+   "per_million": 6325.1
+  },
+  "能": {
+   "corpus_rank": 30,
+   "per_million": 4967.91
+  },
+  "那": {
+   "corpus_rank": 26,
+   "per_million": 5666.37
+  },
+  "看": {
+   "corpus_rank": 50,
+   "per_million": 3056.83
+  },
+  "做": {
+   "corpus_rank": 42,
+   "per_million": 3647.59
+  },
+  "什么": {
+   "corpus_rank": 17,
+   "per_million": 7050.42
+  },
+  "点": {
+   "corpus_rank": 58,
+   "per_million": 2315.14
+  },
+  "没": {
+   "corpus_rank": 32,
+   "per_million": 4754.83
+  },
+  "大": {
+   "corpus_rank": 99,
+   "per_million": 1343.24
+  },
+  "下": {
+   "corpus_rank": 83,
+   "per_million": 1549.34
+  },
+  "里": {
+   "corpus_rank": 69,
+   "per_million": 1886.22
+  },
+  "现在": {
+   "corpus_rank": 56,
+   "per_million": 2626.8
+  },
+  "年": {
+   "corpus_rank": 141,
+   "per_million": 913.6
+  },
+  "多": {
+   "corpus_rank": 80,
+   "per_million": 1568.12
+  },
+  "吗": {
+   "corpus_rank": 15,
+   "per_million": 7428.1
+  },
+  "太": {
+   "corpus_rank": 67,
+   "per_million": 1942.11
+  },
+  "呢": {
+   "corpus_rank": 59,
+   "per_million": 2287.93
+  },
+  "小": {
+   "corpus_rank": 125,
+   "per_million": 1042.34
+  },
+  "时候": {
+   "corpus_rank": 82,
+   "per_million": 1555.33
+  },
+  "工作": {
+   "corpus_rank": 144,
+   "per_million": 899.97
+  },
+  "家": {
+   "corpus_rank": 157,
+   "per_million": 805.63
+  },
+  "怎么": {
+   "corpus_rank": 55,
+   "per_million": 2657.98
+  },
+  "爱": {
+   "corpus_rank": 138,
+   "per_million": 927.73
+  },
+  "喜欢": {
+   "corpus_rank": 96,
+   "per_million": 1375.58
+  },
+  "吃": {
+   "corpus_rank": 153,
+   "per_million": 832.07
+  },
+  "谁": {
+   "corpus_rank": 78,
+   "per_million": 1573.4
+  },
+  "今天": {
+   "corpus_rank": 174,
+   "per_million": 737.78
+  },
+  "月": {
+   "corpus_rank": 291,
+   "per_million": 365.25
+  },
+  "几": {
+   "corpus_rank": 185,
+   "per_million": 668.65
+  },
+  "听": {
+   "corpus_rank": 75,
+   "per_million": 1636.18
+  },
+  "开": {
+   "corpus_rank": 155,
+   "per_million": 816.24
+  },
+  "叫": {
+   "corpus_rank": 127,
+   "per_million": 1032.83
+  },
+  "请": {
+   "corpus_rank": 142,
+   "per_million": 912.11
+  },
+  "钱": {
+   "corpus_rank": 148,
+   "per_million": 871.06
+  },
+  "本": {
+   "corpus_rank": 338,
+   "per_million": 313.77
+  },
+  "回": {
+   "corpus_rank": 143,
+   "per_million": 902
+  },
+  "东西": {
+   "corpus_rank": 114,
+   "per_million": 1136.54
+  },
+  "三": {
+   "corpus_rank": 233,
+   "per_million": 504.26
+  },
+  "买": {
+   "corpus_rank": 246,
+   "per_million": 469.97
+  },
+  "岁": {
+   "corpus_rank": 309,
+   "per_million": 344.48
+  },
+  "朋友": {
+   "corpus_rank": 166,
+   "per_million": 775.55
+  },
+  "住": {
+   "corpus_rank": 209,
+   "per_million": 584.32
+  },
+  "水": {
+   "corpus_rank": 443,
+   "per_million": 225.98
+  },
+  "写": {
+   "corpus_rank": 269,
+   "per_million": 405.08
+  },
+  "日": {
+   "corpus_rank": 761,
+   "per_million": 122.64
+  },
+  "喝": {
+   "corpus_rank": 264,
+   "per_million": 417.45
+  },
+  "学校": {
+   "corpus_rank": 447,
+   "per_million": 223.63
+  },
+  "坐": {
+   "corpus_rank": 261,
+   "per_million": 423.41
+  },
+  "认识": {
+   "corpus_rank": 260,
+   "per_million": 426.39
+  },
+  "分钟": {
+   "corpus_rank": 324,
+   "per_million": 328.77
+  },
+  "明天": {
+   "corpus_rank": 352,
+   "per_million": 301.31
+  },
+  "四": {
+   "corpus_rank": 481,
+   "per_million": 208.04
+  },
+  "块": {
+   "corpus_rank": 372,
+   "per_million": 279.16
+  },
+  "谢谢": {
+   "corpus_rank": 85,
+   "per_million": 1533.9
+  },
+  "多少": {
+   "corpus_rank": 360,
+   "per_million": 297.05
+  },
+  "妈妈": {
+   "corpus_rank": 167,
+   "per_million": 766.99
+  },
+  "少": {
+   "corpus_rank": 616,
+   "per_million": 158.73
+  },
+  "电影": {
+   "corpus_rank": 458,
+   "per_million": 216.09
+  },
+  "哪": {
+   "corpus_rank": 162,
+   "per_million": 786.52
+  },
+  "昨天": {
+   "corpus_rank": 704,
+   "per_million": 133.64
+  },
+  "书": {
+   "corpus_rank": 464,
+   "per_million": 213.2
+  },
+  "五": {
+   "corpus_rank": 563,
+   "per_million": 175.96
+  },
+  "先生": {
+   "corpus_rank": 93,
+   "per_million": 1396.99
+  },
+  "医院": {
+   "corpus_rank": 610,
+   "per_million": 160.7
+  },
+  "些": {
+   "corpus_rank": 195,
+   "per_million": 634.52
+  },
+  "狗": {
+   "corpus_rank": 299,
+   "per_million": 351.99
+  },
+  "学生": {
+   "corpus_rank": 1022,
+   "per_million": 87.7
+  },
+  "二": {
+   "corpus_rank": 664,
+   "per_million": 144.55
+  },
+  "儿子": {
+   "corpus_rank": 321,
+   "per_million": 330.88
+  },
+  "中国": {
+   "corpus_rank": 1406,
+   "per_million": 59.44
+  },
+  "电视": {
+   "corpus_rank": 668,
+   "per_million": 143.56
+  },
+  "下午": {
+   "corpus_rank": 1026,
+   "per_million": 87.28
+  },
+  "学习": {
+   "corpus_rank": 1218,
+   "per_million": 71.1
+  },
+  "老师": {
+   "corpus_rank": 804,
+   "per_million": 115.63
+  },
+  "六": {
+   "corpus_rank": 802,
+   "per_million": 116.2
+  },
+  "医生": {
+   "corpus_rank": 248,
+   "per_million": 467.38
+  },
+  "名字": {
+   "corpus_rank": 259,
+   "per_million": 427.32
+  },
+  "十": {
+   "corpus_rank": 865,
+   "per_million": 107.61
+  },
+  "看见": {
+   "corpus_rank": 312,
+   "per_million": 341.08
+  },
+  "女儿": {
+   "corpus_rank": 406,
+   "per_million": 251.89
+  },
+  "说话": {
+   "corpus_rank": 383,
+   "per_million": 267.84
+  },
+  "爸爸": {
+   "corpus_rank": 190,
+   "per_million": 653.72
+  },
+  "字": {
+   "corpus_rank": 1138,
+   "per_million": 76.67
+  },
+  "漂亮": {
+   "corpus_rank": 323,
+   "per_million": 328.86
+  },
+  "高兴": {
+   "corpus_rank": 236,
+   "per_million": 491.26
+  },
+  "热": {
+   "corpus_rank": 999,
+   "per_million": 90.17
+  },
+  "睡觉": {
+   "corpus_rank": 780,
+   "per_million": 119.21
+  },
+  "电脑": {
+   "corpus_rank": 957,
+   "per_million": 95.69
+  },
+  "读": {
+   "corpus_rank": 686,
+   "per_million": 138.94
+  },
+  "冷": {
+   "corpus_rank": 1231,
+   "per_million": 69.84
+  },
+  "飞机": {
+   "corpus_rank": 645,
+   "per_million": 149.64
+  },
+  "猫": {
+   "corpus_rank": 884,
+   "per_million": 105.05
+  },
+  "打电话": {
+   "corpus_rank": 314,
+   "per_million": 336.52
+  },
+  "后面": {
+   "corpus_rank": 701,
+   "per_million": 134.14
+  },
+  "喂": {
+   "corpus_rank": 315,
+   "per_million": 336.43
+  },
+  "八": {
+   "corpus_rank": 1362,
+   "per_million": 62.3
+  },
+  "怎么样": {
+   "corpus_rank": 197,
+   "per_million": 625.58
+  },
+  "七": {
+   "corpus_rank": 1419,
+   "per_million": 58.78
+  },
+  "菜": {
+   "corpus_rank": 1421,
+   "per_million": 58.52
+  },
+  "衣服": {
+   "corpus_rank": 420,
+   "per_million": 242.35
+  },
+  "小姐": {
+   "corpus_rank": 408,
+   "per_million": 251.08
+  },
+  "对不起": {
+   "corpus_rank": 200,
+   "per_million": 612.52
+  },
+  "天气": {
+   "corpus_rank": 2014,
+   "per_million": 37.56
+  },
+  "前面": {
+   "corpus_rank": 1323,
+   "per_million": 64.33
+  },
+  "同学": {
+   "corpus_rank": 2391,
+   "per_million": 30.35
+  },
+  "茶": {
+   "corpus_rank": 2028,
+   "per_million": 37.11
+  },
+  "星期": {
+   "corpus_rank": 812,
+   "per_million": 114.38
+  },
+  "九": {
+   "corpus_rank": 2040,
+   "per_million": 36.78
+  },
+  "上午": {
+   "corpus_rank": 3543,
+   "per_million": 17.74
+  },
+  "再见": {
+   "corpus_rank": 327,
+   "per_million": 326.65
+  },
+  "苹果": {
+   "corpus_rank": 2939,
+   "per_million": 22.83
+  },
+  "中午": {
+   "corpus_rank": 3366,
+   "per_million": 18.99
+  },
+  "出租车": {
+   "corpus_rank": 1750,
+   "per_million": 45.37
+  },
+  "水果": {
+   "corpus_rank": 3562,
+   "per_million": 17.62
+  },
+  "商店": {
+   "corpus_rank": 2051,
+   "per_million": 36.49
+  },
+  "没关系": {
+   "corpus_rank": 619,
+   "per_million": 157.27
+  },
+  "零": {
+   "corpus_rank": 3623,
+   "per_million": 17.26
+  },
+  "桌子": {
+   "corpus_rank": 1651,
+   "per_million": 48.92
+  },
+  "椅子": {
+   "corpus_rank": 2115,
+   "per_million": 35.29
+  },
+  "北京": {
+   "corpus_rank": 9414,
+   "per_million": 4.14
+  },
+  "下雨": {
+   "corpus_rank": 6507,
+   "per_million": 7.45
+  },
+  "杯子": {
+   "corpus_rank": 3817,
+   "per_million": 16.13
+  },
+  "火车站": {
+   "corpus_rank": 6801,
+   "per_million": 7.01
+  },
+  "米饭": {
+   "corpus_rank": 9088,
+   "per_million": 4.38
+  },
+  "汉语": {
+   "corpus_rank": 21338,
+   "per_million": 0.95
+  },
+  "饭馆": {
+   "corpus_rank": 14942,
+   "per_million": 1.88
+  },
+  "就": {
+   "corpus_rank": 13,
+   "per_million": 8246.34
+  },
+  "要": {
+   "corpus_rank": 16,
+   "per_million": 7114.18
+  },
+  "也": {
+   "corpus_rank": 37,
+   "per_million": 3928.9
+  },
+  "到": {
+   "corpus_rank": 35,
+   "per_million": 4159.42
+  },
+  "还": {
+   "corpus_rank": 39,
+   "per_million": 3884.93
+  },
+  "着": {
+   "corpus_rank": 52,
+   "per_million": 2983.65
+  },
+  "给": {
+   "corpus_rank": 43,
+   "per_million": 3494.19
+  },
+  "让": {
+   "corpus_rank": 41,
+   "per_million": 3690.67
+  },
+  "吧": {
+   "corpus_rank": 25,
+   "per_million": 5785.52
+  },
+  "得": {
+   "corpus_rank": 49,
+   "per_million": 3135.62
+  },
+  "可以": {
+   "corpus_rank": 57,
+   "per_million": 2360.84
+  },
+  "为": {
+   "corpus_rank": 98,
+   "per_million": 1358.26
+  },
+  "从": {
+   "corpus_rank": 92,
+   "per_million": 1410.37
+  },
+  "真": {
+   "corpus_rank": 51,
+   "per_million": 3053.82
+  },
+  "两": {
+   "corpus_rank": 121,
+   "per_million": 1090.43
+  },
+  "出": {
+   "corpus_rank": 105,
+   "per_million": 1275.36
+  },
+  "已经": {
+   "corpus_rank": 84,
+   "per_million": 1543.29
+  },
+  "最": {
+   "corpus_rank": 95,
+   "per_million": 1385.06
+  },
+  "因为": {
+   "corpus_rank": 72,
+   "per_million": 1783.29
+  },
+  "再": {
+   "corpus_rank": 74,
+   "per_million": 1684.82
+  },
+  "次": {
+   "corpus_rank": 104,
+   "per_million": 1307.83
+  },
+  "知道": {
+   "corpus_rank": 23,
+   "per_million": 5864.84
+  },
+  "问题": {
+   "corpus_rank": 131,
+   "per_million": 994.56
+  },
+  "走": {
+   "corpus_rank": 66,
+   "per_million": 1945.3
+  },
+  "它": {
+   "corpus_rank": 91,
+   "per_million": 1461.37
+  },
+  "但是": {
+   "corpus_rank": 79,
+   "per_million": 1571.49
+  },
+  "可能": {
+   "corpus_rank": 100,
+   "per_million": 1324.25
+  },
+  "时间": {
+   "corpus_rank": 140,
+   "per_million": 915.24
+  },
+  "开始": {
+   "corpus_rank": 135,
+   "per_million": 957.66
+  },
+  "新": {
+   "corpus_rank": 229,
+   "per_million": 515.43
+  },
+  "找": {
+   "corpus_rank": 94,
+   "per_million": 1390.52
+  },
+  "快": {
+   "corpus_rank": 77,
+   "per_million": 1595.1
+  },
+  "比": {
+   "corpus_rank": 193,
+   "per_million": 637.06
+  },
+  "所以": {
+   "corpus_rank": 118,
+   "per_million": 1103.36
+  },
+  "觉得": {
+   "corpus_rank": 87,
+   "per_million": 1521.68
+  },
+  "向": {
+   "corpus_rank": 231,
+   "per_million": 513.29
+  },
+  "一起": {
+   "corpus_rank": 132,
+   "per_million": 980.4
+  },
+  "希望": {
+   "corpus_rank": 160,
+   "per_million": 794.66
+  },
+  "大家": {
+   "corpus_rank": 228,
+   "per_million": 520.41
+  },
+  "非常": {
+   "corpus_rank": 158,
+   "per_million": 804.14
+  },
+  "孩子": {
+   "corpus_rank": 116,
+   "per_million": 1110.19
+  },
+  "别": {
+   "corpus_rank": 62,
+   "per_million": 2082.63
+  },
+  "公司": {
+   "corpus_rank": 355,
+   "per_million": 299.46
+  },
+  "第一": {
+   "corpus_rank": 223,
+   "per_million": 542.29
+  },
+  "问": {
+   "corpus_rank": 201,
+   "per_million": 609.75
+  },
+  "长": {
+   "corpus_rank": 294,
+   "per_million": 362.87
+  },
+  "告诉": {
+   "corpus_rank": 71,
+   "per_million": 1824.99
+  },
+  "事情": {
+   "corpus_rank": 151,
+   "per_million": 839.91
+  },
+  "号": {
+   "corpus_rank": 297,
+   "per_million": 353.6
+  },
+  "高": {
+   "corpus_rank": 454,
+   "per_million": 221.04
+  },
+  "件": {
+   "corpus_rank": 210,
+   "per_million": 583.31
+  },
+  "张": {
+   "corpus_rank": 320,
+   "per_million": 332.26
+  },
+  "准备": {
+   "corpus_rank": 187,
+   "per_million": 661.83
+  },
+  "进": {
+   "corpus_rank": 226,
+   "per_million": 525.66
+  },
+  "每": {
+   "corpus_rank": 348,
+   "per_million": 302.68
+  },
+  "您": {
+   "corpus_rank": 230,
+   "per_million": 515.08
+  },
+  "送": {
+   "corpus_rank": 279,
+   "per_million": 393.84
+  },
+  "笑": {
+   "corpus_rank": 504,
+   "per_million": 197.58
+  },
+  "女人": {
+   "corpus_rank": 258,
+   "per_million": 428.9
+  },
+  "小时": {
+   "corpus_rank": 302,
+   "per_million": 349.04
+  },
+  "完": {
+   "corpus_rank": 319,
+   "per_million": 332.73
+  },
+  "路": {
+   "corpus_rank": 479,
+   "per_million": 208.46
+  },
+  "男人": {
+   "corpus_rank": 306,
+   "per_million": 346.03
+  },
+  "玩": {
+   "corpus_rank": 282,
+   "per_million": 388.51
+  },
+  "正在": {
+   "corpus_rank": 501,
+   "per_million": 198.32
+  },
+  "门": {
+   "corpus_rank": 389,
+   "per_million": 264.68
+  },
+  "穿": {
+   "corpus_rank": 270,
+   "per_million": 404.99
+  },
+  "外": {
+   "corpus_rank": 773,
+   "per_million": 120.97
+  },
+  "帮助": {
+   "corpus_rank": 358,
+   "per_million": 299.08
+  },
+  "晚上": {
+   "corpus_rank": 368,
+   "per_million": 285.39
+  },
+  "错": {
+   "corpus_rank": 122,
+   "per_million": 1078.09
+  },
+  "卖": {
+   "corpus_rank": 448,
+   "per_million": 222.82
+  },
+  "远": {
+   "corpus_rank": 508,
+   "per_million": 195.85
+  },
+  "快乐": {
+   "corpus_rank": 596,
+   "per_million": 164.1
+  },
+  "懂": {
+   "corpus_rank": 485,
+   "per_million": 206.37
+  },
+  "药": {
+   "corpus_rank": 674,
+   "per_million": 142.73
+  },
+  "黑": {
+   "corpus_rank": 697,
+   "per_million": 136.02
+  },
+  "身体": {
+   "corpus_rank": 678,
+   "per_million": 142.01
+  },
+  "元": {
+   "corpus_rank": 1434,
+   "per_million": 57.98
+  },
+  "介绍": {
+   "corpus_rank": 1136,
+   "per_million": 77
+  },
+  "红": {
+   "corpus_rank": 1023,
+   "per_million": 87.4
+  },
+  "欢迎": {
+   "corpus_rank": 398,
+   "per_million": 258.57
+  },
+  "眼睛": {
+   "corpus_rank": 584,
+   "per_million": 169.11
+  },
+  "近": {
+   "corpus_rank": 1100,
+   "per_million": 80.99
+  },
+  "手机": {
+   "corpus_rank": 857,
+   "per_million": 108.33
+  },
+  "忙": {
+   "corpus_rank": 413,
+   "per_million": 248.67
+  },
+  "离": {
+   "corpus_rank": 554,
+   "per_million": 181.48
+  },
+  "白": {
+   "corpus_rank": 1105,
+   "per_million": 80.01
+  },
+  "去年": {
+   "corpus_rank": 1469,
+   "per_million": 56.55
+  },
+  "票": {
+   "corpus_rank": 852,
+   "per_million": 109.22
+  },
+  "意思": {
+   "corpus_rank": 215,
+   "per_million": 573.5
+  },
+  "早上": {
+   "corpus_rank": 655,
+   "per_million": 147.65
+  },
+  "回答": {
+   "corpus_rank": 769,
+   "per_million": 121.32
+  },
+  "运动": {
+   "corpus_rank": 1446,
+   "per_million": 57.32
+  },
+  "妻子": {
+   "corpus_rank": 518,
+   "per_million": 193.58
+  },
+  "鱼": {
+   "corpus_rank": 1155,
+   "per_million": 75.48
+  },
+  "累": {
+   "corpus_rank": 1222,
+   "per_million": 70.8
+  },
+  "休息": {
+   "corpus_rank": 767,
+   "per_million": 121.47
+  },
+  "洗": {
+   "corpus_rank": 890,
+   "per_million": 104.18
+  },
+  "船": {
+   "corpus_rank": 739,
+   "per_million": 126.48
+  },
+  "房间": {
+   "corpus_rank": 461,
+   "per_million": 214.87
+  },
+  "丈夫": {
+   "corpus_rank": 550,
+   "per_million": 182.28
+  },
+  "上班": {
+   "corpus_rank": 1294,
+   "per_million": 66.21
+  },
+  "生日": {
+   "corpus_rank": 822,
+   "per_million": 113.28
+  },
+  "姐姐": {
+   "corpus_rank": 1112,
+   "per_million": 79.14
+  },
+  "课": {
+   "corpus_rank": 1290,
+   "per_million": 66.36
+  },
+  "哥哥": {
+   "corpus_rank": 846,
+   "per_million": 110.29
+  },
+  "咖啡": {
+   "corpus_rank": 746,
+   "per_million": 125.05
+  },
+  "考试": {
+   "corpus_rank": 2341,
+   "per_million": 31.03
+  },
+  "千": {
+   "corpus_rank": 1728,
+   "per_million": 46.09
+  },
+  "慢": {
+   "corpus_rank": 1042,
+   "per_million": 86.06
+  },
+  "旁边": {
+   "corpus_rank": 1356,
+   "per_million": 62.54
+  },
+  "颜色": {
+   "corpus_rank": 1603,
+   "per_million": 50.77
+  },
+  "雪": {
+   "corpus_rank": 2481,
+   "per_million": 28.86
+  },
+  "妹妹": {
+   "corpus_rank": 950,
+   "per_million": 97.24
+  },
+  "报纸": {
+   "corpus_rank": 1598,
+   "per_million": 50.97
+  },
+  "贵": {
+   "corpus_rank": 2489,
+   "per_million": 28.59
+  },
+  "机场": {
+   "corpus_rank": 1656,
+   "per_million": 48.71
+  },
+  "踢": {
+   "corpus_rank": 1262,
+   "per_million": 67.55
+  },
+  "弟弟": {
+   "corpus_rank": 918,
+   "per_million": 100.64
+  },
+  "百": {
+   "corpus_rank": 2456,
+   "per_million": 29.24
+  },
+  "好吃": {
+   "corpus_rank": 2075,
+   "per_million": 36.07
+  },
+  "旅游": {
+   "corpus_rank": 4228,
+   "per_million": 13.98
+  },
+  "起床": {
+   "corpus_rank": 2860,
+   "per_million": 23.79
+  },
+  "题": {
+   "corpus_rank": 3599,
+   "per_million": 17.41
+  },
+  "便宜": {
+   "corpus_rank": 2711,
+   "per_million": 25.64
+  },
+  "唱歌": {
+   "corpus_rank": 1687,
+   "per_million": 47.43
+  },
+  "右边": {
+   "corpus_rank": 2692,
+   "per_million": 25.87
+  },
+  "牛奶": {
+   "corpus_rank": 2632,
+   "per_million": 26.47
+  },
+  "自行车": {
+   "corpus_rank": 3123,
+   "per_million": 20.99
+  },
+  "鸡蛋": {
+   "corpus_rank": 3073,
+   "per_million": 21.43
+  },
+  "姓": {
+   "corpus_rank": 2420,
+   "per_million": 29.78
+  },
+  "游泳": {
+   "corpus_rank": 2617,
+   "per_million": 26.59
+  },
+  "跳舞": {
+   "corpus_rank": 897,
+   "per_million": 103.11
+  },
+  "阴": {
+   "corpus_rank": 5247,
+   "per_million": 10.19
+  },
+  "生病": {
+   "corpus_rank": 2542,
+   "per_million": 27.66
+  },
+  "左边": {
+   "corpus_rank": 2373,
+   "per_million": 30.52
+  },
+  "公斤": {
+   "corpus_rank": 7159,
+   "per_million": 6.47
+  },
+  "教室": {
+   "corpus_rank": 4936,
+   "per_million": 11.24
+  },
+  "服务员": {
+   "corpus_rank": 4493,
+   "per_million": 12.85
+  },
+  "手表": {
+   "corpus_rank": 4003,
+   "per_million": 15.23
+  },
+  "跑步": {
+   "corpus_rank": 5223,
+   "per_million": 10.25
+  },
+  "西瓜": {
+   "corpus_rank": 11432,
+   "per_million": 3.01
+  },
+  "晴": {
+   "corpus_rank": 14657,
+   "per_million": 1.94
+  },
+  "羊肉": {
+   "corpus_rank": 14107,
+   "per_million": 2.09
+  },
+  "啊": {
+   "corpus_rank": 38,
+   "per_million": 3903.92
+  },
+  "把": {
+   "corpus_rank": 40,
+   "per_million": 3712.28
+  },
+  "被": {
+   "corpus_rank": 65,
+   "per_million": 1958.33
+  },
+  "自己": {
+   "corpus_rank": 73,
+   "per_million": 1728.29
+  },
+  "用": {
+   "corpus_rank": 81,
+   "per_million": 1563.08
+  },
+  "如果": {
+   "corpus_rank": 60,
+   "per_million": 2277.94
+  },
+  "又": {
+   "corpus_rank": 124,
+   "per_million": 1060.05
+  },
+  "只": {
+   "corpus_rank": 61,
+   "per_million": 2167.08
+  },
+  "更": {
+   "corpus_rank": 134,
+   "per_million": 961.44
+  },
+  "需要": {
+   "corpus_rank": 101,
+   "per_million": 1322.4
+  },
+  "地": {
+   "corpus_rank": 225,
+   "per_million": 536.84
+  },
+  "才": {
+   "corpus_rank": 120,
+   "per_million": 1094.48
+  },
+  "跟": {
+   "corpus_rank": 70,
+   "per_million": 1877.36
+  },
+  "像": {
+   "corpus_rank": 89,
+   "per_million": 1497.29
+  },
+  "还是": {
+   "corpus_rank": 206,
+   "per_million": 596.13
+  },
+  "认为": {
+   "corpus_rank": 171,
+   "per_million": 754
+  },
+  "应该": {
+   "corpus_rank": 115,
+   "per_million": 1127.12
+  },
+  "带": {
+   "corpus_rank": 139,
+   "per_million": 926.15
+  },
+  "位": {
+   "corpus_rank": 239,
+   "per_million": 487.92
+  },
+  "种": {
+   "corpus_rank": 247,
+   "per_million": 468.48
+  },
+  "发现": {
+   "corpus_rank": 207,
+   "per_million": 589.45
+  },
+  "一定": {
+   "corpus_rank": 204,
+   "per_million": 604.33
+  },
+  "一直": {
+   "corpus_rank": 176,
+   "per_million": 731.85
+  },
+  "为了": {
+   "corpus_rank": 220,
+   "per_million": 544.74
+  },
+  "一样": {
+   "corpus_rank": 150,
+   "per_million": 860.33
+  },
+  "世界": {
+   "corpus_rank": 301,
+   "per_million": 349.4
+  },
+  "而且": {
+   "corpus_rank": 212,
+   "per_million": 578.42
+  },
+  "重要": {
+   "corpus_rank": 303,
+   "per_million": 348.08
+  },
+  "必须": {
+   "corpus_rank": 214,
+   "per_million": 575.92
+  },
+  "地方": {
+   "corpus_rank": 181,
+   "per_million": 696.29
+  },
+  "老": {
+   "corpus_rank": 238,
+   "per_million": 490.39
+  },
+  "其他": {
+   "corpus_rank": 263,
+   "per_million": 422.19
+  },
+  "比赛": {
+   "corpus_rank": 331,
+   "per_million": 319.74
+  },
+  "然后": {
+   "corpus_rank": 145,
+   "per_million": 886.89
+  },
+  "担心": {
+   "corpus_rank": 277,
+   "per_million": 394.62
+  },
+  "条": {
+   "corpus_rank": 286,
+   "per_million": 372.86
+  },
+  "放": {
+   "corpus_rank": 216,
+   "per_million": 569.33
+  },
+  "拿": {
+   "corpus_rank": 133,
+   "per_million": 964.66
+  },
+  "为什么": {
+   "corpus_rank": 86,
+   "per_million": 1522.16
+  },
+  "先": {
+   "corpus_rank": 242,
+   "per_million": 478.74
+  },
+  "关系": {
+   "corpus_rank": 335,
+   "per_million": 315
+  },
+  "出现": {
+   "corpus_rank": 456,
+   "per_million": 218.26
+  },
+  "了解": {
+   "corpus_rank": 351,
+   "per_million": 301.88
+  },
+  "过去": {
+   "corpus_rank": 272,
+   "per_million": 401.98
+  },
+  "参加": {
+   "corpus_rank": 423,
+   "per_million": 240.89
+  },
+  "国家": {
+   "corpus_rank": 587,
+   "per_million": 166.22
+  },
+  "决定": {
+   "corpus_rank": 340,
+   "per_million": 307.57
+  },
+  "分": {
+   "corpus_rank": 605,
+   "per_million": 162.61
+  },
+  "选择": {
+   "corpus_rank": 432,
+   "per_million": 235.05
+  },
+  "或者": {
+   "corpus_rank": 268,
+   "per_million": 405.32
+  },
+  "机会": {
+   "corpus_rank": 308,
+   "per_million": 344.92
+  },
+  "别人": {
+   "corpus_rank": 305,
+   "per_million": 346.18
+  },
+  "站": {
+   "corpus_rank": 353,
+   "per_million": 300.51
+  },
+  "使": {
+   "corpus_rank": 659,
+   "per_million": 146.51
+  },
+  "其实": {
+   "corpus_rank": 476,
+   "per_million": 210.66
+  },
+  "以后": {
+   "corpus_rank": 394,
+   "per_million": 259.28
+  },
+  "要求": {
+   "corpus_rank": 624,
+   "per_million": 155.52
+  },
+  "信": {
+   "corpus_rank": 449,
+   "per_million": 222.08
+  },
+  "当然": {
+   "corpus_rank": 163,
+   "per_million": 784.37
+  },
+  "接": {
+   "corpus_rank": 325,
+   "per_million": 327.01
+  },
+  "相信": {
+   "corpus_rank": 168,
+   "per_million": 766.07
+  },
+  "花": {
+   "corpus_rank": 386,
+   "per_million": 266.7
+  },
+  "虽然": {
+   "corpus_rank": 629,
+   "per_million": 153.25
+  },
+  "解决": {
+   "corpus_rank": 567,
+   "per_million": 175.52
+  },
+  "关于": {
+   "corpus_rank": 343,
+   "per_million": 306.02
+  },
+  "完成": {
+   "corpus_rank": 606,
+   "per_million": 162.46
+  },
+  "结束": {
+   "corpus_rank": 354,
+   "per_million": 299.58
+  },
+  "努力": {
+   "corpus_rank": 528,
+   "per_million": 189.59
+  },
+  "以前": {
+   "corpus_rank": 289,
+   "per_million": 369.37
+  },
+  "办法": {
+   "corpus_rank": 424,
+   "per_million": 240.23
+  },
+  "特别": {
+   "corpus_rank": 465,
+   "per_million": 212.57
+  },
+  "难": {
+   "corpus_rank": 345,
+   "per_million": 305.67
+  },
+  "注意": {
+   "corpus_rank": 466,
+   "per_million": 212.51
+  },
+  "讲": {
+   "corpus_rank": 490,
+   "per_million": 202.26
+  },
+  "离开": {
+   "corpus_rank": 202,
+   "per_million": 606.89
+  },
+  "万": {
+   "corpus_rank": 557,
+   "per_million": 179.78
+  },
+  "以为": {
+   "corpus_rank": 235,
+   "per_million": 494.3
+  },
+  "越": {
+   "corpus_rank": 711,
+   "per_million": 132.86
+  },
+  "城市": {
+   "corpus_rank": 923,
+   "per_million": 99.83
+  },
+  "影响": {
+   "corpus_rank": 983,
+   "per_million": 91.96
+  },
+  "游戏": {
+   "corpus_rank": 578,
+   "per_million": 170.87
+  },
+  "马": {
+   "corpus_rank": 489,
+   "per_million": 202.58
+  },
+  "比较": {
+   "corpus_rank": 914,
+   "per_million": 100.99
+  },
+  "最近": {
+   "corpus_rank": 593,
+   "per_million": 164.91
+  },
+  "换": {
+   "corpus_rank": 512,
+   "per_million": 194.98
+  },
+  "终于": {
+   "corpus_rank": 736,
+   "per_million": 127.38
+  },
+  "脸": {
+   "corpus_rank": 636,
+   "per_million": 151.82
+  },
+  "口": {
+   "corpus_rank": 758,
+   "per_million": 123.02
+  },
+  "除了": {
+   "corpus_rank": 626,
+   "per_million": 153.43
+  },
+  "总是": {
+   "corpus_rank": 402,
+   "per_million": 254.93
+  },
+  "双": {
+   "corpus_rank": 916,
+   "per_million": 100.87
+  },
+  "突然": {
+   "corpus_rank": 726,
+   "per_million": 130.15
+  },
+  "段": {
+   "corpus_rank": 522,
+   "per_million": 191.67
+  },
+  "检查": {
+   "corpus_rank": 654,
+   "per_million": 148.06
+  },
+  "米": {
+   "corpus_rank": 994,
+   "per_million": 90.44
+  },
+  "容易": {
+   "corpus_rank": 627,
+   "per_million": 153.4
+  },
+  "明白": {
+   "corpus_rank": 175,
+   "per_million": 737.6
+  },
+  "根据": {
+   "corpus_rank": 1063,
+   "per_million": 83.85
+  },
+  "记得": {
+   "corpus_rank": 265,
+   "per_million": 414.29
+  },
+  "辆": {
+   "corpus_rank": 547,
+   "per_million": 184.52
+  },
+  "简单": {
+   "corpus_rank": 637,
+   "per_million": 151.7
+  },
+  "半": {
+   "corpus_rank": 612,
+   "per_million": 160.64
+  },
+  "愿意": {
+   "corpus_rank": 376,
+   "per_million": 273.98
+  },
+  "音乐": {
+   "corpus_rank": 677,
+   "per_million": 142.37
+  },
+  "包": {
+   "corpus_rank": 839,
+   "per_million": 111.73
+  },
+  "楼": {
+   "corpus_rank": 872,
+   "per_million": 106.72
+  },
+  "清楚": {
+   "corpus_rank": 367,
+   "per_million": 293.2
+  },
+  "照片": {
+   "corpus_rank": 396,
+   "per_million": 258.95
+  },
+  "银行": {
+   "corpus_rank": 1003,
+   "per_million": 89.52
+  },
+  "故事": {
+   "corpus_rank": 510,
+   "per_million": 195.28
+  },
+  "一般": {
+   "corpus_rank": 1134,
+   "per_million": 77.09
+  },
+  "可爱": {
+   "corpus_rank": 599,
+   "per_million": 163.89
+  },
+  "新闻": {
+   "corpus_rank": 900,
+   "per_million": 102.57
+  },
+  "声音": {
+   "corpus_rank": 594,
+   "per_million": 164.64
+  },
+  "马上": {
+   "corpus_rank": 339,
+   "per_million": 310.4
+  },
+  "表示": {
+   "corpus_rank": 1553,
+   "per_million": 52.49
+  },
+  "经过": {
+   "corpus_rank": 1267,
+   "per_million": 67.1
+  },
+  "历史": {
+   "corpus_rank": 1243,
+   "per_million": 69.31
+  },
+  "哭": {
+   "corpus_rank": 820,
+   "per_million": 113.66
+  },
+  "敢": {
+   "corpus_rank": 399,
+   "per_million": 258.27
+  },
+  "会议": {
+   "corpus_rank": 1449,
+   "per_million": 57.17
+  },
+  "经常": {
+   "corpus_rank": 922,
+   "per_million": 100.28
+  },
+  "低": {
+   "corpus_rank": 1512,
+   "per_million": 54.25
+  },
+  "节目": {
+   "corpus_rank": 540,
+   "per_million": 186.4
+  },
+  "健康": {
+   "corpus_rank": 1317,
+   "per_million": 64.63
+  },
+  "作用": {
+   "corpus_rank": 1563,
+   "per_million": 51.84
+  },
+  "西": {
+   "corpus_rank": 1127,
+   "per_million": 77.68
+  },
+  "差": {
+   "corpus_rank": 1001,
+   "per_million": 89.91
+  },
+  "结婚": {
+   "corpus_rank": 513,
+   "per_million": 194.8
+  },
+  "短": {
+   "corpus_rank": 1253,
+   "per_million": 68.65
+  },
+  "同意": {
+   "corpus_rank": 576,
+   "per_million": 171.67
+  },
+  "教": {
+   "corpus_rank": 631,
+   "per_million": 152.83
+  },
+  "几乎": {
+   "corpus_rank": 1064,
+   "per_million": 83.7
+  },
+  "附近": {
+   "corpus_rank": 943,
+   "per_million": 98.37
+  },
+  "认真": {
+   "corpus_rank": 990,
+   "per_million": 90.86
+  },
+  "脚": {
+   "corpus_rank": 813,
+   "per_million": 114.35
+  },
+  "主要": {
+   "corpus_rank": 1873,
+   "per_million": 41.52
+  },
+  "遇到": {
+   "corpus_rank": 883,
+   "per_million": 105.41
+  },
+  "年轻": {
+   "corpus_rank": 831,
+   "per_million": 112.56
+  },
+  "久": {
+   "corpus_rank": 482,
+   "per_million": 207.65
+  },
+  "画": {
+   "corpus_rank": 825,
+   "per_million": 113.13
+  },
+  "表演": {
+   "corpus_rank": 500,
+   "per_million": 198.47
+  },
+  "关": {
+   "corpus_rank": 560,
+   "per_million": 178.8
+  },
+  "刚才": {
+   "corpus_rank": 538,
+   "per_million": 187.2
+  },
+  "办公室": {
+   "corpus_rank": 568,
+   "per_million": 175.34
+  },
+  "环境": {
+   "corpus_rank": 1960,
+   "per_million": 39.23
+  },
+  "关心": {
+   "corpus_rank": 792,
+   "per_million": 117.03
+  },
+  "祝": {
+   "corpus_rank": 754,
+   "per_million": 123.29
+  },
+  "层": {
+   "corpus_rank": 1590,
+   "per_million": 51.15
+  },
+  "腿": {
+   "corpus_rank": 840,
+   "per_million": 111.7
+  },
+  "班": {
+   "corpus_rank": 1284,
+   "per_million": 66.62
+  },
+  "坏": {
+   "corpus_rank": 433,
+   "per_million": 233.76
+  },
+  "一边": {
+   "corpus_rank": 1128,
+   "per_million": 77.33
+  },
+  "鞋": {
+   "corpus_rank": 1238,
+   "per_million": 69.52
+  },
+  "习惯": {
+   "corpus_rank": 1291,
+   "per_million": 66.27
+  },
+  "变化": {
+   "corpus_rank": 1921,
+   "per_million": 40.21
+  },
+  "周末": {
+   "corpus_rank": 1268,
+   "per_million": 67.07
+  },
+  "忘记": {
+   "corpus_rank": 858,
+   "per_million": 108.27
+  },
+  "打算": {
+   "corpus_rank": 457,
+   "per_million": 218.06
+  },
+  "极": {
+   "corpus_rank": 1851,
+   "per_million": 41.97
+  },
+  "小心": {
+   "corpus_rank": 477,
+   "per_million": 209.32
+  },
+  "举行": {
+   "corpus_rank": 2286,
+   "per_million": 31.93
+  },
+  "动物": {
+   "corpus_rank": 1116,
+   "per_million": 78.58
+  },
+  "饿": {
+   "corpus_rank": 1021,
+   "per_million": 87.73
+  },
+  "树": {
+   "corpus_rank": 1328,
+   "per_million": 64.09
+  },
+  "水平": {
+   "corpus_rank": 2565,
+   "per_million": 27.22
+  },
+  "借": {
+   "corpus_rank": 960,
+   "per_million": 94.94
+  },
+  "东": {
+   "corpus_rank": 1924,
+   "per_million": 40.15
+  },
+  "头发": {
+   "corpus_rank": 790,
+   "per_million": 117.9
+  },
+  "害怕": {
+   "corpus_rank": 529,
+   "per_million": 189.17
+  },
+  "鸟": {
+   "corpus_rank": 1315,
+   "per_million": 64.75
+  },
+  "蓝": {
+   "corpus_rank": 1674,
+   "per_million": 47.99
+  },
+  "照顾": {
+   "corpus_rank": 713,
+   "per_million": 132.68
+  },
+  "文化": {
+   "corpus_rank": 2970,
+   "per_million": 22.42
+  },
+  "疼": {
+   "corpus_rank": 1177,
+   "per_million": 73.84
+  },
+  "奇怪": {
+   "corpus_rank": 571,
+   "per_million": 173.88
+  },
+  "礼物": {
+   "corpus_rank": 783,
+   "per_million": 118.88
+  },
+  "南": {
+   "corpus_rank": 2247,
+   "per_million": 32.61
+  },
+  "提高": {
+   "corpus_rank": 3208,
+   "per_million": 20.24
+  },
+  "满意": {
+   "corpus_rank": 1822,
+   "per_million": 42.81
+  },
+  "旧": {
+   "corpus_rank": 1743,
+   "per_million": 45.61
+  },
+  "司机": {
+   "corpus_rank": 1725,
+   "per_million": 46.2
+  },
+  "黄": {
+   "corpus_rank": 2462,
+   "per_million": 29.18
+  },
+  "经理": {
+   "corpus_rank": 1560,
+   "per_million": 52.02
+  },
+  "兴趣": {
+   "corpus_rank": 795,
+   "per_million": 116.91
+  },
+  "帮忙": {
+   "corpus_rank": 579,
+   "per_million": 170.66
+  },
+  "电子": {
+   "corpus_rank": 2618,
+   "per_million": 26.59
+  },
+  "见面": {
+   "corpus_rank": 921,
+   "per_million": 100.34
+  },
+  "成绩": {
+   "corpus_rank": 2808,
+   "per_million": 24.47
+  },
+  "中间": {
+   "corpus_rank": 1685,
+   "per_million": 47.52
+  },
+  "聪明": {
+   "corpus_rank": 715,
+   "per_million": 131.61
+  },
+  "多么": {
+   "corpus_rank": 1019,
+   "per_million": 87.79
+  },
+  "灯": {
+   "corpus_rank": 1650,
+   "per_million": 48.98
+  },
+  "太阳": {
+   "corpus_rank": 1840,
+   "per_million": 42.3
+  },
+  "方便": {
+   "corpus_rank": 2451,
+   "per_million": 29.3
+  },
+  "糖": {
+   "corpus_rank": 1742,
+   "per_million": 45.61
+  },
+  "相同": {
+   "corpus_rank": 2119,
+   "per_million": 35.26
+  },
+  "生气": {
+   "corpus_rank": 816,
+   "per_million": 114.11
+  },
+  "公园": {
+   "corpus_rank": 1304,
+   "per_million": 65.76
+  },
+  "热情": {
+   "corpus_rank": 2303,
+   "per_million": 31.57
+  },
+  "一会儿": {
+   "corpus_rank": 927,
+   "per_million": 99.53
+  },
+  "骑": {
+   "corpus_rank": 1838,
+   "per_million": 42.42
+  },
+  "河": {
+   "corpus_rank": 2186,
+   "per_million": 33.83
+  },
+  "搬": {
+   "corpus_rank": 867,
+   "per_million": 107.25
+  },
+  "同事": {
+   "corpus_rank": 1875,
+   "per_million": 41.49
+  },
+  "舒服": {
+   "corpus_rank": 1130,
+   "per_million": 77.21
+  },
+  "体育": {
+   "corpus_rank": 3431,
+   "per_million": 18.57
+  },
+  "角": {
+   "corpus_rank": 1916,
+   "per_million": 40.39
+  },
+  "胖": {
+   "corpus_rank": 2079,
+   "per_million": 36.04
+  },
+  "干净": {
+   "corpus_rank": 1309,
+   "per_million": 65.25
+  },
+  "放心": {
+   "corpus_rank": 2180,
+   "per_million": 34.1
+  },
+  "草": {
+   "corpus_rank": 3001,
+   "per_million": 22.15
+  },
+  "甜": {
+   "corpus_rank": 719,
+   "per_million": 131.16
+  },
+  "安静": {
+   "corpus_rank": 1016,
+   "per_million": 87.97
+  },
+  "作业": {
+   "corpus_rank": 2573,
+   "per_million": 27.13
+  },
+  "瘦": {
+   "corpus_rank": 3194,
+   "per_million": 20.33
+  },
+  "绿": {
+   "corpus_rank": 2978,
+   "per_million": 22.33
+  },
+  "啤酒": {
+   "corpus_rank": 1251,
+   "per_million": 68.86
+  },
+  "蛋糕": {
+   "corpus_rank": 1409,
+   "per_million": 59.23
+  },
+  "新鲜": {
+   "corpus_rank": 2178,
+   "per_million": 34.13
+  },
+  "难过": {
+   "corpus_rank": 1677,
+   "per_million": 47.84
+  },
+  "客人": {
+   "corpus_rank": 1438,
+   "per_million": 57.8
+  },
+  "奶奶": {
+   "corpus_rank": 1459,
+   "per_million": 56.94
+  },
+  "碗": {
+   "corpus_rank": 2815,
+   "per_million": 24.29
+  },
+  "数学": {
+   "corpus_rank": 3030,
+   "per_million": 21.91
+  },
+  "地铁": {
+   "corpus_rank": 3421,
+   "per_million": 18.63
+  },
+  "刷": {
+   "corpus_rank": 3768,
+   "per_million": 16.4
+  },
+  "厨房": {
+   "corpus_rank": 1665,
+   "per_million": 48.38
+  },
+  "练习": {
+   "corpus_rank": 1654,
+   "per_million": 48.8
+  },
+  "爷爷": {
+   "corpus_rank": 1662,
+   "per_million": 48.44
+  },
+  "云": {
+   "corpus_rank": 5043,
+   "per_million": 10.82
+  },
+  "邻居": {
+   "corpus_rank": 1521,
+   "per_million": 53.75
+  },
+  "校长": {
+   "corpus_rank": 2535,
+   "per_million": 27.78
+  },
+  "花园": {
+   "corpus_rank": 2994,
+   "per_million": 22.18
+  },
+  "耳朵": {
+   "corpus_rank": 2139,
+   "per_million": 34.91
+  },
+  "节日": {
+   "corpus_rank": 3670,
+   "per_million": 16.99
+  },
+  "鼻子": {
+   "corpus_rank": 1891,
+   "per_million": 40.96
+  },
+  "叔叔": {
+   "corpus_rank": 1175,
+   "per_million": 74.08
+  },
+  "洗澡": {
+   "corpus_rank": 2512,
+   "per_million": 28.26
+  },
+  "地图": {
+   "corpus_rank": 2083,
+   "per_million": 35.95
+  },
+  "帽子": {
+   "corpus_rank": 1719,
+   "per_million": 46.29
+  },
+  "街道": {
+   "corpus_rank": 4093,
+   "per_million": 14.67
+  },
+  "感冒": {
+   "corpus_rank": 4304,
+   "per_million": 13.62
+  },
+  "迟到": {
+   "corpus_rank": 1206,
+   "per_million": 71.93
+  },
+  "刻": {
+   "corpus_rank": 3513,
+   "per_million": 17.89
+  },
+  "锻炼": {
+   "corpus_rank": 4303,
+   "per_million": 13.62
+  },
+  "裤子": {
+   "corpus_rank": 1484,
+   "per_million": 55.77
+  },
+  "夏": {
+   "corpus_rank": 5082,
+   "per_million": 10.7
+  },
+  "图书馆": {
+   "corpus_rank": 2931,
+   "per_million": 22.89
+  },
+  "电梯": {
+   "corpus_rank": 2370,
+   "per_million": 30.55
+  },
+  "刮": {
+   "corpus_rank": 2977,
+   "per_million": 22.36
+  },
+  "矮": {
+   "corpus_rank": 3407,
+   "per_million": 18.75
+  },
+  "眼镜": {
+   "corpus_rank": 2857,
+   "per_million": 23.82
+  },
+  "上网": {
+   "corpus_rank": 5467,
+   "per_million": 9.66
+  },
+  "春": {
+   "corpus_rank": 6682,
+   "per_million": 7.18
+  },
+  "面包": {
+   "corpus_rank": 2094,
+   "per_million": 35.8
+  },
+  "冰箱": {
+   "corpus_rank": 3013,
+   "per_million": 22.03
+  },
+  "阿姨": {
+   "corpus_rank": 2877,
+   "per_million": 23.61
+  },
+  "超市": {
+   "corpus_rank": 4430,
+   "per_million": 13.12
+  },
+  "着急": {
+   "corpus_rank": 3134,
+   "per_million": 20.87
+  },
+  "季节": {
+   "corpus_rank": 5659,
+   "per_million": 9.18
+  },
+  "饱": {
+   "corpus_rank": 4543,
+   "per_million": 12.67
+  },
+  "空调": {
+   "corpus_rank": 6489,
+   "per_million": 7.48
+  },
+  "一共": {
+   "corpus_rank": 4026,
+   "per_million": 15.11
+  },
+  "月亮": {
+   "corpus_rank": 4508,
+   "per_million": 12.79
+  },
+  "北方": {
+   "corpus_rank": 5468,
+   "per_million": 9.66
+  },
+  "爱好": {
+   "corpus_rank": 4340,
+   "per_million": 13.47
+  },
+  "衬衫": {
+   "corpus_rank": 2737,
+   "per_million": 25.28
+  },
+  "宾馆": {
+   "corpus_rank": 4894,
+   "per_million": 11.36
+  },
+  "冬": {
+   "corpus_rank": 8578,
+   "per_million": 4.8
+  },
+  "裙子": {
+   "corpus_rank": 2152,
+   "per_million": 34.67
+  },
+  "香蕉": {
+   "corpus_rank": 4771,
+   "per_million": 11.77
+  },
+  "秋": {
+   "corpus_rank": 9644,
+   "per_million": 3.99
+  },
+  "发烧": {
+   "corpus_rank": 5839,
+   "per_million": 8.7
+  },
+  "伞": {
+   "corpus_rank": 6944,
+   "per_million": 6.77
+  },
+  "有名": {
+   "corpus_rank": 4705,
+   "per_million": 12.04
+  },
+  "打扫": {
+   "corpus_rank": 2991,
+   "per_million": 22.18
+  },
+  "葡萄": {
+   "corpus_rank": 6733,
+   "per_million": 7.09
+  },
+  "复习": {
+   "corpus_rank": 8420,
+   "per_million": 4.95
+  },
+  "熊猫": {
+   "corpus_rank": 7456,
+   "per_million": 6.05
+  },
+  "护照": {
+   "corpus_rank": 3653,
+   "per_million": 17.11
+  },
+  "菜单": {
+   "corpus_rank": 5451,
+   "per_million": 9.69
+  },
+  "年级": {
+   "corpus_rank": 1957,
+   "per_million": 39.26
+  },
+  "果汁": {
+   "corpus_rank": 4266,
+   "per_million": 13.8
+  },
+  "面条": {
+   "corpus_rank": 5811,
+   "per_million": 8.79
+  },
+  "盘子": {
+   "corpus_rank": 3856,
+   "per_million": 15.95
+  },
+  "铅笔": {
+   "corpus_rank": 6625,
+   "per_million": 7.27
+  },
+  "渴": {
+   "corpus_rank": 5843,
+   "per_million": 8.7
+  },
+  "洗手间": {
+   "corpus_rank": 2497,
+   "per_million": 28.47
+  },
+  "词语": {
+   "corpus_rank": 9648,
+   "per_million": 3.99
+  },
+  "句子": {
+   "corpus_rank": 10346,
+   "per_million": 3.55
+  },
+  "照相机": {
+   "corpus_rank": 6522,
+   "per_million": 7.45
+  },
+  "筷子": {
+   "corpus_rank": 12226,
+   "per_million": 2.68
+  },
+  "字典": {
+   "corpus_rank": 9272,
+   "per_million": 4.23
+  },
+  "普通话": {
+   "corpus_rank": 21308,
+   "per_million": 0.95
+  },
+  "爬山": {
+   "corpus_rank": 13309,
+   "per_million": 2.3
+  },
+  "黑板": {
+   "corpus_rank": 13744,
+   "per_million": 2.18
+  },
+  "行李箱": {
+   "corpus_rank": 10721,
+   "per_million": 3.34
+  },
+  "对": {
+   "corpus_rank": 36,
+   "per_million": 3958.83
+  },
+  "过": {
+   "corpus_rank": 47,
+   "per_million": 3350.21
+  },
+  "而": {
+   "corpus_rank": 112,
+   "per_million": 1173.92
+  },
+  "等": {
+   "corpus_rank": 130,
+   "per_million": 1014
+  },
+  "与": {
+   "corpus_rank": 267,
+   "per_million": 408.39
+  },
+  "当": {
+   "corpus_rank": 146,
+   "per_million": 882.92
+  },
+  "之": {
+   "corpus_rank": 245,
+   "per_million": 471.11
+  },
+  "以": {
+   "corpus_rank": 281,
+   "per_million": 390
+  },
+  "起来": {
+   "corpus_rank": 117,
+   "per_million": 1109.06
+  },
+  "死": {
+   "corpus_rank": 103,
+   "per_million": 1313.28
+  },
+  "却": {
+   "corpus_rank": 275,
+   "per_million": 397.84
+  },
+  "生活": {
+   "corpus_rank": 244,
+   "per_million": 474.51
+  },
+  "发生": {
+   "corpus_rank": 184,
+   "per_million": 673.75
+  },
+  "不过": {
+   "corpus_rank": 182,
+   "per_million": 695.54
+  },
+  "所有": {
+   "corpus_rank": 154,
+   "per_million": 827.18
+  },
+  "情况": {
+   "corpus_rank": 333,
+   "per_million": 318.16
+  },
+  "最后": {
+   "corpus_rank": 249,
+   "per_million": 453.1
+  },
+  "成为": {
+   "corpus_rank": 356,
+   "per_million": 299.23
+  },
+  "行": {
+   "corpus_rank": 165,
+   "per_million": 776
+  },
+  "感觉": {
+   "corpus_rank": 194,
+   "per_million": 635.39
+  },
+  "继续": {
+   "corpus_rank": 278,
+   "per_million": 394.11
+  },
+  "场": {
+   "corpus_rank": 326,
+   "per_million": 326.8
+  },
+  "进行": {
+   "corpus_rank": 519,
+   "per_million": 193.31
+  },
+  "内": {
+   "corpus_rank": 520,
+   "per_million": 191.85
+  },
+  "通过": {
+   "corpus_rank": 541,
+   "per_million": 185.29
+  },
+  "无": {
+   "corpus_rank": 502,
+   "per_million": 198.17
+  },
+  "一切": {
+   "corpus_rank": 191,
+   "per_million": 647.13
+  },
+  "由": {
+   "corpus_rank": 573,
+   "per_million": 172.86
+  },
+  "任何": {
+   "corpus_rank": 253,
+   "per_million": 444.7
+  },
+  "安全": {
+   "corpus_rank": 369,
+   "per_million": 284.41
+  },
+  "结果": {
+   "corpus_rank": 473,
+   "per_million": 211.2
+  },
+  "完全": {
+   "corpus_rank": 295,
+   "per_million": 359.74
+  },
+  "发": {
+   "corpus_rank": 531,
+   "per_million": 188.48
+  },
+  "计划": {
+   "corpus_rank": 377,
+   "per_million": 273.32
+  },
+  "可是": {
+   "corpus_rank": 300,
+   "per_million": 349.93
+  },
+  "连": {
+   "corpus_rank": 437,
+   "per_million": 229.71
+  },
+  "呀": {
+   "corpus_rank": 332,
+   "per_million": 318.96
+  },
+  "原因": {
+   "corpus_rank": 434,
+   "per_million": 233.38
+  },
+  "消息": {
+   "corpus_rank": 411,
+   "per_million": 248.79
+  },
+  "只要": {
+   "corpus_rank": 346,
+   "per_million": 305.13
+  },
+  "干": {
+   "corpus_rank": 107,
+   "per_million": 1241.59
+  },
+  "接受": {
+   "corpus_rank": 450,
+   "per_million": 221.9
+  },
+  "其中": {
+   "corpus_rank": 692,
+   "per_million": 137.21
+  },
+  "成功": {
+   "corpus_rank": 535,
+   "per_million": 187.95
+  },
+  "甚至": {
+   "corpus_rank": 470,
+   "per_million": 211.65
+  },
+  "拉": {
+   "corpus_rank": 419,
+   "per_million": 245
+  },
+  "肯定": {
+   "corpus_rank": 218,
+   "per_million": 552.4
+  },
+  "当时": {
+   "corpus_rank": 483,
+   "per_million": 206.73
+  },
+  "调查": {
+   "corpus_rank": 532,
+   "per_million": 188.37
+  },
+  "部分": {
+   "corpus_rank": 623,
+   "per_million": 155.96
+  },
+  "能力": {
+   "corpus_rank": 755,
+   "per_million": 123.29
+  },
+  "保护": {
+   "corpus_rank": 471,
+   "per_million": 211.47
+  },
+  "真正": {
+   "corpus_rank": 472,
+   "per_million": 211.35
+  },
+  "支持": {
+   "corpus_rank": 811,
+   "per_million": 114.5
+  },
+  "掉": {
+   "corpus_rank": 241,
+   "per_million": 481.15
+  },
+  "改变": {
+   "corpus_rank": 451,
+   "per_million": 221.6
+  },
+  "方法": {
+   "corpus_rank": 751,
+   "per_million": 124.42
+  },
+  "保证": {
+   "corpus_rank": 446,
+   "per_million": 224.02
+  },
+  "直接": {
+   "corpus_rank": 723,
+   "per_million": 130.65
+  },
+  "组织": {
+   "corpus_rank": 919,
+   "per_million": 100.55
+  },
+  "永远": {
+   "corpus_rank": 357,
+   "per_million": 299.17
+  },
+  "方面": {
+   "corpus_rank": 1002,
+   "per_million": 89.88
+  },
+  "也许": {
+   "corpus_rank": 164,
+   "per_million": 777.52
+  },
+  "活动": {
+   "corpus_rank": 1071,
+   "per_million": 83.26
+  },
+  "考虑": {
+   "corpus_rank": 537,
+   "per_million": 187.65
+  },
+  "份": {
+   "corpus_rank": 349,
+   "per_million": 302.68
+  },
+  "提供": {
+   "corpus_rank": 967,
+   "per_million": 93.69
+  },
+  "指": {
+   "corpus_rank": 580,
+   "per_million": 170.48
+  },
+  "精神": {
+   "corpus_rank": 763,
+   "per_million": 122.19
+  },
+  "使用": {
+   "corpus_rank": 1000,
+   "per_million": 89.93
+  },
+  "代表": {
+   "corpus_rank": 869,
+   "per_million": 106.9
+  },
+  "任务": {
+   "corpus_rank": 657,
+   "per_million": 146.93
+  },
+  "联系": {
+   "corpus_rank": 558,
+   "per_million": 179.48
+  },
+  "因此": {
+   "corpus_rank": 1056,
+   "per_million": 84.84
+  },
+  "台": {
+   "corpus_rank": 866,
+   "per_million": 107.43
+  },
+  "算": {
+   "corpus_rank": 276,
+   "per_million": 397.57
+  },
+  "获得": {
+   "corpus_rank": 1098,
+   "per_million": 81.14
+  },
+  "留": {
+   "corpus_rank": 374,
+   "per_million": 276.39
+  },
+  "生命": {
+   "corpus_rank": 564,
+   "per_million": 175.82
+  },
+  "交": {
+   "corpus_rank": 863,
+   "per_million": 107.73
+  },
+  "全部": {
+   "corpus_rank": 856,
+   "per_million": 108.36
+  },
+  "刚刚": {
+   "corpus_rank": 524,
+   "per_million": 191.44
+  },
+  "正常": {
+   "corpus_rank": 734,
+   "per_million": 127.61
+  },
+  "另外": {
+   "corpus_rank": 764,
+   "per_million": 122.16
+  },
+  "血": {
+   "corpus_rank": 679,
+   "per_million": 141.56
+  },
+  "挺": {
+   "corpus_rank": 441,
+   "per_million": 226.64
+  },
+  "好像": {
+   "corpus_rank": 316,
+   "per_million": 334.28
+  },
+  "到底": {
+   "corpus_rank": 350,
+   "per_million": 302.06
+  },
+  "感谢": {
+   "corpus_rank": 390,
+   "per_million": 264.11
+  },
+  "坚持": {
+   "corpus_rank": 870,
+   "per_million": 106.84
+  },
+  "座": {
+   "corpus_rank": 972,
+   "per_million": 93.36
+  },
+  "技术": {
+   "corpus_rank": 1335,
+   "per_million": 63.67
+  },
+  "往": {
+   "corpus_rank": 556,
+   "per_million": 181.33
+  },
+  "严重": {
+   "corpus_rank": 976,
+   "per_million": 92.71
+  },
+  "包括": {
+   "corpus_rank": 1221,
+   "per_million": 70.83
+  },
+  "原来": {
+   "corpus_rank": 1006,
+   "per_million": 88.83
+  },
+  "光": {
+   "corpus_rank": 828,
+   "per_million": 112.65
+  },
+  "法律": {
+   "corpus_rank": 992,
+   "per_million": 90.74
+  },
+  "父亲": {
+   "corpus_rank": 288,
+   "per_million": 369.61
+  },
+  "并且": {
+   "corpus_rank": 722,
+   "per_million": 130.83
+  },
+  "收": {
+   "corpus_rank": 954,
+   "per_million": 96.49
+  },
+  "社会": {
+   "corpus_rank": 1518,
+   "per_million": 53.81
+  },
+  "证明": {
+   "corpus_rank": 561,
+   "per_million": 178.47
+  },
+  "记者": {
+   "corpus_rank": 1607,
+   "per_million": 50.65
+  },
+  "底": {
+   "corpus_rank": 793,
+   "per_million": 117
+  },
+  "确实": {
+   "corpus_rank": 440,
+   "per_million": 227.45
+  },
+  "不管": {
+   "corpus_rank": 463,
+   "per_million": 214.18
+  },
+  "受到": {
+   "corpus_rank": 1033,
+   "per_million": 86.66
+  },
+  "发展": {
+   "corpus_rank": 1646,
+   "per_million": 49.19
+  },
+  "谈": {
+   "corpus_rank": 304,
+   "per_million": 347.37
+  },
+  "至少": {
+   "corpus_rank": 495,
+   "per_million": 201.21
+  },
+  "解释": {
+   "corpus_rank": 555,
+   "per_million": 181.48
+  },
+  "负责": {
+   "corpus_rank": 771,
+   "per_million": 121.03
+  },
+  "首先": {
+   "corpus_rank": 860,
+   "per_million": 108.03
+  },
+  "理解": {
+   "corpus_rank": 633,
+   "per_million": 152.77
+  },
+  "报道": {
+   "corpus_rank": 1443,
+   "per_million": 57.56
+  },
+  "安排": {
+   "corpus_rank": 829,
+   "per_million": 112.56
+  },
+  "梦": {
+   "corpus_rank": 776,
+   "per_million": 120.82
+  },
+  "重新": {
+   "corpus_rank": 688,
+   "per_million": 138.23
+  },
+  "幸福": {
+   "corpus_rank": 1327,
+   "per_million": 64.12
+  },
+  "自然": {
+   "corpus_rank": 1241,
+   "per_million": 69.4
+  },
+  "责任": {
+   "corpus_rank": 1140,
+   "per_million": 76.58
+  },
+  "试": {
+   "corpus_rank": 459,
+   "per_million": 215.55
+  },
+  "弄": {
+   "corpus_rank": 271,
+   "per_million": 404.63
+  },
+  "赢": {
+   "corpus_rank": 410,
+   "per_million": 249.3
+  },
+  "满": {
+   "corpus_rank": 938,
+   "per_million": 98.7
+  },
+  "说明": {
+   "corpus_rank": 1014,
+   "per_million": 88.03
+  },
+  "许多": {
+   "corpus_rank": 1399,
+   "per_million": 60.04
+  },
+  "压力": {
+   "corpus_rank": 1152,
+   "per_million": 75.75
+  },
+  "由于": {
+   "corpus_rank": 1769,
+   "per_million": 44.83
+  },
+  "母亲": {
+   "corpus_rank": 546,
+   "per_million": 184.67
+  },
+  "放弃": {
+   "corpus_rank": 666,
+   "per_million": 143.77
+  },
+  "意见": {
+   "corpus_rank": 1097,
+   "per_million": 81.26
+  },
+  "过程": {
+   "corpus_rank": 1630,
+   "per_million": 49.87
+  },
+  "即使": {
+   "corpus_rank": 885,
+   "per_million": 104.81
+  },
+  "尽管": {
+   "corpus_rank": 1111,
+   "per_million": 79.2
+  },
+  "深": {
+   "corpus_rank": 1244,
+   "per_million": 69.28
+  },
+  "各": {
+   "corpus_rank": 1878,
+   "per_million": 41.46
+  },
+  "仍然": {
+   "corpus_rank": 1027,
+   "per_million": 87.1
+  },
+  "值得": {
+   "corpus_rank": 995,
+   "per_million": 90.41
+  },
+  "经历": {
+   "corpus_rank": 801,
+   "per_million": 116.29
+  },
+  "讨论": {
+   "corpus_rank": 1011,
+   "per_million": 88.41
+  },
+  "超过": {
+   "corpus_rank": 1471,
+   "per_million": 56.37
+  },
+  "假": {
+   "corpus_rank": 939,
+   "per_million": 98.67
+  },
+  "后来": {
+   "corpus_rank": 1092,
+   "per_million": 81.68
+  },
+  "嘴": {
+   "corpus_rank": 403,
+   "per_million": 253.77
+  },
+  "地址": {
+   "corpus_rank": 1423,
+   "per_million": 58.4
+  },
+  "无论": {
+   "corpus_rank": 1089,
+   "per_million": 82.09
+  },
+  "紧张": {
+   "corpus_rank": 663,
+   "per_million": 144.72
+  },
+  "省": {
+   "corpus_rank": 1859,
+   "per_million": 41.76
+  },
+  "十分": {
+   "corpus_rank": 1466,
+   "per_million": 56.64
+  },
+  "陪": {
+   "corpus_rank": 988,
+   "per_million": 91.19
+  },
+  "挂": {
+   "corpus_rank": 896,
+   "per_million": 103.23
+  },
+  "本来": {
+   "corpus_rank": 716,
+   "per_million": 131.61
+  },
+  "条件": {
+   "corpus_rank": 1702,
+   "per_million": 46.98
+  },
+  "广告": {
+   "corpus_rank": 1226,
+   "per_million": 70.26
+  },
+  "警察": {
+   "corpus_rank": 318,
+   "per_million": 333.15
+  },
+  "关键": {
+   "corpus_rank": 1274,
+   "per_million": 67.01
+  },
+  "样子": {
+   "corpus_rank": 615,
+   "per_million": 159.09
+  },
+  "困难": {
+   "corpus_rank": 1338,
+   "per_million": 63.55
+  },
+  "专业": {
+   "corpus_rank": 1668,
+   "per_million": 48.14
+  },
+  "难道": {
+   "corpus_rank": 569,
+   "per_million": 175.13
+  },
+  "规定": {
+   "corpus_rank": 1966,
+   "per_million": 39.14
+  },
+  "于是": {
+   "corpus_rank": 1428,
+   "per_million": 58.13
+  },
+  "正确": {
+   "corpus_rank": 951,
+   "per_million": 97.15
+  },
+  "爱情": {
+   "corpus_rank": 1464,
+   "per_million": 56.82
+  },
+  "群": {
+   "corpus_rank": 1034,
+   "per_million": 86.54
+  },
+  "够": {
+   "corpus_rank": 287,
+   "per_million": 369.76
+  },
+  "火": {
+   "corpus_rank": 882,
+   "per_million": 105.41
+  },
+  "方向": {
+   "corpus_rank": 1325,
+   "per_million": 64.27
+  },
+  "市场": {
+   "corpus_rank": 2276,
+   "per_million": 32.13
+  },
+  "教育": {
+   "corpus_rank": 2136,
+   "per_million": 34.94
+  },
+  "取": {
+   "corpus_rank": 1245,
+   "per_million": 69.22
+  },
+  "危险": {
+   "corpus_rank": 581,
+   "per_million": 170.24
+  },
+  "管理": {
+   "corpus_rank": 2263,
+   "per_million": 32.34
+  },
+  "乱": {
+   "corpus_rank": 928,
+   "per_million": 99.32
+  },
+  "适合": {
+   "corpus_rank": 1094,
+   "per_million": 81.56
+  },
+  "正式": {
+   "corpus_rank": 1664,
+   "per_million": 48.38
+  },
+  "引起": {
+   "corpus_rank": 1645,
+   "per_million": 49.25
+  },
+  "从来": {
+   "corpus_rank": 401,
+   "per_million": 255.79
+  },
+  "抱": {
+   "corpus_rank": 1281,
+   "per_million": 66.74
+  },
+  "律师": {
+   "corpus_rank": 496,
+   "per_million": 201.12
+  },
+  "内容": {
+   "corpus_rank": 1942,
+   "per_million": 39.71
+  },
+  "通知": {
+   "corpus_rank": 1087,
+   "per_million": 82.15
+  },
+  "感情": {
+   "corpus_rank": 1188,
+   "per_million": 72.91
+  },
+  "观众": {
+   "corpus_rank": 1168,
+   "per_million": 74.61
+  },
+  "目的": {
+   "corpus_rank": 1500,
+   "per_million": 54.7
+  },
+  "国际": {
+   "corpus_rank": 2308,
+   "per_million": 31.51
+  },
+  "美丽": {
+   "corpus_rank": 1151,
+   "per_million": 75.83
+  },
+  "经验": {
+   "corpus_rank": 1793,
+   "per_million": 43.61
+  },
+  "破": {
+   "corpus_rank": 1052,
+   "per_million": 85.22
+  },
+  "推": {
+   "corpus_rank": 1272,
+   "per_million": 67.04
+  },
+  "刀": {
+   "corpus_rank": 1091,
+   "per_million": 81.71
+  },
+  "科学": {
+   "corpus_rank": 1862,
+   "per_million": 41.7
+  },
+  "心情": {
+   "corpus_rank": 1676,
+   "per_million": 47.84
+  },
+  "标准": {
+   "corpus_rank": 2239,
+   "per_million": 32.76
+  },
+  "职业": {
+   "corpus_rank": 1420,
+   "per_million": 58.58
+  },
+  "精彩": {
+   "corpus_rank": 1186,
+   "per_million": 73.12
+  },
+  "范围": {
+   "corpus_rank": 1836,
+   "per_million": 42.42
+  },
+  "速度": {
+   "corpus_rank": 1824,
+   "per_million": 42.72
+  },
+  "实在": {
+   "corpus_rank": 904,
+   "per_million": 102.13
+  },
+  "效果": {
+   "corpus_rank": 1974,
+   "per_million": 38.72
+  },
+  "遍": {
+   "corpus_rank": 742,
+   "per_million": 125.74
+  },
+  "经济": {
+   "corpus_rank": 2625,
+   "per_million": 26.56
+  },
+  "按照": {
+   "corpus_rank": 2084,
+   "per_million": 35.95
+  },
+  "反对": {
+   "corpus_rank": 1181,
+   "per_million": 73.57
+  },
+  "竟然": {
+   "corpus_rank": 1549,
+   "per_million": 52.67
+  },
+  "重点": {
+   "corpus_rank": 2129,
+   "per_million": 35.12
+  },
+  "倍": {
+   "corpus_rank": 1789,
+   "per_million": 43.76
+  },
+  "醒": {
+   "corpus_rank": 604,
+   "per_million": 162.67
+  },
+  "讨厌": {
+   "corpus_rank": 582,
+   "per_million": 169.65
+  },
+  "输": {
+   "corpus_rank": 969,
+   "per_million": 93.54
+  },
+  "咱们": {
+   "corpus_rank": 515,
+   "per_million": 194.33
+  },
+  "否则": {
+   "corpus_rank": 824,
+   "per_million": 113.16
+  },
+  "免费": {
+   "corpus_rank": 1594,
+   "per_million": 51.06
+  },
+  "动作": {
+   "corpus_rank": 1030,
+   "per_million": 86.92
+  },
+  "俩": {
+   "corpus_rank": 379,
+   "per_million": 269.39
+  },
+  "增加": {
+   "corpus_rank": 2525,
+   "per_million": 27.96
+  },
+  "著名": {
+   "corpus_rank": 1578,
+   "per_million": 51.54
+  },
+  "拒绝": {
+   "corpus_rank": 1045,
+   "per_million": 85.85
+  },
+  "帅": {
+   "corpus_rank": 1261,
+   "per_million": 67.61
+  },
+  "不仅": {
+   "corpus_rank": 2296,
+   "per_million": 31.75
+  },
+  "顺利": {
+   "corpus_rank": 1411,
+   "per_million": 59.17
+  },
+  "艺术": {
+   "corpus_rank": 1821,
+   "per_million": 42.81
+  },
+  "麻烦": {
+   "corpus_rank": 455,
+   "per_million": 219.87
+  },
+  "申请": {
+   "corpus_rank": 1632,
+   "per_million": 49.72
+  },
+  "演出": {
+   "corpus_rank": 1191,
+   "per_million": 72.65
+  },
+  "猪": {
+   "corpus_rank": 1403,
+   "per_million": 59.95
+  },
+  "竞争": {
+   "corpus_rank": 2354,
+   "per_million": 30.82
+  },
+  "估计": {
+   "corpus_rank": 1557,
+   "per_million": 52.11
+  },
+  "失败": {
+   "corpus_rank": 1131,
+   "per_million": 77.21
+  },
+  "世纪": {
+   "corpus_rank": 2099,
+   "per_million": 35.74
+  },
+  "制造": {
+   "corpus_rank": 1682,
+   "per_million": 47.75
+  },
+  "不得不": {
+   "corpus_rank": 1088,
+   "per_million": 82.15
+  },
+  "当地": {
+   "corpus_rank": 2364,
+   "per_million": 30.7
+  },
+  "大概": {
+   "corpus_rank": 671,
+   "per_million": 143.2
+  },
+  "允许": {
+   "corpus_rank": 1095,
+   "per_million": 81.5
+  },
+  "教授": {
+   "corpus_rank": 1468,
+   "per_million": 56.58
+  },
+  "顿": {
+   "corpus_rank": 1219,
+   "per_million": 71.01
+  },
+  "吸引": {
+   "corpus_rank": 1671,
+   "per_million": 48.02
+  },
+  "共同": {
+   "corpus_rank": 2510,
+   "per_million": 28.29
+  },
+  "杂志": {
+   "corpus_rank": 1214,
+   "per_million": 71.39
+  },
+  "既然": {
+   "corpus_rank": 1077,
+   "per_million": 82.96
+  },
+  "停止": {
+   "corpus_rank": 1053,
+   "per_million": 85.14
+  },
+  "提醒": {
+   "corpus_rank": 1349,
+   "per_million": 62.99
+  },
+  "演员": {
+   "corpus_rank": 1048,
+   "per_million": 85.58
+  },
+  "态度": {
+   "corpus_rank": 2018,
+   "per_million": 37.44
+  },
+  "周围": {
+   "corpus_rank": 1442,
+   "per_million": 57.59
+  },
+  "丢": {
+   "corpus_rank": 766,
+   "per_million": 121.86
+  },
+  "复杂": {
+   "corpus_rank": 1517,
+   "per_million": 54.01
+  },
+  "表达": {
+   "corpus_rank": 1922,
+   "per_million": 40.21
+  },
+  "数字": {
+   "corpus_rank": 1832,
+   "per_million": 42.48
+  },
+  "邀请": {
+   "corpus_rank": 1110,
+   "per_million": 79.32
+  },
+  "交通": {
+   "corpus_rank": 2490,
+   "per_million": 28.59
+  },
+  "优秀": {
+   "corpus_rank": 1846,
+   "per_million": 42.12
+  },
+  "亮": {
+   "corpus_rank": 2148,
+   "per_million": 34.73
+  },
+  "篇": {
+   "corpus_rank": 1995,
+   "per_million": 38.07
+  },
+  "儿童": {
+   "corpus_rank": 1983,
+   "per_million": 38.33
+  },
+  "最好": {
+   "corpus_rank": 2588,
+   "per_million": 26.98
+  },
+  "味道": {
+   "corpus_rank": 1153,
+   "per_million": 75.54
+  },
+  "断": {
+   "corpus_rank": 1277,
+   "per_million": 66.95
+  },
+  "千万": {
+   "corpus_rank": 1709,
+   "per_million": 46.74
+  },
+  "出发": {
+   "corpus_rank": 1165,
+   "per_million": 74.79
+  },
+  "距离": {
+   "corpus_rank": 1881,
+   "per_million": 41.35
+  },
+  "轻松": {
+   "corpus_rank": 1561,
+   "per_million": 51.99
+  },
+  "墙": {
+   "corpus_rank": 1620,
+   "per_million": 50.29
+  },
+  "毕业": {
+   "corpus_rank": 1653,
+   "per_million": 48.83
+  },
+  "怀疑": {
+   "corpus_rank": 1041,
+   "per_million": 86.09
+  },
+  "修": {
+   "corpus_rank": 1496,
+   "per_million": 54.91
+  },
+  "价格": {
+   "corpus_rank": 3354,
+   "per_million": 19.05
+  },
+  "戴": {
+   "corpus_rank": 785,
+   "per_million": 118.85
+  },
+  "究竟": {
+   "corpus_rank": 1282,
+   "per_million": 66.71
+  },
+  "轻": {
+   "corpus_rank": 2037,
+   "per_million": 36.84
+  },
+  "然而": {
+   "corpus_rank": 2563,
+   "per_million": 27.22
+  },
+  "交流": {
+   "corpus_rank": 2458,
+   "per_million": 29.21
+  },
+  "兴奋": {
+   "corpus_rank": 1167,
+   "per_million": 74.64
+  },
+  "困": {
+   "corpus_rank": 1765,
+   "per_million": 44.89
+  },
+  "符合": {
+   "corpus_rank": 2482,
+   "per_million": 28.86
+  },
+  "躺": {
+   "corpus_rank": 1295,
+   "per_million": 66.18
+  },
+  "答案": {
+   "corpus_rank": 1068,
+   "per_million": 83.5
+  },
+  "皮肤": {
+   "corpus_rank": 2168,
+   "per_million": 34.37
+  },
+  "浪费": {
+   "corpus_rank": 1113,
+   "per_million": 78.82
+  },
+  "厉害": {
+   "corpus_rank": 1156,
+   "per_million": 75.48
+  },
+  "尊重": {
+   "corpus_rank": 1467,
+   "per_million": 56.64
+  },
+  "激动": {
+   "corpus_rank": 1357,
+   "per_million": 62.48
+  },
+  "骗": {
+   "corpus_rank": 905,
+   "per_million": 101.92
+  },
+  "可怜": {
+   "corpus_rank": 903,
+   "per_million": 102.19
+  },
+  "语言": {
+   "corpus_rank": 2238,
+   "per_million": 32.76
+  },
+  "擦": {
+   "corpus_rank": 1790,
+   "per_million": 43.67
+  },
+  "香": {
+   "corpus_rank": 2455,
+   "per_million": 29.24
+  },
+  "成熟": {
+   "corpus_rank": 2311,
+   "per_million": 31.45
+  },
+  "无聊": {
+   "corpus_rank": 1498,
+   "per_million": 54.82
+  },
+  "文章": {
+   "corpus_rank": 2222,
+   "per_million": 33.09
+  },
+  "信任": {
+   "corpus_rank": 899,
+   "per_million": 102.57
+  },
+  "网站": {
+   "corpus_rank": 2803,
+   "per_million": 24.53
+  },
+  "地球": {
+   "corpus_rank": 1254,
+   "per_million": 68.35
+  },
+  "实际": {
+   "corpus_rank": 3240,
+   "per_million": 19.97
+  },
+  "年龄": {
+   "corpus_rank": 2479,
+   "per_million": 28.94
+  },
+  "差不多": {
+   "corpus_rank": 932,
+   "per_million": 99.15
+  },
+  "可惜": {
+   "corpus_rank": 1854,
+   "per_million": 41.94
+  },
+  "阳光": {
+   "corpus_rank": 2198,
+   "per_million": 33.57
+  },
+  "回忆": {
+   "corpus_rank": 2105,
+   "per_million": 35.62
+  },
+  "空气": {
+   "corpus_rank": 1903,
+   "per_million": 40.69
+  },
+  "材料": {
+   "corpus_rank": 3042,
+   "per_million": 21.82
+  },
+  "熟悉": {
+   "corpus_rank": 2056,
+   "per_million": 36.4
+  },
+  "随便": {
+   "corpus_rank": 789,
+   "per_million": 118.37
+  },
+  "撞": {
+   "corpus_rank": 959,
+   "per_million": 94.97
+  },
+  "互相": {
+   "corpus_rank": 1616,
+   "per_million": 50.32
+  },
+  "合适": {
+   "corpus_rank": 1217,
+   "per_million": 71.1
+  },
+  "失望": {
+   "corpus_rank": 1096,
+   "per_million": 81.5
+  },
+  "印象": {
+   "corpus_rank": 1554,
+   "per_million": 52.4
+  },
+  "号码": {
+   "corpus_rank": 970,
+   "per_million": 93.48
+  },
+  "出生": {
+   "corpus_rank": 1555,
+   "per_million": 52.26
+  },
+  "桥": {
+   "corpus_rank": 2283,
+   "per_million": 32.02
+  },
+  "基础": {
+   "corpus_rank": 3813,
+   "per_million": 16.13
+  },
+  "适应": {
+   "corpus_rank": 2545,
+   "per_million": 27.6
+  },
+  "赚": {
+   "corpus_rank": 1425,
+   "per_million": 58.4
+  },
+  "猜": {
+   "corpus_rank": 514,
+   "per_million": 194.39
+  },
+  "到处": {
+   "corpus_rank": 887,
+   "per_million": 104.66
+  },
+  "食品": {
+   "corpus_rank": 3202,
+   "per_million": 20.27
+  },
+  "大约": {
+   "corpus_rank": 1923,
+   "per_million": 40.18
+  },
+  "提前": {
+   "corpus_rank": 2682,
+   "per_million": 25.99
+  },
+  "暂时": {
+   "corpus_rank": 1843,
+   "per_million": 42.27
+  },
+  "积极": {
+   "corpus_rank": 3842,
+   "per_million": 16.01
+  },
+  "高级": {
+   "corpus_rank": 2574,
+   "per_million": 27.13
+  },
+  "汤": {
+   "corpus_rank": 2406,
+   "per_million": 30.02
+  },
+  "响": {
+   "corpus_rank": 1855,
+   "per_million": 41.88
+  },
+  "收入": {
+   "corpus_rank": 3786,
+   "per_million": 16.31
+  },
+  "恐怕": {
+   "corpus_rank": 1287,
+   "per_million": 66.56
+  },
+  "仔细": {
+   "corpus_rank": 1611,
+   "per_million": 50.56
+  },
+  "严格": {
+   "corpus_rank": 3182,
+   "per_million": 20.45
+  },
+  "及时": {
+   "corpus_rank": 3427,
+   "per_million": 18.6
+  },
+  "知识": {
+   "corpus_rank": 3655,
+   "per_million": 17.08
+  },
+  "专门": {
+   "corpus_rank": 3024,
+   "per_million": 21.97
+  },
+  "工具": {
+   "corpus_rank": 2330,
+   "per_million": 31.15
+  },
+  "脱": {
+   "corpus_rank": 987,
+   "per_million": 91.28
+  },
+  "苦": {
+   "corpus_rank": 2947,
+   "per_million": 22.77
+  },
+  "租": {
+   "corpus_rank": 1987,
+   "per_million": 38.22
+  },
+  "尤其": {
+   "corpus_rank": 1791,
+   "per_million": 43.64
+  },
+  "页": {
+   "corpus_rank": 2217,
+   "per_million": 33.21
+  },
+  "扔": {
+   "corpus_rank": 753,
+   "per_million": 123.56
+  },
+  "信心": {
+   "corpus_rank": 2315,
+   "per_million": 31.39
+  },
+  "博士": {
+   "corpus_rank": 661,
+   "per_million": 145.5
+  },
+  "故意": {
+   "corpus_rank": 1520,
+   "per_million": 53.75
+  },
+  "看法": {
+   "corpus_rank": 1797,
+   "per_million": 43.55
+  },
+  "浪漫": {
+   "corpus_rank": 2006,
+   "per_million": 37.77
+  },
+  "减少": {
+   "corpus_rank": 4076,
+   "per_million": 14.76
+  },
+  "辛苦": {
+   "corpus_rank": 2564,
+   "per_million": 27.22
+  },
+  "剩": {
+   "corpus_rank": 1513,
+   "per_million": 54.22
+  },
+  "正好": {
+   "corpus_rank": 1346,
+   "per_million": 63.08
+  },
+  "主动": {
+   "corpus_rank": 3334,
+   "per_million": 19.23
+  },
+  "硬": {
+   "corpus_rank": 2237,
+   "per_million": 32.79
+  },
+  "限制": {
+   "corpus_rank": 3295,
+   "per_million": 19.55
+  },
+  "判断": {
+   "corpus_rank": 2717,
+   "per_million": 25.58
+  },
+  "现代": {
+   "corpus_rank": 4005,
+   "per_million": 15.2
+  },
+  "弹": {
+   "corpus_rank": 1388,
+   "per_million": 60.6
+  },
+  "有趣": {
+   "corpus_rank": 617,
+   "per_million": 157.87
+  },
+  "公里": {
+   "corpus_rank": 3790,
+   "per_million": 16.28
+  },
+  "工资": {
+   "corpus_rank": 3506,
+   "per_million": 17.92
+  },
+  "好处": {
+   "corpus_rank": 1543,
+   "per_million": 52.94
+  },
+  "伤心": {
+   "corpus_rank": 1596,
+   "per_million": 51
+  },
+  "区别": {
+   "corpus_rank": 2170,
+   "per_million": 34.34
+  },
+  "暗": {
+   "corpus_rank": 2652,
+   "per_million": 26.26
+  },
+  "将来": {
+   "corpus_rank": 2575,
+   "per_million": 27.1
+  },
+  "聊天": {
+   "corpus_rank": 2206,
+   "per_million": 33.45
+  },
+  "小说": {
+   "corpus_rank": 2478,
+   "per_million": 28.94
+  },
+  "鼓励": {
+   "corpus_rank": 3394,
+   "per_million": 18.81
+  },
+  "理想": {
+   "corpus_rank": 3498,
+   "per_million": 17.98
+  },
+  "后悔": {
+   "corpus_rank": 1909,
+   "per_million": 40.48
+  },
+  "举办": {
+   "corpus_rank": 3927,
+   "per_million": 15.53
+  },
+  "感动": {
+   "corpus_rank": 3629,
+   "per_million": 17.23
+  },
+  "顾客": {
+   "corpus_rank": 2447,
+   "per_million": 29.42
+  },
+  "组成": {
+   "corpus_rank": 4138,
+   "per_million": 14.43
+  },
+  "流行": {
+   "corpus_rank": 3041,
+   "per_million": 21.82
+  },
+  "整理": {
+   "corpus_rank": 2762,
+   "per_million": 24.95
+  },
+  "吵": {
+   "corpus_rank": 1355,
+   "per_million": 62.57
+  },
+  "丰富": {
+   "corpus_rank": 4186,
+   "per_million": 14.22
+  },
+  "原谅": {
+   "corpus_rank": 912,
+   "per_million": 101.32
+  },
+  "肚子": {
+   "corpus_rank": 2293,
+   "per_million": 31.84
+  },
+  "平时": {
+   "corpus_rank": 3335,
+   "per_million": 19.2
+  },
+  "辣": {
+   "corpus_rank": 1615,
+   "per_million": 50.35
+  },
+  "作者": {
+   "corpus_rank": 4291,
+   "per_million": 13.68
+  },
+  "质量": {
+   "corpus_rank": 5076,
+   "per_million": 10.73
+  },
+  "愉快": {
+   "corpus_rank": 1204,
+   "per_million": 72.02
+  },
+  "寄": {
+   "corpus_rank": 1475,
+   "per_million": 56.22
+  },
+  "准确": {
+   "corpus_rank": 3326,
+   "per_million": 19.29
+  },
+  "详细": {
+   "corpus_rank": 3087,
+   "per_million": 21.28
+  },
+  "禁止": {
+   "corpus_rank": 2613,
+   "per_million": 26.71
+  },
+  "圆": {
+   "corpus_rank": 3081,
+   "per_million": 21.34
+  },
+  "冷静": {
+   "corpus_rank": 750,
+   "per_million": 124.48
+  },
+  "购物": {
+   "corpus_rank": 2641,
+   "per_million": 26.32
+  },
+  "数量": {
+   "corpus_rank": 4550,
+   "per_million": 12.64
+  },
+  "勇敢": {
+   "corpus_rank": 1828,
+   "per_million": 42.63
+  },
+  "巧克力": {
+   "corpus_rank": 1612,
+   "per_million": 50.47
+  },
+  "富": {
+   "corpus_rank": 3872,
+   "per_million": 15.89
+  },
+  "骄傲": {
+   "corpus_rank": 1358,
+   "per_million": 62.42
+  },
+  "性格": {
+   "corpus_rank": 3374,
+   "per_million": 18.93
+  },
+  "降低": {
+   "corpus_rank": 5042,
+   "per_million": 10.82
+  },
+  "果然": {
+   "corpus_rank": 4317,
+   "per_million": 13.53
+  },
+  "随着": {
+   "corpus_rank": 3105,
+   "per_million": 21.13
+  },
+  "只好": {
+   "corpus_rank": 3535,
+   "per_million": 17.77
+  },
+  "密码": {
+   "corpus_rank": 1776,
+   "per_million": 44.45
+  },
+  "亚洲": {
+   "corpus_rank": 4645,
+   "per_million": 12.22
+  },
+  "道歉": {
+   "corpus_rank": 902,
+   "per_million": 102.51
+  },
+  "趟": {
+   "corpus_rank": 1755,
+   "per_million": 45.28
+  },
+  "软": {
+   "corpus_rank": 3745,
+   "per_million": 16.54
+  },
+  "访问": {
+   "corpus_rank": 4188,
+   "per_million": 14.22
+  },
+  "森林": {
+   "corpus_rank": 2763,
+   "per_million": 24.92
+  },
+  "友好": {
+   "corpus_rank": 3253,
+   "per_million": 19.88
+  },
+  "尝": {
+   "corpus_rank": 3035,
+   "per_million": 21.88
+  },
+  "亿": {
+   "corpus_rank": 3216,
+   "per_million": 20.15
+  },
+  "对话": {
+   "corpus_rank": 3080,
+   "per_million": 21.34
+  },
+  "收拾": {
+   "corpus_rank": 1437,
+   "per_million": 57.86
+  },
+  "广播": {
+   "corpus_rank": 3004,
+   "per_million": 22.12
+  },
+  "逐渐": {
+   "corpus_rank": 5115,
+   "per_million": 10.58
+  },
+  "钥匙": {
+   "corpus_rank": 837,
+   "per_million": 111.81
+  },
+  "酸": {
+   "corpus_rank": 3789,
+   "per_million": 16.28
+  },
+  "污染": {
+   "corpus_rank": 4745,
+   "per_million": 11.86
+  },
+  "温度": {
+   "corpus_rank": 4527,
+   "per_million": 12.73
+  },
+  "孤单": {
+   "corpus_rank": 3458,
+   "per_million": 18.36
+  },
+  "饮料": {
+   "corpus_rank": 2516,
+   "per_million": 28.08
+  },
+  "宽": {
+   "corpus_rank": 4760,
+   "per_million": 11.8
+  },
+  "例如": {
+   "corpus_rank": 4451,
+   "per_million": 13.03
+  },
+  "祝贺": {
+   "corpus_rank": 1700,
+   "per_million": 47.13
+  },
+  "批评": {
+   "corpus_rank": 4408,
+   "per_million": 13.18
+  },
+  "重视": {
+   "corpus_rank": 5846,
+   "per_million": 8.67
+  },
+  "增长": {
+   "corpus_rank": 6725,
+   "per_million": 7.09
+  },
+  "相反": {
+   "corpus_rank": 3256,
+   "per_million": 19.85
+  },
+  "抬": {
+   "corpus_rank": 2321,
+   "per_million": 31.3
+  },
+  "主意": {
+   "corpus_rank": 548,
+   "per_million": 183.15
+  },
+  "扩大": {
+   "corpus_rank": 6204,
+   "per_million": 7.99
+  },
+  "奖金": {
+   "corpus_rank": 3683,
+   "per_million": 16.93
+  },
+  "盐": {
+   "corpus_rank": 4519,
+   "per_million": 12.73
+  },
+  "难受": {
+   "corpus_rank": 3679,
+   "per_million": 16.96
+  },
+  "民族": {
+   "corpus_rank": 6408,
+   "per_million": 7.66
+  },
+  "航班": {
+   "corpus_rank": 2651,
+   "per_million": 26.26
+  },
+  "偶尔": {
+   "corpus_rank": 3218,
+   "per_million": 20.15
+  },
+  "约会": {
+   "corpus_rank": 539,
+   "per_million": 186.82
+  },
+  "受不了": {
+   "corpus_rank": 2155,
+   "per_million": 34.61
+  },
+  "厚": {
+   "corpus_rank": 4609,
+   "per_million": 12.4
+  },
+  "护士": {
+   "corpus_rank": 1904,
+   "per_million": 40.69
+  },
+  "参观": {
+   "corpus_rank": 4147,
+   "per_million": 14.4
+  },
+  "顺便": {
+   "corpus_rank": 1492,
+   "per_million": 55.24
+  },
+  "友谊": {
+   "corpus_rank": 3311,
+   "per_million": 19.41
+  },
+  "笨": {
+   "corpus_rank": 1864,
+   "per_million": 41.7
+  },
+  "沙发": {
+   "corpus_rank": 2580,
+   "per_million": 27.07
+  },
+  "耐心": {
+   "corpus_rank": 2576,
+   "per_million": 27.1
+  },
+  "开玩笑": {
+   "corpus_rank": 1209,
+   "per_million": 71.72
+  },
+  "反映": {
+   "corpus_rank": 6716,
+   "per_million": 7.12
+  },
+  "植物": {
+   "corpus_rank": 4479,
+   "per_million": 12.94
+  },
+  "笔记本": {
+   "corpus_rank": 4770,
+   "per_million": 11.77
+  },
+  "对面": {
+   "corpus_rank": 3337,
+   "per_million": 19.14
+  },
+  "信用卡": {
+   "corpus_rank": 2365,
+   "per_million": 30.67
+  },
+  "减肥": {
+   "corpus_rank": 4877,
+   "per_million": 11.39
+  },
+  "其次": {
+   "corpus_rank": 5248,
+   "per_million": 10.16
+  },
+  "敲": {
+   "corpus_rank": 2528,
+   "per_million": 27.9
+  },
+  "脾气": {
+   "corpus_rank": 3350,
+   "per_million": 19.05
+  },
+  "烦恼": {
+   "corpus_rank": 3915,
+   "per_million": 15.59
+  },
+  "特点": {
+   "corpus_rank": 6949,
+   "per_million": 6.77
+  },
+  "往往": {
+   "corpus_rank": 6745,
+   "per_million": 7.06
+  },
+  "风景": {
+   "corpus_rank": 4856,
+   "per_million": 11.48
+  },
+  "笑话": {
+   "corpus_rank": 1853,
+   "per_million": 41.94
+  },
+  "海洋": {
+   "corpus_rank": 4338,
+   "per_million": 13.47
+  },
+  "窗户": {
+   "corpus_rank": 1901,
+   "per_million": 40.75
+  },
+  "不但": {
+   "corpus_rank": 6339,
+   "per_million": 7.75
+  },
+  "代替": {
+   "corpus_rank": 3556,
+   "per_million": 17.65
+  },
+  "家具": {
+   "corpus_rank": 4509,
+   "per_million": 12.79
+  },
+  "棵": {
+   "corpus_rank": 3459,
+   "per_million": 18.36
+  },
+  "商量": {
+   "corpus_rank": 2827,
+   "per_million": 24.21
+  },
+  "狮子": {
+   "corpus_rank": 4512,
+   "per_million": 12.76
+  },
+  "稍微": {
+   "corpus_rank": 2515,
+   "per_million": 28.14
+  },
+  "汗": {
+   "corpus_rank": 3777,
+   "per_million": 16.34
+  },
+  "缺少": {
+   "corpus_rank": 4931,
+   "per_million": 11.24
+  },
+  "阅读": {
+   "corpus_rank": 5368,
+   "per_million": 9.87
+  },
+  "穷": {
+   "corpus_rank": 4502,
+   "per_million": 12.79
+  },
+  "打扮": {
+   "corpus_rank": 2460,
+   "per_million": 29.21
+  },
+  "座位": {
+   "corpus_rank": 2630,
+   "per_million": 26.5
+  },
+  "首都": {
+   "corpus_rank": 5968,
+   "per_million": 8.47
+  },
+  "吃惊": {
+   "corpus_rank": 2048,
+   "per_million": 36.58
+  },
+  "忽然": {
+   "corpus_rank": 6583,
+   "per_million": 7.33
+  },
+  "羡慕": {
+   "corpus_rank": 6153,
+   "per_million": 8.08
+  },
+  "报名": {
+   "corpus_rank": 7154,
+   "per_million": 6.47
+  },
+  "脏": {
+   "corpus_rank": 1818,
+   "per_million": 42.9
+  },
+  "极其": {
+   "corpus_rank": 4733,
+   "per_million": 11.92
+  },
+  "日记": {
+   "corpus_rank": 3197,
+   "per_million": 20.3
+  },
+  "同情": {
+   "corpus_rank": 2780,
+   "per_million": 24.8
+  },
+  "逛": {
+   "corpus_rank": 4567,
+   "per_million": 12.55
+  },
+  "总结": {
+   "corpus_rank": 7518,
+   "per_million": 5.96
+  },
+  "打扰": {
+   "corpus_rank": 945,
+   "per_million": 98.13
+  },
+  "幽默": {
+   "corpus_rank": 3716,
+   "per_million": 16.72
+  },
+  "误会": {
+   "corpus_rank": 2269,
+   "per_million": 32.25
+  },
+  "抱歉": {
+   "corpus_rank": 192,
+   "per_million": 642.78
+  },
+  "师傅": {
+   "corpus_rank": 4734,
+   "per_million": 11.92
+  },
+  "朵": {
+   "corpus_rank": 4833,
+   "per_million": 11.57
+  },
+  "镜子": {
+   "corpus_rank": 2925,
+   "per_million": 23.01
+  },
+  "合格": {
+   "corpus_rank": 7076,
+   "per_million": 6.59
+  },
+  "亲戚": {
+   "corpus_rank": 4115,
+   "per_million": 14.52
+  },
+  "力气": {
+   "corpus_rank": 3873,
+   "per_million": 15.86
+  },
+  "缺点": {
+   "corpus_rank": 5879,
+   "per_million": 8.61
+  },
+  "抽烟": {
+   "corpus_rank": 2645,
+   "per_million": 26.29
+  },
+  "起飞": {
+   "corpus_rank": 3252,
+   "per_million": 19.91
+  },
+  "网球": {
+   "corpus_rank": 5252,
+   "per_million": 10.16
+  },
+  "老虎": {
+   "corpus_rank": 5007,
+   "per_million": 10.97
+  },
+  "乘坐": {
+   "corpus_rank": 5750,
+   "per_million": 8.94
+  },
+  "诚实": {
+   "corpus_rank": 2427,
+   "per_million": 29.69
+  },
+  "集合": {
+   "corpus_rank": 3792,
+   "per_million": 16.25
+  },
+  "孙子": {
+   "corpus_rank": 3773,
+   "per_million": 16.37
+  },
+  "优点": {
+   "corpus_rank": 6487,
+   "per_million": 7.48
+  },
+  "猴子": {
+   "corpus_rank": 2620,
+   "per_million": 26.56
+  },
+  "来不及": {
+   "corpus_rank": 4683,
+   "per_million": 12.1
+  },
+  "普遍": {
+   "corpus_rank": 9976,
+   "per_million": 3.76
+  },
+  "入口": {
+   "corpus_rank": 3891,
+   "per_million": 15.74
+  },
+  "加班": {
+   "corpus_rank": 6599,
+   "per_million": 7.3
+  },
+  "热闹": {
+   "corpus_rank": 7634,
+   "per_million": 5.84
+  },
+  "散步": {
+   "corpus_rank": 3537,
+   "per_million": 17.77
+  },
+  "顺序": {
+   "corpus_rank": 5454,
+   "per_million": 9.69
+  },
+  "懒": {
+   "corpus_rank": 6350,
+   "per_million": 7.75
+  },
+  "大夫": {
+   "corpus_rank": 3299,
+   "per_million": 19.5
+  },
+  "准时": {
+   "corpus_rank": 3829,
+   "per_million": 16.07
+  },
+  "盒子": {
+   "corpus_rank": 1794,
+   "per_million": 43.61
+  },
+  "得意": {
+   "corpus_rank": 6922,
+   "per_million": 6.83
+  },
+  "礼貌": {
+   "corpus_rank": 2663,
+   "per_million": 26.17
+  },
+  "推迟": {
+   "corpus_rank": 5874,
+   "per_million": 8.64
+  },
+  "饼干": {
+   "corpus_rank": 2298,
+   "per_million": 31.72
+  },
+  "中文": {
+   "corpus_rank": 9443,
+   "per_million": 4.11
+  },
+  "性别": {
+   "corpus_rank": 7112,
+   "per_million": 6.53
+  },
+  "袜子": {
+   "corpus_rank": 3905,
+   "per_million": 15.65
+  },
+  "气候": {
+   "corpus_rank": 8757,
+   "per_million": 4.65
+  },
+  "毛巾": {
+   "corpus_rank": 4268,
+   "per_million": 13.77
+  },
+  "鼓掌": {
+   "corpus_rank": 3681,
+   "per_million": 16.96
+  },
+  "瓶子": {
+   "corpus_rank": 4048,
+   "per_million": 14.96
+  },
+  "传真": {
+   "corpus_rank": 6471,
+   "per_million": 7.54
+  },
+  "害羞": {
+   "corpus_rank": 3818,
+   "per_million": 16.13
+  },
+  "握手": {
+   "corpus_rank": 5189,
+   "per_million": 10.31
+  },
+  "来得及": {
+   "corpus_rank": 4878,
+   "per_million": 11.39
+  },
+  "咳嗽": {
+   "corpus_rank": 7744,
+   "per_million": 5.66
+  },
+  "研究生": {
+   "corpus_rank": 9714,
+   "per_million": 3.93
+  },
+  "出差": {
+   "corpus_rank": 6386,
+   "per_million": 7.69
+  },
+  "按时": {
+   "corpus_rank": 6713,
+   "per_million": 7.12
+  },
+  "流泪": {
+   "corpus_rank": 8143,
+   "per_million": 5.22
+  },
+  "咸": {
+   "corpus_rank": 7961,
+   "per_million": 5.43
+  },
+  "加油站": {
+   "corpus_rank": 5920,
+   "per_million": 8.56
+  },
+  "节约": {
+   "corpus_rank": 12261,
+   "per_million": 2.65
+  },
+  "招聘": {
+   "corpus_rank": 12089,
+   "per_million": 2.74
+  },
+  "活泼": {
+   "corpus_rank": 8443,
+   "per_million": 4.95
+  },
+  "干燥": {
+   "corpus_rank": 10578,
+   "per_million": 3.43
+  },
+  "签证": {
+   "corpus_rank": 7835,
+   "per_million": 5.57
+  },
+  "暖和": {
+   "corpus_rank": 6338,
+   "per_million": 7.75
+  },
+  "打印": {
+   "corpus_rank": 8296,
+   "per_million": 5.07
+  },
+  "农村": {
+   "corpus_rank": 16006,
+   "per_million": 1.67
+  },
+  "排列": {
+   "corpus_rank": 10420,
+   "per_million": 3.52
+  },
+  "窄": {
+   "corpus_rank": 11030,
+   "per_million": 3.16
+  },
+  "积累": {
+   "corpus_rank": 14020,
+   "per_million": 2.12
+  },
+  "整齐": {
+   "corpus_rank": 9465,
+   "per_million": 4.11
+  },
+  "表格": {
+   "corpus_rank": 5319,
+   "per_million": 10.02
+  },
+  "表扬": {
+   "corpus_rank": 9913,
+   "per_million": 3.82
+  },
+  "硕士": {
+   "corpus_rank": 12397,
+   "per_million": 2.62
+  },
+  "牙膏": {
+   "corpus_rank": 8590,
+   "per_million": 4.8
+  },
+  "长城": {
+   "corpus_rank": 14337,
+   "per_million": 2.03
+  },
+  "请客": {
+   "corpus_rank": 6402,
+   "per_million": 7.66
+  },
+  "请假": {
+   "corpus_rank": 9168,
+   "per_million": 4.32
+  },
+  "乒乓球": {
+   "corpus_rank": 13534,
+   "per_million": 2.24
+  },
+  "导游": {
+   "corpus_rank": 11347,
+   "per_million": 3.04
+  },
+  "叶子": {
+   "corpus_rank": 10249,
+   "per_million": 3.61
+  },
+  "打折": {
+   "corpus_rank": 10282,
+   "per_million": 3.58
+  },
+  "洗衣机": {
+   "corpus_rank": 9547,
+   "per_million": 4.05
+  },
+  "堵车": {
+   "corpus_rank": 10126,
+   "per_million": 3.67
+  },
+  "西红柿": {
+   "corpus_rank": 11972,
+   "per_million": 2.77
+  },
+  "个子": {
+   "corpus_rank": 7283,
+   "per_million": 6.32
+  },
+  "大使馆": {
+   "corpus_rank": 7509,
+   "per_million": 5.99
+  },
+  "饺子": {
+   "corpus_rank": 16260,
+   "per_million": 1.61
+  },
+  "垃圾桶": {
+   "corpus_rank": 6514,
+   "per_million": 7.45
+  },
+  "塑料袋": {
+   "corpus_rank": 11194,
+   "per_million": 3.1
+  },
+  "养成": {
+   "corpus_rank": 18831,
+   "per_million": 1.22
+  },
+  "打针": {
+   "corpus_rank": 9935,
+   "per_million": 3.79
+  },
+  "理发": {
+   "corpus_rank": 9340,
+   "per_million": 4.2
+  },
+  "语法": {
+   "corpus_rank": 14604,
+   "per_million": 1.97
+  },
+  "干杯": {
+   "corpus_rank": 1796,
+   "per_million": 43.58
+  },
+  "复印": {
+   "corpus_rank": 9566,
+   "per_million": 4.05
+  },
+  "留学": {
+   "corpus_rank": 25428,
+   "per_million": 0.66
+  },
+  "湿润": {
+   "corpus_rank": 18640,
+   "per_million": 1.25
+  },
+  "羽毛球": {
+   "corpus_rank": 24439,
+   "per_million": 0.72
+  },
+  "流利": {
+   "corpus_rank": 17340,
+   "per_million": 1.43
+  },
+  "词典": {
+   "corpus_rank": 20876,
+   "per_million": 1.01
+  },
+  "凉快": {
+   "corpus_rank": 11134,
+   "per_million": 3.13
+  },
+  "售货员": {
+   "corpus_rank": 16870,
+   "per_million": 1.52
+  },
+  "长江": {
+   "corpus_rank": 35820,
+   "per_million": 0.3
+  },
+  "马虎": {
+   "corpus_rank": 19492,
+   "per_million": 1.16
+  },
+  "寒假": {
+   "corpus_rank": 34301,
+   "per_million": 0.33
+  },
+  "人民币": {
+   "corpus_rank": 42136,
+   "per_million": 0.18
+  },
+  "粗心": {
+   "corpus_rank": 17555,
+   "per_million": 1.4
+  },
+  "预习": {
+   "corpus_rank": 41476,
+   "per_million": 0.21
+  },
+  "京剧": {
+   "corpus_rank": 89507,
+   "per_million": 0.03
+  },
+  "分之": {
+   "corpus_rank": 42863,
+   "per_million": 0.18
+  },
+  "填空": {
+   "corpus_rank": 49856,
+   "per_million": 0.12
+  },
+  "所": {
+   "corpus_rank": 208,
+   "per_million": 587.69
+  },
+  "正": {
+   "corpus_rank": 211,
+   "per_million": 582.36
+  },
+  "搞": {
+   "corpus_rank": 221,
+   "per_million": 544.41
+  },
+  "如何": {
+   "corpus_rank": 330,
+   "per_million": 324.3
+  },
+  "作为": {
+   "corpus_rank": 570,
+   "per_million": 174.8
+  },
+  "唯一": {
+   "corpus_rank": 426,
+   "per_million": 239.16
+  },
+  "表现": {
+   "corpus_rank": 474,
+   "per_million": 211.11
+  },
+  "对于": {
+   "corpus_rank": 724,
+   "per_million": 130.36
+  },
+  "方式": {
+   "corpus_rank": 681,
+   "per_million": 140.43
+  },
+  "处理": {
+   "corpus_rank": 517,
+   "per_million": 193.7
+  },
+  "政府": {
+   "corpus_rank": 878,
+   "per_million": 105.79
+  },
+  "系统": {
+   "corpus_rank": 779,
+   "per_million": 119.21
+  },
+  "是否": {
+   "corpus_rank": 521,
+   "per_million": 191.79
+  },
+  "杀": {
+   "corpus_rank": 180,
+   "per_million": 697.69
+  },
+  "以及": {
+   "corpus_rank": 864,
+   "per_million": 107.61
+  },
+  "片": {
+   "corpus_rank": 693,
+   "per_million": 137.03
+  },
+  "同时": {
+   "corpus_rank": 966,
+   "per_million": 93.75
+  },
+  "拍": {
+   "corpus_rank": 475,
+   "per_million": 210.93
+  },
+  "控制": {
+   "corpus_rank": 592,
+   "per_million": 164.99
+  },
+  "整个": {
+   "corpus_rank": 498,
+   "per_million": 199.6
+  },
+  "根本": {
+   "corpus_rank": 342,
+   "per_million": 307.36
+  },
+  "目前": {
+   "corpus_rank": 1070,
+   "per_million": 83.41
+  },
+  "重": {
+   "corpus_rank": 641,
+   "per_million": 151.4
+  },
+  "信息": {
+   "corpus_rank": 843,
+   "per_million": 111.04
+  },
+  "存在": {
+   "corpus_rank": 859,
+   "per_million": 108.12
+  },
+  "个人": {
+   "corpus_rank": 868,
+   "per_million": 107.22
+  },
+  "保持": {
+   "corpus_rank": 628,
+   "per_million": 153.34
+  },
+  "来自": {
+   "corpus_rank": 710,
+   "per_million": 133.01
+  },
+  "确定": {
+   "corpus_rank": 365,
+   "per_million": 294.78
+  },
+  "目标": {
+   "corpus_rank": 759,
+   "per_million": 122.9
+  },
+  "中心": {
+   "corpus_rank": 935,
+   "per_million": 98.91
+  },
+  "行动": {
+   "corpus_rank": 526,
+   "per_million": 190.93
+  },
+  "开心": {
+   "corpus_rank": 545,
+   "per_million": 184.88
+  },
+  "合作": {
+   "corpus_rank": 925,
+   "per_million": 99.68
+  },
+  "人员": {
+   "corpus_rank": 1078,
+   "per_million": 82.9
+  },
+  "哈": {
+   "corpus_rank": 603,
+   "per_million": 162.76
+  },
+  "报告": {
+   "corpus_rank": 797,
+   "per_million": 116.61
+  },
+  "治疗": {
+   "corpus_rank": 911,
+   "per_million": 101.32
+  },
+  "家庭": {
+   "corpus_rank": 646,
+   "per_million": 149.55
+  },
+  "明显": {
+   "corpus_rank": 940,
+   "per_million": 98.55
+  },
+  "套": {
+   "corpus_rank": 819,
+   "per_million": 113.75
+  },
+  "曾经": {
+   "corpus_rank": 583,
+   "per_million": 169.59
+  },
+  "行为": {
+   "corpus_rank": 913,
+   "per_million": 101.23
+  },
+  "克": {
+   "corpus_rank": 757,
+   "per_million": 123.05
+  },
+  "装": {
+   "corpus_rank": 648,
+   "per_million": 149.23
+  },
+  "绝对": {
+   "corpus_rank": 491,
+   "per_million": 202.17
+  },
+  "派": {
+   "corpus_rank": 559,
+   "per_million": 178.89
+  },
+  "设计": {
+   "corpus_rank": 1146,
+   "per_million": 76.25
+  },
+  "未来": {
+   "corpus_rank": 901,
+   "per_million": 102.54
+  },
+  "利用": {
+   "corpus_rank": 984,
+   "per_million": 91.75
+  },
+  "看来": {
+   "corpus_rank": 453,
+   "per_million": 221.07
+  },
+  "倒": {
+   "corpus_rank": 553,
+   "per_million": 181.6
+  },
+  "建议": {
+   "corpus_rank": 817,
+   "per_million": 113.84
+  },
+  "意义": {
+   "corpus_rank": 871,
+   "per_million": 106.72
+  },
+  "便": {
+   "corpus_rank": 1220,
+   "per_million": 70.95
+  },
+  "项": {
+   "corpus_rank": 1331,
+   "per_million": 63.97
+  },
+  "力量": {
+   "corpus_rank": 964,
+   "per_million": 93.9
+  },
+  "项目": {
+   "corpus_rank": 1538,
+   "per_million": 53.15
+  },
+  "造成": {
+   "corpus_rank": 1266,
+   "per_million": 67.1
+  },
+  "某": {
+   "corpus_rank": 1164,
+   "per_million": 74.88
+  },
+  "支": {
+   "corpus_rank": 933,
+   "per_million": 99
+  },
+  "提": {
+   "corpus_rank": 618,
+   "per_million": 157.48
+  },
+  "人生": {
+   "corpus_rank": 1054,
+   "per_million": 85.02
+  },
+  "非": {
+   "corpus_rank": 1430,
+   "per_million": 58.07
+  },
+  "失去": {
+   "corpus_rank": 533,
+   "per_million": 188.22
+  },
+  "则": {
+   "corpus_rank": 1707,
+   "per_million": 46.8
+  },
+  "面对": {
+   "corpus_rank": 1040,
+   "per_million": 86.18
+  },
+  "训练": {
+   "corpus_rank": 993,
+   "per_million": 90.59
+  },
+  "总统": {
+   "corpus_rank": 589,
+   "per_million": 165.41
+  },
+  "部门": {
+   "corpus_rank": 1747,
+   "per_million": 45.49
+  },
+  "似乎": {
+   "corpus_rank": 962,
+   "per_million": 94.11
+  },
+  "宝贝": {
+   "corpus_rank": 296,
+   "per_million": 356.22
+  },
+  "位置": {
+   "corpus_rank": 952,
+   "per_million": 96.97
+  },
+  "方": {
+   "corpus_rank": 1608,
+   "per_million": 50.62
+  },
+  "参与": {
+   "corpus_rank": 1445,
+   "per_million": 57.38
+  },
+  "显示": {
+   "corpus_rank": 1453,
+   "per_million": 57.08
+  },
+  "秒": {
+   "corpus_rank": 961,
+   "per_million": 94.61
+  },
+  "属于": {
+   "corpus_rank": 1061,
+   "per_million": 84.27
+  },
+  "人类": {
+   "corpus_rank": 808,
+   "per_million": 114.97
+  },
+  "手术": {
+   "corpus_rank": 847,
+   "per_million": 110.15
+  },
+  "比如": {
+   "corpus_rank": 973,
+   "per_million": 93.01
+  },
+  "兄弟": {
+   "corpus_rank": 400,
+   "per_million": 257.28
+  },
+  "自由": {
+   "corpus_rank": 810,
+   "per_million": 114.71
+  },
+  "夜": {
+   "corpus_rank": 1059,
+   "per_million": 84.57
+  },
+  "事实": {
+   "corpus_rank": 644,
+   "per_million": 149.91
+  },
+  "基本": {
+   "corpus_rank": 1748,
+   "per_million": 45.43
+  },
+  "居然": {
+   "corpus_rank": 1043,
+   "per_million": 86.03
+  },
+  "类": {
+   "corpus_rank": 1532,
+   "per_million": 53.48
+  },
+  "专家": {
+   "corpus_rank": 1581,
+   "per_million": 51.48
+  },
+  "分析": {
+   "corpus_rank": 1751,
+   "per_million": 45.34
+  },
+  "享受": {
+   "corpus_rank": 978,
+   "per_million": 92.29
+  },
+  "以来": {
+   "corpus_rank": 1675,
+   "per_million": 47.87
+  },
+  "反应": {
+   "corpus_rank": 1126,
+   "per_million": 77.86
+  },
+  "地区": {
+   "corpus_rank": 1753,
+   "per_million": 45.28
+  },
+  "资料": {
+   "corpus_rank": 1308,
+   "per_million": 65.31
+  },
+  "冠军": {
+   "corpus_rank": 1382,
+   "per_million": 61.02
+  },
+  "价值": {
+   "corpus_rank": 1610,
+   "per_million": 50.59
+  },
+  "相当": {
+   "corpus_rank": 1232,
+   "per_million": 69.72
+  },
+  "实现": {
+   "corpus_rank": 1931,
+   "per_million": 39.91
+  },
+  "产生": {
+   "corpus_rank": 1727,
+   "per_million": 46.14
+  },
+  "对方": {
+   "corpus_rank": 1386,
+   "per_million": 60.69
+  },
+  "状态": {
+   "corpus_rank": 1439,
+   "per_million": 57.77
+  },
+  "心理": {
+   "corpus_rank": 1326,
+   "per_million": 64.15
+  },
+  "根": {
+   "corpus_rank": 909,
+   "per_million": 101.65
+  },
+  "建立": {
+   "corpus_rank": 1918,
+   "per_million": 40.36
+  },
+  "更加": {
+   "corpus_rank": 1589,
+   "per_million": 51.18
+  },
+  "老板": {
+   "corpus_rank": 924,
+   "per_million": 99.83
+  },
+  "必要": {
+   "corpus_rank": 848,
+   "per_million": 110.15
+  },
+  "抢": {
+   "corpus_rank": 1289,
+   "per_million": 66.42
+  },
+  "节": {
+   "corpus_rank": 1396,
+   "per_million": 60.19
+  },
+  "傻": {
+   "corpus_rank": 747,
+   "per_million": 124.96
+  },
+  "亲爱": {
+   "corpus_rank": 283,
+   "per_million": 381.05
+  },
+  "救": {
+   "corpus_rank": 422,
+   "per_million": 241.31
+  },
+  "恢复": {
+   "corpus_rank": 1300,
+   "per_million": 65.79
+  },
+  "棒": {
+   "corpus_rank": 222,
+   "per_million": 544.11
+  },
+  "达到": {
+   "corpus_rank": 2103,
+   "per_million": 35.65
+  },
+  "投资": {
+   "corpus_rank": 2255,
+   "per_million": 32.43
+  },
+  "现实": {
+   "corpus_rank": 1292,
+   "per_million": 66.27
+  },
+  "不断": {
+   "corpus_rank": 2053,
+   "per_million": 36.43
+  },
+  "导致": {
+   "corpus_rank": 1759,
+   "per_million": 45.19
+  },
+  "集中": {
+   "corpus_rank": 1539,
+   "per_million": 53.06
+  },
+  "战争": {
+   "corpus_rank": 979,
+   "per_million": 92.26
+  },
+  "理由": {
+   "corpus_rank": 875,
+   "per_million": 106.42
+  },
+  "感受": {
+   "corpus_rank": 1081,
+   "per_million": 82.72
+  },
+  "完美": {
+   "corpus_rank": 756,
+   "per_million": 123.23
+  },
+  "真实": {
+   "corpus_rank": 1050,
+   "per_million": 85.4
+  },
+  "错误": {
+   "corpus_rank": 787,
+   "per_million": 118.61
+  },
+  "记录": {
+   "corpus_rank": 707,
+   "per_million": 133.55
+  },
+  "空间": {
+   "corpus_rank": 1780,
+   "per_million": 44.27
+  },
+  "冲": {
+   "corpus_rank": 809,
+   "per_million": 114.83
+  },
+  "期待": {
+   "corpus_rank": 1567,
+   "per_million": 51.75
+  },
+  "毛": {
+   "corpus_rank": 1372,
+   "per_million": 61.65
+  },
+  "政治": {
+   "corpus_rank": 1935,
+   "per_million": 39.86
+  },
+  "朝": {
+   "corpus_rank": 1194,
+   "per_million": 72.62
+  },
+  "一旦": {
+   "corpus_rank": 1028,
+   "per_million": 87.1
+  },
+  "承认": {
+   "corpus_rank": 873,
+   "per_million": 106.57
+  },
+  "执行": {
+   "corpus_rank": 1772,
+   "per_million": 44.62
+  },
+  "接着": {
+   "corpus_rank": 1330,
+   "per_million": 64.06
+  },
+  "痛苦": {
+   "corpus_rank": 855,
+   "per_million": 108.74
+  },
+  "文件": {
+   "corpus_rank": 1103,
+   "per_million": 80.43
+  },
+  "显然": {
+   "corpus_rank": 876,
+   "per_million": 106.3
+  },
+  "传统": {
+   "corpus_rank": 2005,
+   "per_million": 37.83
+  },
+  "状况": {
+   "corpus_rank": 1499,
+   "per_million": 54.79
+  },
+  "翻": {
+   "corpus_rank": 1628,
+   "per_million": 49.96
+  },
+  "作品": {
+   "corpus_rank": 1704,
+   "per_million": 46.95
+  },
+  "时代": {
+   "corpus_rank": 1730,
+   "per_million": 46.03
+  },
+  "伟大": {
+   "corpus_rank": 1166,
+   "per_million": 74.64
+  },
+  "的确": {
+   "corpus_rank": 672,
+   "per_million": 143.17
+  },
+  "颗": {
+   "corpus_rank": 1182,
+   "per_million": 73.39
+  },
+  "身份": {
+   "corpus_rank": 1013,
+   "per_million": 88.06
+  },
+  "充满": {
+   "corpus_rank": 1276,
+   "per_million": 67.01
+  },
+  "人物": {
+   "corpus_rank": 1400,
+   "per_million": 60.04
+  },
+  "要是": {
+   "corpus_rank": 1099,
+   "per_million": 81.05
+  },
+  "系": {
+   "corpus_rank": 2401,
+   "per_million": 30.11
+  },
+  "直": {
+   "corpus_rank": 1552,
+   "per_million": 52.52
+  },
+  "产品": {
+   "corpus_rank": 2658,
+   "per_million": 26.2
+  },
+  "枪": {
+   "corpus_rank": 298,
+   "per_million": 353.24
+  },
+  "保险": {
+   "corpus_rank": 1570,
+   "per_million": 51.66
+  },
+  "年代": {
+   "corpus_rank": 1672,
+   "per_million": 48.02
+  },
+  "领导": {
+   "corpus_rank": 2509,
+   "per_million": 28.29
+  },
+  "寻找": {
+   "corpus_rank": 1106,
+   "per_million": 80.01
+  },
+  "胜利": {
+   "corpus_rank": 1548,
+   "per_million": 52.73
+  },
+  "明星": {
+   "corpus_rank": 1196,
+   "per_million": 72.56
+  },
+  "受伤": {
+   "corpus_rank": 1058,
+   "per_million": 84.72
+  },
+  "程度": {
+   "corpus_rank": 2149,
+   "per_million": 34.67
+  },
+  "理论": {
+   "corpus_rank": 2034,
+   "per_million": 36.96
+  },
+  "宣布": {
+   "corpus_rank": 1770,
+   "per_million": 44.77
+  },
+  "姑娘": {
+   "corpus_rank": 834,
+   "per_million": 112.23
+  },
+  "创造": {
+   "corpus_rank": 1814,
+   "per_million": 43.1
+  },
+  "呆": {
+   "corpus_rank": 480,
+   "per_million": 208.16
+  },
+  "雷": {
+   "corpus_rank": 1047,
+   "per_million": 85.64
+  },
+  "数据": {
+   "corpus_rank": 2190,
+   "per_million": 33.77
+  },
+  "武器": {
+   "corpus_rank": 854,
+   "per_million": 108.92
+  },
+  "圈": {
+   "corpus_rank": 1319,
+   "per_million": 64.63
+  },
+  "思想": {
+   "corpus_rank": 2494,
+   "per_million": 28.5
+  },
+  "破坏": {
+   "corpus_rank": 1201,
+   "per_million": 72.23
+  },
+  "消失": {
+   "corpus_rank": 949,
+   "per_million": 97.27
+  },
+  "稳定": {
+   "corpus_rank": 2184,
+   "per_million": 33.92
+  },
+  "巨大": {
+   "corpus_rank": 1943,
+   "per_million": 39.71
+  },
+  "龙": {
+   "corpus_rank": 2043,
+   "per_million": 36.73
+  },
+  "英雄": {
+   "corpus_rank": 1079,
+   "per_million": 82.84
+  },
+  "满足": {
+   "corpus_rank": 1999,
+   "per_million": 37.89
+  },
+  "土地": {
+   "corpus_rank": 2210,
+   "per_million": 33.42
+  },
+  "威胁": {
+   "corpus_rank": 968,
+   "per_million": 93.63
+  },
+  "等待": {
+   "corpus_rank": 1463,
+   "per_million": 56.85
+  },
+  "挑战": {
+   "corpus_rank": 1416,
+   "per_million": 58.93
+  },
+  "秘密": {
+   "corpus_rank": 649,
+   "per_million": 149.08
+  },
+  "设备": {
+   "corpus_rank": 2228,
+   "per_million": 33
+  },
+  "团": {
+   "corpus_rank": 2279,
+   "per_million": 32.07
+  },
+  "紧": {
+   "corpus_rank": 1255,
+   "per_million": 68.35
+  },
+  "对手": {
+   "corpus_rank": 1951,
+   "per_million": 39.38
+  },
+  "俱乐部": {
+   "corpus_rank": 1247,
+   "per_million": 69.07
+  },
+  "想象": {
+   "corpus_rank": 749,
+   "per_million": 124.51
+  },
+  "所谓": {
+   "corpus_rank": 1917,
+   "per_million": 40.39
+  },
+  "背": {
+   "corpus_rank": 1395,
+   "per_million": 60.3
+  },
+  "顶": {
+   "corpus_rank": 1861,
+   "per_million": 41.73
+  },
+  "恐怖": {
+   "corpus_rank": 1004,
+   "per_million": 89.25
+  },
+  "特殊": {
+   "corpus_rank": 1666,
+   "per_million": 48.26
+  },
+  "具体": {
+   "corpus_rank": 2507,
+   "per_million": 28.32
+  },
+  "风格": {
+   "corpus_rank": 1593,
+   "per_million": 51.06
+  },
+  "建筑": {
+   "corpus_rank": 2284,
+   "per_million": 31.99
+  },
+  "角色": {
+   "corpus_rank": 1210,
+   "per_million": 71.63
+  },
+  "疯狂": {
+   "corpus_rank": 690,
+   "per_million": 138.08
+  },
+  "彻底": {
+   "corpus_rank": 1624,
+   "per_million": 50.08
+  },
+  "幅": {
+   "corpus_rank": 2326,
+   "per_million": 31.21
+  },
+  "出口": {
+   "corpus_rank": 2372,
+   "per_million": 30.52
+  },
+  "布": {
+   "corpus_rank": 1729,
+   "per_million": 46.06
+  },
+  "权利": {
+   "corpus_rank": 1366,
+   "per_million": 61.97
+  },
+  "采取": {
+   "corpus_rank": 2636,
+   "per_million": 26.41
+  },
+  "期间": {
+   "corpus_rank": 2650,
+   "per_million": 26.26
+  },
+  "意外": {
+   "corpus_rank": 1137,
+   "per_million": 76.88
+  },
+  "风险": {
+   "corpus_rank": 2578,
+   "per_million": 27.07
+  },
+  "时刻": {
+   "corpus_rank": 1224,
+   "per_million": 70.44
+  },
+  "平": {
+   "corpus_rank": 2211,
+   "per_million": 33.39
+  },
+  "观察": {
+   "corpus_rank": 2039,
+   "per_million": 36.81
+  },
+  "钟": {
+   "corpus_rank": 1172,
+   "per_million": 74.2
+  },
+  "恨": {
+   "corpus_rank": 985,
+   "per_million": 91.72
+  },
+  "接近": {
+   "corpus_rank": 1353,
+   "per_million": 62.84
+  },
+  "敌人": {
+   "corpus_rank": 1389,
+   "per_million": 60.54
+  },
+  "表明": {
+   "corpus_rank": 2323,
+   "per_million": 31.3
+  },
+  "时尚": {
+   "corpus_rank": 2220,
+   "per_million": 33.12
+  },
+  "程序": {
+   "corpus_rank": 1808,
+   "per_million": 43.19
+  },
+  "持续": {
+   "corpus_rank": 2614,
+   "per_million": 26.68
+  },
+  "和平": {
+   "corpus_rank": 2011,
+   "per_million": 37.62
+  },
+  "切": {
+   "corpus_rank": 1617,
+   "per_million": 50.32
+  },
+  "合同": {
+   "corpus_rank": 2352,
+   "per_million": 30.82
+  },
+  "食物": {
+   "corpus_rank": 1141,
+   "per_million": 76.34
+  },
+  "发表": {
+   "corpus_rank": 2703,
+   "per_million": 25.73
+  },
+  "相关": {
+   "corpus_rank": 3049,
+   "per_million": 21.76
+  },
+  "简直": {
+   "corpus_rank": 665,
+   "per_million": 144.37
+  },
+  "退": {
+   "corpus_rank": 1686,
+   "per_million": 47.49
+  },
+  "情绪": {
+   "corpus_rank": 1811,
+   "per_million": 43.1
+  },
+  "信号": {
+   "corpus_rank": 1270,
+   "per_million": 67.07
+  },
+  "岛": {
+   "corpus_rank": 1017,
+   "per_million": 87.94
+  },
+  "官": {
+   "corpus_rank": 1551,
+   "per_million": 52.58
+  },
+  "掌握": {
+   "corpus_rank": 1981,
+   "per_million": 38.36
+  },
+  "证据": {
+   "corpus_rank": 634,
+   "per_million": 152.56
+  },
+  "幸运": {
+   "corpus_rank": 888,
+   "per_million": 104.33
+  },
+  "制作": {
+   "corpus_rank": 1885,
+   "per_million": 41.23
+  },
+  "教练": {
+   "corpus_rank": 1384,
+   "per_million": 60.9
+  },
+  "记忆": {
+   "corpus_rank": 1341,
+   "per_million": 63.43
+  },
+  "公开": {
+   "corpus_rank": 2465,
+   "per_million": 29.15
+  },
+  "资金": {
+   "corpus_rank": 3261,
+   "per_million": 19.76
+  },
+  "摆": {
+   "corpus_rank": 1629,
+   "per_million": 49.9
+  },
+  "吓": {
+   "corpus_rank": 910,
+   "per_million": 101.59
+  },
+  "立即": {
+   "corpus_rank": 2601,
+   "per_million": 26.83
+  },
+  "升": {
+   "corpus_rank": 2639,
+   "per_million": 26.35
+  },
+  "经营": {
+   "corpus_rank": 3228,
+   "per_million": 20.06
+  },
+  "发挥": {
+   "corpus_rank": 2878,
+   "per_million": 23.58
+  },
+  "立刻": {
+   "corpus_rank": 1455,
+   "per_million": 57.03
+  },
+  "独立": {
+   "corpus_rank": 2440,
+   "per_million": 29.54
+  },
+  "实验": {
+   "corpus_rank": 2268,
+   "per_million": 32.28
+  },
+  "吹": {
+   "corpus_rank": 1493,
+   "per_million": 55
+  },
+  "取消": {
+   "corpus_rank": 1461,
+   "per_million": 56.88
+  },
+  "表情": {
+   "corpus_rank": 1541,
+   "per_million": 53
+  },
+  "采访": {
+   "corpus_rank": 2799,
+   "per_million": 24.56
+  },
+  "通常": {
+   "corpus_rank": 1248,
+   "per_million": 69.04
+  },
+  "针对": {
+   "corpus_rank": 2504,
+   "per_million": 28.38
+  },
+  "角度": {
+   "corpus_rank": 2035,
+   "per_million": 36.87
+  },
+  "遗憾": {
+   "corpus_rank": 1143,
+   "per_million": 76.31
+  },
+  "对象": {
+   "corpus_rank": 2257,
+   "per_million": 32.4
+  },
+  "接触": {
+   "corpus_rank": 1731,
+   "per_million": 46.03
+  },
+  "规则": {
+   "corpus_rank": 1715,
+   "per_million": 46.47
+  },
+  "损失": {
+   "corpus_rank": 2287,
+   "per_million": 31.93
+  },
+  "合理": {
+   "corpus_rank": 2647,
+   "per_million": 26.29
+  },
+  "依然": {
+   "corpus_rank": 2689,
+   "per_million": 25.93
+  },
+  "阶段": {
+   "corpus_rank": 2825,
+   "per_million": 24.24
+  },
+  "一致": {
+   "corpus_rank": 2260,
+   "per_million": 32.4
+  },
+  "吐": {
+   "corpus_rank": 1458,
+   "per_million": 56.97
+  },
+  "刺激": {
+   "corpus_rank": 1963,
+   "per_million": 39.2
+  },
+  "反正": {
+   "corpus_rank": 1144,
+   "per_million": 76.28
+  },
+  "赶紧": {
+   "corpus_rank": 1914,
+   "per_million": 40.42
+  },
+  "移动": {
+   "corpus_rank": 2050,
+   "per_million": 36.55
+  },
+  "销售": {
+   "corpus_rank": 3429,
+   "per_million": 18.57
+  },
+  "呼吸": {
+   "corpus_rank": 1195,
+   "per_million": 72.59
+  },
+  "可怕": {
+   "corpus_rank": 936,
+   "per_million": 98.91
+  },
+  "确认": {
+   "corpus_rank": 1301,
+   "per_million": 65.76
+  },
+  "出色": {
+   "corpus_rank": 1069,
+   "per_million": 83.44
+  },
+  "不必": {
+   "corpus_rank": 1180,
+   "per_million": 73.57
+  },
+  "现金": {
+   "corpus_rank": 1979,
+   "per_million": 38.39
+  },
+  "调整": {
+   "corpus_rank": 3479,
+   "per_million": 18.15
+  },
+  "滴": {
+   "corpus_rank": 2709,
+   "per_million": 25.67
+  },
+  "滚": {
+   "corpus_rank": 781,
+   "per_million": 119
+  },
+  "逃": {
+   "corpus_rank": 1086,
+   "per_million": 82.24
+  },
+  "婚姻": {
+   "corpus_rank": 1310,
+   "per_million": 65.19
+  },
+  "喊": {
+   "corpus_rank": 1877,
+   "per_million": 41.49
+  },
+  "紧急": {
+   "corpus_rank": 1343,
+   "per_million": 63.37
+  },
+  "宣传": {
+   "corpus_rank": 3181,
+   "per_million": 20.45
+  },
+  "优势": {
+   "corpus_rank": 3377,
+   "per_million": 18.93
+  },
+  "随时": {
+   "corpus_rank": 1387,
+   "per_million": 60.69
+  },
+  "卷": {
+   "corpus_rank": 1792,
+   "per_million": 43.64
+  },
+  "时期": {
+   "corpus_rank": 2849,
+   "per_million": 23.85
+  },
+  "措施": {
+   "corpus_rank": 3470,
+   "per_million": 18.27
+  },
+  "存": {
+   "corpus_rank": 2453,
+   "per_million": 29.27
+  },
+  "利益": {
+   "corpus_rank": 3413,
+   "per_million": 18.72
+  },
+  "评价": {
+   "corpus_rank": 2800,
+   "per_million": 24.53
+  },
+  "形象": {
+   "corpus_rank": 2863,
+   "per_million": 23.76
+  },
+  "方案": {
+   "corpus_rank": 3404,
+   "per_million": 18.75
+  },
+  "欠": {
+   "corpus_rank": 1123,
+   "per_million": 78.19
+  },
+  "商业": {
+   "corpus_rank": 3201,
+   "per_million": 20.27
+  },
+  "答应": {
+   "corpus_rank": 953,
+   "per_million": 96.61
+  },
+  "到达": {
+   "corpus_rank": 1450,
+   "per_million": 57.14
+  },
+  "功能": {
+   "corpus_rank": 3760,
+   "per_million": 16.48
+  },
+  "避免": {
+   "corpus_rank": 2602,
+   "per_million": 26.83
+  },
+  "生产": {
+   "corpus_rank": 4088,
+   "per_million": 14.7
+  },
+  "女士": {
+   "corpus_rank": 337,
+   "per_million": 314.31
+  },
+  "成长": {
+   "corpus_rank": 2718,
+   "per_million": 25.58
+  },
+  "彼此": {
+   "corpus_rank": 1447,
+   "per_million": 57.23
+  },
+  "推荐": {
+   "corpus_rank": 3665,
+   "per_million": 17.05
+  },
+  "指导": {
+   "corpus_rank": 3038,
+   "per_million": 21.85
+  },
+  "盖": {
+   "corpus_rank": 2046,
+   "per_million": 36.58
+  },
+  "原则": {
+   "corpus_rank": 3265,
+   "per_million": 19.76
+  },
+  "联合": {
+   "corpus_rank": 3341,
+   "per_million": 19.14
+  },
+  "炒": {
+   "corpus_rank": 1810,
+   "per_million": 43.19
+  },
+  "塔": {
+   "corpus_rank": 1865,
+   "per_million": 41.7
+  },
+  "微笑": {
+   "corpus_rank": 2368,
+   "per_million": 30.61
+  },
+  "组合": {
+   "corpus_rank": 2493,
+   "per_million": 28.5
+  },
+  "观点": {
+   "corpus_rank": 2470,
+   "per_million": 29.06
+  },
+  "强烈": {
+   "corpus_rank": 2809,
+   "per_million": 24.47
+  },
+  "争取": {
+   "corpus_rank": 2357,
+   "per_million": 30.79
+  },
+  "公平": {
+   "corpus_rank": 1235,
+   "per_million": 69.63
+  },
+  "洞": {
+   "corpus_rank": 1699,
+   "per_million": 47.13
+  },
+  "病毒": {
+   "corpus_rank": 2224,
+   "per_million": 33.09
+  },
+  "良好": {
+   "corpus_rank": 3447,
+   "per_million": 18.48
+  },
+  "权力": {
+   "corpus_rank": 2174,
+   "per_million": 34.22
+  },
+  "思考": {
+   "corpus_rank": 2073,
+   "per_million": 36.19
+  },
+  "自从": {
+   "corpus_rank": 1171,
+   "per_million": 74.34
+  },
+  "命运": {
+   "corpus_rank": 1643,
+   "per_million": 49.36
+  },
+  "凭": {
+   "corpus_rank": 1965,
+   "per_million": 39.14
+  },
+  "尽量": {
+   "corpus_rank": 1839,
+   "per_million": 42.42
+  },
+  "娱乐": {
+   "corpus_rank": 2916,
+   "per_million": 23.19
+  },
+  "不然": {
+   "corpus_rank": 1109,
+   "per_million": 79.32
+  },
+  "资格": {
+   "corpus_rank": 2421,
+   "per_million": 29.78
+  },
+  "胸": {
+   "corpus_rank": 2361,
+   "per_million": 30.73
+  },
+  "企业": {
+   "corpus_rank": 4511,
+   "per_million": 12.79
+  },
+  "嫁": {
+   "corpus_rank": 1415,
+   "per_million": 58.99
+  },
+  "追求": {
+   "corpus_rank": 2936,
+   "per_million": 22.86
+  },
+  "命令": {
+   "corpus_rank": 965,
+   "per_million": 93.81
+  },
+  "欣赏": {
+   "corpus_rank": 2012,
+   "per_million": 37.62
+  },
+  "政策": {
+   "corpus_rank": 4229,
+   "per_million": 13.95
+  },
+  "神经": {
+   "corpus_rank": 1825,
+   "per_million": 42.72
+  },
+  "放松": {
+   "corpus_rank": 765,
+   "per_million": 121.98
+  },
+  "举": {
+   "corpus_rank": 1565,
+   "per_million": 51.81
+  },
+  "碎": {
+   "corpus_rank": 2150,
+   "per_million": 34.67
+  },
+  "阻止": {
+   "corpus_rank": 748,
+   "per_million": 124.57
+  },
+  "资源": {
+   "corpus_rank": 4047,
+   "per_million": 14.96
+  },
+  "决赛": {
+   "corpus_rank": 2443,
+   "per_million": 29.48
+  },
+  "主席": {
+   "corpus_rank": 3325,
+   "per_million": 19.29
+  },
+  "形成": {
+   "corpus_rank": 4198,
+   "per_million": 14.16
+  },
+  "一辈子": {
+   "corpus_rank": 1925,
+   "per_million": 40.15
+  },
+  "行业": {
+   "corpus_rank": 4201,
+   "per_million": 14.16
+  },
+  "士兵": {
+   "corpus_rank": 1673,
+   "per_million": 48.02
+  },
+  "配合": {
+   "corpus_rank": 3110,
+   "per_million": 21.05
+  },
+  "单位": {
+   "corpus_rank": 4282,
+   "per_million": 13.74
+  },
+  "显得": {
+   "corpus_rank": 2932,
+   "per_million": 22.89
+  },
+  "亲自": {
+   "corpus_rank": 1847,
+   "per_million": 42.09
+  },
+  "物质": {
+   "corpus_rank": 2851,
+   "per_million": 23.85
+  },
+  "承担": {
+   "corpus_rank": 2984,
+   "per_million": 22.21
+  },
+  "面临": {
+   "corpus_rank": 3223,
+   "per_million": 20.12
+  },
+  "费用": {
+   "corpus_rank": 3492,
+   "per_million": 18.03
+  },
+  "神秘": {
+   "corpus_rank": 1930,
+   "per_million": 39.91
+  },
+  "自动": {
+   "corpus_rank": 2676,
+   "per_million": 26.05
+  },
+  "明确": {
+   "corpus_rank": 3762,
+   "per_million": 16.45
+  },
+  "结合": {
+   "corpus_rank": 3956,
+   "per_million": 15.41
+  },
+  "登记": {
+   "corpus_rank": 3034,
+   "per_million": 21.88
+  },
+  "烂": {
+   "corpus_rank": 1108,
+   "per_million": 79.77
+  },
+  "充分": {
+   "corpus_rank": 3966,
+   "per_million": 15.38
+  },
+  "除": {
+   "corpus_rank": 3612,
+   "per_million": 17.32
+  },
+  "批": {
+   "corpus_rank": 2606,
+   "per_million": 26.77
+  },
+  "主人": {
+   "corpus_rank": 1762,
+   "per_million": 45.16
+  },
+  "经典": {
+   "corpus_rank": 2927,
+   "per_million": 22.95
+  },
+  "法院": {
+   "corpus_rank": 2677,
+   "per_million": 26.05
+  },
+  "醉": {
+   "corpus_rank": 1159,
+   "per_million": 75.24
+  },
+  "工人": {
+   "corpus_rank": 3455,
+   "per_million": 18.39
+  },
+  "念": {
+   "corpus_rank": 2008,
+   "per_million": 37.68
+  },
+  "背景": {
+   "corpus_rank": 2781,
+   "per_million": 24.77
+  },
+  "狼": {
+   "corpus_rank": 2091,
+   "per_million": 35.83
+  },
+  "进步": {
+   "corpus_rank": 2935,
+   "per_million": 22.86
+  },
+  "闻": {
+   "corpus_rank": 1234,
+   "per_million": 69.66
+  },
+  "对待": {
+   "corpus_rank": 1761,
+   "per_million": 45.16
+  },
+  "现象": {
+   "corpus_rank": 3955,
+   "per_million": 15.41
+  },
+  "道德": {
+   "corpus_rank": 2903,
+   "per_million": 23.34
+  },
+  "编辑": {
+   "corpus_rank": 3372,
+   "per_million": 18.93
+  },
+  "私人": {
+   "corpus_rank": 1163,
+   "per_million": 74.97
+  },
+  "一路": {
+   "corpus_rank": 2418,
+   "per_million": 29.84
+  },
+  "领域": {
+   "corpus_rank": 3961,
+   "per_million": 15.38
+  },
+  "服装": {
+   "corpus_rank": 2571,
+   "per_million": 27.13
+  },
+  "形式": {
+   "corpus_rank": 3949,
+   "per_million": 15.44
+  },
+  "毕竟": {
+   "corpus_rank": 2898,
+   "per_million": 23.43
+  },
+  "万一": {
+   "corpus_rank": 2484,
+   "per_million": 28.77
+  },
+  "如今": {
+   "corpus_rank": 3631,
+   "per_million": 17.2
+  },
+  "恋爱": {
+   "corpus_rank": 2273,
+   "per_million": 32.22
+  },
+  "成立": {
+   "corpus_rank": 4009,
+   "per_million": 15.2
+  },
+  "细节": {
+   "corpus_rank": 1860,
+   "per_million": 41.73
+  },
+  "唉": {
+   "corpus_rank": 2778,
+   "per_million": 24.8
+  },
+  "道理": {
+   "corpus_rank": 1867,
+   "per_million": 41.64
+  },
+  "迅速": {
+   "corpus_rank": 3990,
+   "per_million": 15.26
+  },
+  "似的": {
+   "corpus_rank": 1504,
+   "per_million": 54.46
+  },
+  "出席": {
+   "corpus_rank": 3229,
+   "per_million": 20.06
+  },
+  "深刻": {
+   "corpus_rank": 2729,
+   "per_million": 25.37
+  },
+  "庆祝": {
+   "corpus_rank": 1479,
+   "per_million": 55.98
+  },
+  "婚礼": {
+   "corpus_rank": 917,
+   "per_million": 100.79
+  },
+  "全面": {
+   "corpus_rank": 4427,
+   "per_million": 13.12
+  },
+  "体验": {
+   "corpus_rank": 3361,
+   "per_million": 19.02
+  },
+  "财产": {
+   "corpus_rank": 2558,
+   "per_million": 27.36
+  },
+  "玻璃": {
+   "corpus_rank": 2191,
+   "per_million": 33.77
+  },
+  "话题": {
+   "corpus_rank": 2275,
+   "per_million": 32.19
+  },
+  "坚强": {
+   "corpus_rank": 2189,
+   "per_million": 33.77
+  },
+  "军事": {
+   "corpus_rank": 3424,
+   "per_million": 18.63
+  },
+  "咬": {
+   "corpus_rank": 1252,
+   "per_million": 68.68
+  },
+  "银": {
+   "corpus_rank": 3757,
+   "per_million": 16.48
+  },
+  "合法": {
+   "corpus_rank": 2429,
+   "per_million": 29.66
+  },
+  "至于": {
+   "corpus_rank": 3031,
+   "per_million": 21.91
+  },
+  "贷款": {
+   "corpus_rank": 4100,
+   "per_million": 14.61
+  },
+  "缺乏": {
+   "corpus_rank": 3600,
+   "per_million": 17.38
+  },
+  "诗": {
+   "corpus_rank": 2757,
+   "per_million": 25.01
+  },
+  "锁": {
+   "corpus_rank": 1072,
+   "per_million": 83.17
+  },
+  "重复": {
+   "corpus_rank": 2010,
+   "per_million": 37.62
+  },
+  "自信": {
+   "corpus_rank": 2030,
+   "per_million": 37.02
+  },
+  "个性": {
+   "corpus_rank": 2587,
+   "per_million": 27.01
+  },
+  "批准": {
+   "corpus_rank": 3348,
+   "per_million": 19.08
+  },
+  "骂": {
+   "corpus_rank": 3036,
+   "per_million": 21.88
+  },
+  "机器": {
+   "corpus_rank": 1599,
+   "per_million": 50.94
+  },
+  "标志": {
+   "corpus_rank": 3128,
+   "per_million": 20.93
+  },
+  "公布": {
+   "corpus_rank": 4321,
+   "per_million": 13.53
+  },
+  "工厂": {
+   "corpus_rank": 2436,
+   "per_million": 29.57
+  },
+  "心脏": {
+   "corpus_rank": 1503,
+   "per_million": 54.55
+  },
+  "人才": {
+   "corpus_rank": 4406,
+   "per_million": 13.21
+  },
+  "黄金": {
+   "corpus_rank": 3382,
+   "per_million": 18.93
+  },
+  "魅力": {
+   "corpus_rank": 2267,
+   "per_million": 32.31
+  },
+  "不如": {
+   "corpus_rank": 3638,
+   "per_million": 17.17
+  },
+  "指挥": {
+   "corpus_rank": 2667,
+   "per_million": 26.14
+  },
+  "伙伴": {
+   "corpus_rank": 2097,
+   "per_million": 35.77
+  },
+  "露": {
+   "corpus_rank": 2069,
+   "per_million": 36.25
+  },
+  "因素": {
+   "corpus_rank": 4619,
+   "per_million": 12.34
+  },
+  "双方": {
+   "corpus_rank": 4549,
+   "per_million": 12.64
+  },
+  "摸": {
+   "corpus_rank": 2071,
+   "per_million": 36.22
+  },
+  "离婚": {
+   "corpus_rank": 1462,
+   "per_million": 56.85
+  },
+  "赶快": {
+   "corpus_rank": 1587,
+   "per_million": 51.21
+  },
+  "股票": {
+   "corpus_rank": 4185,
+   "per_million": 14.22
+  },
+  "脑袋": {
+   "corpus_rank": 1320,
+   "per_million": 64.54
+  },
+  "温暖": {
+   "corpus_rank": 3571,
+   "per_million": 17.56
+  },
+  "祝福": {
+   "corpus_rank": 3466,
+   "per_million": 18.27
+  },
+  "承受": {
+   "corpus_rank": 2218,
+   "per_million": 33.21
+  },
+  "公主": {
+   "corpus_rank": 2059,
+   "per_million": 36.34
+  },
+  "人口": {
+   "corpus_rank": 3746,
+   "per_million": 16.54
+  },
+  "咨询": {
+   "corpus_rank": 3698,
+   "per_million": 16.84
+  },
+  "表面": {
+   "corpus_rank": 3321,
+   "per_million": 19.32
+  },
+  "地位": {
+   "corpus_rank": 4157,
+   "per_million": 14.31
+  },
+  "青": {
+   "corpus_rank": 3715,
+   "per_million": 16.72
+  },
+  "结构": {
+   "corpus_rank": 4915,
+   "per_million": 11.3
+  },
+  "妇女": {
+   "corpus_rank": 3510,
+   "per_million": 17.89
+  },
+  "矛盾": {
+   "corpus_rank": 3953,
+   "per_million": 15.41
+  },
+  "吻": {
+   "corpus_rank": 1084,
+   "per_million": 82.66
+  },
+  "不好意思": {
+   "corpus_rank": 670,
+   "per_million": 143.23
+  },
+  "完整": {
+   "corpus_rank": 3167,
+   "per_million": 20.57
+  },
+  "煮": {
+   "corpus_rank": 2982,
+   "per_million": 22.24
+  },
+  "谈判": {
+   "corpus_rank": 3191,
+   "per_million": 20.33
+  },
+  "请求": {
+   "corpus_rank": 1636,
+   "per_million": 49.63
+  },
+  "纪念": {
+   "corpus_rank": 2882,
+   "per_million": 23.55
+  },
+  "插": {
+   "corpus_rank": 2101,
+   "per_million": 35.71
+  },
+  "分别": {
+   "corpus_rank": 5151,
+   "per_million": 10.43
+  },
+  "愿望": {
+   "corpus_rank": 2858,
+   "per_million": 23.79
+  },
+  "广场": {
+   "corpus_rank": 3282,
+   "per_million": 19.64
+  },
+  "度过": {
+   "corpus_rank": 1896,
+   "per_million": 40.9
+  },
+  "臭": {
+   "corpus_rank": 1169,
+   "per_million": 74.49
+  },
+  "金属": {
+   "corpus_rank": 2643,
+   "per_million": 26.29
+  },
+  "灰": {
+   "corpus_rank": 3279,
+   "per_million": 19.67
+  },
+  "堆": {
+   "corpus_rank": 1242,
+   "per_million": 69.34
+  },
+  "保留": {
+   "corpus_rank": 2605,
+   "per_million": 26.77
+  },
+  "频道": {
+   "corpus_rank": 2848,
+   "per_million": 23.88
+  },
+  "公寓": {
+   "corpus_rank": 1102,
+   "per_million": 80.66
+  },
+  "弱": {
+   "corpus_rank": 4012,
+   "per_million": 15.17
+  },
+  "不足": {
+   "corpus_rank": 4624,
+   "per_million": 12.31
+  },
+  "业务": {
+   "corpus_rank": 5452,
+   "per_million": 9.69
+  },
+  "驾驶": {
+   "corpus_rank": 2537,
+   "per_million": 27.75
+  },
+  "计算": {
+   "corpus_rank": 4433,
+   "per_million": 13.09
+  },
+  "开发": {
+   "corpus_rank": 5579,
+   "per_million": 9.36
+  },
+  "乘": {
+   "corpus_rank": 2691,
+   "per_million": 25.87
+  },
+  "晕": {
+   "corpus_rank": 2461,
+   "per_million": 29.21
+  },
+  "甲": {
+   "corpus_rank": 4484,
+   "per_million": 12.88
+  },
+  "始终": {
+   "corpus_rank": 4166,
+   "per_million": 14.31
+  },
+  "革命": {
+   "corpus_rank": 5117,
+   "per_million": 10.58
+  },
+  "贡献": {
+   "corpus_rank": 4156,
+   "per_million": 14.31
+  },
+  "出版": {
+   "corpus_rank": 3577,
+   "per_million": 17.53
+  },
+  "诊断": {
+   "corpus_rank": 4040,
+   "per_million": 14.99
+  },
+  "临时": {
+   "corpus_rank": 3381,
+   "per_million": 18.93
+  },
+  "单独": {
+   "corpus_rank": 1575,
+   "per_million": 51.63
+  },
+  "平衡": {
+   "corpus_rank": 3433,
+   "per_million": 18.57
+  },
+  "开放": {
+   "corpus_rank": 4568,
+   "per_million": 12.55
+  },
+  "瞧": {
+   "corpus_rank": 689,
+   "per_million": 138.14
+  },
+  "大型": {
+   "corpus_rank": 4570,
+   "per_million": 12.52
+  },
+  "展开": {
+   "corpus_rank": 4536,
+   "per_million": 12.7
+  },
+  "把握": {
+   "corpus_rank": 3774,
+   "per_million": 16.37
+  },
+  "酒吧": {
+   "corpus_rank": 1010,
+   "per_million": 88.47
+  },
+  "胃": {
+   "corpus_rank": 3494,
+   "per_million": 18
+  },
+  "成就": {
+   "corpus_rank": 3399,
+   "per_million": 18.78
+  },
+  "课程": {
+   "corpus_rank": 3231,
+   "per_million": 20.06
+  },
+  "踩": {
+   "corpus_rank": 2334,
+   "per_million": 31.12
+  },
+  "激烈": {
+   "corpus_rank": 3776,
+   "per_million": 16.37
+  },
+  "想念": {
+   "corpus_rank": 1786,
+   "per_million": 43.79
+  },
+  "固定": {
+   "corpus_rank": 4299,
+   "per_million": 13.62
+  },
+  "勇气": {
+   "corpus_rank": 2192,
+   "per_million": 33.74
+  },
+  "注册": {
+   "corpus_rank": 4306,
+   "per_million": 13.59
+  },
+  "选举": {
+   "corpus_rank": 3732,
+   "per_million": 16.63
+  },
+  "摇": {
+   "corpus_rank": 3155,
+   "per_million": 20.66
+  },
+  "愤怒": {
+   "corpus_rank": 1829,
+   "per_million": 42.57
+  },
+  "培养": {
+   "corpus_rank": 5203,
+   "per_million": 10.31
+  },
+  "平静": {
+   "corpus_rank": 2690,
+   "per_million": 25.93
+  },
+  "传说": {
+   "corpus_rank": 2852,
+   "per_million": 23.85
+  },
+  "转变": {
+   "corpus_rank": 4134,
+   "per_million": 14.46
+  },
+  "至今": {
+   "corpus_rank": 4343,
+   "per_million": 13.44
+  },
+  "餐厅": {
+   "corpus_rank": 1876,
+   "per_million": 41.49
+  },
+  "维护": {
+   "corpus_rank": 4637,
+   "per_million": 12.25
+  },
+  "无数": {
+   "corpus_rank": 3301,
+   "per_million": 19.5
+  },
+  "后果": {
+   "corpus_rank": 2582,
+   "per_million": 27.01
+  },
+  "气氛": {
+   "corpus_rank": 3347,
+   "per_million": 19.08
+  },
+  "违反": {
+   "corpus_rank": 2824,
+   "per_million": 24.24
+  },
+  "石头": {
+   "corpus_rank": 1856,
+   "per_million": 41.88
+  },
+  "委托": {
+   "corpus_rank": 3529,
+   "per_million": 17.83
+  },
+  "主持": {
+   "corpus_rank": 3589,
+   "per_million": 17.47
+  },
+  "关闭": {
+   "corpus_rank": 2087,
+   "per_million": 35.89
+  },
+  "聚会": {
+   "corpus_rank": 1302,
+   "per_million": 65.76
+  },
+  "摄影": {
+   "corpus_rank": 3840,
+   "per_million": 16.01
+  },
+  "交换": {
+   "corpus_rank": 2480,
+   "per_million": 28.94
+  },
+  "文明": {
+   "corpus_rank": 4586,
+   "per_million": 12.46
+  },
+  "挡": {
+   "corpus_rank": 2579,
+   "per_million": 27.07
+  },
+  "丁": {
+   "corpus_rank": 3663,
+   "per_million": 17.05
+  },
+  "届": {
+   "corpus_rank": 4739,
+   "per_million": 11.86
+  },
+  "运气": {
+   "corpus_rank": 1872,
+   "per_million": 41.55
+  },
+  "玩具": {
+   "corpus_rank": 1996,
+   "per_million": 38.04
+  },
+  "年纪": {
+   "corpus_rank": 2036,
+   "per_million": 36.87
+  },
+  "智慧": {
+   "corpus_rank": 3327,
+   "per_million": 19.29
+  },
+  "摔": {
+   "corpus_rank": 1887,
+   "per_million": 41.2
+  },
+  "教训": {
+   "corpus_rank": 2159,
+   "per_million": 34.52
+  },
+  "沟通": {
+   "corpus_rank": 4227,
+   "per_million": 13.98
+  },
+  "手指": {
+   "corpus_rank": 2413,
+   "per_million": 29.93
+  },
+  "结论": {
+   "corpus_rank": 3432,
+   "per_million": 18.57
+  },
+  "除非": {
+   "corpus_rank": 730,
+   "per_million": 128.15
+  },
+  "化学": {
+   "corpus_rank": 3477,
+   "per_million": 18.18
+  },
+  "总之": {
+   "corpus_rank": 2111,
+   "per_million": 35.38
+  },
+  "天空": {
+   "corpus_rank": 3009,
+   "per_million": 22.09
+  },
+  "统一": {
+   "corpus_rank": 5667,
+   "per_million": 9.15
+  },
+  "制度": {
+   "corpus_rank": 6142,
+   "per_million": 8.11
+  },
+  "绕": {
+   "corpus_rank": 2529,
+   "per_million": 27.87
+  },
+  "玉米": {
+   "corpus_rank": 3275,
+   "per_million": 19.7
+  },
+  "工业": {
+   "corpus_rank": 5775,
+   "per_million": 8.88
+  },
+  "身材": {
+   "corpus_rank": 3050,
+   "per_million": 21.73
+  },
+  "设施": {
+   "corpus_rank": 5190,
+   "per_million": 10.31
+  },
+  "腰": {
+   "corpus_rank": 4087,
+   "per_million": 14.7
+  },
+  "从事": {
+   "corpus_rank": 4750,
+   "per_million": 11.83
+  },
+  "义务": {
+   "corpus_rank": 3601,
+   "per_million": 17.38
+  },
+  "奇迹": {
+   "corpus_rank": 1902,
+   "per_million": 40.72
+  },
+  "运用": {
+   "corpus_rank": 4668,
+   "per_million": 12.16
+  },
+  "肺": {
+   "corpus_rank": 3702,
+   "per_million": 16.84
+  },
+  "民主": {
+   "corpus_rank": 4892,
+   "per_million": 11.39
+  },
+  "制定": {
+   "corpus_rank": 5470,
+   "per_million": 9.66
+  },
+  "沉默": {
+   "corpus_rank": 3086,
+   "per_million": 21.28
+  },
+  "独特": {
+   "corpus_rank": 4070,
+   "per_million": 14.82
+  },
+  "厕所": {
+   "corpus_rank": 1622,
+   "per_million": 50.14
+  },
+  "各自": {
+   "corpus_rank": 4140,
+   "per_million": 14.43
+  },
+  "糟糕": {
+   "corpus_rank": 625,
+   "per_million": 155.4
+  },
+  "砍": {
+   "corpus_rank": 2204,
+   "per_million": 33.48
+  },
+  "拆": {
+   "corpus_rank": 2992,
+   "per_million": 22.18
+  },
+  "退休": {
+   "corpus_rank": 2661,
+   "per_million": 26.2
+  },
+  "成果": {
+   "corpus_rank": 5202,
+   "per_million": 10.31
+  },
+  "蛇": {
+   "corpus_rank": 2378,
+   "per_million": 30.49
+  },
+  "精力": {
+   "corpus_rank": 2660,
+   "per_million": 26.2
+  },
+  "宗教": {
+   "corpus_rank": 2683,
+   "per_million": 25.96
+  },
+  "等于": {
+   "corpus_rank": 3224,
+   "per_million": 20.12
+  },
+  "概念": {
+   "corpus_rank": 5101,
+   "per_million": 10.61
+  },
+  "能源": {
+   "corpus_rank": 4953,
+   "per_million": 11.18
+  },
+  "核心": {
+   "corpus_rank": 5575,
+   "per_million": 9.36
+  },
+  "据说": {
+   "corpus_rank": 3977,
+   "per_million": 15.32
+  },
+  "特征": {
+   "corpus_rank": 4992,
+   "per_million": 11.03
+  },
+  "去世": {
+   "corpus_rank": 1710,
+   "per_million": 46.71
+  },
+  "平均": {
+   "corpus_rank": 6119,
+   "per_million": 8.14
+  },
+  "县": {
+   "corpus_rank": 6036,
+   "per_million": 8.32
+  },
+  "询问": {
+   "corpus_rank": 3422,
+   "per_million": 18.63
+  },
+  "事物": {
+   "corpus_rank": 2865,
+   "per_million": 23.76
+  },
+  "温柔": {
+   "corpus_rank": 3389,
+   "per_million": 18.87
+  },
+  "软件": {
+   "corpus_rank": 5726,
+   "per_million": 8.97
+  },
+  "严肃": {
+   "corpus_rank": 3088,
+   "per_million": 21.25
+  },
+  "脖子": {
+   "corpus_rank": 1991,
+   "per_million": 38.13
+  },
+  "否认": {
+   "corpus_rank": 2826,
+   "per_million": 24.24
+  },
+  "肌肉": {
+   "corpus_rank": 2911,
+   "per_million": 23.25
+  },
+  "安慰": {
+   "corpus_rank": 2906,
+   "per_million": 23.28
+  },
+  "过分": {
+   "corpus_rank": 2256,
+   "per_million": 32.43
+  },
+  "寂寞": {
+   "corpus_rank": 4272,
+   "per_million": 13.77
+  },
+  "反而": {
+   "corpus_rank": 4795,
+   "per_million": 11.72
+  },
+  "体会": {
+   "corpus_rank": 4086,
+   "per_million": 14.73
+  },
+  "豪华": {
+   "corpus_rank": 3706,
+   "per_million": 16.78
+  },
+  "税": {
+   "corpus_rank": 5290,
+   "per_million": 10.08
+  },
+  "王子": {
+   "corpus_rank": 2289,
+   "per_million": 31.93
+  },
+  "高速": {
+   "corpus_rank": 4707,
+   "per_million": 12.01
+  },
+  "此外": {
+   "corpus_rank": 6134,
+   "per_million": 8.11
+  },
+  "安装": {
+   "corpus_rank": 5113,
+   "per_million": 10.58
+  },
+  "怀念": {
+   "corpus_rank": 3548,
+   "per_million": 17.71
+  },
+  "荣誉": {
+   "corpus_rank": 2818,
+   "per_million": 24.29
+  },
+  "解放": {
+   "corpus_rank": 4903,
+   "per_million": 11.33
+  },
+  "假如": {
+   "corpus_rank": 2347,
+   "per_million": 30.94
+  },
+  "幻想": {
+   "corpus_rank": 2089,
+   "per_million": 35.83
+  },
+  "甩": {
+   "corpus_rank": 2096,
+   "per_million": 35.77
+  },
+  "相对": {
+   "corpus_rank": 6212,
+   "per_million": 7.99
+  },
+  "改善": {
+   "corpus_rank": 6054,
+   "per_million": 8.29
+  },
+  "功夫": {
+   "corpus_rank": 3165,
+   "per_million": 20.6
+  },
+  "拥抱": {
+   "corpus_rank": 2483,
+   "per_million": 28.77
+  },
+  "晒": {
+   "corpus_rank": 4595,
+   "per_million": 12.46
+  },
+  "感激": {
+   "corpus_rank": 1404,
+   "per_million": 59.92
+  },
+  "纪录": {
+   "corpus_rank": 3274,
+   "per_million": 19.7
+  },
+  "乖": {
+   "corpus_rank": 2379,
+   "per_million": 30.47
+  },
+  "农民": {
+   "corpus_rank": 6602,
+   "per_million": 7.3
+  },
+  "商品": {
+   "corpus_rank": 6361,
+   "per_million": 7.72
+  },
+  "形势": {
+   "corpus_rank": 5709,
+   "per_million": 9
+  },
+  "劝": {
+   "corpus_rank": 3260,
+   "per_million": 19.76
+  },
+  "娶": {
+   "corpus_rank": 2250,
+   "per_million": 32.52
+  },
+  "运输": {
+   "corpus_rank": 5461,
+   "per_million": 9.66
+  },
+  "利润": {
+   "corpus_rank": 6288,
+   "per_million": 7.84
+  },
+  "珍惜": {
+   "corpus_rank": 5201,
+   "per_million": 10.31
+  },
+  "传播": {
+   "corpus_rank": 4753,
+   "per_million": 11.83
+  },
+  "匹": {
+   "corpus_rank": 1915,
+   "per_million": 40.39
+  },
+  "好奇": {
+   "corpus_rank": 2199,
+   "per_million": 33.57
+  },
+  "集体": {
+   "corpus_rank": 5890,
+   "per_million": 8.59
+  },
+  "收获": {
+   "corpus_rank": 4435,
+   "per_million": 13.09
+  },
+  "装饰": {
+   "corpus_rank": 4031,
+   "per_million": 15.05
+  },
+  "通讯": {
+   "corpus_rank": 3850,
+   "per_million": 15.98
+  },
+  "锅": {
+   "corpus_rank": 5210,
+   "per_million": 10.28
+  },
+  "太太": {
+   "corpus_rank": 714,
+   "per_million": 132.12
+  },
+  "落后": {
+   "corpus_rank": 4978,
+   "per_million": 11.06
+  },
+  "蹲": {
+   "corpus_rank": 2702,
+   "per_million": 25.76
+  },
+  "强调": {
+   "corpus_rank": 6473,
+   "per_million": 7.51
+  },
+  "丑": {
+   "corpus_rank": 2675,
+   "per_million": 26.05
+  },
+  "冒险": {
+   "corpus_rank": 1542,
+   "per_million": 52.97
+  },
+  "牵": {
+   "corpus_rank": 4081,
+   "per_million": 14.76
+  },
+  "分配": {
+   "corpus_rank": 5690,
+   "per_million": 9.09
+  },
+  "账户": {
+   "corpus_rank": 4179,
+   "per_million": 14.25
+  },
+  "修改": {
+   "corpus_rank": 5116,
+   "per_million": 10.58
+  },
+  "宇宙": {
+   "corpus_rank": 2403,
+   "per_million": 30.08
+  },
+  "冻": {
+   "corpus_rank": 4572,
+   "per_million": 12.52
+  },
+  "要不": {
+   "corpus_rank": 5393,
+   "per_million": 9.81
+  },
+  "辞职": {
+   "corpus_rank": 2423,
+   "per_million": 29.72
+  },
+  "遵守": {
+   "corpus_rank": 2972,
+   "per_million": 22.39
+  },
+  "抓紧": {
+   "corpus_rank": 3071,
+   "per_million": 21.43
+  },
+  "相处": {
+   "corpus_rank": 1892,
+   "per_million": 40.96
+  },
+  "保存": {
+   "corpus_rank": 3625,
+   "per_million": 17.23
+  },
+  "阵": {
+   "corpus_rank": 4844,
+   "per_million": 11.51
+  },
+  "日期": {
+   "corpus_rank": 3934,
+   "per_million": 15.5
+  },
+  "瞎": {
+   "corpus_rank": 2404,
+   "per_million": 30.08
+  },
+  "从此": {
+   "corpus_rank": 4496,
+   "per_million": 12.82
+  },
+  "地震": {
+   "corpus_rank": 4125,
+   "per_million": 14.49
+  },
+  "赔偿": {
+   "corpus_rank": 5012,
+   "per_million": 10.94
+  },
+  "发明": {
+   "corpus_rank": 2487,
+   "per_million": 28.62
+  },
+  "挥": {
+   "corpus_rank": 4025,
+   "per_million": 15.11
+  },
+  "突出": {
+   "corpus_rank": 6435,
+   "per_million": 7.6
+  },
+  "电池": {
+   "corpus_rank": 3978,
+   "per_million": 15.32
+  },
+  "乐观": {
+   "corpus_rank": 4341,
+   "per_million": 13.44
+  },
+  "实话": {
+   "corpus_rank": 1540,
+   "per_million": 53.06
+  },
+  "青少年": {
+   "corpus_rank": 4532,
+   "per_million": 12.7
+  },
+  "老鼠": {
+   "corpus_rank": 2041,
+   "per_million": 36.78
+  },
+  "涨": {
+   "corpus_rank": 6433,
+   "per_million": 7.6
+  },
+  "热烈": {
+   "corpus_rank": 4940,
+   "per_million": 11.24
+  },
+  "吨": {
+   "corpus_rank": 7280,
+   "per_million": 6.32
+  },
+  "相似": {
+   "corpus_rank": 3958,
+   "per_million": 15.41
+  },
+  "移民": {
+   "corpus_rank": 3918,
+   "per_million": 15.56
+  },
+  "担任": {
+   "corpus_rank": 5992,
+   "per_million": 8.44
+  },
+  "趁": {
+   "corpus_rank": 2962,
+   "per_million": 22.54
+  },
+  "宿舍": {
+   "corpus_rank": 5307,
+   "per_million": 10.02
+  },
+  "秩序": {
+   "corpus_rank": 5206,
+   "per_million": 10.28
+  },
+  "善良": {
+   "corpus_rank": 3306,
+   "per_million": 19.47
+  },
+  "可靠": {
+   "corpus_rank": 3358,
+   "per_million": 19.02
+  },
+  "其余": {
+   "corpus_rank": 4879,
+   "per_million": 11.39
+  },
+  "规模": {
+   "corpus_rank": 7212,
+   "per_million": 6.41
+  },
+  "决心": {
+   "corpus_rank": 4747,
+   "per_million": 11.86
+  },
+  "忍不住": {
+   "corpus_rank": 4573,
+   "per_million": 12.52
+  },
+  "球迷": {
+   "corpus_rank": 5888,
+   "per_million": 8.61
+  },
+  "捡": {
+   "corpus_rank": 2611,
+   "per_million": 26.71
+  },
+  "蔬菜": {
+   "corpus_rank": 5170,
+   "per_million": 10.37
+  },
+  "消灭": {
+   "corpus_rank": 3236,
+   "per_million": 20
+  },
+  "哪怕": {
+   "corpus_rank": 3268,
+   "per_million": 19.76
+  },
+  "补充": {
+   "corpus_rank": 5686,
+   "per_million": 9.09
+  },
+  "最初": {
+   "corpus_rank": 4136,
+   "per_million": 14.43
+  },
+  "克服": {
+   "corpus_rank": 4425,
+   "per_million": 13.12
+  },
+  "摩托车": {
+   "corpus_rank": 3938,
+   "per_million": 15.5
+  },
+  "薄": {
+   "corpus_rank": 5281,
+   "per_million": 10.08
+  },
+  "贸易": {
+   "corpus_rank": 6848,
+   "per_million": 6.92
+  },
+  "成分": {
+   "corpus_rank": 5246,
+   "per_million": 10.19
+  },
+  "召开": {
+   "corpus_rank": 7215,
+   "per_million": 6.38
+  },
+  "平常": {
+   "corpus_rank": 3154,
+   "per_million": 20.66
+  },
+  "借口": {
+   "corpus_rank": 2209,
+   "per_million": 33.42
+  },
+  "有利": {
+   "corpus_rank": 4446,
+   "per_million": 13.06
+  },
+  "博物馆": {
+   "corpus_rank": 2964,
+   "per_million": 22.51
+  },
+  "热爱": {
+   "corpus_rank": 3937,
+   "per_million": 15.5
+  },
+  "体现": {
+   "corpus_rank": 7055,
+   "per_million": 6.62
+  },
+  "总裁": {
+   "corpus_rank": 4808,
+   "per_million": 11.66
+  },
+  "协调": {
+   "corpus_rank": 6606,
+   "per_million": 7.3
+  },
+  "论文": {
+   "corpus_rank": 4287,
+   "per_million": 13.68
+  },
+  "从而": {
+   "corpus_rank": 7308,
+   "per_million": 6.26
+  },
+  "整体": {
+   "corpus_rank": 7239,
+   "per_million": 6.35
+  },
+  "综合": {
+   "corpus_rank": 7578,
+   "per_million": 5.9
+  },
+  "形容": {
+   "corpus_rank": 3405,
+   "per_million": 18.75
+  },
+  "青春": {
+   "corpus_rank": 5739,
+   "per_million": 8.94
+  },
+  "吸收": {
+   "corpus_rank": 5963,
+   "per_million": 8.47
+  },
+  "迎接": {
+   "corpus_rank": 4787,
+   "per_million": 11.74
+  },
+  "改进": {
+   "corpus_rank": 5893,
+   "per_million": 8.59
+  },
+  "小伙子": {
+   "corpus_rank": 1569,
+   "per_million": 51.69
+  },
+  "舒适": {
+   "corpus_rank": 4602,
+   "per_million": 12.43
+  },
+  "建设": {
+   "corpus_rank": 8397,
+   "per_million": 4.98
+  },
+  "文学": {
+   "corpus_rank": 6078,
+   "per_million": 8.23
+  },
+  "会计": {
+   "corpus_rank": 5747,
+   "per_million": 8.94
+  },
+  "仿佛": {
+   "corpus_rank": 5364,
+   "per_million": 9.87
+  },
+  "漏": {
+   "corpus_rank": 3344,
+   "per_million": 19.11
+  },
+  "屋子": {
+   "corpus_rank": 1681,
+   "per_million": 47.75
+  },
+  "排队": {
+   "corpus_rank": 4447,
+   "per_million": 13.06
+  },
+  "应付": {
+   "corpus_rank": 2548,
+   "per_million": 27.57
+  },
+  "雾": {
+   "corpus_rank": 4638,
+   "per_million": 12.25
+  },
+  "家乡": {
+   "corpus_rank": 3987,
+   "per_million": 15.29
+  },
+  "祖国": {
+   "corpus_rank": 6026,
+   "per_million": 8.35
+  },
+  "伸": {
+   "corpus_rank": 2854,
+   "per_million": 23.82
+  },
+  "奋斗": {
+   "corpus_rank": 5191,
+   "per_million": 10.31
+  },
+  "消费": {
+   "corpus_rank": 7781,
+   "per_million": 5.6
+  },
+  "实行": {
+   "corpus_rank": 7796,
+   "per_million": 5.6
+  },
+  "吵架": {
+   "corpus_rank": 2569,
+   "per_million": 27.16
+  },
+  "口味": {
+   "corpus_rank": 4302,
+   "per_million": 13.62
+  },
+  "具备": {
+   "corpus_rank": 6903,
+   "per_million": 6.83
+  },
+  "姿势": {
+   "corpus_rank": 2402,
+   "per_million": 30.11
+  },
+  "干脆": {
+   "corpus_rank": 3559,
+   "per_million": 17.62
+  },
+  "不安": {
+   "corpus_rank": 3044,
+   "per_million": 21.79
+  },
+  "谨慎": {
+   "corpus_rank": 4476,
+   "per_million": 12.94
+  },
+  "尽力": {
+   "corpus_rank": 1465,
+   "per_million": 56.82
+  },
+  "陌生": {
+   "corpus_rank": 4385,
+   "per_million": 13.27
+  },
+  "企图": {
+   "corpus_rank": 3636,
+   "per_million": 17.17
+  },
+  "扶": {
+   "corpus_rank": 3791,
+   "per_million": 16.25
+  },
+  "下载": {
+   "corpus_rank": 4504,
+   "per_million": 12.79
+  },
+  "构成": {
+   "corpus_rank": 7001,
+   "per_million": 6.71
+  },
+  "肩膀": {
+   "corpus_rank": 3180,
+   "per_million": 20.45
+  },
+  "发言": {
+   "corpus_rank": 4941,
+   "per_million": 11.21
+  },
+  "观念": {
+   "corpus_rank": 7167,
+   "per_million": 6.47
+  },
+  "催": {
+   "corpus_rank": 5240,
+   "per_million": 10.19
+  },
+  "改革": {
+   "corpus_rank": 8692,
+   "per_million": 4.71
+  },
+  "告别": {
+   "corpus_rank": 4152,
+   "per_million": 14.37
+  },
+  "秘书": {
+   "corpus_rank": 3796,
+   "per_million": 16.25
+  },
+  "捐": {
+   "corpus_rank": 3425,
+   "per_million": 18.63
+  },
+  "卧室": {
+   "corpus_rank": 2409,
+   "per_million": 29.99
+  },
+  "假装": {
+   "corpus_rank": 1486,
+   "per_million": 55.74
+  },
+  "燃烧": {
+   "corpus_rank": 3705,
+   "per_million": 16.81
+  },
+  "反复": {
+   "corpus_rank": 6362,
+   "per_million": 7.72
+  },
+  "尊敬": {
+   "corpus_rank": 2185,
+   "per_million": 33.89
+  },
+  "宠物": {
+   "corpus_rank": 3278,
+   "per_million": 19.67
+  },
+  "模仿": {
+   "corpus_rank": 2796,
+   "per_million": 24.62
+  },
+  "破产": {
+   "corpus_rank": 3863,
+   "per_million": 15.92
+  },
+  "烫": {
+   "corpus_rank": 3305,
+   "per_million": 19.47
+  },
+  "说不定": {
+   "corpus_rank": 2475,
+   "per_million": 29
+  },
+  "统治": {
+   "corpus_rank": 3943,
+   "per_million": 15.47
+  },
+  "自豪": {
+   "corpus_rank": 2292,
+   "per_million": 31.84
+  },
+  "闯": {
+   "corpus_rank": 3799,
+   "per_million": 16.22
+  },
+  "戒指": {
+   "corpus_rank": 1697,
+   "per_million": 47.16
+  },
+  "单纯": {
+   "corpus_rank": 6214,
+   "per_million": 7.99
+  },
+  "比例": {
+   "corpus_rank": 8222,
+   "per_million": 5.16
+  },
+  "输入": {
+   "corpus_rank": 5048,
+   "per_million": 10.79
+  },
+  "逃避": {
+   "corpus_rank": 2844,
+   "per_million": 23.94
+  },
+  "劳动": {
+   "corpus_rank": 8459,
+   "per_million": 4.92
+  },
+  "事先": {
+   "corpus_rank": 3803,
+   "per_million": 16.22
+  },
+  "失业": {
+   "corpus_rank": 4418,
+   "per_million": 13.15
+  },
+  "粒": {
+   "corpus_rank": 6194,
+   "per_million": 8.02
+  },
+  "规律": {
+   "corpus_rank": 7087,
+   "per_million": 6.59
+  },
+  "待遇": {
+   "corpus_rank": 5545,
+   "per_million": 9.45
+  },
+  "淡": {
+   "corpus_rank": 7420,
+   "per_million": 6.08
+  },
+  "逗": {
+   "corpus_rank": 3127,
+   "per_million": 20.93
+  },
+  "飘": {
+   "corpus_rank": 5809,
+   "per_million": 8.79
+  },
+  "物理": {
+   "corpus_rank": 5036,
+   "per_million": 10.85
+  },
+  "前途": {
+   "corpus_rank": 3998,
+   "per_million": 15.23
+  },
+  "营养": {
+   "corpus_rank": 7272,
+   "per_million": 6.32
+  },
+  "平等": {
+   "corpus_rank": 5729,
+   "per_million": 8.97
+  },
+  "说服": {
+   "corpus_rank": 1721,
+   "per_million": 46.26
+  },
+  "打工": {
+   "corpus_rank": 5577,
+   "per_million": 9.36
+  },
+  "自愿": {
+   "corpus_rank": 3456,
+   "per_million": 18.39
+  },
+  "抗议": {
+   "corpus_rank": 4222,
+   "per_million": 14.04
+  },
+  "铜": {
+   "corpus_rank": 7797,
+   "per_million": 5.6
+  },
+  "总算": {
+   "corpus_rank": 3521,
+   "per_million": 17.86
+  },
+  "汽油": {
+   "corpus_rank": 4233,
+   "per_million": 13.95
+  },
+  "传递": {
+   "corpus_rank": 5490,
+   "per_million": 9.6
+  },
+  "浓": {
+   "corpus_rank": 5352,
+   "per_million": 9.93
+  },
+  "活跃": {
+   "corpus_rank": 6500,
+   "per_million": 7.48
+  },
+  "毛病": {
+   "corpus_rank": 2454,
+   "per_million": 29.27
+  },
+  "逻辑": {
+   "corpus_rank": 5026,
+   "per_million": 10.88
+  },
+  "兔子": {
+   "corpus_rank": 2861,
+   "per_million": 23.76
+  },
+  "弯": {
+   "corpus_rank": 4615,
+   "per_million": 12.37
+  },
+  "横": {
+   "corpus_rank": 6346,
+   "per_million": 7.75
+  },
+  "忽视": {
+   "corpus_rank": 5000,
+   "per_million": 11
+  },
+  "密切": {
+   "corpus_rank": 7095,
+   "per_million": 6.56
+  },
+  "哲学": {
+   "corpus_rank": 6694,
+   "per_million": 7.15
+  },
+  "光明": {
+   "corpus_rank": 4099,
+   "per_million": 14.64
+  },
+  "光荣": {
+   "corpus_rank": 5023,
+   "per_million": 10.91
+  },
+  "卡车": {
+   "corpus_rank": 1732,
+   "per_million": 46
+  },
+  "嘉宾": {
+   "corpus_rank": 5691,
+   "per_million": 9.09
+  },
+  "象征": {
+   "corpus_rank": 4558,
+   "per_million": 12.58
+  },
+  "射击": {
+   "corpus_rank": 2853,
+   "per_million": 23.82
+  },
+  "本质": {
+   "corpus_rank": 5644,
+   "per_million": 9.24
+  },
+  "提问": {
+   "corpus_rank": 5561,
+   "per_million": 9.42
+  },
+  "录取": {
+   "corpus_rank": 6224,
+   "per_million": 7.96
+  },
+  "浅": {
+   "corpus_rank": 5742,
+   "per_million": 8.94
+  },
+  "犹豫": {
+   "corpus_rank": 4494,
+   "per_million": 12.85
+  },
+  "实践": {
+   "corpus_rank": 8861,
+   "per_million": 4.56
+  },
+  "小偷": {
+   "corpus_rank": 3659,
+   "per_million": 17.05
+  },
+  "坚决": {
+   "corpus_rank": 8129,
+   "per_million": 5.25
+  },
+  "从前": {
+   "corpus_rank": 4659,
+   "per_million": 12.19
+  },
+  "日常": {
+   "corpus_rank": 5790,
+   "per_million": 8.85
+  },
+  "老实": {
+   "corpus_rank": 1669,
+   "per_million": 48.14
+  },
+  "预防": {
+   "corpus_rank": 8000,
+   "per_million": 5.4
+  },
+  "效率": {
+   "corpus_rank": 7876,
+   "per_million": 5.51
+  },
+  "情景": {
+   "corpus_rank": 5094,
+   "per_million": 10.64
+  },
+  "必然": {
+   "corpus_rank": 8217,
+   "per_million": 5.16
+  },
+  "摘": {
+   "corpus_rank": 4142,
+   "per_million": 14.43
+  },
+  "皇帝": {
+   "corpus_rank": 6607,
+   "per_million": 7.3
+  },
+  "业余": {
+   "corpus_rank": 4395,
+   "per_million": 13.24
+  },
+  "古老": {
+   "corpus_rank": 3524,
+   "per_million": 17.83
+  },
+  "倒霉": {
+   "corpus_rank": 2885,
+   "per_million": 23.55
+  },
+  "胳膊": {
+   "corpus_rank": 2740,
+   "per_million": 25.22
+  },
+  "对比": {
+   "corpus_rank": 6966,
+   "per_million": 6.74
+  },
+  "危害": {
+   "corpus_rank": 6619,
+   "per_million": 7.27
+  },
+  "手续": {
+   "corpus_rank": 7572,
+   "per_million": 5.9
+  },
+  "争论": {
+   "corpus_rank": 4366,
+   "per_million": 13.35
+  },
+  "休闲": {
+   "corpus_rank": 7997,
+   "per_million": 5.4
+  },
+  "签字": {
+   "corpus_rank": 3395,
+   "per_million": 18.81
+  },
+  "戏剧": {
+   "corpus_rank": 4213,
+   "per_million": 14.07
+  },
+  "难怪": {
+   "corpus_rank": 4424,
+   "per_million": 13.12
+  },
+  "围绕": {
+   "corpus_rank": 7672,
+   "per_million": 5.78
+  },
+  "隔壁": {
+   "corpus_rank": 3199,
+   "per_million": 20.3
+  },
+  "歪": {
+   "corpus_rank": 4422,
+   "per_million": 13.12
+  },
+  "外交": {
+   "corpus_rank": 7129,
+   "per_million": 6.5
+  },
+  "缩小": {
+   "corpus_rank": 5286,
+   "per_million": 10.08
+  },
+  "偶然": {
+   "corpus_rank": 4692,
+   "per_million": 12.07
+  },
+  "规矩": {
+   "corpus_rank": 1736,
+   "per_million": 45.85
+  },
+  "模糊": {
+   "corpus_rank": 5670,
+   "per_million": 9.15
+  },
+  "差别": {
+   "corpus_rank": 6264,
+   "per_million": 7.87
+  },
+  "赞成": {
+   "corpus_rank": 3935,
+   "per_million": 15.5
+  },
+  "复制": {
+   "corpus_rank": 3836,
+   "per_million": 16.04
+  },
+  "消化": {
+   "corpus_rank": 7013,
+   "per_million": 6.68
+  },
+  "录音": {
+   "corpus_rank": 3367,
+   "per_million": 18.99
+  },
+  "接待": {
+   "corpus_rank": 6859,
+   "per_million": 6.92
+  },
+  "疑问": {
+   "corpus_rank": 4634,
+   "per_million": 12.28
+  },
+  "包裹": {
+   "corpus_rank": 3505,
+   "per_million": 17.92
+  },
+  "真理": {
+   "corpus_rank": 5085,
+   "per_million": 10.67
+  },
+  "客观": {
+   "corpus_rank": 8103,
+   "per_million": 5.28
+  },
+  "善于": {
+   "corpus_rank": 5872,
+   "per_million": 8.64
+  },
+  "丝毫": {
+   "corpus_rank": 6330,
+   "per_million": 7.78
+  },
+  "应用": {
+   "corpus_rank": 10101,
+   "per_million": 3.7
+  },
+  "包含": {
+   "corpus_rank": 6600,
+   "per_million": 7.3
+  },
+  "过敏": {
+   "corpus_rank": 3500,
+   "per_million": 17.98
+  },
+  "电台": {
+   "corpus_rank": 3650,
+   "per_million": 17.14
+  },
+  "总理": {
+   "corpus_rank": 8904,
+   "per_million": 4.53
+  },
+  "骨头": {
+   "corpus_rank": 2331,
+   "per_million": 31.15
+  },
+  "宝贵": {
+   "corpus_rank": 5081,
+   "per_million": 10.7
+  },
+  "进口": {
+   "corpus_rank": 9306,
+   "per_million": 4.2
+  },
+  "睁": {
+   "corpus_rank": 2923,
+   "per_million": 23.01
+  },
+  "工程师": {
+   "corpus_rank": 5511,
+   "per_million": 9.54
+  },
+  "土豆": {
+   "corpus_rank": 4687,
+   "per_million": 12.1
+  },
+  "展览": {
+   "corpus_rank": 6499,
+   "per_million": 7.48
+  },
+  "客厅": {
+   "corpus_rank": 4906,
+   "per_million": 11.33
+  },
+  "完善": {
+   "corpus_rank": 10128,
+   "per_million": 3.67
+  },
+  "参考": {
+   "corpus_rank": 8540,
+   "per_million": 4.86
+  },
+  "拦": {
+   "corpus_rank": 5056,
+   "per_million": 10.79
+  },
+  "重量": {
+   "corpus_rank": 6312,
+   "per_million": 7.78
+  },
+  "缓解": {
+   "corpus_rank": 7992,
+   "per_million": 5.4
+  },
+  "多余": {
+   "corpus_rank": 5736,
+   "per_million": 8.94
+  },
+  "发达": {
+   "corpus_rank": 9009,
+   "per_million": 4.44
+  },
+  "自私": {
+   "corpus_rank": 3203,
+   "per_million": 20.27
+  },
+  "爱心": {
+   "corpus_rank": 8259,
+   "per_million": 5.13
+  },
+  "撕": {
+   "corpus_rank": 3693,
+   "per_million": 16.87
+  },
+  "天真": {
+   "corpus_rank": 4669,
+   "per_million": 12.16
+  },
+  "沙漠": {
+   "corpus_rank": 3213,
+   "per_million": 20.18
+  },
+  "语气": {
+   "corpus_rank": 5180,
+   "per_million": 10.34
+  },
+  "形状": {
+   "corpus_rank": 5211,
+   "per_million": 10.28
+  },
+  "披": {
+   "corpus_rank": 4264,
+   "per_million": 13.8
+  },
+  "学期": {
+   "corpus_rank": 5104,
+   "per_million": 10.61
+  },
+  "皇后": {
+   "corpus_rank": 3393,
+   "per_million": 18.81
+  },
+  "了不起": {
+   "corpus_rank": 2202,
+   "per_million": 33.54
+  },
+  "证件": {
+   "corpus_rank": 4937,
+   "per_million": 11.24
+  },
+  "幼儿园": {
+   "corpus_rank": 7274,
+   "per_million": 6.32
+  },
+  "罪犯": {
+   "corpus_rank": 1800,
+   "per_million": 43.49
+  },
+  "煎": {
+   "corpus_rank": 5411,
+   "per_million": 9.78
+  },
+  "影子": {
+   "corpus_rank": 5239,
+   "per_million": 10.19
+  },
+  "延长": {
+   "corpus_rank": 7681,
+   "per_million": 5.75
+  },
+  "地道": {
+   "corpus_rank": 6462,
+   "per_million": 7.54
+  },
+  "数码": {
+   "corpus_rank": 8857,
+   "per_million": 4.56
+  },
+  "盆": {
+   "corpus_rank": 7285,
+   "per_million": 6.29
+  },
+  "实习": {
+   "corpus_rank": 4993,
+   "per_million": 11.03
+  },
+  "性质": {
+   "corpus_rank": 9190,
+   "per_million": 4.29
+  },
+  "神话": {
+   "corpus_rank": 5525,
+   "per_million": 9.51
+  },
+  "紫": {
+   "corpus_rank": 9045,
+   "per_million": 4.41
+  },
+  "称呼": {
+   "corpus_rank": 3111,
+   "per_million": 21.05
+  },
+  "推广": {
+   "corpus_rank": 10417,
+   "per_million": 3.52
+  },
+  "营业": {
+   "corpus_rank": 7733,
+   "per_million": 5.69
+  },
+  "古代": {
+   "corpus_rank": 7613,
+   "per_million": 5.84
+  },
+  "问候": {
+   "corpus_rank": 5541,
+   "per_million": 9.45
+  },
+  "棉花": {
+   "corpus_rank": 7793,
+   "per_million": 5.6
+  },
+  "铃": {
+   "corpus_rank": 5287,
+   "per_million": 10.08
+  },
+  "点头": {
+   "corpus_rank": 8754,
+   "per_million": 4.65
+  },
+  "农业": {
+   "corpus_rank": 11396,
+   "per_million": 3.01
+  },
+  "服从": {
+   "corpus_rank": 4518,
+   "per_million": 12.73
+  },
+  "洒": {
+   "corpus_rank": 4929,
+   "per_million": 11.27
+  },
+  "等候": {
+   "corpus_rank": 5277,
+   "per_million": 10.11
+  },
+  "纪律": {
+   "corpus_rank": 6964,
+   "per_million": 6.74
+  },
+  "面积": {
+   "corpus_rank": 11389,
+   "per_million": 3.01
+  },
+  "闪电": {
+   "corpus_rank": 3841,
+   "per_million": 16.01
+  },
+  "桃": {
+   "corpus_rank": 5527,
+   "per_million": 9.51
+  },
+  "广泛": {
+   "corpus_rank": 10928,
+   "per_million": 3.22
+  },
+  "手套": {
+   "corpus_rank": 3217,
+   "per_million": 20.15
+  },
+  "品种": {
+   "corpus_rank": 11019,
+   "per_million": 3.19
+  },
+  "讽刺": {
+   "corpus_rank": 3052,
+   "per_million": 21.7
+  },
+  "悄悄": {
+   "corpus_rank": 6818,
+   "per_million": 6.98
+  },
+  "舌头": {
+   "corpus_rank": 3235,
+   "per_million": 20.03
+  },
+  "总共": {
+   "corpus_rank": 6073,
+   "per_million": 8.26
+  },
+  "粮食": {
+   "corpus_rank": 10421,
+   "per_million": 3.52
+  },
+  "特意": {
+   "corpus_rank": 7321,
+   "per_million": 6.23
+  },
+  "糊涂": {
+   "corpus_rank": 3703,
+   "per_million": 16.84
+  },
+  "豆腐": {
+   "corpus_rank": 6524,
+   "per_million": 7.42
+  },
+  "促进": {
+   "corpus_rank": 12022,
+   "per_million": 2.74
+  },
+  "何必": {
+   "corpus_rank": 7325,
+   "per_million": 6.23
+  },
+  "优惠": {
+   "corpus_rank": 10819,
+   "per_million": 3.28
+  },
+  "恶劣": {
+   "corpus_rank": 6638,
+   "per_million": 7.24
+  },
+  "高档": {
+   "corpus_rank": 8811,
+   "per_million": 4.62
+  },
+  "废话": {
+   "corpus_rank": 1973,
+   "per_million": 38.75
+  },
+  "个别": {
+   "corpus_rank": 9043,
+   "per_million": 4.44
+  },
+  "蝴蝶": {
+   "corpus_rank": 4790,
+   "per_million": 11.72
+  },
+  "利息": {
+   "corpus_rank": 7720,
+   "per_million": 5.69
+  },
+  "否定": {
+   "corpus_rank": 7165,
+   "per_million": 6.47
+  },
+  "灵活": {
+   "corpus_rank": 8488,
+   "per_million": 4.89
+  },
+  "主张": {
+   "corpus_rank": 9331,
+   "per_million": 4.2
+  },
+  "辣椒": {
+   "corpus_rank": 6436,
+   "per_million": 7.6
+  },
+  "嫩": {
+   "corpus_rank": 7421,
+   "per_million": 6.08
+  },
+  "沙滩": {
+   "corpus_rank": 3913,
+   "per_million": 15.59
+  },
+  "亲切": {
+   "corpus_rank": 8184,
+   "per_million": 5.19
+  },
+  "预订": {
+   "corpus_rank": 7874,
+   "per_million": 5.54
+  },
+  "地毯": {
+   "corpus_rank": 3515,
+   "per_million": 17.86
+  },
+  "办理": {
+   "corpus_rank": 11380,
+   "per_million": 3.01
+  },
+  "趋势": {
+   "corpus_rank": 11596,
+   "per_million": 2.92
+  },
+  "艰苦": {
+   "corpus_rank": 7226,
+   "per_million": 6.38
+  },
+  "钢铁": {
+   "corpus_rank": 9437,
+   "per_million": 4.11
+  },
+  "名牌": {
+   "corpus_rank": 8790,
+   "per_million": 4.62
+  },
+  "学术": {
+   "corpus_rank": 10309,
+   "per_million": 3.58
+  },
+  "原料": {
+   "corpus_rank": 10057,
+   "per_million": 3.73
+  },
+  "透明": {
+   "corpus_rank": 8383,
+   "per_million": 4.98
+  },
+  "地理": {
+   "corpus_rank": 9081,
+   "per_million": 4.38
+  },
+  "翅膀": {
+   "corpus_rank": 4700,
+   "per_million": 12.04
+  },
+  "阳台": {
+   "corpus_rank": 6248,
+   "per_million": 7.9
+  },
+  "项链": {
+   "corpus_rank": 3239,
+   "per_million": 19.97
+  },
+  "鼓舞": {
+   "corpus_rank": 7186,
+   "per_million": 6.44
+  },
+  "抄": {
+   "corpus_rank": 6810,
+   "per_million": 6.98
+  },
+  "佩服": {
+   "corpus_rank": 7221,
+   "per_million": 6.38
+  },
+  "妨碍": {
+   "corpus_rank": 4018,
+   "per_million": 15.14
+  },
+  "名片": {
+   "corpus_rank": 4382,
+   "per_million": 13.27
+  },
+  "花生": {
+   "corpus_rank": 5693,
+   "per_million": 9.09
+  },
+  "荣幸": {
+   "corpus_rank": 1448,
+   "per_million": 57.2
+  },
+  "液体": {
+   "corpus_rank": 6181,
+   "per_million": 8.02
+  },
+  "降落": {
+   "corpus_rank": 3151,
+   "per_million": 20.69
+  },
+  "宴会": {
+   "corpus_rank": 3528,
+   "per_million": 17.83
+  },
+  "岸": {
+   "corpus_rank": 7827,
+   "per_million": 5.57
+  },
+  "尾巴": {
+   "corpus_rank": 4814,
+   "per_million": 11.63
+  },
+  "罚款": {
+   "corpus_rank": 9515,
+   "per_million": 4.08
+  },
+  "手工": {
+   "corpus_rank": 7263,
+   "per_million": 6.32
+  },
+  "歇": {
+   "corpus_rank": 4440,
+   "per_million": 13.06
+  },
+  "侵略": {
+   "corpus_rank": 8562,
+   "per_million": 4.83
+  },
+  "题目": {
+   "corpus_rank": 7784,
+   "per_million": 5.6
+  },
+  "节省": {
+   "corpus_rank": 8401,
+   "per_million": 4.98
+  },
+  "围巾": {
+   "corpus_rank": 7018,
+   "per_million": 6.68
+  },
+  "何况": {
+   "corpus_rank": 6917,
+   "per_million": 6.83
+  },
+  "删除": {
+   "corpus_rank": 6515,
+   "per_million": 7.45
+  },
+  "枕头": {
+   "corpus_rank": 4118,
+   "per_million": 14.52
+  },
+  "车厢": {
+   "corpus_rank": 7022,
+   "per_million": 6.68
+  },
+  "失眠": {
+   "corpus_rank": 9469,
+   "per_million": 4.11
+  },
+  "绳子": {
+   "corpus_rank": 2870,
+   "per_million": 23.7
+  },
+  "优美": {
+   "corpus_rank": 7593,
+   "per_million": 5.87
+  },
+  "传染": {
+   "corpus_rank": 4982,
+   "per_million": 11.06
+  },
+  "分布": {
+   "corpus_rank": 12004,
+   "per_million": 2.77
+  },
+  "必需": {
+   "corpus_rank": 5367,
+   "per_million": 9.87
+  },
+  "卫生间": {
+   "corpus_rank": 5243,
+   "per_million": 10.19
+  },
+  "递": {
+   "corpus_rank": 7175,
+   "per_million": 6.44
+  },
+  "赞美": {
+   "corpus_rank": 4873,
+   "per_million": 11.42
+  },
+  "痒": {
+   "corpus_rank": 5344,
+   "per_million": 9.93
+  },
+  "疲劳": {
+   "corpus_rank": 9457,
+   "per_million": 4.11
+  },
+  "挣钱": {
+   "corpus_rank": 5926,
+   "per_million": 8.53
+  },
+  "台阶": {
+   "corpus_rank": 6405,
+   "per_million": 7.66
+  },
+  "目录": {
+   "corpus_rank": 7423,
+   "per_million": 6.08
+  },
+  "耽误": {
+   "corpus_rank": 5536,
+   "per_million": 9.48
+  },
+  "彩虹": {
+   "corpus_rank": 6126,
+   "per_million": 8.14
+  },
+  "柜台": {
+   "corpus_rank": 6767,
+   "per_million": 7.06
+  },
+  "打听": {
+   "corpus_rank": 6098,
+   "per_million": 8.17
+  },
+  "促使": {
+   "corpus_rank": 10377,
+   "per_million": 3.52
+  },
+  "钓": {
+   "corpus_rank": 4114,
+   "per_million": 14.52
+  },
+  "辩论": {
+   "corpus_rank": 4950,
+   "per_million": 11.18
+  },
+  "怪不得": {
+   "corpus_rank": 6003,
+   "per_million": 8.41
+  },
+  "老百姓": {
+   "corpus_rank": 12088,
+   "per_million": 2.74
+  },
+  "辅导": {
+   "corpus_rank": 6921,
+   "per_million": 6.83
+  },
+  "未必": {
+   "corpus_rank": 9966,
+   "per_million": 3.79
+  },
+  "牛仔裤": {
+   "corpus_rank": 6256,
+   "per_million": 7.9
+  },
+  "浏览": {
+   "corpus_rank": 9191,
+   "per_million": 4.29
+  },
+  "古典": {
+   "corpus_rank": 8641,
+   "per_million": 4.74
+  },
+  "大方": {
+   "corpus_rank": 8961,
+   "per_million": 4.47
+  },
+  "斜": {
+   "corpus_rank": 11087,
+   "per_million": 3.16
+  },
+  "启发": {
+   "corpus_rank": 7261,
+   "per_million": 6.32
+  },
+  "体贴": {
+   "corpus_rank": 5785,
+   "per_million": 8.85
+  },
+  "壶": {
+   "corpus_rank": 7643,
+   "per_million": 5.81
+  },
+  "浇": {
+   "corpus_rank": 7189,
+   "per_million": 6.44
+  },
+  "生动": {
+   "corpus_rank": 9396,
+   "per_million": 4.14
+  },
+  "步骤": {
+   "corpus_rank": 10190,
+   "per_million": 3.64
+  },
+  "乙": {
+   "corpus_rank": 11335,
+   "per_million": 3.04
+  },
+  "梨": {
+   "corpus_rank": 8388,
+   "per_million": 4.98
+  },
+  "人事": {
+   "corpus_rank": 10739,
+   "per_million": 3.34
+  },
+  "热心": {
+   "corpus_rank": 8438,
+   "per_million": 4.95
+  },
+  "郊区": {
+   "corpus_rank": 7716,
+   "per_million": 5.69
+  },
+  "蜡烛": {
+   "corpus_rank": 3983,
+   "per_million": 15.29
+  },
+  "纷纷": {
+   "corpus_rank": 13955,
+   "per_million": 2.12
+  },
+  "单元": {
+   "corpus_rank": 9916,
+   "per_million": 3.82
+  },
+  "打招呼": {
+   "corpus_rank": 5296,
+   "per_million": 10.05
+  },
+  "缘故": {
+   "corpus_rank": 6620,
+   "per_million": 7.27
+  },
+  "流传": {
+   "corpus_rank": 8483,
+   "per_million": 4.89
+  },
+  "海关": {
+   "corpus_rank": 8280,
+   "per_million": 5.1
+  },
+  "简历": {
+   "corpus_rank": 6286,
+   "per_million": 7.84
+  },
+  "自觉": {
+   "corpus_rank": 12664,
+   "per_million": 2.5
+  },
+  "醋": {
+   "corpus_rank": 9239,
+   "per_million": 4.26
+  },
+  "夸": {
+   "corpus_rank": 6570,
+   "per_million": 7.36
+  },
+  "嗓子": {
+   "corpus_rank": 7229,
+   "per_million": 6.38
+  },
+  "专心": {
+   "corpus_rank": 4145,
+   "per_million": 14.4
+  },
+  "中介": {
+   "corpus_rank": 12246,
+   "per_million": 2.65
+  },
+  "征求": {
+   "corpus_rank": 10102,
+   "per_million": 3.7
+  },
+  "救护车": {
+   "corpus_rank": 2787,
+   "per_million": 24.68
+  },
+  "键盘": {
+   "corpus_rank": 9741,
+   "per_million": 3.93
+  },
+  "蜜蜂": {
+   "corpus_rank": 3609,
+   "per_million": 17.32
+  },
+  "实用": {
+   "corpus_rank": 12697,
+   "per_million": 2.5
+  },
+  "繁荣": {
+   "corpus_rank": 11692,
+   "per_million": 2.89
+  },
+  "册": {
+   "corpus_rank": 11152,
+   "per_million": 3.13
+  },
+  "被子": {
+   "corpus_rank": 10116,
+   "per_million": 3.7
+  },
+  "车库": {
+   "corpus_rank": 3849,
+   "per_million": 15.98
+  },
+  "宁可": {
+   "corpus_rank": 5505,
+   "per_million": 9.54
+  },
+  "迫切": {
+   "corpus_rank": 9842,
+   "per_million": 3.85
+  },
+  "打交道": {
+   "corpus_rank": 4171,
+   "per_million": 14.28
+  },
+  "用途": {
+   "corpus_rank": 9442,
+   "per_million": 4.11
+  },
+  "当代": {
+   "corpus_rank": 12212,
+   "per_million": 2.68
+  },
+  "零件": {
+   "corpus_rank": 5735,
+   "per_million": 8.94
+  },
+  "雇佣": {
+   "corpus_rank": 3640,
+   "per_million": 17.17
+  },
+  "招待": {
+   "corpus_rank": 5106,
+   "per_million": 10.61
+  },
+  "关怀": {
+   "corpus_rank": 11102,
+   "per_million": 3.13
+  },
+  "称赞": {
+   "corpus_rank": 8533,
+   "per_million": 4.86
+  },
+  "不得了": {
+   "corpus_rank": 7098,
+   "per_million": 6.56
+  },
+  "时髦": {
+   "corpus_rank": 5907,
+   "per_million": 8.56
+  },
+  "拥挤": {
+   "corpus_rank": 8351,
+   "per_million": 5.01
+  },
+  "预报": {
+   "corpus_rank": 9069,
+   "per_million": 4.41
+  },
+  "支票": {
+   "corpus_rank": 2024,
+   "per_million": 37.23
+  },
+  "点心": {
+   "corpus_rank": 4821,
+   "per_million": 11.6
+  },
+  "光临": {
+   "corpus_rank": 2735,
+   "per_million": 25.31
+  },
+  "逐步": {
+   "corpus_rank": 15847,
+   "per_million": 1.7
+  },
+  "硬币": {
+   "corpus_rank": 3672,
+   "per_million": 16.99
+  },
+  "常识": {
+   "corpus_rank": 9235,
+   "per_million": 4.26
+  },
+  "可见": {
+   "corpus_rank": 14653,
+   "per_million": 1.94
+  },
+  "凡是": {
+   "corpus_rank": 11759,
+   "per_million": 2.86
+  },
+  "无奈": {
+   "corpus_rank": 15152,
+   "per_million": 1.85
+  },
+  "小麦": {
+   "corpus_rank": 11706,
+   "per_million": 2.86
+  },
+  "木头": {
+   "corpus_rank": 4315,
+   "per_million": 13.56
+  },
+  "格外": {
+   "corpus_rank": 11695,
+   "per_million": 2.89
+  },
+  "大象": {
+   "corpus_rank": 4605,
+   "per_million": 12.4
+  },
+  "讲座": {
+   "corpus_rank": 11086,
+   "per_million": 3.16
+  },
+  "残疾": {
+   "corpus_rank": 9131,
+   "per_million": 4.35
+  },
+  "迷路": {
+   "corpus_rank": 3430,
+   "per_million": 18.57
+  },
+  "英俊": {
+   "corpus_rank": 4313,
+   "per_million": 13.56
+  },
+  "舍不得": {
+   "corpus_rank": 11568,
+   "per_million": 2.95
+  },
+  "日程": {
+   "corpus_rank": 6128,
+   "per_million": 8.14
+  },
+  "景色": {
+   "corpus_rank": 7463,
+   "per_million": 6.05
+  },
+  "零食": {
+   "corpus_rank": 8895,
+   "per_million": 4.53
+  },
+  "因而": {
+   "corpus_rank": 15381,
+   "per_million": 1.79
+  },
+  "融化": {
+   "corpus_rank": 6011,
+   "per_million": 8.41
+  },
+  "巧妙": {
+   "corpus_rank": 9817,
+   "per_million": 3.88
+  },
+  "付款": {
+   "corpus_rank": 8919,
+   "per_million": 4.53
+  },
+  "眉毛": {
+   "corpus_rank": 6824,
+   "per_million": 6.98
+  },
+  "痛快": {
+   "corpus_rank": 7540,
+   "per_million": 5.96
+  },
+  "美术": {
+   "corpus_rank": 10964,
+   "per_million": 3.22
+  },
+  "家务": {
+   "corpus_rank": 8500,
+   "per_million": 4.89
+  },
+  "海鲜": {
+   "corpus_rank": 10132,
+   "per_million": 3.67
+  },
+  "描写": {
+   "corpus_rank": 9991,
+   "per_million": 3.76
+  },
+  "窗帘": {
+   "corpus_rank": 6306,
+   "per_million": 7.81
+  },
+  "武术": {
+   "corpus_rank": 10257,
+   "per_million": 3.61
+  },
+  "开幕式": {
+   "corpus_rank": 12510,
+   "per_million": 2.56
+  },
+  "鸽子": {
+   "corpus_rank": 4212,
+   "per_million": 14.07
+  },
+  "舅舅": {
+   "corpus_rank": 6548,
+   "per_million": 7.39
+  },
+  "主观": {
+   "corpus_rank": 11667,
+   "per_million": 2.89
+  },
+  "缩短": {
+   "corpus_rank": 13219,
+   "per_million": 2.33
+  },
+  "房东": {
+   "corpus_rank": 6673,
+   "per_million": 7.18
+  },
+  "长途": {
+   "corpus_rank": 10845,
+   "per_million": 3.28
+  },
+  "广大": {
+   "corpus_rank": 18004,
+   "per_million": 1.34
+  },
+  "剪刀": {
+   "corpus_rank": 4819,
+   "per_million": 11.6
+  },
+  "合影": {
+   "corpus_rank": 11463,
+   "per_million": 2.98
+  },
+  "议论": {
+   "corpus_rank": 10680,
+   "per_million": 3.37
+  },
+  "操心": {
+   "corpus_rank": 4636,
+   "per_million": 12.28
+  },
+  "熟练": {
+   "corpus_rank": 11135,
+   "per_million": 3.13
+  },
+  "上当": {
+   "corpus_rank": 9425,
+   "per_million": 4.14
+  },
+  "过期": {
+   "corpus_rank": 8289,
+   "per_million": 5.1
+  },
+  "及格": {
+   "corpus_rank": 7312,
+   "per_million": 6.26
+  },
+  "谦虚": {
+   "corpus_rank": 8039,
+   "per_million": 5.34
+  },
+  "讲究": {
+   "corpus_rank": 13174,
+   "per_million": 2.35
+  },
+  "测验": {
+   "corpus_rank": 5970,
+   "per_million": 8.47
+  },
+  "丙": {
+   "corpus_rank": 12260,
+   "per_million": 2.65
+  },
+  "发票": {
+   "corpus_rank": 13402,
+   "per_million": 2.27
+  },
+  "抽屉": {
+   "corpus_rank": 4825,
+   "per_million": 11.6
+  },
+  "叙述": {
+   "corpus_rank": 10468,
+   "per_million": 3.46
+  },
+  "傍晚": {
+   "corpus_rank": 12839,
+   "per_million": 2.44
+  },
+  "胡说": {
+   "corpus_rank": 2665,
+   "per_million": 26.17
+  },
+  "匆忙": {
+   "corpus_rank": 7291,
+   "per_million": 6.29
+  },
+  "不要紧": {
+   "corpus_rank": 4987,
+   "per_million": 11.03
+  },
+  "狡猾": {
+   "corpus_rank": 4847,
+   "per_million": 11.51
+  },
+  "行人": {
+   "corpus_rank": 14607,
+   "per_million": 1.97
+  },
+  "初级": {
+   "corpus_rank": 10789,
+   "per_million": 3.31
+  },
+  "小吃": {
+   "corpus_rank": 11724,
+   "per_million": 2.86
+  },
+  "信封": {
+   "corpus_rank": 5404,
+   "per_million": 9.78
+  },
+  "光滑": {
+   "corpus_rank": 11084,
+   "per_million": 3.16
+  },
+  "发抖": {
+   "corpus_rank": 5751,
+   "per_million": 8.91
+  },
+  "灰尘": {
+   "corpus_rank": 8923,
+   "per_million": 4.53
+  },
+  "盼望": {
+   "corpus_rank": 9083,
+   "per_million": 4.38
+  },
+  "轮流": {
+   "corpus_rank": 9486,
+   "per_million": 4.08
+  },
+  "硬件": {
+   "corpus_rank": 15548,
+   "per_million": 1.76
+  },
+  "改正": {
+   "corpus_rank": 10720,
+   "per_million": 3.34
+  },
+  "结实": {
+   "corpus_rank": 7522,
+   "per_million": 5.96
+  },
+  "幸亏": {
+   "corpus_rank": 10027,
+   "per_million": 3.73
+  },
+  "明信片": {
+   "corpus_rank": 8843,
+   "per_million": 4.56
+  },
+  "爱护": {
+   "corpus_rank": 12339,
+   "per_million": 2.62
+  },
+  "黄瓜": {
+   "corpus_rank": 12139,
+   "per_million": 2.71
+  },
+  "姑姑": {
+   "corpus_rank": 7011,
+   "per_million": 6.68
+  },
+  "悲观": {
+   "corpus_rank": 10323,
+   "per_million": 3.55
+  },
+  "祖先": {
+   "corpus_rank": 7073,
+   "per_million": 6.59
+  },
+  "肥皂": {
+   "corpus_rank": 5039,
+   "per_million": 10.85
+  },
+  "委屈": {
+   "corpus_rank": 15876,
+   "per_million": 1.7
+  },
+  "作文": {
+   "corpus_rank": 15017,
+   "per_million": 1.88
+  },
+  "本领": {
+   "corpus_rank": 11918,
+   "per_million": 2.8
+  },
+  "勤奋": {
+   "corpus_rank": 12544,
+   "per_million": 2.56
+  },
+  "寿命": {
+   "corpus_rank": 15453,
+   "per_million": 1.79
+  },
+  "体积": {
+   "corpus_rank": 15588,
+   "per_million": 1.76
+  },
+  "动画片": {
+   "corpus_rank": 9203,
+   "per_million": 4.29
+  },
+  "周到": {
+   "corpus_rank": 8683,
+   "per_million": 4.71
+  },
+  "操场": {
+   "corpus_rank": 9429,
+   "per_million": 4.14
+  },
+  "难看": {
+   "corpus_rank": 11966,
+   "per_million": 2.77
+  },
+  "罐头": {
+   "corpus_rank": 7504,
+   "per_million": 5.99
+  },
+  "尖锐": {
+   "corpus_rank": 13148,
+   "per_million": 2.35
+  },
+  "皮鞋": {
+   "corpus_rank": 12692,
+   "per_million": 2.5
+  },
+  "酱油": {
+   "corpus_rank": 14794,
+   "per_million": 1.91
+  },
+  "艰巨": {
+   "corpus_rank": 14016,
+   "per_million": 2.12
+  },
+  "陆地": {
+   "corpus_rank": 9107,
+   "per_million": 4.35
+  },
+  "滑冰": {
+   "corpus_rank": 6788,
+   "per_million": 7.04
+  },
+  "惭愧": {
+   "corpus_rank": 9142,
+   "per_million": 4.35
+  },
+  "交际": {
+   "corpus_rank": 11622,
+   "per_million": 2.92
+  },
+  "字幕": {
+   "corpus_rank": 12597,
+   "per_million": 2.53
+  },
+  "振动": {
+   "corpus_rank": 13250,
+   "per_million": 2.33
+  },
+  "感想": {
+   "corpus_rank": 8198,
+   "per_million": 5.19
+  },
+  "邮局": {
+   "corpus_rank": 8559,
+   "per_million": 4.83
+  },
+  "执照": {
+   "corpus_rank": 4218,
+   "per_million": 14.04
+  },
+  "提倡": {
+   "corpus_rank": 17232,
+   "per_million": 1.46
+  },
+  "概括": {
+   "corpus_rank": 16584,
+   "per_million": 1.55
+  },
+  "坦率": {
+   "corpus_rank": 9394,
+   "per_million": 4.14
+  },
+  "均匀": {
+   "corpus_rank": 18456,
+   "per_million": 1.28
+  },
+  "火柴": {
+   "corpus_rank": 7362,
+   "per_million": 6.17
+  },
+  "收据": {
+   "corpus_rank": 5481,
+   "per_million": 9.63
+  },
+  "诚恳": {
+   "corpus_rank": 11101,
+   "per_million": 3.13
+  },
+  "多亏": {
+   "corpus_rank": 4292,
+   "per_million": 13.65
+  },
+  "姥姥": {
+   "corpus_rank": 12198,
+   "per_million": 2.68
+  },
+  "桔子": {
+   "corpus_rank": 12222,
+   "per_million": 2.68
+  },
+  "丝绸": {
+   "corpus_rank": 10015,
+   "per_million": 3.76
+  },
+  "转告": {
+   "corpus_rank": 6502,
+   "per_million": 7.48
+  },
+  "调皮": {
+   "corpus_rank": 11072,
+   "per_million": 3.16
+  },
+  "麦克风": {
+   "corpus_rank": 5652,
+   "per_million": 9.21
+  },
+  "公元": {
+   "corpus_rank": 16180,
+   "per_million": 1.64
+  },
+  "戒烟": {
+   "corpus_rank": 9490,
+   "per_million": 4.08
+  },
+  "健身房": {
+   "corpus_rank": 6160,
+   "per_million": 8.08
+  },
+  "游览": {
+   "corpus_rank": 15528,
+   "per_million": 1.76
+  },
+  "抽象": {
+   "corpus_rank": 15726,
+   "per_million": 1.73
+  },
+  "悠久": {
+   "corpus_rank": 15022,
+   "per_million": 1.88
+  },
+  "陆续": {
+   "corpus_rank": 21350,
+   "per_million": 0.95
+  },
+  "试卷": {
+   "corpus_rank": 15897,
+   "per_million": 1.7
+  },
+  "应聘": {
+   "corpus_rank": 14126,
+   "per_million": 2.09
+  },
+  "责备": {
+   "corpus_rank": 6680,
+   "per_million": 7.18
+  },
+  "刻苦": {
+   "corpus_rank": 14815,
+   "per_million": 1.91
+  },
+  "单调": {
+   "corpus_rank": 13364,
+   "per_million": 2.3
+  },
+  "除夕": {
+   "corpus_rank": 16206,
+   "per_million": 1.64
+  },
+  "管子": {
+   "corpus_rank": 5052,
+   "per_million": 10.79
+  },
+  "矿泉水": {
+   "corpus_rank": 14177,
+   "per_million": 2.06
+  },
+  "小气": {
+   "corpus_rank": 10481,
+   "per_million": 3.46
+  },
+  "再三": {
+   "corpus_rank": 14665,
+   "per_million": 1.94
+  },
+  "不耐烦": {
+   "corpus_rank": 13195,
+   "per_million": 2.33
+  },
+  "零钱": {
+   "corpus_rank": 6300,
+   "per_million": 7.81
+  },
+  "磁带": {
+   "corpus_rank": 6327,
+   "per_million": 7.78
+  },
+  "平方": {
+   "corpus_rank": 10242,
+   "per_million": 3.61
+  },
+  "嚷": {
+   "corpus_rank": 11089,
+   "per_million": 3.16
+  },
+  "果实": {
+   "corpus_rank": 16616,
+   "per_million": 1.55
+  },
+  "日历": {
+   "corpus_rank": 8327,
+   "per_million": 5.04
+  },
+  "往返": {
+   "corpus_rank": 16938,
+   "per_million": 1.49
+  },
+  "灾害": {
+   "corpus_rank": 21146,
+   "per_million": 0.98
+  },
+  "碰见": {
+   "corpus_rank": 8005,
+   "per_million": 5.37
+  },
+  "内科": {
+   "corpus_rank": 19076,
+   "per_million": 1.19
+  },
+  "轻视": {
+   "corpus_rank": 13405,
+   "per_million": 2.27
+  },
+  "排球": {
+   "corpus_rank": 16224,
+   "per_million": 1.64
+  },
+  "样式": {
+   "corpus_rank": 14833,
+   "per_million": 1.91
+  },
+  "疼爱": {
+   "corpus_rank": 15621,
+   "per_million": 1.76
+  },
+  "吃亏": {
+   "corpus_rank": 18668,
+   "per_million": 1.25
+  },
+  "苗条": {
+   "corpus_rank": 9940,
+   "per_million": 3.79
+  },
+  "连续剧": {
+   "corpus_rank": 14544,
+   "per_million": 1.97
+  },
+  "学问": {
+   "corpus_rank": 19037,
+   "per_million": 1.22
+  },
+  "光盘": {
+   "corpus_rank": 20013,
+   "per_million": 1.1
+  },
+  "与其": {
+   "corpus_rank": 25452,
+   "per_million": 0.66
+  },
+  "寺庙": {
+   "corpus_rank": 13381,
+   "per_million": 2.3
+  },
+  "固体": {
+   "corpus_rank": 17161,
+   "per_million": 1.46
+  },
+  "鲜艳": {
+   "corpus_rank": 19159,
+   "per_million": 1.19
+  },
+  "看不起": {
+   "corpus_rank": 17841,
+   "per_million": 1.37
+  },
+  "竹子": {
+   "corpus_rank": 14118,
+   "per_million": 2.09
+  },
+  "照常": {
+   "corpus_rank": 12872,
+   "per_million": 2.44
+  },
+  "象棋": {
+   "corpus_rank": 12749,
+   "per_million": 2.47
+  },
+  "慌张": {
+   "corpus_rank": 11861,
+   "per_million": 2.83
+  },
+  "国籍": {
+   "corpus_rank": 16693,
+   "per_million": 1.55
+  },
+  "敬爱": {
+   "corpus_rank": 12199,
+   "per_million": 2.68
+  },
+  "空闲": {
+   "corpus_rank": 10432,
+   "per_million": 3.49
+  },
+  "勺子": {
+   "corpus_rank": 8887,
+   "per_million": 4.56
+  },
+  "能干": {
+   "corpus_rank": 17901,
+   "per_million": 1.37
+  },
+  "勤劳": {
+   "corpus_rank": 17412,
+   "per_million": 1.43
+  },
+  "中旬": {
+   "corpus_rank": 26582,
+   "per_million": 0.6
+  },
+  "风俗": {
+   "corpus_rank": 16456,
+   "per_million": 1.58
+  },
+  "班主任": {
+   "corpus_rank": 23754,
+   "per_million": 0.78
+  },
+  "田野": {
+   "corpus_rank": 15281,
+   "per_million": 1.82
+  },
+  "教材": {
+   "corpus_rank": 27983,
+   "per_million": 0.54
+  },
+  "躲藏": {
+   "corpus_rank": 8569,
+   "per_million": 4.83
+  },
+  "包子": {
+   "corpus_rank": 23724,
+   "per_million": 0.78
+  },
+  "馒头": {
+   "corpus_rank": 23773,
+   "per_million": 0.78
+  },
+  "书架": {
+   "corpus_rank": 15787,
+   "per_million": 1.7
+  },
+  "煤炭": {
+   "corpus_rank": 29359,
+   "per_million": 0.48
+  },
+  "充电器": {
+   "corpus_rank": 16068,
+   "per_million": 1.64
+  },
+  "发愁": {
+   "corpus_rank": 17531,
+   "per_million": 1.4
+  },
+  "朴素": {
+   "corpus_rank": 20429,
+   "per_million": 1.04
+  },
+  "次要": {
+   "corpus_rank": 16764,
+   "per_million": 1.52
+  },
+  "片面": {
+   "corpus_rank": 22459,
+   "per_million": 0.86
+  },
+  "本科": {
+   "corpus_rank": 29060,
+   "per_million": 0.51
+  },
+  "鞭炮": {
+   "corpus_rank": 23141,
+   "per_million": 0.83
+  },
+  "清淡": {
+   "corpus_rank": 23020,
+   "per_million": 0.83
+  },
+  "不见得": {
+   "corpus_rank": 19503,
+   "per_million": 1.16
+  },
+  "孝顺": {
+   "corpus_rank": 20035,
+   "per_million": 1.1
+  },
+  "橡皮": {
+   "corpus_rank": 14078,
+   "per_million": 2.09
+  },
+  "嘱咐": {
+   "corpus_rank": 19714,
+   "per_million": 1.13
+  },
+  "胡须": {
+   "corpus_rank": 11219,
+   "per_million": 3.1
+  },
+  "元旦": {
+   "corpus_rank": 31153,
+   "per_million": 0.42
+  },
+  "汇率": {
+   "corpus_rank": 31807,
+   "per_million": 0.39
+  },
+  "鼠标": {
+   "corpus_rank": 28638,
+   "per_million": 0.51
+  },
+  "急忙": {
+   "corpus_rank": 30511,
+   "per_million": 0.45
+  },
+  "结账": {
+   "corpus_rank": 15267,
+   "per_million": 1.82
+  },
+  "胶水": {
+   "corpus_rank": 9273,
+   "per_million": 4.23
+  },
+  "打喷嚏": {
+   "corpus_rank": 14346,
+   "per_million": 2.03
+  },
+  "国庆节": {
+   "corpus_rank": 21531,
+   "per_million": 0.95
+  },
+  "省略": {
+   "corpus_rank": 18374,
+   "per_million": 1.28
+  },
+  "夹子": {
+   "corpus_rank": 13049,
+   "per_million": 2.38
+  },
+  "爱惜": {
+   "corpus_rank": 21603,
+   "per_million": 0.95
+  },
+  "近代": {
+   "corpus_rank": 32045,
+   "per_million": 0.39
+  },
+  "胡同": {
+   "corpus_rank": 27071,
+   "per_million": 0.6
+  },
+  "灰心": {
+   "corpus_rank": 14896,
+   "per_million": 1.91
+  },
+  "拐弯": {
+   "corpus_rank": 17659,
+   "per_million": 1.4
+  },
+  "退步": {
+   "corpus_rank": 16316,
+   "per_million": 1.61
+  },
+  "梳子": {
+   "corpus_rank": 11933,
+   "per_million": 2.77
+  },
+  "雄伟": {
+   "corpus_rank": 21392,
+   "per_million": 0.95
+  },
+  "划船": {
+   "corpus_rank": 10371,
+   "per_million": 3.52
+  },
+  "着凉": {
+   "corpus_rank": 17115,
+   "per_million": 1.46
+  },
+  "立方": {
+   "corpus_rank": 22159,
+   "per_million": 0.89
+  },
+  "登机牌": {
+   "corpus_rank": 22586,
+   "per_million": 0.86
+  },
+  "胆小鬼": {
+   "corpus_rank": 4108,
+   "per_million": 14.55
+  },
+  "华裔": {
+   "corpus_rank": 32694,
+   "per_million": 0.39
+  },
+  "声调": {
+   "corpus_rank": 20917,
+   "per_million": 1.01
+  },
+  "池子": {
+   "corpus_rank": 11442,
+   "per_million": 2.98
+  },
+  "厘米": {
+   "corpus_rank": 9029,
+   "per_million": 4.44
+  },
+  "文具": {
+   "corpus_rank": 28674,
+   "per_million": 0.51
+  },
+  "日用品": {
+   "corpus_rank": 25984,
+   "per_million": 0.63
+  },
+  "扇子": {
+   "corpus_rank": 24893,
+   "per_million": 0.72
+  },
+  "成语": {
+   "corpus_rank": 31696,
+   "per_million": 0.42
+  },
+  "不免": {
+   "corpus_rank": 38436,
+   "per_million": 0.24
+  },
+  "虚心": {
+   "corpus_rank": 35827,
+   "per_million": 0.3
+  },
+  "谜语": {
+   "corpus_rank": 12335,
+   "per_million": 2.62
+  },
+  "叉子": {
+   "corpus_rank": 9750,
+   "per_million": 3.91
+  },
+  "粘贴": {
+   "corpus_rank": 33473,
+   "per_million": 0.36
+  },
+  "烤鸭": {
+   "corpus_rank": 32210,
+   "per_million": 0.39
+  },
+  "推辞": {
+   "corpus_rank": 30584,
+   "per_million": 0.45
+  },
+  "提纲": {
+   "corpus_rank": 31347,
+   "per_million": 0.42
+  },
+  "挂号": {
+   "corpus_rank": 35884,
+   "per_million": 0.3
+  },
+  "名胜": {
+   "corpus_rank": 37064,
+   "per_million": 0.27
+  },
+  "解说员": {
+   "corpus_rank": 32429,
+   "per_million": 0.39
+  },
+  "礼拜天": {
+   "corpus_rank": 14803,
+   "per_million": 1.91
+  },
+  "太极拳": {
+   "corpus_rank": 41008,
+   "per_million": 0.21
+  },
+  "朝代": {
+   "corpus_rank": 40111,
+   "per_million": 0.21
+  },
+  "尺子": {
+   "corpus_rank": 35615,
+   "per_million": 0.3
+  },
+  "标点": {
+   "corpus_rank": 37492,
+   "per_million": 0.27
+  },
+  "劳驾": {
+   "corpus_rank": 6118,
+   "per_million": 8.14
+  },
+  "占线": {
+   "corpus_rank": 22690,
+   "per_million": 0.86
+  },
+  "干活儿": {
+   "corpus_rank": 26584,
+   "per_million": 0.6
+  },
+  "连忙": {
+   "corpus_rank": 82327,
+   "per_million": 0.03
+  },
+  "公共汽车": {
+   "corpus_rank": 17089,
+   "source": "opensubtitles2018"
+  },
+  "打篮球": {
+   "corpus_rank": 20123,
+   "source": "opensubtitles2018"
+  },
+  "翻译": {
+   "corpus_rank": 764,
+   "source": "opensubtitles2018"
+  },
+  "做生意": {
+   "corpus_rank": 4135,
+   "source": "opensubtitles2018"
+  },
+  "放暑假": {
+   "corpus_rank": 45338,
+   "source": "opensubtitles2018"
+  },
+  "导演": {
+   "corpus_rank": 2142,
+   "source": "opensubtitles2018"
+  },
+  "油炸": {
+   "corpus_rank": 14222,
+   "source": "opensubtitles2018"
+  },
+  "短信": {
+   "corpus_rank": 4208,
+   "source": "opensubtitles2018"
+  },
+  "使劲儿": {
+   "corpus_rank": 61332,
+   "source": "opensubtitles2018"
+  }
+ }
+}

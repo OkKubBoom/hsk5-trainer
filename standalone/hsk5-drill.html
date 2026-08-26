@@ -1,0 +1,1304 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#151920">
+<meta name="description" content="ฝึกสอบ HSK5 รายวัน">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="HSK5">
+<title>HSK5 Daily Drill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+Thai:wght@600;700&display=swap">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0;min-height:100vh}</style>
+</head>
+<body>
+<style>
+:root{
+  --ink:#151920;--paper:#F5F6F4;--surface:#FFFFFF;--surface-2:#ECEEEB;
+  --line:#D3D7D2;--line-soft:#E3E6E2;
+  --text:#1B2029;--text-2:#525C69;--text-3:#7C8794;
+  --seal:#B3372C;--seal-soft:#F2DCD9;
+  --jade:#3E7A69;--jade-soft:#DCEAE5;
+  --amber:#9A6A18;--amber-soft:#F5E7CE;
+  --shadow:0 1px 2px rgba(21,25,32,.05),0 8px 24px -14px rgba(21,25,32,.28);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#0C0F14;--paper:#0F1319;--surface:#161B23;--surface-2:#1D242E;
+  --line:#2C3542;--line-soft:#232B36;
+  --text:#E4E8EC;--text-2:#A3AEBB;--text-3:#78838F;
+  --seal:#E4796B;--seal-soft:#38211F;
+  --jade:#6FBAA4;--jade-soft:#172B27;
+  --amber:#D7A552;--amber-soft:#2C2415;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -16px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --ink:#0C0F14;--paper:#0F1319;--surface:#161B23;--surface-2:#1D242E;
+  --line:#2C3542;--line-soft:#232B36;
+  --text:#E4E8EC;--text-2:#A3AEBB;--text-3:#78838F;
+  --seal:#E4796B;--seal-soft:#38211F;
+  --jade:#6FBAA4;--jade-soft:#172B27;
+  --amber:#D7A552;--amber-soft:#2C2415;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);
+  font-family:"IBM Plex Sans Thai","Noto Sans SC",system-ui,sans-serif;
+  font-size:15.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Noto Serif Thai","IBM Plex Sans Thai",serif;margin:0;line-height:1.3;text-wrap:balance}
+.zh{font-family:"Noto Sans SC",sans-serif}
+.mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+
+/* header */
+.top{background:var(--ink);color:#E9ECEF;padding:16px 0 0;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:40px 40px}
+.wrap{max-width:840px;margin:0 auto;padding:0 18px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-family:"Noto Serif Thai",serif;font-size:19px;font-weight:700;color:#F7F8F9}
+.brand span{font-family:"IBM Plex Mono",monospace;font-size:11px;color:#8F9AA6;font-weight:400;letter-spacing:.1em;display:block;margin-top:1px}
+.hstats{display:flex;gap:18px;flex-wrap:wrap}
+.hs{text-align:right}
+.hs .n{font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:600;color:#F7F8F9;display:block;line-height:1.2;font-variant-numeric:tabular-nums}
+.hs .l{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:#7E8A97}
+.hs.hot .n{color:#F09A8C}
+.tabs{display:flex;gap:0;margin-top:16px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{background:none;border:0;color:#8F9AA6;padding:10px 15px;white-space:nowrap;
+  font-size:13.5px;border-bottom:2px solid transparent}
+.tabs button:hover{color:#D4DAE0}
+.tabs button[aria-selected="true"]{color:#F7F8F9;border-bottom-color:var(--seal)}
+
+main{padding:26px 0 60px}
+.panel[hidden]{display:none}
+.ph{margin-bottom:16px}
+.ph h2{font-size:21px}
+.ph p{color:var(--text-2);font-size:14px;margin:5px 0 0;max-width:62ch}
+
+.card{background:var(--surface);border:1px solid var(--line);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--line);padding:14px 16px;box-shadow:var(--shadow)}
+.stat .n{font-family:"IBM Plex Mono",monospace;font-size:26px;font-weight:600;line-height:1.15;display:block;font-variant-numeric:tabular-nums}
+.stat .l{font-size:12.5px;color:var(--text-3);display:block;margin-top:2px}
+.stat .sub{font-size:11.5px;color:var(--text-3);margin-top:5px;display:block}
+.stat.good .n{color:var(--jade)}
+.stat.bad .n{color:var(--seal)}
+.stat.warn .n{color:var(--amber)}
+
+.btn{background:var(--seal);color:#fff;border:0;padding:11px 20px;font-weight:600;border-radius:2px}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--text-2);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--surface-2);filter:none}
+.btn.big{width:100%;padding:16px;font-size:16.5px;font-family:"Noto Serif Thai",serif}
+.btn.jade{background:var(--jade)}
+.row{display:flex;gap:9px;flex-wrap:wrap}
+
+/* drill */
+.qcard{background:var(--surface);border:1px solid var(--line);padding:26px 22px;box-shadow:var(--shadow);margin-bottom:14px}
+.qmeta{display:flex;justify-content:space-between;align-items:center;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
+.qprompt{font-size:15px;color:var(--text-2);margin-bottom:12px}
+.qbig{font-family:"Noto Sans SC",sans-serif;font-size:42px;font-weight:500;line-height:1.35;margin-bottom:6px;text-align:center}
+.qbig.sm{font-size:26px;text-align:left;line-height:1.7}
+.qpy{font-family:"IBM Plex Mono",monospace;font-size:15px;color:var(--text-3);text-align:center;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:var(--surface);border:1px solid var(--line);padding:13px 15px;
+  border-radius:2px;display:flex;gap:11px;align-items:baseline;transition:none}
+.opt:hover:not(:disabled){border-color:var(--text-3);background:var(--surface-2)}
+.opt .k{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--text-3);flex:0 0 auto}
+.opt.right{border-color:var(--jade);background:var(--jade-soft)}
+.opt.wrong{border-color:var(--seal);background:var(--seal-soft)}
+.reveal{border-top:1px solid var(--line-soft);margin-top:16px;padding-top:14px}
+.reveal h4{font-size:14px;margin:0 0 5px;font-family:"IBM Plex Sans Thai",sans-serif;font-weight:600}
+.reveal p{margin:0 0 9px;font-size:14px;color:var(--text-2)}
+.reveal .ex{background:var(--surface-2);padding:11px 13px;font-size:14.5px;margin-bottom:10px}
+.reveal .ex .zh{font-size:17px;display:block;margin-bottom:3px}
+.why{margin-top:12px}
+.why .lbl{font-size:12.5px;color:var(--text-3);margin-bottom:7px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:var(--surface-2);border:1px solid var(--line);color:var(--text-2);
+  padding:5px 10px;font-size:12.5px;border-radius:2px}
+.chip:hover{border-color:var(--seal);color:var(--seal)}
+.chip[aria-pressed="true"]{background:var(--seal);border-color:var(--seal);color:#fff}
+.prog{height:3px;background:var(--line-soft);margin-bottom:16px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--seal);width:0}
+input[type=text]{width:100%;padding:12px 14px;border:1px solid var(--line);background:var(--surface);
+  color:var(--text);font-family:"Noto Sans SC",sans-serif;font-size:19px;border-radius:2px}
+
+/* tables/lists */
+.tw{overflow-x:auto;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);margin-bottom:14px}
+table{border-collapse:collapse;width:100%;min-width:440px;font-size:14px}
+th{text-align:left;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-3);padding:10px 13px;border-bottom:1px solid var(--line);background:var(--surface-2);font-weight:500;white-space:nowrap}
+td{padding:10px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar{display:grid;grid-template-columns:150px 1fr 42px;gap:11px;align-items:center;font-size:13.5px}
+@media(max-width:560px){.bar{grid-template-columns:110px 1fr 36px;gap:8px;font-size:12.5px}}
+.bar .t{background:var(--line-soft);height:16px;position:relative;overflow:hidden}
+.bar .t i{display:block;height:100%;background:var(--seal)}
+.bar .v{font-family:"IBM Plex Mono",monospace;text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
+
+.spark{width:100%;height:76px;display:block}
+
+.note{background:var(--surface-2);border-left:3px solid var(--text-3);padding:12px 15px;font-size:13.5px;color:var(--text-2);margin-bottom:14px}
+.note.seal{border-left-color:var(--seal);background:var(--seal-soft)}
+.note.jade{border-left-color:var(--jade);background:var(--jade-soft)}
+.note strong{color:var(--text)}
+
+.savechip{position:fixed;right:14px;bottom:14px;background:var(--ink);color:#C8D0D8;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;padding:8px 13px;border-radius:2px;
+  box-shadow:var(--shadow);z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+.savechip.on{opacity:1}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+details{background:var(--surface);border:1px solid var(--line);padding:0;margin-bottom:10px;box-shadow:var(--shadow)}
+summary{padding:13px 16px;cursor:pointer;font-weight:600;font-size:14.5px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";color:var(--seal)}
+details[open] summary::before{content:"▾ "}
+.dbody{padding:0 16px 16px}
+.dbody p{margin:0 0 10px;font-size:14px}
+pre{background:var(--ink);color:#D5DBE2;padding:14px 16px;overflow-x:auto;font-family:"IBM Plex Mono",monospace;
+  font-size:12.5px;line-height:1.65;white-space:pre-wrap;word-break:break-word;margin:0 0 12px}
+code{font-family:"IBM Plex Mono",monospace;font-size:.9em;background:var(--surface-2);padding:1px 5px}
+ul{padding-left:20px;margin:0 0 12px}
+li{margin-bottom:5px;font-size:14px}
+.empty{text-align:center;padding:44px 20px;color:var(--text-3);font-size:14.5px}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">HSK5 Daily Drill<span>13 ธ.ค. 2026</span></div>
+      <div class="hstats">
+        <div class="hs hot"><span class="n" id="hDays">—</span><span class="l">วันเหลือ</span></div>
+        <div class="hs"><span class="n" id="hStreak">—</span><span class="l">ต่อเนื่อง</span></div>
+        <div class="hs"><span class="n" id="hWords">—</span><span class="l">คำสะสม</span></div>
+        <div class="hs"><span class="n" id="hAcc">—</span><span class="l">แม่น 7 วัน</span></div>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" id="tabs">
+      <button role="tab" data-p="today" aria-selected="true">วันนี้</button>
+      <button role="tab" data-p="drill" aria-selected="false">ทำข้อสอบ</button>
+      <button role="tab" data-p="stats" aria-selected="false">สถิติ</button>
+      <button role="tab" data-p="errors" aria-selected="false">ข้อผิด</button>
+      <button role="tab" data-p="write" aria-selected="false">เขียน</button>
+      <button role="tab" data-p="data" aria-selected="false">ข้อมูล</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ───────── TODAY ───────── -->
+<section class="panel" id="p-today">
+  <div class="ph"><h2>วันนี้</h2><p id="todayDate"></p></div>
+  <div class="grid">
+    <div class="stat"><span class="n" id="tDue">0</span><span class="l">ถึงกำหนดทบทวน</span></div>
+    <div class="stat"><span class="n" id="tWrong">0</span><span class="l">เคยตอบผิด</span></div>
+    <div class="stat"><span class="n" id="tNew">0</span><span class="l">คำใหม่วันนี้</span></div>
+    <div class="stat"><span class="n" id="tSize">0</span><span class="l">ข้อในชุดวันนี้</span></div>
+  </div>
+
+  <div class="note" id="mixNote"></div>
+
+  <button class="btn big" id="startBtn">พร้อมทำข้อสอบ</button>
+  <p style="text-align:center;color:var(--text-3);font-size:13px;margin-top:9px" id="doneToday"></p>
+
+  <div class="card" style="margin-top:20px">
+    <h3 style="font-size:16px;margin-bottom:9px">เป้าหมายของวันนี้ (สัปดาห์ที่ <span id="wkNum" class="mono">1</span>)</h3>
+    <div class="bars" id="weekGoals"></div>
+  </div>
+
+  <div class="note jade">
+    <strong>ทำไมชุดข้อสอบไม่โตขึ้นทุกวัน</strong> — จำนวนคงที่ 40 ข้อ แต่ <em>ส่วนผสม</em> เปลี่ยนทุกวัน
+    ระบบไม่ถามสิ่งที่คุณจำแม่นแล้ว มันไปถามเฉพาะสิ่งที่กำลังจะลืม ครอบคลุมเท่าเดิม แต่เวลาไม่บาน
+  </div>
+</section>
+
+<!-- ───────── DRILL ───────── -->
+<section class="panel" id="p-drill" hidden>
+  <div class="prog"><i id="progBar"></i></div>
+  <div id="drillArea"></div>
+</section>
+
+<!-- ───────── STATS ───────── -->
+<section class="panel" id="p-stats" hidden>
+  <div class="ph"><h2>สถิติ</h2><p>ตัวเลขที่ต้องดูทุกสัปดาห์ ไม่ใช่ทุกวัน — วันเดียวไม่บอกอะไร เจ็ดวันบอกทุกอย่าง</p></div>
+
+  <div class="grid">
+    <div class="stat" id="sAdh"><span class="n">—</span><span class="l">ความสม่ำเสมอ 14 วัน</span><span class="sub">เป้า ≥ 85%</span></div>
+    <div class="stat" id="sAcc"><span class="n">—</span><span class="l">ความแม่น 7 วัน</span><span class="sub">เป้า ≥ 80%</span></div>
+    <div class="stat" id="sPace"><span class="n">—</span><span class="l">คำสะสม vs เป้า</span><span class="sub" id="sPaceSub">—</span></div>
+    <div class="stat" id="sMin"><span class="n">—</span><span class="l">นาทีเฉลี่ย/วัน</span><span class="sub">งบ 210 นาที</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:16px;margin-bottom:4px">ความแม่นรายวัน 21 วันล่าสุด</h3>
+    <p style="font-size:13px;color:var(--text-3);margin:0 0 12px">เส้นประคือ 80% — เกณฑ์ที่บอกว่าระดับความยากกำลังพอดี ต่ำกว่านี้แปลว่ายากไป สูงกว่า 95% ตลอดแปลว่าง่ายไป</p>
+    <svg class="spark" id="accSpark" viewBox="0 0 640 76" preserveAspectRatio="none" role="img" aria-label="กราฟความแม่นรายวัน"></svg>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:16px;margin-bottom:4px">คำศัพท์สะสม เทียบเส้นเป้า</h3>
+    <p style="font-size:13px;color:var(--text-3);margin:0 0 12px">เส้นเป้าคือ 1,360 คำภายใน 29 พ.ย. (วัน freeze) — หลังจากนั้นห้ามเรียนคำใหม่</p>
+    <svg class="spark" id="vocabSpark" viewBox="0 0 640 76" preserveAspectRatio="none" role="img" aria-label="กราฟคำศัพท์สะสม"></svg>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:16px;margin-bottom:12px">สาเหตุที่ตอบผิด 14 วันล่าสุด</h3>
+    <div class="bars" id="errBars"></div>
+    <p style="font-size:13px;color:var(--text-3);margin:12px 0 0" id="errAdvice"></p>
+  </div>
+
+  <div class="note seal" id="gateNote"></div>
+</section>
+
+<!-- ───────── ERRORS ───────── -->
+<section class="panel" id="p-errors" hidden>
+  <div class="ph"><h2>ข้อผิด</h2><p>คำที่ผิดบ่อยที่สุดขึ้นก่อน — และมันจะถูกดันเข้าชุดข้อสอบพรุ่งนี้อัตโนมัติ 30% ของชุด</p></div>
+  <div class="row" style="margin-bottom:14px">
+    <button class="btn ghost" id="expCsv">ส่งออกเป็น CSV สำหรับ Anki</button>
+    <button class="btn ghost" id="clearResolved">ล้างคำที่แก้แล้ว</button>
+  </div>
+  <div id="errList"></div>
+</section>
+
+<!-- ───────── WRITE ───────── -->
+<section class="panel" id="p-write" hidden>
+  <div class="ph"><h2>พาร์ทเขียน</h2><p>พาร์ทที่ถูกที่สุด — 7–11 ชั่วโมงต่อ 10 คะแนน เทียบกับพาร์ทฟังที่ 22–28 ชั่วโมง ท่องเทมเพลตให้ได้ก่อนอย่างอื่น</p></div>
+
+  <div class="note seal">
+    <strong>เขียนไม่ครบ 80 ตัวอักษร = ถูกตัดหนัก</strong> เหลือ 2 นาทีแล้วยังไม่ครบ ให้ยัดประโยคปิดสำเร็จรูปทันที:
+    <span class="zh">总之，我认为这是一件很有意义的事情，希望大家都能重视起来。</span> (~28 ตัวอักษร)
+  </div>
+
+  <h3 style="font-size:17px;margin:20px 0 10px">เทมเพลตเรียงความ 3 แบบ</h3>
+  <div id="tplList"></div>
+
+  <h3 style="font-size:17px;margin:24px 0 10px">ส่งงานเขียนให้ตรวจ</h3>
+  <div class="card">
+    <p style="font-size:14px;color:var(--text-2);margin:0 0 12px">คัดลอก prompt นี้ไปวางใน Claude พร้อมงานเขียนของคุณ ใช้เวลา 2 นาที แทนการสร้างระบบตรวจอัตโนมัติ 22 ชั่วโมง</p>
+    <pre id="gradePrompt"></pre>
+    <button class="btn" id="copyPrompt">คัดลอก prompt</button>
+  </div>
+</section>
+
+<!-- ───────── DATA ───────── -->
+<section class="panel" id="p-data" hidden>
+  <div class="ph"><h2>ข้อมูล</h2><p>คลังคำศัพท์ตอนนี้มี <span id="deckCount" class="mono">0</span> คำ — ชุดเริ่มต้นคือคำที่ให้ผลตอบแทนสูงสุด ไม่ใช่คำที่มาก่อนตามตัวอักษร</p></div>
+
+  <div class="note">
+    <strong>เพิ่มคำเองได้</strong> วางทีละบรรทัด รูปแบบ <code>汉字 | pinyin | ความหมายไทย | ประโยคตัวอย่าง(ไม่บังคับ)</code>
+    — เอาลิสต์ HSK5 เต็ม 2,500 คำมาวางทีเดียวได้เลย
+  </div>
+  <div class="card">
+    <textarea id="importBox" rows="6" placeholder="影响 | yǐngxiǎng | ส่งผลกระทบ | 天气影响了我们的计划。"
+      style="width:100%;padding:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-family:'Noto Sans SC',monospace;font-size:14px;border-radius:2px"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button class="btn" id="importBtn">นำเข้า</button>
+      <span id="importMsg" style="align-self:center;font-size:13.5px;color:var(--text-3)"></span>
+    </div>
+  </div>
+
+  <h3 style="font-size:17px;margin:22px 0 10px">สำรองและกู้คืน</h3>
+  <div class="row" style="margin-bottom:14px">
+    <button class="btn ghost" id="expJson">ดาวน์โหลดข้อมูลทั้งหมด</button>
+    <button class="btn ghost" id="saveNow">บันทึกขึ้นคลาวด์เดี๋ยวนี้</button>
+  </div>
+  <p id="saveState" style="font-size:13.5px;color:var(--text-3)"></p>
+
+  <h3 style="font-size:17px;margin:22px 0 10px">รหัสสาเหตุที่ตอบผิด</h3>
+  <div class="tw"><table>
+    <thead><tr><th>รหัส</th><th>หมายถึง</th><th>ถ้าเจอบ่อย ให้ทำ</th></tr></thead>
+    <tbody id="codeTable"></tbody>
+  </table></div>
+
+  <details>
+    <summary>รีเซ็ตข้อมูลทั้งหมด</summary>
+    <div class="dbody">
+      <p style="color:var(--text-2)">ลบประวัติการเรียน สถิติ และข้อผิดทั้งหมด คลังคำศัพท์กลับเป็นชุดเริ่มต้น กู้คืนไม่ได้ — ดาวน์โหลดข้อมูลเก็บไว้ก่อน</p>
+      <button class="btn" id="resetBtn" style="background:var(--seal)">ลบทุกอย่าง</button>
+    </div>
+  </details>
+</section>
+
+</main>
+
+<div class="savechip" id="chip">บันทึกแล้ว</div>
+
+<script>
+"use strict";
+
+/* ══════════ 1. ข้อมูลตั้งต้น ══════════ */
+
+// hanzi | pinyin | ความหมาย | ประโยคตัวอย่าง | tag
+const SEED = `
+于是|yúshì|ดังนั้น จึง (เชื่อมเหตุ→ผลตามลำดับเวลา)|他觉得很累，于是决定休息一天。|conn
+因此|yīncǐ|เพราะฉะนั้น (เชื่อมเหตุ→ผลเชิงตรรกะ)|价格太高，因此很少有人买。|conn
+然而|rán'ér|แต่ทว่า (ขัดแย้ง ระดับทางการ)|他很努力，然而结果并不理想。|conn
+从而|cóng'ér|จากนั้นจึง (นำไปสู่ผลที่ตั้งใจ)|减少浪费，从而降低成本。|conn
+随着|suízhe|พร้อมกับ ตามที่...|随着科技的发展，生活越来越方便。|conn
+尽管|jǐnguǎn|ถึงแม้ว่า (ตามด้วย 但是/还是)|尽管下着雨，他还是来了。|conn
+总之|zǒngzhī|กล่าวโดยสรุป (เปิดย่อหน้าสรุป)|总之，这是一个值得重视的问题。|conn
+反而|fǎn'ér|กลับกลายเป็น (ผลตรงข้ามที่คาด)|吃了药，病反而更重了。|conn
+甚至|shènzhì|ถึงขนาดที่ (ยกตัวอย่างสุดโต่ง)|他忙得甚至忘了吃饭。|conn
+以及|yǐjí|ตลอดจน และ (เชื่อมรายการ ทางการ)|会议讨论了预算以及人事问题。|conn
+此外|cǐwài|นอกจากนี้|此外，我们还需要更多时间。|conn
+相反|xiāngfǎn|ตรงกันข้าม|他并不生气，相反还笑了。|conn
+假如|jiǎrú|ถ้าหากว่า|假如你是我，你会怎么做？|conn
+万一|wànyī|เผื่อว่า หากบังเอิญ (เรื่องไม่ดี)|万一下雨，我们就改天去。|conn
+除非|chúfēi|นอกเสียจากว่า|除非你亲自去，否则他不会同意。|conn
+与其|yǔqí|แทนที่จะ... (คู่กับ 不如)|与其等待，不如主动出击。|conn
+宁可|nìngkě|ยอมที่จะ (เลือกทางที่ลำบากกว่า)|我宁可走路，也不愿意等车。|conn
+一旦|yídàn|เมื่อใดก็ตามที่|一旦决定了，就不要后悔。|conn
+即使|jíshǐ|ถึงแม้ว่า (สมมติ คู่กับ 也)|即使失败了，也要继续努力。|conn
+何况|hékuàng|ยิ่งไม่ต้องพูดถึง...|大人都做不到，何况孩子呢？|conn
+承认|chéngrèn|ยอมรับ (ว่าเป็นความจริง)|他终于承认了自己的错误。|verb
+承担|chéngdān|แบกรับ (ความรับผิดชอบ/ค่าใช้จ่าย)|这个责任应该由他来承担。|verb
+承受|chéngshòu|ทนรับ (แรงกดดัน/น้ำหนัก)|他承受了巨大的压力。|verb
+促进|cùjìn|ส่งเสริม ผลักดันให้ดีขึ้น|运动能促进身体健康。|verb
+保持|bǎochí|รักษาไว้ (สภาพ/ความสัมพันธ์)|请大家保持安静。|verb
+保存|bǎocún|เก็บรักษา (สิ่งของ/ข้อมูล)|这些文件要好好保存。|verb
+培养|péiyǎng|ปลูกฝัง อบรม (คน/นิสัย)|学校的任务是培养人才。|verb
+从事|cóngshì|ประกอบอาชีพด้าน|他从事教育工作二十年了。|verb
+采取|cǎiqǔ|ใช้ (มาตรการ/วิธีการ)|我们必须采取有效的措施。|verb
+达到|dádào|บรรลุถึง (เป้าหมาย/ระดับ)|他的汉语已经达到了很高的水平。|verb
+具备|jùbèi|มีพร้อม (เงื่อนไข/คุณสมบัติ)|他具备了当经理的条件。|verb
+缺乏|quēfá|ขาดแคลน|这个计划缺乏具体的内容。|verb
+面临|miànlín|เผชิญกับ (ปัญหา/ทางเลือก)|我们正面临着新的挑战。|verb
+忽视|hūshì|มองข้าม ละเลย|不能忽视孩子的心理健康。|verb
+重视|zhòngshì|ให้ความสำคัญ|越来越多的人重视环境保护。|verb
+强调|qiángdiào|เน้นย้ำ|老师再三强调这一点。|verb
+表达|biǎodá|แสดงออก (ความคิด/ความรู้สึกด้วยคำพูด)|他不太会表达自己的感情。|verb
+表现|biǎoxiàn|แสดงออก / ผลงาน พฤติกรรม|他在工作中表现得很出色。|verb
+反映|fǎnyìng|สะท้อน (สภาพความจริง)|这部电影反映了社会问题。|verb
+导致|dǎozhì|นำไปสู่ (ผลเสีย)|粗心导致了这次事故。|verb
+造成|zàochéng|ก่อให้เกิด (ความเสียหาย)|大雨造成了严重的损失。|verb
+形成|xíngchéng|ก่อตัวขึ้น เกิดเป็นรูปเป็นร่าง|好习惯不是一天形成的。|verb
+建立|jiànlì|สถาปนา สร้าง (ความสัมพันธ์/ระบบ)|两国建立了外交关系。|verb
+实现|shíxiàn|ทำให้เป็นจริง|他终于实现了自己的梦想。|verb
+掌握|zhǎngwò|เชี่ยวชาญ ควบคุมได้|他已经掌握了这项技术。|verb
+分析|fēnxī|วิเคราะห์|我们先分析一下原因。|verb
+判断|pànduàn|ตัดสิน วินิจฉัย|很难判断他说的是真是假。|verb
+观察|guānchá|สังเกต|通过观察，他发现了问题所在。|verb
+争取|zhēngqǔ|พยายามให้ได้มา|我们要争取更多的时间。|verb
+克服|kèfú|เอาชนะ (อุปสรรค/นิสัยเสีย)|他克服了很多困难。|verb
+避免|bìmiǎn|หลีกเลี่ยง|应该避免类似的错误再次发生。|verb
+改善|gǎishàn|ปรับปรุงให้ดีขึ้น (สภาพ/ความสัมพันธ์)|政府正在努力改善交通状况。|verb
+改进|gǎijìn|ปรับปรุง (วิธีการ/เทคนิค)|我们需要改进工作方法。|verb
+调整|tiáozhěng|ปรับ (แผน/สภาพจิตใจ)|请及时调整你的计划。|verb
+限制|xiànzhì|จำกัด|这里限制车辆通行。|verb
+保证|bǎozhèng|รับประกัน|我保证按时完成任务。|verb
+值得|zhíde|คุ้มค่าที่จะ|这本书很值得一读。|verb
+类似|lèisì|คล้ายคลึงกับ|类似的情况以前也发生过。|verb
+消除|xiāochú|ขจัด กำจัด (ความกังวล/ความเข้าใจผิด)|谈话消除了他们之间的误会。|verb
+因素|yīnsù|ปัจจัย|影响健康的因素有很多。|noun
+现象|xiànxiàng|ปรากฏการณ์|这种现象很值得研究。|noun
+趋势|qūshì|แนวโน้ม|这已经成为一种趋势。|noun
+观念|guānniàn|ทัศนคติ แนวคิด (ที่ฝังลึก)|年轻人的消费观念变了。|noun
+观点|guāndiǎn|มุมมอง ความเห็น|我不同意你的观点。|noun
+角度|jiǎodù|แง่มุม มุมมอง|从另一个角度看，这也是好事。|noun
+程度|chéngdù|ระดับ ขั้น|他的汉语水平达到了什么程度？|noun
+状况|zhuàngkuàng|สภาพการณ์|他的健康状况不太好。|noun
+效率|xiàolǜ|ประสิทธิภาพ (เร็ว/คุ้มเวลา)|这样做可以提高工作效率。|noun
+效果|xiàoguǒ|ผลลัพธ์ ผลสัมฤทธิ์|这种方法效果很好。|noun
+优势|yōushì|ข้อได้เปรียบ|我们在价格上有明显的优势。|noun
+前提|qiántí|เงื่อนไขเบื้องต้น|互相信任是合作的前提。|noun
+基础|jīchǔ|พื้นฐาน|他的汉语基础很扎实。|noun
+核心|héxīn|แกนกลาง หัวใจ|这是整个问题的核心。|noun
+关键|guānjiàn|จุดสำคัญ กุญแจสำคัญ|关键在于你是否愿意坚持。|noun
+原则|yuánzé|หลักการ|做人要有原则。|noun
+措施|cuòshī|มาตรการ|政府采取了一系列措施。|noun
+方案|fāng'àn|แผนงาน โครงการ|这个方案还需要修改。|noun
+结论|jiélùn|ข้อสรุป|现在下结论还太早。|noun
+后果|hòuguǒ|ผลเสียที่ตามมา|你要考虑清楚后果。|noun
+责任|zérèn|ความรับผิดชอบ|保护环境是每个人的责任。|noun
+义务|yìwù|หน้าที่ พันธะ|受教育是公民的权利和义务。|noun
+权利|quánlì|สิทธิ|每个人都有选择的权利。|noun
+挑战|tiǎozhàn|ความท้าทาย|这对我来说是一个新的挑战。|noun
+资源|zīyuán|ทรัพยากร|我们要合理利用资源。|noun
+素质|sùzhì|คุณภาพ คุณสมบัติ (ของคน)|提高国民素质很重要。|noun
+显然|xiǎnrán|เห็นได้ชัดว่า|显然，他并不了解情况。|adv
+明显|míngxiǎn|ชัดเจน เห็นได้ชัด|他的进步很明显。|adv
+逐渐|zhújiàn|ค่อยๆ (เปลี่ยนแปลงต่อเนื่อง)|天气逐渐暖和起来了。|adv
+逐步|zhúbù|ทีละขั้น (มีขั้นตอน)|我们要逐步解决这些问题。|adv
+格外|géwài|เป็นพิเศษ ยิ่งกว่าปกติ|今天的月亮格外明亮。|adv
+尤其|yóuqí|โดยเฉพาะอย่างยิ่ง|我喜欢运动，尤其是游泳。|adv
+未必|wèibì|ไม่จำเป็นเสมอไป|贵的东西未必就好。|adv
+难免|nánmiǎn|ยากจะหลีกเลี่ยง|工作中难免会出错。|adv
+必然|bìrán|ย่อมต้อง อย่างหลีกเลี่ยงไม่ได้|这是历史发展的必然结果。|adv
+偶然|ǒurán|บังเอิญ|我们的相遇纯属偶然。|adv
+依然|yīrán|ยังคง (ทางการกว่า 还是)|十年过去了，他依然记得那件事。|adv
+始终|shǐzhōng|ตลอดมา ตั้งแต่ต้นจนจบ|他始终没有放弃。|adv
+究竟|jiūjìng|ตกลงแล้ว...(กันแน่)|你究竟想说什么？|adv
+相当|xiāngdāng|ค่อนข้าง (ระดับสูง)|这个问题相当复杂。|adv
+一举两得|yī jǔ liǎng dé|ยิงปืนนัดเดียวได้นกสองตัว|骑车上班既省钱又锻炼身体，真是一举两得。|idiom
+全力以赴|quán lì yǐ fù|ทุ่มเทอย่างเต็มกำลัง|无论结果如何，我们都要全力以赴。|idiom
+实事求是|shí shì qiú shì|ยึดความจริงเป็นหลัก|做研究必须实事求是。|idiom
+半途而废|bàn tú ér fèi|ล้มเลิกกลางคัน|做事不能半途而废。|idiom
+众所周知|zhòng suǒ zhōu zhī|เป็นที่รู้กันดีว่า|众所周知，吸烟有害健康。|idiom
+理所当然|lǐ suǒ dāng rán|เป็นเรื่องธรรมดาที่ควรเป็น|父母照顾孩子是理所当然的。|idiom
+日新月异|rì xīn yuè yì|เปลี่ยนแปลงรวดเร็วทุกวัน|科技发展日新月异。|idiom
+与日俱增|yǔ rì jù zēng|เพิ่มขึ้นทุกวัน|学习汉语的人与日俱增。|idiom
+不可缺少|bù kě quē shǎo|ขาดไม่ได้|水是生命中不可缺少的。|idiom
+各种各样|gè zhǒng gè yàng|นานาชนิด สารพัดแบบ|市场上有各种各样的商品。|idiom
+`.trim();
+
+// 近义词 — คู่คำที่ข้อสอบพาร์ทอ่านชอบเอามาหลอก
+const SYN = [
+  {q:"这次事故____了很大的损失。", a:"造成", opts:["造成","形成","组成","完成"],
+   why:"造成 ใช้กับ<strong>ผลเสีย</strong>เท่านั้น (损失/困难/影响不好) · 形成 = ก่อตัวเป็นรูปเป็นร่าง (习惯/风格) · 组成 = ประกอบขึ้นจากส่วนย่อย · 完成 = ทำเสร็จ"},
+  {q:"他终于____了自己的错误。", a:"承认", opts:["承认","承担","承受","接受"],
+   why:"承认 = ยอมรับ<strong>ว่าเป็นความจริง</strong> · 承担 = แบกรับ<strong>ความรับผิดชอบ</strong> (责任/费用) · 承受 = ทน<strong>แรงกดดัน</strong> (压力/痛苦)"},
+  {q:"政府正在努力____交通状况。", a:"改善", opts:["改善","改进","改正","改变"],
+   why:"改善 ใช้กับ<strong>สภาพการณ์</strong> (状况/关系/生活) · 改进 ใช้กับ<strong>วิธีการ</strong> (方法/技术) · 改正 = แก้ให้ถูก (错误/缺点)"},
+  {q:"这种方法的____很好。", a:"效果", opts:["效果","效率","结果","后果"],
+   why:"效果 = ผลสัมฤทธิ์<strong>ดีหรือไม่ดี</strong> · 效率 = <strong>เร็วแค่ไหน</strong>ต่อหน่วยเวลา · 后果 = ผล<strong>เสีย</strong>ที่ตามมาเท่านั้น"},
+  {q:"他不太会____自己的感情。", a:"表达", opts:["表达","表现","表示","表明"],
+   why:"表达 = สื่อความคิด/ความรู้สึก<strong>ออกมาเป็นคำ</strong> · 表现 = แสดงออกผ่าน<strong>พฤติกรรม/ผลงาน</strong> · 表示 = แสดงท่าที (感谢/同意)"},
+  {q:"这部电影____了当前的社会问题。", a:"反映", opts:["反映","反应","反对","反正"],
+   why:"反映 = <strong>สะท้อน</strong>สภาพความจริง (กริยา) · 反应 = <strong>ปฏิกิริยา</strong>ตอบสนอง (คำนาม) — ออกเสียงเหมือนกัน ข้อสอบชอบหลอกตรงนี้"},
+  {q:"请大家____安静。", a:"保持", opts:["保持","保存","保留","保护"],
+   why:"保持 = รักษา<strong>สภาพ</strong>ให้คงเดิม (安静/联系/健康) · 保存 = เก็บ<strong>สิ่งของ/ข้อมูล</strong> · 保留 = สงวนไว้ (意见/权利)"},
+  {q:"贵的东西____就好。", a:"未必", opts:["未必","必然","难免","居然"],
+   why:"未必 = <strong>ไม่จำเป็น</strong>เสมอไป (ปฏิเสธความแน่นอน) · 必然 = ย่อมต้องเป็น · 难免 = ยากจะเลี่ยง (เรื่องไม่ดี)"},
+  {q:"天气____暖和起来了。", a:"逐渐", opts:["逐渐","逐步","渐渐地","一直"],
+   why:"逐渐 = ค่อยๆ เปลี่ยน<strong>ตามธรรมชาติ</strong>ต่อเนื่อง · 逐步 = ทีละขั้น<strong>มีแผน</strong> มักใช้กับงานที่คนทำ (解决/改革)"},
+  {q:"我们必须____有效的措施。", a:"采取", opts:["采取","采用","接受","使用"],
+   why:"采取 คู่กับ 措施/方法/行动/态度 เป็น<strong>คำที่ใช้คู่กันตายตัว</strong> · 采用 คู่กับ 技术/方案 · ข้อสอบพาร์ทอ่านส่วนแรกคือการทดสอบคู่คำแบบนี้ล้วน"},
+  {q:"____科技的发展，生活越来越方便。", a:"随着", opts:["随着","跟着","顺着","按照"],
+   why:"随着 + คำนามการเปลี่ยนแปลง (发展/提高/增加) = <strong>เมื่อ...เพิ่มขึ้น</strong> เป็นโครงสร้างเปิดประโยคที่ออกสอบบ่อยที่สุดในพาร์ทเขียน"},
+  {q:"他很努力，____结果并不理想。", a:"然而", opts:["然而","于是","因此","从而"],
+   why:"然而 = <strong>ขัดแย้ง</strong> · 于是 = เหตุ→ผลตามลำดับเวลา · 因此 = เหตุ→ผลตรรกะ · 从而 = นำไปสู่ผลที่<strong>ตั้งใจ</strong>"}
+];
+
+// 完成句子 — เรียงคำเป็นประโยค (8 ข้อในข้อสอบจริง = 52 คะแนน)
+const ORDER = [
+  {p:["认真","我们","这个问题","对待","必须"], a:"我们必须认真对待这个问题。",
+   r:"ประธาน + 状语(必须/认真) + กริยา + กรรม — คำวิเศษณ์บอกทัศนะ (必须) มาก่อนคำวิเศษณ์บอกลักษณะ (认真) เสมอ"},
+  {p:["放在","他","那本书","桌子上","把"], a:"他把那本书放在桌子上。",
+   r:"ประโยค 把: ประธาน + 把 + กรรม + กริยา + 补语 — กริยาหลังจาก 把 ต้องมีส่วนขยาย (在/了/给) ห้ามอยู่โดดๆ"},
+  {p:["越来越","学习汉语","多了","的人"], a:"学习汉语的人越来越多了。",
+   r:"ส่วนขยาย + 的 + คำนามหลัก แล้วค่อยตามด้วย 越来越 + คำคุณศัพท์ + 了"},
+  {p:["接受了","他的建议","大家","被"], a:"他的建议被大家接受了。",
+   r:"ประโยค 被: ผู้ถูกกระทำ + 被 + ผู้กระทำ + กริยา + 了 — กริยาต้องมี 了/过/补语 ปิดท้าย"},
+  {p:["值得","这部电影","一看","非常"], a:"这部电影非常值得一看。",
+   r:"值得 + กริยาพยางค์เดียว (一看/一试/学习) เป็นรูปตายตัว · 非常 วางหน้า 值得"},
+  {p:["提高","随着","生活水平的","人们越来越重视健康"], a:"随着生活水平的提高，人们越来越重视健康。",
+   r:"随着 + [ส่วนขยาย + 的 + คำนามการเปลี่ยนแปลง] + ，+ ประโยคหลัก — โครงสร้างเปิดเรียงความที่ออกบ่อยที่สุด"},
+  {p:["说","他","很流利","汉语","得"], a:"他汉语说得很流利。",
+   r:"เมื่อกริยามีทั้งกรรมและ 得: ยกกรรมขึ้นหน้า (他汉语说得...) หรือทวนกริยา (他说汉语说得...) ห้ามพูดว่า 说得汉语很流利"},
+  {p:["困难","克服","他","很多","了"], a:"他克服了很多困难。",
+   r:"ประธาน + กริยา + 了 + จำนวน + กรรม — 了 ติดกริยา ไม่ใช่ท้ายประโยค เมื่อกรรมมีตัวขยายจำนวน"},
+  {p:["有害健康","众所周知","吸烟"], a:"众所周知，吸烟有害健康。",
+   r:"成语 4 พยางค์ที่ทำหน้าที่เปิดประโยค (众所周知/毫无疑问) ตามด้วยคอมมา แล้วประโยคเต็ม"},
+  {p:["同意","除非","否则他不会","你亲自去"], a:"除非你亲自去，否则他不会同意。",
+   r:"除非...否则... เป็นคู่ตายตัว — 除非 นำเงื่อนไขเดียวที่ทำให้เกิดผล 否则 นำผลถ้าไม่ทำ"},
+  {p:["不如","与其","主动出击","等待"], a:"与其等待，不如主动出击。",
+   r:"与其 A，不如 B = แทนที่จะ A สู้ B ดีกว่า — B คือสิ่งที่ผู้พูดเลือก"},
+  {p:["也要","即使","继续努力","失败了"], a:"即使失败了，也要继续努力。",
+   r:"即使...也... เป็นคู่ตายตัว · 也 ต้องอยู่หน้ากริยาในประโยคหลังเสมอ ห้ามขึ้นต้นประโยค"}
+];
+
+const TEMPLATES = [
+  {name:"แบบที่ 1 — เห็นด้วย/ไม่เห็นด้วย (ใช้ได้กับหัวข้อความเห็นเกือบทุกแบบ)",
+   zh:"随着社会的发展，[หัวข้อ]越来越受到人们的关注。在我看来，[จุดยืนของคุณ]。\n首先，[เหตุผลที่ 1]。比如说，[ตัวอย่างรูปธรรม]。\n其次，[เหตุผลที่ 2]，这一点也不可忽视。\n总之，我认为[ทวนจุดยืน]，希望大家都能重视起来。",
+   th:"พร้อมกับการพัฒนาของสังคม [หัวข้อ] ได้รับความสนใจมากขึ้นเรื่อยๆ ในความเห็นของผม [จุดยืน] · ประการแรก [เหตุผล 1] ยกตัวอย่างเช่น [ตัวอย่าง] · ประการที่สอง [เหตุผล 2] ซึ่งก็มองข้ามไม่ได้ · โดยสรุป ผมคิดว่า [ทวนจุดยืน] หวังว่าทุกคนจะให้ความสำคัญ",
+   n:"~95 ตัวอักษรเมื่อเติมครบ"},
+  {name:"แบบที่ 2 — เล่าเหตุการณ์ (ใช้กับโจทย์ภาพ)",
+   zh:"上个周末，我和[ใคร]一起去[ที่ไหน]。当时[บรรยายสถานการณ์]，我们都觉得很[ความรู้สึก]。\n没想到，[เหตุการณ์พลิก]。幸好[วิธีแก้]，问题终于解决了。\n通过这件事，我明白了[บทเรียน]。这是一次难忘的经历。",
+   th:"สุดสัปดาห์ที่แล้ว ผมกับ [ใคร] ไป [ที่ไหน] ตอนนั้น [สถานการณ์] พวกเรารู้สึก [ความรู้สึก] มาก · ไม่คาดคิดว่า [เหตุการณ์พลิก] โชคดีที่ [วิธีแก้] ปัญหาจึงคลี่คลาย · จากเรื่องนี้ผมเข้าใจว่า [บทเรียน] เป็นประสบการณ์ที่ลืมไม่ลง",
+   n:"~90 ตัวอักษรเมื่อเติมครบ"},
+  {name:"แบบที่ 3 — เปรียบเทียบข้อดีข้อเสีย",
+   zh:"关于[หัวข้อ]，不同的人有不同的看法。\n有人认为[ฝ่าย ก]，因为[เหตุผล]。然而，也有人持相反的观点，他们觉得[ฝ่าย ข]。\n就我个人而言，我更倾向于[เลือกฝ่ายไหน]。虽然[ยอมรับข้อเสีย]，但是[ข้อดีที่ชนะ]。\n因此，[ข้อสรุป]。",
+   th:"เกี่ยวกับ [หัวข้อ] คนต่างกันมีมุมมองต่างกัน · บางคนคิดว่า [ฝ่าย ก] เพราะ [เหตุผล] แต่ก็มีคนที่เห็นตรงข้าม พวกเขารู้สึกว่า [ฝ่าย ข] · สำหรับผมเอง ผมโน้มเอียงไปทาง [เลือก] แม้ว่า [ข้อเสีย] แต่ [ข้อดี] · ดังนั้น [ข้อสรุป]",
+   n:"~105 ตัวอักษรเมื่อเติมครบ"}
+];
+
+const CODES = [
+  ["VOCAB","ไม่รู้คำศัพท์คำนั้นเลย","คำนั้นเข้าคิวทบทวนถี่ขึ้นทันที ถ้าเกิน 40% ของข้อผิด แปลว่าคลังคำยังไม่พอ ต้องเพิ่มคำใหม่/วัน"],
+  ["MEANING","รู้คำ แต่เลือกความหมายผิดในบริบท","ปัญหา 近义词 — ไปทำหมวดเรียงประโยคและอ่านคำอธิบายคู่คำให้ครบ"],
+  ["STRUCTURE","เข้าใจคำครบ แต่จับโครงสร้างประโยคผิด","ทบทวนจุดไวยากรณ์ ไม่ใช่ทบทวนคำศัพท์ — เพิ่มเวลาหมวดเรียงประโยค"],
+  ["TOO_SLOW","รู้คำตอบ แต่ไม่ทันเวลา","ปัญหาความเร็ว ไม่ใช่ความรู้ — ฝึกอ่านจับเวลา ไม่ใช่ท่องคำเพิ่ม"],
+  ["SOUND","ฟังไม่ออกทั้งที่รู้คำนั้น","ต้องทำการ์ดเสียง→ความหมาย และ 听写 ไม่ใช่การ์ดอ่าน"],
+  ["CARELESS","เผลอ อ่านโจทย์ไม่ครบ","ไม่ต้องเรียนเพิ่ม — ในห้องสอบให้อ่านตัวเลือกให้ครบทั้ง 4 ก่อนเลือก"]
+];
+
+const GRADE_PROMPT = `คุณคือกรรมการตรวจข้อสอบ HSK ระดับ 5 พาร์ท 书写第二部分
+ตรวจงานเขียนด้านล่างตาม rubric นี้ ให้คะแนนแต่ละมิติแยกกัน:
+
+A. 内容切题 ตรงโจทย์ (0-8)     B. 语法准确 ไวยากรณ์ (0-8)
+C. 词语运用 การใช้คำ (0-6)     D. 篇章连贯 ความต่อเนื่อง (0-4)
+E. 字数与规范 ความยาว/รูปแบบ (0-4)   → รวม 30 แล้วแปลงเป็นเต็ม 100
+
+ตอบเป็นภาษาไทย ตามรูปแบบนี้เท่านั้น:
+1. คะแนนรายมิติ + คะแนนรวมเต็ม 100
+2. จุดผิดทีละจุด: [ยกประโยคที่ผิด] → [ที่ถูก] → [เหตุผลสั้นๆ] จัดกลุ่มเป็น ไวยากรณ์/คำผิด/โครงสร้าง
+3. ประโยคไหนที่ "ถูกแต่ระดับต่ำกว่า HSK5" พร้อมเวอร์ชันที่ยกระดับแล้ว
+4. นับจำนวนตัวอักษรจีนจริง (ไม่นับเครื่องหมายวรรคตอน)
+5. สามอย่างที่ต้องแก้ก่อนงานชิ้นถัดไป
+
+เกณฑ์สำคัญ: ต่ำกว่า 80 ตัวอักษรให้หัก E เหลือไม่เกิน 1 คะแนน และระบุให้ชัด
+
+โจทย์: [วางโจทย์ตรงนี้]
+งานเขียน: [วางงานเขียนตรงนี้]`;
+
+/* ══════════ 2. สถานะ ══════════ */
+
+const EXAM = new Date("2026-12-13T00:00:00+07:00");
+const START = new Date("2026-08-25T00:00:00+07:00");
+const FREEZE = new Date("2026-11-29T00:00:00+07:00");
+const VOCAB_TARGET = 1360;
+const DAILY_SIZE = 40;
+const MIX = {due:.50, wrong:.30, new:.20};
+const LS = "hsk5drill.v1";
+
+let S = null;          // state
+let session = null;    // in-flight drill
+let artifactNS = null; // capability namespace, or null
+let filesFormOK = true;
+
+function todayKey(d){
+  const x = d || new Date();
+  return new Date(x.getTime()+7*36e5).toISOString().slice(0,10);
+}
+function daysBetween(a,b){ return Math.round((b-a)/864e5); }
+
+function blankState(){
+  return {
+    v:1, updatedAt:Date.now(),
+    cards:[],            // {id,hz,py,th,ex,tag,due,ivl,ease,reps,lapses,seen}
+    days:{},             // "2026-08-25": {answered,correct,minutes,newWords}
+    errors:[],           // {id,cardId,label,code,n,last}
+    settings:{newPerDay:14}
+  };
+}
+
+function seedCards(){
+  return SEED.split("\n").filter(Boolean).map((line,i)=>{
+    const p = line.split("|").map(s=>s.trim());
+    return {id:"c"+i, hz:p[0], py:p[1], th:p[2], ex:p[3]||"", tag:p[4]||"misc",
+            due:null, ivl:0, ease:2.5, reps:0, lapses:0, seen:false};
+  });
+}
+
+function load(){
+  let local = null;
+  try{ const raw = localStorage.getItem(LS); if(raw) local = JSON.parse(raw); }catch(e){}
+  S = local || blankState();
+  if(!S.cards || !S.cards.length) S.cards = seedCards();
+  if(!S.days) S.days = {};
+  if(!S.errors) S.errors = [];
+  if(!S.settings) S.settings = {newPerDay:14};
+}
+
+function saveLocal(){
+  S.updatedAt = Date.now();
+  try{ localStorage.setItem(LS, JSON.stringify(S)); }catch(e){}
+}
+
+let saveTimer = null;
+function scheduleCloudSave(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(cloudSave, 2500);
+}
+
+async function cloudSave(){
+  if(!artifactNS || !filesFormOK) return;
+  try{
+    await artifactNS.publish({"data/progress.json": JSON.stringify(S)});
+    flash("บันทึกขึ้นคลาวด์แล้ว");
+    setSaveState();
+  }catch(err){
+    const code = err && err.code;
+    if(code==="conflict"){ flash("มีเวอร์ชันใหม่กว่า — กำลังโหลดใหม่"); return; }
+    if(code==="rate_limited"){ clearTimeout(saveTimer); saveTimer=setTimeout(cloudSave,15000); return; }
+    filesFormOK = false;
+    setSaveState();
+  }
+}
+
+function setSaveState(){
+  const el = document.getElementById("saveState");
+  if(!el) return;
+  if(artifactNS && filesFormOK)
+    el.innerHTML = "บันทึกอัตโนมัติขึ้นคลาวด์ — เปิดจากเครื่องไหนก็เห็นความคืบหน้าเดียวกัน";
+  else
+    el.innerHTML = "<strong>บันทึกในเบราว์เซอร์นี้เท่านั้น</strong> — ข้อมูลไม่ข้ามเครื่อง ดาวน์โหลดสำรองไว้เป็นระยะ";
+}
+
+function flash(msg){
+  const c = document.getElementById("chip");
+  c.textContent = msg; c.classList.add("on");
+  setTimeout(()=>c.classList.remove("on"), 1800);
+}
+
+/* ══════════ 3. ตารางทบทวน (SM-2 ปรับให้รู้จักวันสอบ) ══════════ */
+
+function schedule(card, ok){
+  const now = Date.now();
+  card.reps = (card.reps||0)+1;
+  card.seen = true;
+  if(!ok){
+    card.lapses = (card.lapses||0)+1;
+    card.ease = Math.max(1.3, (card.ease||2.5)-0.2);
+    card.ivl = 0;
+    card.due = now + 10*6e4;                 // ถามซ้ำใน 10 นาที
+    return;
+  }
+  card.ease = Math.min(2.8, (card.ease||2.5)+0.05);
+  if(card.ivl<1) card.ivl = 1;
+  else if(card.ivl<3) card.ivl = 3;
+  else card.ivl = Math.round(card.ivl * card.ease);
+
+  // deadline-aware: ไม่มีประโยชน์ที่จะทบทวนหลังวันสอบ และต้องเจอทุกใบอย่างน้อยครั้งหนึ่งช่วง freeze
+  const daysLeft = Math.max(1, daysBetween(new Date(), EXAM));
+  card.ivl = Math.min(card.ivl, Math.max(1, Math.floor(daysLeft*0.6)));
+  card.due = now + card.ivl*864e5;
+}
+
+function dueCards(){
+  const now = Date.now();
+  return S.cards.filter(c=>c.seen && c.due!=null && c.due<=now)
+                .sort((a,b)=>a.due-b.due);
+}
+function newCards(){ return S.cards.filter(c=>!c.seen); }
+function learnedCount(){ return S.cards.filter(c=>c.seen).length; }
+
+function inFreeze(){ return new Date() >= FREEZE; }
+
+function newPerDayNow(){
+  if(inFreeze()) return 0;
+  const backlog = dueCards().length;
+  if(backlog > 130) return 0;                       // ตัวคุมโหลด: ของค้างเยอะ = หยุดคำใหม่
+  const wk = weekNum();
+  if(wk<=1) return 0;
+  if(wk<=3) return 14;
+  if(wk<=9) return 18;
+  if(wk<=13) return 15;
+  return 8;
+}
+
+function weekNum(){
+  return Math.min(16, Math.max(1, Math.floor(daysBetween(START, new Date())/7)+1));
+}
+
+/* ══════════ 4. สร้างชุดข้อสอบประจำวัน ══════════ */
+
+function buildSession(){
+  const nDue = Math.round(DAILY_SIZE*MIX.due);
+  const nWrong = Math.round(DAILY_SIZE*MIX.wrong);
+  const nNew = DAILY_SIZE - nDue - nWrong;
+
+  const due = dueCards().slice(0, nDue);
+  const usedIds = new Set(due.map(c=>c.id));
+
+  const wrongPool = S.errors
+    .filter(e=>!e.resolved && e.cardId)
+    .sort((a,b)=> (b.n*1000 + b.last/1e9) - (a.n*1000 + a.last/1e9))
+    .map(e=>S.cards.find(c=>c.id===e.cardId))
+    .filter(c=>c && !usedIds.has(c.id));
+  const wrong = wrongPool.slice(0, nWrong);
+  wrong.forEach(c=>usedIds.add(c.id));
+
+  const fresh = newCards().slice(0, Math.min(nNew, newPerDayNow()));
+  fresh.forEach(c=>usedIds.add(c.id));
+
+  // เติมให้ครบด้วยการ์ดที่เคยเห็นแล้วและใกล้ครบกำหนดที่สุด
+  let items = [...due, ...wrong, ...fresh];
+  if(items.length < DAILY_SIZE){
+    const filler = S.cards.filter(c=>c.seen && !usedIds.has(c.id))
+      .sort((a,b)=>(a.due||0)-(b.due||0)).slice(0, DAILY_SIZE-items.length);
+    filler.forEach(c=>usedIds.add(c.id));
+    items = items.concat(filler);
+  }
+
+  // แปลงเป็นคำถาม แล้วคละชนิด (interleaving)
+  const qs = items.map(c=>makeVocabQ(c));
+
+  // แทรกข้อ 近义词 และเรียงประโยค กระจายทั่วชุด
+  const extras = [];
+  SYN.slice(0, 4).forEach(s=>extras.push({type:"syn", data:s}));
+  ORDER.slice(0, 3).forEach(o=>extras.push({type:"order", data:o}));
+  shuffle(extras);
+  const step = Math.max(3, Math.floor(qs.length/(extras.length+1)));
+  extras.forEach((e,i)=>qs.splice(Math.min(qs.length,(i+1)*step), 0, e));
+
+  return {items:qs, i:0, answered:0, correct:0, startedAt:Date.now(), pendingWrong:null};
+}
+
+function makeVocabQ(card){
+  const mode = (!card.seen || card.reps<2) ? "recognize"
+             : (Math.random()<0.35 ? "recall" : "recognize");
+  const distract = shuffle(S.cards.filter(c=>c.id!==card.id && c.tag===card.tag))
+    .slice(0,3);
+  while(distract.length<3){
+    const r = S.cards[Math.floor(Math.random()*S.cards.length)];
+    if(r.id!==card.id && !distract.find(d=>d.id===r.id)) distract.push(r);
+  }
+  return {type:"vocab", mode, card, distract, wasNew: !card.seen};
+}
+
+function shuffle(a){ const x=a.slice(); for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];} return x; }
+
+/* ══════════ 5. เรนเดอร์ ══════════ */
+
+const $ = id=>document.getElementById(id);
+
+function renderHeader(){
+  const d = daysBetween(new Date(), EXAM);
+  $("hDays").textContent = d>0? d : 0;
+  $("hStreak").textContent = streak();
+  $("hWords").textContent = learnedCount();
+  const a = accuracy(7);
+  $("hAcc").textContent = a==null? "—" : Math.round(a*100)+"%";
+}
+
+function streak(){
+  let n=0; const d=new Date();
+  for(;;){
+    const k = todayKey(d);
+    const rec = S.days[k];
+    if(rec && rec.answered>0){ n++; d.setDate(d.getDate()-1); }
+    else if(n===0 && k===todayKey()){ d.setDate(d.getDate()-1); }  // วันนี้ยังไม่ทำ ไม่ตัด streak
+    else break;
+    if(n>400) break;
+  }
+  return n;
+}
+
+function accuracy(days){
+  let a=0,c=0; const d=new Date();
+  for(let i=0;i<days;i++){
+    const rec = S.days[todayKey(d)];
+    if(rec){ a+=rec.answered; c+=rec.correct; }
+    d.setDate(d.getDate()-1);
+  }
+  return a? c/a : null;
+}
+
+function adherence(days){
+  let hit=0, total=0; const d=new Date();
+  for(let i=0;i<days;i++){
+    const k=todayKey(d);
+    if(new Date(k) >= START){ total++; if(S.days[k] && S.days[k].answered>=20) hit++; }
+    d.setDate(d.getDate()-1);
+  }
+  return total? hit/total : null;
+}
+
+function renderToday(){
+  const wk = weekNum();
+  $("wkNum").textContent = wk;
+  const dd = new Date();
+  $("todayDate").textContent = dd.toLocaleDateString("th-TH",{weekday:"long",day:"numeric",month:"long"})
+    + " · สัปดาห์ที่ " + wk + " จาก 16" + (inFreeze()? " · ช่วง FREEZE ห้ามเรียนคำใหม่":"");
+
+  const due = dueCards().length;
+  const wrongN = S.errors.filter(e=>!e.resolved).length;
+  const nNew = Math.min(newPerDayNow(), newCards().length);
+  $("tDue").textContent = due;
+  $("tWrong").textContent = wrongN;
+  $("tNew").textContent = nNew;
+  $("tSize").textContent = DAILY_SIZE;
+
+  let note;
+  if(inFreeze())
+    note = "<strong>ช่วง FREEZE</strong> — ไม่มีคำใหม่แล้ว ชุดวันนี้เป็นการทบทวนล้วนเพื่อให้การ์ดทุกใบผ่านสายตาอย่างน้อยหนึ่งครั้งก่อนวันสอบ";
+  else if(newPerDayNow()===0 && due>130)
+    note = "<strong>ของค้างเกินเพดาน (" + due + " ใบ)</strong> — ตัวคุมโหลดหยุดคำใหม่วันนี้อัตโนมัติ เคลียร์ของค้างให้ต่ำกว่า 130 ก่อน นี่คือกฎที่กันไม่ให้เลิกกลางคัน";
+  else
+    note = "ชุดวันนี้ = <strong>" + Math.round(DAILY_SIZE*MIX.due) + " ข้อถึงกำหนดทบทวน</strong> + <strong>" +
+      Math.round(DAILY_SIZE*MIX.wrong) + " ข้อที่เคยผิด</strong> + <strong>" + nNew +
+      " คำใหม่</strong> คละพาร์ทกัน (interleaving) ซึ่งจำได้นานกว่าทำทีละกอง แม้จะรู้สึกยากกว่า";
+  $("mixNote").innerHTML = note;
+
+  const rec = S.days[todayKey()];
+  $("doneToday").textContent = rec && rec.answered
+    ? "วันนี้ทำไปแล้ว " + rec.answered + " ข้อ แม่น " + Math.round(rec.correct/rec.answered*100) + "% — ทำซ้ำได้ ระบบจะเลือกข้อใหม่ให้"
+    : "";
+
+  const goals = [
+    ["ทบทวนให้หมดคิว", Math.min(1, due? (rec?rec.answered:0)/Math.max(due,1) : 1)],
+    ["คำใหม่วันนี้", nNew? Math.min(1,((rec&&rec.newToday)||0)/nNew) : 1],
+    ["ทำครบ 40 ข้อ", Math.min(1,(rec?rec.answered:0)/DAILY_SIZE)]
+  ];
+  $("weekGoals").innerHTML = goals.map(([l,p])=>
+    `<div class="bar"><span>${l}</span><span class="t"><i style="width:${Math.round(p*100)}%"></i></span><span class="v">${Math.round(p*100)}%</span></div>`
+  ).join("");
+}
+
+function renderDrill(){
+  const area = $("drillArea");
+  if(!session){ area.innerHTML = `<div class="empty">ยังไม่ได้เริ่ม — กลับไปแท็บ "วันนี้" แล้วกดปุ่มพร้อมทำข้อสอบ</div>`;
+    $("progBar").style.width="0"; return; }
+
+  if(session.i >= session.items.length) return renderSummary();
+
+  const q = session.items[session.i];
+  $("progBar").style.width = Math.round(session.i/session.items.length*100)+"%";
+
+  const meta = `<div class="qmeta"><span>ข้อ ${session.i+1} / ${session.items.length}</span>
+    <span>${q.type==="vocab"?(q.mode==="recall"?"นึกคำจากความหมาย":"อ่านแล้วเลือกความหมาย"):q.type==="syn"?"เลือกคำให้ตรงบริบท":"เรียงคำเป็นประโยค"}</span></div>`;
+
+  if(q.type==="vocab") return renderVocabQ(q, meta);
+  if(q.type==="syn") return renderSynQ(q, meta);
+  return renderOrderQ(q, meta);
+}
+
+function renderVocabQ(q, meta){
+  const c = q.card;
+  const opts = shuffle([c, ...q.distract]);
+  const body = q.mode==="recall"
+    ? `<div class="qprompt">คำไหนแปลว่า</div><div class="qbig sm">${esc(c.th)}</div>`
+    : `<div class="qbig zh">${esc(c.hz)}</div>`;
+  const optHtml = opts.map((o,i)=>
+    `<button class="opt" data-i="${i}" data-ok="${o.id===c.id?1:0}">
+      <span class="k">${"ABCD"[i]}</span>
+      <span>${q.mode==="recall"? `<span class="zh" style="font-size:19px">${esc(o.hz)}</span>` : esc(o.th)}</span>
+    </button>`).join("");
+  $("drillArea").innerHTML = `<div class="qcard">${meta}${body}
+    <div class="opts">${optHtml}</div><div id="rev"></div></div>`;
+  bindOpts(c);
+}
+
+function renderSynQ(q, meta){
+  const d = q.data;
+  const opts = shuffle(d.opts);
+  const optHtml = opts.map((o,i)=>
+    `<button class="opt" data-i="${i}" data-ok="${o===d.a?1:0}">
+      <span class="k">${"ABCD"[i]}</span><span class="zh" style="font-size:19px">${esc(o)}</span></button>`).join("");
+  $("drillArea").innerHTML = `<div class="qcard">${meta}
+    <div class="qbig sm zh">${esc(d.q).replace("____","<span style='color:var(--seal)'>____</span>")}</div>
+    <div class="opts">${optHtml}</div><div id="rev"></div></div>`;
+  bindOpts(null, d.why, d.a);
+}
+
+function renderOrderQ(q, meta){
+  const d = q.data;
+  $("drillArea").innerHTML = `<div class="qcard">${meta}
+    <div class="qprompt">เรียงคำต่อไปนี้เป็นประโยคที่ถูกต้อง</div>
+    <div class="chips" style="margin-bottom:16px">${shuffle(d.p).map(w=>`<span class="chip zh" style="font-size:16px">${esc(w)}</span>`).join("")}</div>
+    <input type="text" id="ordIn" placeholder="พิมพ์ประโยคที่เรียงแล้ว" autocomplete="off">
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="ordCheck">ตรวจ</button>
+      <button class="btn ghost" id="ordSkip">ดูเฉลย</button>
+    </div><div id="rev"></div></div>`;
+  const check = ()=>{
+    const v = ($("ordIn").value||"").replace(/[\s，。！？,.!?]/g,"");
+    const a = d.a.replace(/[\s，。！？,.!?]/g,"");
+    reveal(v===a, null, d.a, d.r);
+  };
+  $("ordCheck").onclick = check;
+  $("ordSkip").onclick = ()=>reveal(false, null, d.a, d.r);
+  $("ordIn").addEventListener("keydown", e=>{ if(e.key==="Enter") check(); });
+  $("ordIn").focus();
+}
+
+function bindOpts(card, why, answer){
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.onclick = ()=>{
+      const ok = b.dataset.ok==="1";
+      document.querySelectorAll(".opt").forEach(x=>{
+        x.disabled = true;
+        if(x.dataset.ok==="1") x.classList.add("right");
+      });
+      if(!ok) b.classList.add("wrong");
+      reveal(ok, card, answer, why);
+    };
+  });
+}
+
+function reveal(ok, card, answer, why){
+  const q = session.items[session.i];
+  const c = card || (q.type==="vocab"? q.card : null);
+  session.answered++;
+  if(ok) session.correct++;
+
+  if(c) schedule(c, ok);
+
+  const label = c? c.hz : (answer||"");
+  session.pendingWrong = ok? null : {cardId: c? c.id : null, label};
+
+  let html = `<div class="reveal">`;
+  html += ok
+    ? `<h4 style="color:var(--jade)">ถูกต้อง</h4>`
+    : `<h4 style="color:var(--seal)">ผิด — คำตอบคือ <span class="zh">${esc(answer|| (c?c.th:""))}</span></h4>`;
+
+  if(c){
+    html += `<p><span class="zh" style="font-size:19px">${esc(c.hz)}</span>
+      <span class="mono" style="color:var(--text-3);margin-left:8px">${esc(c.py)}</span> — ${esc(c.th)}</p>`;
+    if(c.ex) html += `<div class="ex"><span class="zh">${esc(c.ex)}</span></div>`;
+  }
+  if(why) html += `<p>${why}</p>`;
+
+  if(!ok){
+    html += `<div class="why"><div class="lbl">ผิดเพราะอะไร — ตอบให้ตรง เพราะนี่คือสิ่งที่ทำให้ระบบนี้มีค่ากว่าแอปท่องศัพท์</div>
+      <div class="chips">${CODES.map(([code,desc])=>
+        `<button class="chip" data-code="${code}" title="${esc(desc)}">${esc(desc)}</button>`).join("")}</div></div>`;
+  }
+  html += `<div class="row" style="margin-top:16px"><button class="btn" id="nextQ">${
+    ok? "ข้อถัดไป" : "ข้ามการติดป้าย"}</button></div></div>`;
+
+  $("rev").innerHTML = html;
+
+  $("rev").querySelectorAll("[data-code]").forEach(b=>{
+    b.onclick = ()=>{
+      $("rev").querySelectorAll("[data-code]").forEach(x=>x.setAttribute("aria-pressed","false"));
+      b.setAttribute("aria-pressed","true");
+      logError(session.pendingWrong, b.dataset.code);
+      session.pendingWrong = null;
+      $("nextQ").textContent = "ข้อถัดไป";
+      $("nextQ").focus();
+    };
+  });
+  $("nextQ").onclick = next;
+  $("nextQ").focus();
+}
+
+function logError(w, code){
+  if(!w) return;
+  const key = (w.cardId||w.label)+"|"+code;
+  let e = S.errors.find(x=>x.key===key);
+  if(e){ e.n++; e.last = Date.now(); e.resolved = false; }
+  else S.errors.push({key, cardId:w.cardId, label:w.label, code, n:1, last:Date.now(), resolved:false});
+}
+
+function next(){
+  session.i++;
+  recordDay();
+  saveLocal();
+  renderHeader();
+  if(session.i >= session.items.length){ scheduleCloudSave(); renderSummary(); }
+  else renderDrill();
+}
+
+function recordDay(){
+  const k = todayKey();
+  const rec = S.days[k] || (S.days[k] = {answered:0, correct:0, minutes:0, newWords:0, newToday:0});
+  rec.answered = (rec.baseA||0) + session.answered;
+  rec.correct  = (rec.baseC||0) + session.correct;
+  rec.minutes  = (rec.baseM||0) + Math.round((Date.now()-session.startedAt)/6e4);
+  rec.newWords = learnedCount();                       // ยอดสะสม ใช้วาดกราฟ
+  rec.newToday = session.items.filter(q=>q.type==="vocab" && q.wasNew).length;
+}
+
+function renderSummary(){
+  $("progBar").style.width="100%";
+  const acc = session.answered? session.correct/session.answered : 0;
+  const mins = Math.max(1, Math.round((Date.now()-session.startedAt)/6e4));
+  let verdict, cls;
+  if(acc>=0.95){ verdict="ง่ายเกินไป — เพิ่มคำใหม่/วัน หรือเพิ่มสัดส่วนข้อที่ยังไม่แม่น"; cls="warn"; }
+  else if(acc>=0.80){ verdict="ระดับความยากกำลังพอดี ทำแบบนี้ต่อไป"; cls="good"; }
+  else if(acc>=0.60){ verdict="ยากไปนิด — วันพรุ่งนี้ระบบจะดันข้อที่ผิดขึ้นมาให้มากขึ้นเอง"; cls="warn"; }
+  else { verdict="ยากเกินไป — ลดคำใหม่/วันลง แล้วเคลียร์ของค้างก่อน"; cls="bad"; }
+
+  const codeCount = {};
+  S.errors.filter(e=>Date.now()-e.last < 864e5).forEach(e=>codeCount[e.code]=(codeCount[e.code]||0)+e.n);
+  const top = Object.entries(codeCount).sort((a,b)=>b[1]-a[1])[0];
+
+  $("drillArea").innerHTML = `
+    <div class="qcard" style="text-align:center">
+      <div class="qmeta" style="justify-content:center">จบชุดวันนี้</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:52px;font-weight:600;line-height:1.1">${Math.round(acc*100)}%</div>
+      <p style="color:var(--text-2);margin:6px 0 0">${session.correct} จาก ${session.answered} ข้อ · ${mins} นาที</p>
+      <div class="note ${cls==='good'?'jade':cls==='bad'?'seal':''}" style="text-align:left;margin:20px 0 0">${verdict}</div>
+      ${top? `<p style="color:var(--text-2);font-size:14px;margin-top:14px;text-align:left">สาเหตุที่ผิดบ่อยที่สุดวันนี้คือ <strong>${
+        CODES.find(c=>c[0]===top[0])[1]}</strong> — ${CODES.find(c=>c[0]===top[0])[2]}</p>`:""}
+      <div class="row" style="margin-top:18px;justify-content:center">
+        <button class="btn" id="againBtn">ทำอีกชุด</button>
+        <button class="btn ghost" id="toStats">ดูสถิติ</button>
+      </div>
+    </div>`;
+  $("againBtn").onclick = ()=>{ session = buildSession(); renderDrill(); };
+  $("toStats").onclick = ()=>go("stats");
+}
+
+/* ══════════ 6. สถิติ ══════════ */
+
+function renderStats(){
+  const adh = adherence(14), acc = accuracy(7);
+  setStat("sAdh", adh==null?"—":Math.round(adh*100)+"%", adh==null?"":adh>=.85?"good":adh>=.7?"warn":"bad");
+  setStat("sAcc", acc==null?"—":Math.round(acc*100)+"%", acc==null?"":acc>=.8?"good":acc>=.6?"warn":"bad");
+
+  const learned = learnedCount();
+  const elapsed = Math.max(1, daysBetween(START, new Date()));
+  const totalDays = daysBetween(START, FREEZE);
+  const expected = Math.round(VOCAB_TARGET * Math.min(1, elapsed/totalDays));
+  const ratio = expected? learned/expected : 1;
+  setStat("sPace", learned, ratio>=.95?"good":ratio>=.75?"warn":"bad");
+  $("sPaceSub").textContent = "ควรอยู่ที่ " + expected + " คำ ณ วันนี้";
+
+  let mins=0, n=0; const d=new Date();
+  for(let i=0;i<14;i++){ const r=S.days[todayKey(d)]; if(r){mins+=r.minutes;n++;} d.setDate(d.getDate()-1); }
+  const avg = n? Math.round(mins/n) : null;
+  setStat("sMin", avg==null?"—":avg, avg==null?"":avg>=150?"good":avg>=90?"warn":"bad");
+
+  drawAccSpark();
+  drawVocabSpark();
+  drawErrBars();
+  drawGate();
+}
+
+function setStat(id, val, cls){
+  const el = $(id);
+  el.className = "stat" + (cls? " "+cls : "");
+  el.querySelector(".n").textContent = val;
+}
+
+function drawAccSpark(){
+  const pts=[], d=new Date();
+  for(let i=20;i>=0;i--){
+    const dd = new Date(); dd.setDate(dd.getDate()-i);
+    const r = S.days[todayKey(dd)];
+    pts.push(r && r.answered? r.correct/r.answered : null);
+  }
+  const W=640,H=76,pad=6;
+  const x = i=>pad + i/(pts.length-1)*(W-pad*2);
+  const y = v=>H-pad - v*(H-pad*2);
+  let path="", started=false, dots="";
+  pts.forEach((v,i)=>{
+    if(v==null){ started=false; return; }
+    path += (started?" L":" M") + x(i).toFixed(1) + "," + y(v).toFixed(1);
+    started = true;
+    dots += `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.5" fill="var(--seal)"/>`;
+  });
+  const has = pts.some(v=>v!=null);
+  $("accSpark").innerHTML = has
+    ? `<line x1="${pad}" y1="${y(.8).toFixed(1)}" x2="${W-pad}" y2="${y(.8).toFixed(1)}"
+         stroke="var(--jade)" stroke-width="1" stroke-dasharray="4 4"/>
+       <path d="${path}" fill="none" stroke="var(--seal)" stroke-width="2" stroke-linejoin="round"/>${dots}`
+    : `<text x="${W/2}" y="${H/2+4}" text-anchor="middle" fill="var(--text-3)" font-size="13" font-family="IBM Plex Sans Thai">ยังไม่มีข้อมูล — ทำชุดแรกก่อน</text>`;
+}
+
+function drawVocabSpark(){
+  const W=640,H=76,pad=6;
+  const total = daysBetween(START, FREEZE);
+  const elapsed = Math.max(0, daysBetween(START, new Date()));
+  const x = day=>pad + Math.min(1,day/total)*(W-pad*2);
+  const y = v=>H-pad - Math.min(1,v/VOCAB_TARGET)*(H-pad*2);
+  // เส้นเป้า
+  const target = `<line x1="${x(0)}" y1="${y(0)}" x2="${x(total)}" y2="${y(VOCAB_TARGET)}"
+    stroke="var(--jade)" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  // เส้นจริง
+  let path="", started=false, run=0;
+  for(let i=0;i<=elapsed;i++){
+    const dd = new Date(START.getTime()+i*864e5);
+    const r = S.days[todayKey(dd)];
+    if(r) run = r.newWords;
+    path += (started?" L":"M") + x(i).toFixed(1) + "," + y(run).toFixed(1);
+    started = true;
+  }
+  $("vocabSpark").innerHTML = target +
+    (started? `<path d="${path}" fill="none" stroke="var(--seal)" stroke-width="2.5"/>
+       <circle cx="${x(elapsed).toFixed(1)}" cy="${y(learnedCount()).toFixed(1)}" r="3.5" fill="var(--seal)"/>` : "");
+}
+
+function drawErrBars(){
+  const counts = {};
+  const cut = Date.now()-14*864e5;
+  S.errors.filter(e=>e.last>cut).forEach(e=>counts[e.code]=(counts[e.code]||0)+e.n);
+  const rows = CODES.map(([code,desc])=>[desc, counts[code]||0, code]).sort((a,b)=>b[1]-a[1]);
+  const max = Math.max(1, ...rows.map(r=>r[1]));
+  $("errBars").innerHTML = rows.map(([l,v])=>
+    `<div class="bar"><span>${l}</span><span class="t"><i style="width:${Math.round(v/max*100)}%"></i></span><span class="v">${v}</span></div>`
+  ).join("");
+  const top = rows[0];
+  $("errAdvice").innerHTML = top && top[1]>0
+    ? "<strong>สิ่งที่ควรทำ:</strong> " + CODES.find(c=>c[0]===top[2])[2]
+    : "ยังไม่มีข้อผิดพอจะวิเคราะห์ — ทำสัก 3 วันแล้วกลับมาดู";
+}
+
+function drawGate(){
+  const now = new Date();
+  const gates = [
+    ["2026-09-21", ()=>learnedCount()<200 || (adherence(14)||1)<.7,
+     "จุดตรวจ 21 ก.ย. — คำสะสมยังไม่ถึง 200 หรือความสม่ำเสมอต่ำกว่า 70% ให้ลดคำใหม่เหลือ 12/วัน แล้วตัด shadowing ทิ้ง"],
+    ["2026-10-20", ()=>true,
+     "จุดตรวจ 20 ต.ค. — ทำ mock เต็มฉบับวันนี้ ได้ ≥150 ให้สมัครรอบ 7 พ.ย. พรุ่งนี้ · ได้ <120 ให้ข้ามรอบนั้น"],
+    ["2026-11-25", ()=>true,
+     "จุดตรวจ 25 พ.ย. — mock <150 ให้สมัครรอบ มี.ค. 2027 ในวันนี้เลย (แต่ยังไปสอบ 13 ธ.ค.) · 150–179 ให้ทุ่มพาร์ทเขียนอย่างเดียว 18 วันสุดท้าย"]
+  ];
+  const upcoming = gates.map(([d,f,msg])=>({d:new Date(d+"T00:00:00+07:00"), f, msg}))
+    .filter(g=>daysBetween(now,g.d) >= -2)
+    .sort((a,b)=>a.d-b.d)[0];
+  $("gateNote").innerHTML = upcoming
+    ? `<strong>จุดตัดสินใจถัดไป — อีก ${Math.max(0,daysBetween(now,upcoming.d))} วัน</strong><br>${upcoming.msg}`
+    : `<strong>ถึงช่วงสอบแล้ว</strong> — freeze คำใหม่ ทบทวนอย่างเดียว นอนให้พอ`;
+}
+
+/* ══════════ 7. ข้อผิด / เขียน / ข้อมูล ══════════ */
+
+function renderErrors(){
+  const list = S.errors.filter(e=>!e.resolved).sort((a,b)=>b.n-a.n || b.last-a.last);
+  if(!list.length){ $("errList").innerHTML = `<div class="empty">ยังไม่มีข้อผิดที่บันทึกไว้ — ทำข้อสอบแล้วติดป้ายสาเหตุทุกครั้งที่ผิด</div>`; return; }
+  $("errList").innerHTML = `<div class="tw"><table>
+    <thead><tr><th>คำ</th><th>สาเหตุ</th><th class="num">ผิดกี่ครั้ง</th><th class="num">ล่าสุด</th><th></th></tr></thead>
+    <tbody>${list.map(e=>{
+      const c = e.cardId? S.cards.find(x=>x.id===e.cardId) : null;
+      return `<tr>
+        <td><span class="zh" style="font-size:18px">${esc(e.label)}</span>${c?`<br><span class="mono" style="font-size:12px;color:var(--text-3)">${esc(c.py)}</span> <span style="font-size:13px;color:var(--text-2)">${esc(c.th)}</span>`:""}</td>
+        <td style="font-size:13.5px">${esc((CODES.find(x=>x[0]===e.code)||["","—"])[1])}</td>
+        <td class="num">${e.n}</td>
+        <td class="num" style="font-size:12.5px">${new Date(e.last).toLocaleDateString("th-TH",{day:"numeric",month:"short"})}</td>
+        <td><button class="chip" data-res="${esc(e.key)}">แก้แล้ว</button></td></tr>`;
+    }).join("")}</tbody></table></div>`;
+  $("errList").querySelectorAll("[data-res]").forEach(b=>{
+    b.onclick = ()=>{
+      const e = S.errors.find(x=>x.key===b.dataset.res);
+      if(e) e.resolved = true;
+      saveLocal(); scheduleCloudSave(); renderErrors();
+    };
+  });
+}
+
+function renderWrite(){
+  $("tplList").innerHTML = TEMPLATES.map(t=>`
+    <details><summary>${esc(t.name)}</summary><div class="dbody">
+      <div class="ex" style="background:var(--surface-2);padding:14px;margin-bottom:12px">
+        <span class="zh" style="font-size:17px;line-height:1.9;white-space:pre-line">${esc(t.zh)}</span></div>
+      <p style="color:var(--text-2);white-space:pre-line">${esc(t.th)}</p>
+      <p style="color:var(--text-3);font-size:13px">${esc(t.n)}</p>
+    </div></details>`).join("");
+  $("gradePrompt").textContent = GRADE_PROMPT;
+}
+
+function renderData(){
+  $("deckCount").textContent = S.cards.length;
+  $("codeTable").innerHTML = CODES.map(([c,d,a])=>
+    `<tr><td class="mono" style="font-size:12px">${c}</td><td>${esc(d)}</td><td style="font-size:13.5px;color:var(--text-2)">${esc(a)}</td></tr>`).join("");
+  setSaveState();
+}
+
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m])); }
+
+/* ══════════ 8. เหตุการณ์ ══════════ */
+
+function go(p){
+  document.querySelectorAll(".panel").forEach(el=>el.hidden = el.id!=="p-"+p);
+  document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.p===p)));
+  if(p==="today") renderToday();
+  if(p==="drill") renderDrill();
+  if(p==="stats") renderStats();
+  if(p==="errors") renderErrors();
+  if(p==="write") renderWrite();
+  if(p==="data") renderData();
+  window.scrollTo(0,0);
+}
+
+document.getElementById("tabs").addEventListener("click", e=>{
+  const b = e.target.closest("button[data-p]");
+  if(b) go(b.dataset.p);
+});
+
+$("startBtn").onclick = ()=>{
+  const k = todayKey();
+  const rec = S.days[k];
+  if(rec){ rec.baseA = rec.answered; rec.baseC = rec.correct; rec.baseM = rec.minutes; }
+  session = buildSession();
+  go("drill");
+};
+
+$("copyPrompt").onclick = async ()=>{
+  try{ await navigator.clipboard.writeText(GRADE_PROMPT); flash("คัดลอกแล้ว"); }
+  catch(e){ flash("คัดลอกไม่ได้ — เลือกข้อความเอง"); }
+};
+
+$("importBtn").onclick = ()=>{
+  const raw = $("importBox").value.trim();
+  if(!raw){ $("importMsg").textContent = "ยังไม่ได้วางอะไร"; return; }
+  let added=0, dup=0;
+  raw.split("\n").forEach(line=>{
+    const p = line.split("|").map(s=>s.trim());
+    if(p.length<3 || !p[0]) return;
+    if(S.cards.find(c=>c.hz===p[0])){ dup++; return; }
+    S.cards.push({id:"u"+Date.now()+"_"+added, hz:p[0], py:p[1], th:p[2], ex:p[3]||"",
+      tag:"custom", due:null, ivl:0, ease:2.5, reps:0, lapses:0, seen:false});
+    added++;
+  });
+  saveLocal(); scheduleCloudSave();
+  $("importMsg").textContent = `เพิ่ม ${added} คำ${dup?` · ข้ามซ้ำ ${dup} คำ`:""}`;
+  $("importBox").value = "";
+  renderData(); renderHeader();
+};
+
+$("expCsv").onclick = ()=>{
+  const rows = S.errors.filter(e=>!e.resolved).map(e=>{
+    const c = e.cardId? S.cards.find(x=>x.id===e.cardId) : null;
+    return [e.label, c?c.py:"", c?c.th:"", c?c.ex:"", e.code, e.n]
+      .map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",");
+  });
+  download("hsk5-errors.csv", "﻿" + ["hanzi,pinyin,thai,sentence,error_code,miss_count", ...rows].join("\n"));
+};
+
+$("expJson").onclick = ()=>download("hsk5-backup.json", JSON.stringify(S,null,2));
+
+$("clearResolved").onclick = ()=>{
+  S.errors = S.errors.filter(e=>!e.resolved);
+  saveLocal(); scheduleCloudSave(); renderErrors(); flash("ล้างแล้ว");
+};
+
+$("saveNow").onclick = ()=>{ clearTimeout(saveTimer); cloudSave(); };
+
+$("resetBtn").onclick = ()=>{
+  S = blankState(); S.cards = seedCards();
+  saveLocal(); scheduleCloudSave();
+  session = null; renderHeader(); go("today"); flash("รีเซ็ตแล้ว");
+};
+
+async function download(name, text){
+  const dl = await claudeUse("downloads");
+  if(dl){
+    try{ await dl.save({filename:name, data:text}); flash("บันทึกไฟล์แล้ว"); return; }catch(e){}
+  }
+  // สำรอง: เปิดในหน้าต่างใหม่ให้คัดลอก
+  const w = window.open("", "_blank");
+  if(w){ w.document.write("<pre style='white-space:pre-wrap;word-break:break-all'>"+esc(text)+"</pre>"); w.document.close(); }
+  else flash("ดาวน์โหลดไม่ได้ในหน้าต่างนี้");
+}
+
+async function claudeUse(name){
+  try{
+    if(!window.claude || typeof window.claude.use!=="function") return null;
+    return await window.claude.use(name);
+  }catch(e){ return null; }
+}
+
+/* ══════════ 9. เริ่มทำงาน ══════════ */
+
+load();
+renderHeader();
+go("today");
+
+(async ()=>{
+  // ดึงความคืบหน้าจากคลาวด์ถ้ามีและใหม่กว่าของในเครื่อง
+  try{
+    const res = await fetch("data/progress.json", {cache:"no-store"});
+    if(res.ok){
+      const remote = await res.json();
+      if(remote && remote.updatedAt && (!S.updatedAt || remote.updatedAt > S.updatedAt)){
+        S = remote;
+        if(!S.cards || !S.cards.length) S.cards = seedCards();
+        saveLocal();
+        renderHeader();
+        go("today");
+        flash("โหลดความคืบหน้าจากคลาวด์");
+      }
+    }
+  }catch(e){}
+
+  artifactNS = await claudeUse("artifact");
+  setSaveState();
+})();
+</script>
+
+</body>
+</html>

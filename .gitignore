@@ -13,4 +13,15 @@ __pycache__/
 
 # ห้าม commit ข้อสอบลิขสิทธิ์
 /data/past_papers/
+/data/exam_corpus/
 *.pdf
+.venv*/
+
+# ── ไฟล์ระหว่างทางของ pipeline สร้างคำศัพท์ ไม่ต้องเก็บใน repo ──
+# ผลลัพธ์สุดท้ายอยู่ใน hsk5_merged.json / needs_review.json / QUALITY_REPORT.md แล้ว
+/data/vocab/batch_inputs/
+/data/vocab/verify/
+/data/vocab/hsk5_batch_*.json
+
+# ข้อสอบต้นฉบับ (ลิขสิทธิ์)
+/SampleExamQuestions/

@@ -54,6 +54,7 @@
 | D7 | ชุดข้อสอบรายวัน **ขนาดคงที่** ไม่โตแบบทบต้น | กฎ +10%/วัน ที่เจ้าของเสนอ ทำให้ชนเพดานเวลาวันที่ 33 และถึง 324,940 ข้อวันสอบ |
 | D8 | ทุกครั้งที่ตอบผิดต้องติดป้าย **สาเหตุ** | นี่คือสิ่งที่ Anki/Quizlet/Du Chinese ไม่มี = เหตุผลเดียวที่ระบบนี้ควรมีอยู่ |
 | D9 | มี coach dashboard สำหรับเจ้าของ/ครู | คนเรียนกับคนสร้างเป็นคนละคน ต้องเห็นว่าน้องทำจริงไหม |
+| D10 | เว็บก่อน (Django templates + HTMX + Alpine, ไม่มี build step) · แอปในสโตร์ค่อยทำด้วย Expo ต่อ API เดิม | ผู้เรียน 2 คน เหลือเวลาถึงวันสอบไม่มาก · ตรรกะอยู่ใน srs.py/selection.py อยู่แล้ว เปิด API ครอบทีหลังได้ไม่ต้องเขียนใหม่ |
 
 ---
 
@@ -106,6 +107,9 @@
   ⚠️ **ลิขสิทธิ์** — ใช้ส่วนตัวได้ ห้ามนำเข้าฐานข้อมูลเวอร์ชันที่จะขาย
   ทุกอย่างที่ดึงมาจากไฟล์เหล่านี้ต้องตั้ง `source_type="official_past_paper"` และ `commercial_safe=False`
 - น้องมีหนังสือเตรียมสอบ + ครูสอน
+- `data/exam_corpus/` — ข้อสอบ 9 ชุดที่แยกโครงสร้างแล้ว (โจทย์/ตัวเลือก/เฉลย/สคริปต์ฟัง)
+  ⚠️ `commercial_safe=false` · อยู่ใน .gitignore แล้ว ห้าม commit
+  `synonym_sets.json` = กลุ่มคำใกล้เคียง 100 กลุ่มที่ดึงจากตัวเลือกจริงของ 阅读第一部分
 
 ---
 
@@ -118,8 +122,13 @@ hsk5-trainer/
 │   ├── models/       users · lexicon · srs · content · practice · diagnostics
 │   ├── srs.py        ตัวจัดตารางทบทวน (SM-2 ปรับให้รู้จักวันสอบ)
 │   ├── selection.py  Daily Drill Engine
-│   ├── admin.py      ครบทุกตาราง — ใช้กรอกข้อมูลได้โดยไม่ต้องมี UI
-│   └── management/commands/seed_hsk5.py
+│   ├── placement.py  แบบวัดระดับ (สุ่มคำ · ตรวจ · แปลผลเป็นค่าตั้งต้น)
+│   ├── drill.py      ตัวประสานชุดข้อสอบกับหน้าเว็บ
+│   ├── views.py      หน้าเว็บผู้เรียน — บางที่สุด ตรรกะอยู่ที่อื่น
+│   ├── admin.py      ครบทุกตาราง — สำหรับเจ้าของ/ครูเท่านั้น ผู้เรียนไม่ได้ใช้
+│   └── management/commands/  seed_hsk5 · import_vocab · make_learner
+├── templates/        base + หน้าผู้เรียน
+├── static/           app.css (ระบบสีชุดเดียว) · htmx · alpine (วางไว้ในเครื่อง ไม่มี CDN)
 └── data/             seed JSON
 ```
 
@@ -131,6 +140,8 @@ hsk5-trainer/
 source .venv/bin/activate
 python manage.py migrate
 python manage.py seed_hsk5          # ใส่คำศัพท์ + 近义词 + 完成句子 ตั้งต้น
+python manage.py import_vocab       # นำเข้าคำศัพท์ 2,496 คำจาก data/vocab/hsk5_merged.json
+python manage.py make_learner mint --name มิ้นท์ --exam-date 2026-11-07
 python manage.py createsuperuser
 python manage.py runserver
 python manage.py test               # ทดสอบ SRS + drill engine
@@ -141,7 +152,13 @@ python manage.py test               # ทดสอบ SRS + drill engine
 ## 10. สถานะ / ทำถึงไหนแล้ว
 
 - [x] **Sprint 1** — scaffold, data model ครบ, admin, seed, tests
-- [ ] Sprint 2 — Daily Drill UI (HTMX) + หน้าสถิติผู้เรียน
+- [x] **Sprint 1.5** — ฐานข้อมูลคำศัพท์ 2,496 คำ จากลิสต์ทางการ 2012 + ข้อสอบจริง 9 ชุด
+  `data/vocab/hsk5_merged.json` · คำที่ต้องให้ครูตรวจอยู่ใน `needs_review.json` · อ่าน `QUALITY_REPORT.md` ก่อนใช้
+  ⚠️ สุ่มตรวจ 5% พบผิดจริง 2.4% **เกินเกณฑ์ 2% ที่ตั้งไว้** → ยังไม่ผ่านการรับรอง ต้องให้ครูตรวจก่อนใช้สอน
+- [x] **Sprint 2 (บางส่วน)** — UI ผู้เรียนใช้งานได้จริงแล้ว: login · แบบวัดระดับ · ชุดฝึกรายวัน · คลังคำศัพท์ HSK1-6 · สถิติ
+  นำเข้าคำศัพท์เข้าฐานข้อมูลแล้ว 2,206 คำ (กันคำที่ต้องให้ครูตรวจ 305 คำไว้) · เทสต์ 33 ตัวผ่าน
+  คำสั่งใหม่: `import_vocab` · `make_learner`
+- [ ] Sprint 2 (ที่เหลือ) — ระบบทดสอบแยกพาร์ท + คำอธิบายเฉลย 882 ข้อ + หน้าคำเชื่อม
 - [ ] Sprint 3 — พาร์ทฟัง: TTS batch, เครื่องเล่นปรับความเร็ว, 听写 + เทียบตัวอักษร
 - [ ] Sprint 4 — Coach dashboard + สรุปรายสัปดาห์
 - [ ] Sprint 5 — deploy VPS + PWA + backup อัตโนมัติ

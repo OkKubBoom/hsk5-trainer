@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}ความคืบหน้ากลุ่ม · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ความคืบหน้ากลุ่ม{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:var(--s-half)">
+  <span class="eyebrow">ความคืบหน้ากลุ่ม</span>
+  <h1>วันนี้ใครทำแล้วบ้าง</h1>
+  <p class="muted" style="max-width:62ch">
+    หน้านี้เทียบ<b>ความสม่ำเสมอ</b> ไม่ได้เทียบคะแนน — ความแม่นของแต่ละคนเทียบกันไม่ได้จริง
+    เพราะขึ้นกับว่าเจอของยากง่ายต่างกัน ตัวเลขที่นี่จึงเป็นสิ่งที่ทุกคนควบคุมได้เอง
+  </p>
+</div>
+
+{% if not_done %}
+<div class="note warn">
+  วันนี้ยังไม่ได้ทำ {{ not_done|length }} คน —
+  {% for r in not_done %}<b>{{ r.name }}</b>{% if not forloop.last %} · {% endif %}{% endfor %}
+</div>
+{% else %}
+<div class="note">ทุกคนทำชุดของวันนี้ครบแล้ว</div>
+{% endif %}
+
+<div class="peoplegrid">
+  {% for r in rows %}
+  <div class="card stack person {% if r.done_today %}done{% endif %}" style="gap:var(--s2)">
+    <div class="row" style="gap:var(--s1)">
+      <span class="avatar">{{ r.initial }}</span>
+      <span class="userbox-text grow">
+        <b style="font-size:var(--t-base)">{{ r.name }}</b>
+        <span class="muted">เหลือ {{ r.days_to_exam }} วันถึงวันสอบ</span>
+      </span>
+    </div>
+
+    {% if r.done_today %}
+      <span class="pill ok" style="align-self:flex-start">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+        ทำชุดวันนี้แล้ว
+      </span>
+    {% elif r.in_progress_today %}
+      <span class="pill warn" style="align-self:flex-start">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        กำลังทำ · ตอบไป {{ r.answered_today }} ข้อ
+      </span>
+    {% else %}
+      <span class="pill bad" style="align-self:flex-start">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        ยังไม่ได้ทำวันนี้
+      </span>
+    {% endif %}
+
+    <div class="row" style="gap:var(--s3);flex-wrap:wrap">
+      <span class="stack" style="gap:0">
+        <b class="mono" style="font-size:var(--t-h2)">{{ r.streak }}</b>
+        <span class="muted">วันติดกัน</span>
+      </span>
+      <span class="stack" style="gap:0">
+        <b class="mono" style="font-size:var(--t-h2)">{{ r.sessions_done }}</b>
+        <span class="muted">ชุดที่ทำจบ</span>
+      </span>
+      <span class="stack" style="gap:0">
+        <b class="mono" style="font-size:var(--t-h2)">{{ r.answered_total }}</b>
+        <span class="muted">ข้อที่ตอบ</span>
+      </span>
+    </div>
+
+    <div class="stack" style="gap:var(--s-half)">
+      <div class="row">
+        <span class="eyebrow grow">30 วันที่ผ่านมา</span>
+        <span class="mono muted">{{ r.active_days }}/30</span>
+      </div>
+      <div class="daygrid">
+        {% for d in r.calendar %}
+          <i class="{% if d.done %}on{% endif %}" title="{{ d.date|date:'j M' }}{% if d.done %} · ทำแล้ว{% else %} · ไม่ได้ทำ{% endif %}"></i>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<p class="muted" style="font-size:var(--t-sm)">
+  ทุกคนที่มีบัญชีเห็นหน้านี้เหมือนกัน · ความแม่น จุดอ่อน และคำตอบรายข้อยังเป็นข้อมูลส่วนตัวของแต่ละคน ไม่แสดงที่นี่
+</p>
+
+{% endblock %}

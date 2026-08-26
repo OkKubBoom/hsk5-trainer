@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}จัดการผู้ใช้ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}จัดการผู้ใช้{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:var(--s-half)">
+  <span class="eyebrow">ผู้ดูแลระบบ</span>
+  <h1>จัดการผู้ใช้</h1>
+  <p class="muted">หน้านี้เพิ่มผู้เรียนใหม่ได้อย่างเดียว — การแก้ข้อมูลหรือลบบัญชีต้องทำที่หน้าจัดการข้อมูลของเจ้าของระบบ</p>
+</div>
+
+<div class="card stack">
+  <h3>เพิ่มผู้เรียนใหม่</h3>
+
+  {% if error %}
+    <div class="note" style="border-left-color:var(--missing)">
+      <b>เพิ่มไม่สำเร็จ</b> — {{ error }}
+    </div>
+  {% endif %}
+
+  <form method="post" class="stack">
+    {% csrf_token %}
+    <div class="formgrid">
+      <div class="stack" style="gap:var(--s-half)">
+        <label for="id_username">ชื่อผู้ใช้ <span style="color:var(--missing)">*</span></label>
+        <input id="id_username" type="text" name="username" value="{{ form.username|default:'' }}"
+               placeholder="เช่น nong2" required>
+        <span class="muted" style="font-size:0.75rem">ใช้ตัวอักษรอังกฤษ ไม่มีเว้นวรรค</span>
+      </div>
+
+      <div class="stack" style="gap:var(--s-half)">
+        <label for="id_display_name">ชื่อที่แสดง</label>
+        <input id="id_display_name" type="text" name="display_name" value="{{ form.display_name|default:'' }}"
+               placeholder="เช่น มิ้นท์">
+      </div>
+
+      <div class="stack" style="gap:var(--s-half)">
+        <label for="id_exam_date">วันสอบเป้าหมาย <span style="color:var(--missing)">*</span></label>
+        <input id="id_exam_date" type="date" name="exam_date" value="{{ form.exam_date|default:'' }}" required>
+      </div>
+
+      <div class="stack" style="gap:var(--s-half)">
+        <label for="id_backup">วันสอบสำรอง</label>
+        <input id="id_backup" type="date" name="backup_exam_date" value="{{ form.backup_exam_date|default:'' }}">
+      </div>
+
+      <div class="stack" style="gap:var(--s-half)">
+        <label for="id_password">รหัสผ่านตั้งต้น <span style="color:var(--missing)">*</span></label>
+        <input id="id_password" type="text" name="password" placeholder="อย่างน้อย 8 ตัวอักษร" required>
+        <span class="muted" style="font-size:0.75rem">ต้องบอกเจ้าตัวเอง ระบบไม่ได้ส่งให้</span>
+      </div>
+    </div>
+
+    <div><button class="btn" type="submit" style="width:auto">เพิ่มผู้เรียน</button></div>
+  </form>
+
+  <div class="note">
+    เพิ่มแล้วระบบจะสร้างโปรไฟล์ผู้เรียนและ<b>การ์ดทบทวนครบทุกคำในคลัง</b>ให้อัตโนมัติ
+    ผู้เรียนใหม่เข้าใช้ได้ทันที
+  </div>
+</div>
+
+<div class="card stack">
+  <h3>ผู้ใช้ในระบบ ({{ users|length }})</h3>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>ชื่อผู้ใช้</th><th>ชื่อที่แสดง</th><th>บทบาท</th><th>วันสอบ</th><th>เข้าใช้ล่าสุด</th></tr></thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td class="cell-word" data-label="ชื่อผู้ใช้"><b>{{ u.username }}</b></td>
+          <td data-label="ชื่อที่แสดง">{{ u.first_name|default:"—" }}</td>
+          <td data-label="บทบาท">
+            <span class="pill {% if u.role == 'admin' %}accent{% endif %}">{{ u.get_role_display }}</span>
+          </td>
+          <td class="num" data-label="วันสอบ">
+            {% if u.learner_profile %}{{ u.learner_profile.target_exam_date|date:"j M Y" }}{% else %}<span class="muted">—</span>{% endif %}
+          </td>
+          <td class="num muted" data-label="เข้าใช้ล่าสุด">
+            {% if u.last_login %}{{ u.last_login|date:"j M · H:i" }}{% else %}ยังไม่เคยเข้า{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

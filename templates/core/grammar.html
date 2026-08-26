@@ -1,0 +1,259 @@
+{% extends "base.html" %}{% load hsk %}
+{% block title %}คำเชื่อม &amp; จับคู่คำ · HSK5 Trainer{% endblock %}
+{% block content %}
+<div class="stack" style="gap:14px">
+
+  <div class="stack" style="gap:4px">
+    <span class="eyebrow">คำเชื่อม &amp; การจับคู่คำ</span>
+    <h1>สองอย่างที่ท่องเป็นคำเดี่ยวแล้วใช้ไม่ได้</h1>
+  </div>
+
+  <div class="row" style="gap:5px;flex-wrap:wrap">
+    {% for key, label in tabs %}
+      <a class="pill {% if key == tab %}accent{% endif %}"
+         style="text-decoration:none;padding:6px 14px;{% if key != tab %}border:1px solid var(--line);color:var(--ink-2){% endif %}"
+         href="?tab={{ key }}">{{ label }}</a>
+    {% endfor %}
+  </div>
+
+{% if tab == 'conn' %}
+  <div x-data="{
+        group: '{{ groups.0.key }}',
+        open: null,
+        showTh: true,
+        report: null,
+        toggle(id) { this.open = this.open === id ? null : id }
+      }" class="stack" style="gap:14px">
+
+    {# แถบเลือกหมวด — ติดขอบบน เลื่อนตามหน้า #}
+    <div class="groupbar">
+      {% for g in groups %}
+        <button type="button" class="gtab" :class="group === '{{ g.key }}' && 'on'" @click="group = '{{ g.key }}'; open = null">
+          {{ g.name }}<span class="gtab-n">{{ g.count }}</span>
+        </button>
+      {% endfor %}
+      <label class="row" style="gap:7px;margin-left:auto;cursor:pointer;font-size:.84rem;white-space:nowrap">
+        <input type="checkbox" x-model="showTh"> เห็นคำแปล
+      </label>
+    </div>
+
+    {% for g in groups %}
+    <div x-show="group === '{{ g.key }}'" x-cloak class="stack" style="gap:12px">
+      <p class="muted" style="font-size:.88rem">{{ g.hint }}</p>
+
+      {# ตารางคำแบบกะทัดรัด — เห็นทั้งหมวดในหน้าจอเดียว เทียบกันได้ #}
+      <div class="wordgrid">
+        {% for w in g.items %}
+        <div class="wcard" :class="open === '{{ g.key }}-{{ w.pk }}' && 'open'">
+          <button type="button" class="wcard-head" @click="toggle('{{ g.key }}-{{ w.pk }}')"
+                  :aria-expanded="open === '{{ g.key }}-{{ w.pk }}'">
+            <span class="zh wcard-hz">{{ w.hanzi }}</span>
+            <span class="wcard-mid">
+              <span class="mono wcard-py">{{ w.pinyin }}</span>
+              <span class="wcard-th" x-show="showTh">{{ w.meaning_th|truncatechars:34 }}</span>
+            </span>
+            <span class="dots wcard-dots" title="พบใน {{ w.exam_papers_count }} จาก 9 ชุด">
+              {% for on in w.exam_papers_count|paper_dots %}<i class="{% if on %}on{% endif %}"></i>{% endfor %}
+            </span>
+            <svg class="wcard-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+
+          <div class="wcard-body" x-show="open === '{{ g.key }}-{{ w.pk }}'" x-collapse x-cloak>
+            {% if w.collocations %}
+            <div class="wrow">
+              <span class="wlab">รูปที่ใช้</span>
+              <div class="row" style="gap:6px;flex-wrap:wrap">
+                {% for c in w.collocations %}<span class="tagx zh">{{ c }}</span>{% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            {% if w.example_zh %}
+            <div class="wrow">
+              <span class="wlab">ตัวอย่าง</span>
+              <div class="stack" style="gap:3px">
+                <span class="zh" style="font-size:1.02rem">{{ w.example_zh }}</span>
+                <span class="muted" style="font-size:.86rem" x-show="showTh">{{ w.example_th }}</span>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if w.confusable_with %}
+            <div class="wrow">
+              <span class="wlab">อย่าสับสนกับ</span>
+              <div class="stack" style="gap:6px">
+                {% for cf in w.confusable_with|slice:":2" %}
+                <div class="row" style="gap:9px;align-items:flex-start">
+                  <span class="zh cfw">{{ cf.hanzi }}</span>
+                  <span style="font-size:.86rem;color:var(--ink-2)">{{ cf.how_to_tell }}</span>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="wrow">
+              <span class="wlab">ในข้อสอบ</span>
+              <span style="font-size:.86rem;color:var(--ink-2)">
+                พบ {{ w.exam_papers_count }} จาก 9 ชุด
+                {% if w.exam_as_answer %} · เคยเป็นเฉลย {{ w.exam_as_answer }} ครั้ง{% endif %}
+                {% if w.exam_as_distractor %} · เป็นตัวลวง {{ w.exam_as_distractor }} ครั้ง{% endif %}
+              </span>
+            </div>
+
+            {% if "human_verified" in w.tags %}
+              <div class="row"><span class="pill ok">คำแปลนี้มีคนตรวจยืนยันแล้ว</span></div>
+            {% else %}
+            <div class="ai-notice" style="padding:var(--s1) var(--s2)">
+              <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+                <span class="ai-star">✱✱✱</span>
+                <span class="ai-sub grow">คำแปลและวิธีแยกคำนี้เขียนโดย AI ยังไม่มีครูตรวจ</span>
+                <button type="button" class="btn ghost sm" style="width:auto"
+                        @click="report = {id: {{ w.pk }}, hanzi: '{{ w.hanzi|escapejs }}', pinyin: '{{ w.pinyin|escapejs }}', meaning: '{{ w.meaning_th|escapejs }}'}">แย้ง</button>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+    {% include "core/partials/vocab_report_modal.html" %}
+
+    <details class="foot-note">
+      <summary>ที่มาของการแบ่งหมวด และคำที่ยังไม่ได้จัด ({{ uncovered|length }})</summary>
+      <div class="stack" style="gap:8px;padding-top:10px">
+        <p style="font-size:.88rem;color:var(--ink-2)">
+          การแบ่งหมวดตามหน้าที่เขียนจากความรู้ทางภาษา <b>ไม่ได้มาจากการนับข้อมูล</b>เหมือนหน้าเก็งข้อสอบ
+          ครูควรตรวจก่อนใช้สอน · ส่วนตัวอย่างประโยคและคำที่จับคู่มาจากฐานข้อมูลที่ผ่านการตรวจแล้ว
+        </p>
+        {% if uncovered %}
+        <p style="font-size:.88rem;color:var(--ink-2)">
+          คำที่ติดแท็กว่าเป็นคำเชื่อมแต่ยังไม่ถูกจัดหมวด:
+          <span class="zh">{{ uncovered|join:" · " }}</span>
+        </p>
+        {% endif %}
+      </div>
+    </details>
+  </div>
+
+{% else %}
+  <div x-data="{ showTh: true, open: null, report: null }" class="stack" style="gap:14px">
+
+    <p class="muted" style="font-size:.9rem;max-width:64ch">
+      ข้อสอบ <span class="zh">选词填空</span> ถามการจับคู่ ไม่ได้ถามความหมาย —
+      เห็นช่องว่างหน้าคำว่า <span class="zh">措施</span> ต้องนึกออกทันทีว่าคู่กับ <span class="zh">采取</span>
+    </p>
+
+    <form method="get" class="stack" style="gap:9px">
+      <input type="hidden" name="tab" value="match">
+      <input type="hidden" name="per" value="{{ per_page }}">
+      <input type="hidden" name="min_level" value="{{ min_level }}">
+      <input type="hidden" name="pos" value="{{ pos }}">
+      <div class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" name="q" value="{{ query }}" class="grow" placeholder="ค้นคำที่อยากรู้ว่าจับคู่กับอะไร เช่น 采取 · 达到">
+      </div>
+    </form>
+
+    <div class="filterbar">
+      <div class="row" style="gap:5px;flex-wrap:wrap">
+        {% for value, label in level_filters %}
+          <a class="chip {% if value == min_level %}on{% endif %}" style="min-width:auto;padding:0 12px"
+             href="?tab=match&min_level={{ value }}&pos={{ pos }}&per={{ per_page }}{% if query %}&q={{ query }}{% endif %}">{{ label }}</a>
+        {% endfor %}
+      </div>
+      <span class="fdiv"></span>
+      <div class="row" style="gap:5px;flex-wrap:wrap">
+        {% for value, label in pos_filters %}
+          <a class="chip {% if value == pos %}on{% endif %}" style="min-width:auto;padding:0 12px"
+             href="?tab=match&pos={{ value }}&min_level={{ min_level }}&per={{ per_page }}{% if query %}&q={{ query }}{% endif %}">{{ label }}</a>
+        {% endfor %}
+      </div>
+      <label class="row" style="gap:7px;margin-left:auto;cursor:pointer;font-size:.84rem;white-space:nowrap">
+        <input type="checkbox" x-model="showTh"> เห็นคำแปล
+      </label>
+    </div>
+
+    {% if page.paginator.count %}
+    <div class="wordgrid">
+      {% for w in page %}
+      <div class="wcard" :class="open === {{ w.pk }} && 'open'">
+        <button type="button" class="wcard-head" @click="open = open === {{ w.pk }} ? null : {{ w.pk }}">
+          <span class="zh wcard-hz">{{ w.hanzi }}</span>
+          <span class="wcard-mid">
+            <span class="mono wcard-py">{{ w.pinyin }}</span>
+            <span class="wcard-th" x-show="showTh">{{ w.meaning_th|truncatechars:34 }}</span>
+          </span>
+          <span class="dots wcard-dots"><span class="n">{{ w.exam_papers_count }}/9</span></span>
+          <svg class="wcard-chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+
+        <div class="wcard-preview" x-show="open !== {{ w.pk }}">
+          {% for c in w.collocations|slice:":3" %}<span class="tagx zh">{{ c }}</span>{% endfor %}
+        </div>
+
+        <div class="wcard-body" x-show="open === {{ w.pk }}" x-collapse x-cloak>
+          <div class="wrow">
+            <span class="wlab">จับคู่กับ</span>
+            <div class="row" style="gap:6px;flex-wrap:wrap">
+              {% for c in w.collocations %}<span class="tagx zh">{{ c }}</span>{% endfor %}
+            </div>
+          </div>
+          {% if w.example_zh %}
+          <div class="wrow">
+            <span class="wlab">ตัวอย่าง</span>
+            <div class="stack" style="gap:3px">
+              <span class="zh" style="font-size:1.02rem">{{ w.example_zh }}</span>
+              <span class="muted" style="font-size:.86rem" x-show="showTh">{{ w.example_th }}</span>
+            </div>
+          </div>
+          {% endif %}
+          {% if w.confusable_with %}
+          <div class="wrow">
+            <span class="wlab">อย่าสับสนกับ</span>
+            <div class="stack" style="gap:6px">
+              {% for cf in w.confusable_with|slice:":2" %}
+              <div class="row" style="gap:9px;align-items:flex-start">
+                <span class="zh cfw">{{ cf.hanzi }}</span>
+                <span style="font-size:.86rem;color:var(--ink-2)">{{ cf.how_to_tell }}</span>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          {% if "human_verified" not in w.tags %}
+          <div class="ai-notice" style="padding:var(--s1) var(--s2)">
+            <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+              <span class="ai-star">✱✱✱</span>
+              <span class="ai-sub grow">การจับคู่คำและวิธีแยกคำนี้เขียนโดย AI</span>
+              <button type="button" class="btn ghost sm" style="width:auto"
+                      @click="report = {id: {{ w.pk }}, hanzi: '{{ w.hanzi|escapejs }}', pinyin: '{{ w.pinyin|escapejs }}', meaning: '{{ w.meaning_th|escapejs }}'}">แย้ง</button>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="row list-tools">
+      {% include "core/partials/per_page.html" %}
+      <span class="muted grow" style="text-align:right;font-size:.82rem">{{ page.start_index }}–{{ page.end_index }} จาก {{ page.paginator.count }}</span>
+    </div>
+    {% include "core/partials/pager.html" %}
+    {% else %}
+    <div class="card empty">
+      <h3>ไม่เจอคำที่ค้น</h3>
+      <a class="btn ghost" href="?tab=match">ล้างการค้นหา</a>
+    </div>
+    {% endif %}
+    {% include "core/partials/vocab_report_modal.html" %}
+  </div>
+{% endif %}
+
+</div>
+{% endblock %}

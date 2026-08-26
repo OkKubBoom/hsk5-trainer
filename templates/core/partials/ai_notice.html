@@ -1,0 +1,46 @@
+{# ป้ายบอกว่าคำอธิบายนี้มาจาก AI + ฟอร์มให้ผู้ใช้ส่งสิ่งที่ตรวจมาได้ #}
+<div class="ai-notice" x-data="{ open: false }">
+  <div class="row" style="gap:var(--s1);align-items:flex-start;flex-wrap:wrap">
+    <span class="ai-star" aria-hidden="true">✱✱✱</span>
+    <div class="stack grow" style="gap:2px;min-width:200px">
+      <b class="ai-title">คำอธิบายนี้เขียนโดย AI ยังไม่มีครูตรวจ</b>
+      <span class="ai-sub">
+        {% if ex.disputed %}
+          มีคนแจ้งแล้วว่าอาจผิด — อย่าเพิ่งเชื่อจนกว่าจะยืนยัน
+        {% else %}
+          รบกวนหาข้อมูลเพิ่มก่อนเชื่อ ถ้าเจอของจริงช่วยส่งกลับมาด้วย
+        {% endif %}
+      </span>
+    </div>
+    <button type="button" class="btn ghost sm" style="width:auto" @click="open = !open"
+            :aria-expanded="open" x-text="open ? 'ปิด' : 'ช่วยตรวจข้อนี้'"></button>
+  </div>
+
+  <div x-show="open" x-cloak x-collapse>
+    <form hx-post="{% url 'explanation_note' question.pk %}" hx-target="closest .ai-notice" hx-swap="outerHTML"
+          class="stack" style="gap:var(--s2);padding-top:var(--s2);margin-top:var(--s2);border-top:1px dashed var(--line-strong)">
+
+      <div class="stack" style="gap:var(--s-half)">
+        <span class="wlab">คุณตรวจแล้วพบว่า</span>
+        <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+          <label class="radio-chip"><input type="radio" name="verdict" value="confirmed" checked> ถูกต้องแล้ว</label>
+          <label class="radio-chip"><input type="radio" name="verdict" value="wrong"> ผิด</label>
+        </div>
+      </div>
+
+      <div class="stack" style="gap:var(--s-half)">
+        <label for="note-body-{{ question.pk }}">คำอธิบายที่ถูกต้อง <span class="muted">(ถ้ามี)</span></label>
+        <textarea id="note-body-{{ question.pk }}" name="body" rows="3"
+                  placeholder="เช่น ครูบอกว่า 表示 ใช้กับประโยคย่อยได้ ไม่จำเป็นต้องมีกรรมเป็นคำนาม"></textarea>
+      </div>
+
+      <div class="stack" style="gap:var(--s-half)">
+        <label for="note-source-{{ question.pk }}">ได้ข้อมูลมาจากไหน</label>
+        <input id="note-source-{{ question.pk }}" type="text" name="source"
+               placeholder="เช่น ครูที่สอน · หนังสือเตรียมสอบหน้า 42 · ลิงก์เว็บ">
+      </div>
+
+      <div><button class="btn sm" type="submit" style="width:auto">ส่งให้เจ้าของระบบ</button></div>
+    </form>
+  </div>
+</div>

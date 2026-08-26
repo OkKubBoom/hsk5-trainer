@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}ยืนยันการส่ง · จำลองสอบ{% endblock %}
+{% block content %}
+<div x-data="{ left: {{ seconds_left }} }"
+     x-init="setInterval(() => { if (left > 0) left--; }, 1000)" class="stack">
+
+  <div class="stack" style="gap:var(--s-half)">
+    <span class="eyebrow">ก่อนส่ง</span>
+    <h1>ตรวจดูอีกครั้ง</h1>
+    <p class="muted">เหลือเวลา <b x-text="Math.floor(left/60) + ' นาที ' + (left%60) + ' วินาที'"></b> — ส่งแล้วแก้ไม่ได้</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>{{ exam.answered_count }}</b><span>ตอบแล้ว</span></div>
+    <div class="stat"><b {% if unanswered %}style="color:var(--missing)"{% endif %}>{{ unanswered|length }}</b><span>ยังไม่ตอบ</span></div>
+    <div class="stat"><b {% if flagged %}style="color:var(--partial)"{% endif %}>{{ flagged|length }}</b><span>ปักธงไว้</span></div>
+    <div class="stat"><b>{{ exam.question_count }}</b><span>ทั้งหมด</span></div>
+  </div>
+
+  {% if unanswered %}
+  <div class="card stack" style="border-left:3px solid var(--missing)">
+    <h3>ยังไม่ได้ตอบ {{ unanswered|length }} ข้อ</h3>
+    <p class="muted">ข้อสอบจริงไม่หักคะแนนถ้าตอบผิด — เดาดีกว่าเว้นว่าง</p>
+    <div class="palette">
+      {% for s in unanswered %}<a class="pnum" href="{% url 'mock_run' exam.pk %}?q={{ s.number }}">{{ s.number }}</a>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if flagged %}
+  <div class="card stack" style="border-left:3px solid var(--partial)">
+    <h3>ปักธงไว้ {{ flagged|length }} ข้อ</h3>
+    <div class="palette">
+      {% for s in flagged %}<a class="pnum flag" href="{% url 'mock_run' exam.pk %}?q={{ s.number }}">{{ s.number }}</a>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="actionbar" style="gap:var(--s1)">
+    <a class="btn ghost" href="{% url 'mock_run' exam.pk %}?q=1" style="width:auto">กลับไปแก้</a>
+    <form method="post" class="grow">
+      {% csrf_token %}
+      <button class="btn block" type="submit">ส่งคำตอบ · ดูคะแนน</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

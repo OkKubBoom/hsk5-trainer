@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}จำลองสอบ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}จำลองสอบ{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:var(--s-half)">
+  <span class="eyebrow">จำลองสอบ · พาร์ทอ่าน</span>
+  <h1>วัดว่าตอนนี้ทำได้เท่าไร</h1>
+  <p class="muted" style="max-width:64ch">
+    จับเวลาจริง ไม่เฉลยระหว่างทาง ส่งทีเดียวตอนจบ — ต่างจากชุดฝึกรายวันที่เฉลยทันที
+    เพราะจุดประสงค์คนละอย่าง อันนี้คือ<b>วัด</b> ไม่ใช่<b>เรียน</b>
+  </p>
+</div>
+
+{% if running %}
+<div class="card hero stack" style="gap:var(--s2)">
+  <span class="pill warn" style="align-self:flex-start">มีชุดที่ทำค้างอยู่</span>
+  <h2>ตอบไปแล้ว {{ running.answered_count }} / {{ running.question_count }} ข้อ</h2>
+  <p class="muted">เหลือเวลา {{ running.seconds_left }} วินาที — เวลายังเดินอยู่</p>
+  <a class="btn lg block" href="{% url 'mock_run' running.pk %}">กลับไปทำต่อ</a>
+</div>
+{% else %}
+<div class="card hero stack" style="gap:var(--s2)">
+  <span class="eyebrow">ชุดใหม่</span>
+  <h2>45 ข้อ · {{ minutes }} นาที</h2>
+  <div class="stack" style="gap:var(--s-half)">
+    {% for part in blueprint %}
+      <div class="row" style="gap:var(--s1)">
+        <span class="mono muted" style="min-width:34px">{{ part.count }}</span>
+        <span>{{ part.label }}</span>
+      </div>
+    {% endfor %}
+  </div>
+  <p class="muted">
+    ข้อสอบสุ่มใหม่ทุกครั้งจากคลังข้อสอบจริง และเลี่ยงข้อที่เพิ่งเจอในสองครั้งล่าสุด —
+    ถ้าเจอชุดเดิมซ้ำ คะแนนจะสูงขึ้นเพราะจำได้ ไม่ใช่เพราะเก่งขึ้น
+  </p>
+  <a class="btn lg block" href="{% url 'mock_start' %}">เริ่มจำลองสอบ</a>
+</div>
+{% endif %}
+
+{# ─── สถิติ ─── #}
+<div class="stats">
+  <div class="stat"><b>{{ stats.times }}</b><span>ครั้งที่สอบไปแล้ว</span></div>
+  <div class="stat"><b>{% if stats.latest is not None %}{{ stats.latest }}{% else %}—{% endif %}</b><span>คะแนนล่าสุด (เต็ม 100)</span></div>
+  <div class="stat"><b>{% if stats.best is not None %}{{ stats.best }}{% else %}—{% endif %}</b><span>ดีที่สุด</span></div>
+  <div class="stat"><b>{% if stats.average is not None %}{{ stats.average }}{% else %}—{% endif %}</b><span>เฉลี่ย</span></div>
+</div>
+
+{% if stats.trend is not None %}
+  <div class="note {% if stats.trend < 0 %}warn{% endif %}">
+    {% if stats.trend > 0 %}
+      ครั้งล่าสุดดีขึ้น <b>{{ stats.trend }} คะแนน</b>จากครั้งก่อน
+    {% elif stats.trend < 0 %}
+      ครั้งล่าสุดลดลง {{ stats.trend }} คะแนน — คะแนนแกว่งเป็นเรื่องปกติ ดูแนวโน้มหลายครั้งดีกว่าดูครั้งเดียว
+    {% else %}
+      คะแนนเท่าครั้งก่อน
+    {% endif %}
+  </div>
+{% endif %}
+
+{% if stats.history %}
+<div class="card stack">
+  <h3>ประวัติการสอบจำลอง</h3>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>ครั้งที่</th><th>วันที่</th><th>คะแนน</th><th>ถูก</th><th>เวลาที่ใช้</th><th>หมายเหตุ</th></tr></thead>
+      <tbody>
+        {% for e in stats.history %}
+        <tr>
+          <td class="cell-rank"><span class="rank">{{ stats.times|add:1|add:forloop.counter0|add:"-1"|add:"-"|default:forloop.revcounter }}</span></td>
+          <td class="cell-word num" data-label="วันที่">{{ e.finished_at|date:"j M Y" }}</td>
+          <td class="num" data-label="คะแนน">
+            <span class="pill {% if e.reading >= 60 %}ok{% elif e.reading >= 40 %}warn{% else %}bad{% endif %}">{{ e.reading }}/100</span>
+          </td>
+          <td class="num" data-label="ถูก">{{ e.correct_count }}/{{ e.question_count }}</td>
+          <td class="num" data-label="เวลาที่ใช้">{% if e.minutes_used %}{{ e.minutes_used }} นาที{% else %}—{% endif %}</td>
+          <td data-label="หมายเหตุ">
+            {% if e.auto_submitted %}<span class="pill warn">หมดเวลา</span>{% endif %}
+            <a href="{% url 'mock_result' e.pk %}">ดูผล</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<div class="note">
+  <b>ทำสัปดาห์ละครั้งพอ</b> — ทำถี่เกินไปคือการวัดความล้า ไม่ใช่วัดความรู้
+  และคะแนนจะไม่ขยับเพราะยังไม่มีเวลาให้เรียนรู้ระหว่างครั้ง
+</div>
+
+<p class="muted" style="font-size:var(--t-sm)">
+  ตอนนี้จำลองได้เฉพาะพาร์ทอ่าน (45 ข้อ 45 นาที) เพราะพาร์ทฟังยังไม่มีไฟล์เสียง ·
+  พาร์ทอ่านคิดเป็น 100 จาก 300 คะแนนของข้อสอบจริง
+</p>
+
+{% endblock %}

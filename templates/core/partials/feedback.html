@@ -1,0 +1,129 @@
+{# การ์ดเฉลย — ปุ่มไปต่ออยู่ติดล่างในระยะนิ้วโป้ง ไม่ต้องเลื่อนหา #}
+<div id="card" x-data @keydown.window.enter="$el.querySelector('.js-next').click()" class="stack" style="gap:var(--s2)">
+
+  <div class="card stack" style="gap:var(--s2);border-color:{% if outcome.is_correct %}var(--ready){% else %}var(--missing){% endif %};border-width:2px">
+
+    {# ถูก/ผิด บอกด้วยไอคอน + ข้อความ + สี ไม่ใช้สีอย่างเดียว #}
+    <div class="row" style="gap:var(--s1)">
+      {% if outcome.is_correct %}
+        <span class="pill ok">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+          ถูกต้อง
+        </span>
+      {% else %}
+        <span class="pill bad">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          ยังไม่ใช่
+        </span>
+      {% endif %}
+    </div>
+
+    {% if not outcome.is_correct %}
+    <div class="stack" style="gap:var(--s2)">
+      <div class="stack" style="gap:2px">
+        <span class="eyebrow">คุณเลือก</span>
+        <span style="text-decoration:line-through;color:var(--ink-3)">{{ given }}</span>
+      </div>
+      <div class="stack" style="gap:2px">
+        <span class="eyebrow">คำตอบที่ถูก</span>
+        <span style="color:var(--ready);font-weight:500">{{ outcome.correct_answer }}</span>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if outcome.vocab %}
+    <div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">
+      <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+        <span class="zh" style="font-size:var(--t-h2)">{{ outcome.vocab.hanzi }}</span>
+        <span class="mono muted">{{ outcome.vocab.pinyin }}</span>
+        <span class="pill accent" style="margin-left:auto">HSK{{ outcome.vocab.hsk_level }}</span>
+      </div>
+      {% if outcome.vocab.example_zh %}
+        <p class="zh" style="font-size:var(--t-lead)">{{ outcome.vocab.example_zh }}</p>
+        <p class="muted">{{ outcome.vocab.example_th }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% with ex=outcome.question.explanation %}
+    {% if ex.why_correct %}
+    <div class="stack" style="gap:var(--s2);padding-top:var(--s2);border-top:1px solid var(--line)">
+
+      {# ชั้น 1 — ทำไมคำตอบนี้ถูก #}
+      <div class="layer l1">
+        <span class="wlab">ทำไมข้อนี้ถูก</span>
+        <p>{{ ex.why_correct }}</p>
+        {% if ex.hint %}<p class="muted">คำใบ้ในโจทย์ — {{ ex.hint }}</p>{% endif %}
+      </div>
+
+      {# ชั้น 2 — ตัวลวงแต่ละตัวผิดเพราะอะไร #}
+      {% if outcome.distractors %}
+      <div class="layer l2">
+        <span class="wlab">ตัวเลือกอื่นผิดเพราะอะไร</span>
+        <div class="stack" style="gap:var(--s1)">
+          {% for d in outcome.distractors %}
+          <div class="row" style="gap:var(--s1);align-items:flex-start">
+            <span class="zh cfw">{{ d.text }}</span>
+            <span style="font-size:var(--t-sm);color:var(--ink-2)">{{ d.rationale_th }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {# ชั้น 3 — คำที่ต้องรู้ #}
+      {% if ex.key_vocab %}
+      <div class="layer l3">
+        <span class="wlab">คำที่ต้องรู้เพื่อตอบข้อนี้</span>
+        <div class="stack" style="gap:var(--s-half)">
+          {% for kv in ex.key_vocab %}
+            <div class="row" style="gap:var(--s1);align-items:baseline">
+              <span class="zh" style="min-width:3em">{{ kv.hanzi }}</span>
+              <span style="font-size:var(--t-sm);color:var(--ink-2)">{{ kv.note }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {# ชั้น 4 — กฎที่ใช้ต่อได้ #}
+      {% if ex.rule %}
+      <div class="layer l4">
+        <span class="wlab">กฎที่เอาไปใช้ข้ออื่นได้</span>
+        <p>{{ ex.rule }}</p>
+      </div>
+      {% endif %}
+
+      {# คำอธิบายที่คนตรวจแล้วมาก่อน ของ AI อยู่ล่าง #}
+      {% if not ex.human_verified %}
+        {% with question=outcome.question %}{% include "core/partials/ai_notice.html" %}{% endwith %}
+      {% else %}
+        <div class="ai-notice verified">
+          <span class="row" style="gap:var(--s1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ready)" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <b style="font-size:var(--t-sm)">คำอธิบายนี้มีคนตรวจยืนยันแล้ว</b>
+          </span>
+        </div>
+      {% endif %}
+    </div>
+    {% elif outcome.question.explanation_th %}
+      <div class="note">{{ outcome.question.explanation_th }}</div>
+    {% endif %}
+    {% endwith %}
+
+    {% if outcome.advice %}<div class="note warn"><b>ทำไงต่อ</b> — {{ outcome.advice }}</div>{% endif %}
+
+    {% if outcome.question %}
+    <div><button class="btn ghost sm" type="button" style="width:auto">เฉลยนี้ผิด บอกเรา</button></div>
+    {% endif %}
+  </div>
+
+  {# แถบปุ่มติดล่าง #}
+  <div class="actionbar">
+    <a class="btn block js-next" href="{% url 'drill_run' %}">
+      {% if is_last %}ดูสรุปชุดนี้{% else %}ข้อต่อไป{% endif %}
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+    <span class="muted" style="white-space:nowrap">Enter</span>
+  </div>
+</div>

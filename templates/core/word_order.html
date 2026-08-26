@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}ฝึกเรียงคำ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ฝึกเรียงคำ{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:var(--s-half)">
+  <div class="row">
+    <span class="eyebrow grow">พาร์ทเขียน · 完成句子</span>
+    <span class="mono muted">ทำไปแล้ว {{ done_count }} / {{ total }}</span>
+  </div>
+  <h1>เรียงคำให้เป็นประโยค</h1>
+</div>
+
+{% if not question %}
+  <div class="card empty">
+    <span class="empty-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h7"/></svg>
+    </span>
+    <h3>ยังไม่มีข้อเรียงคำในระบบ</h3>
+    <p class="muted">ต้องนำเข้าข้อสอบก่อน</p>
+  </div>
+
+{% elif result %}
+  {# ─── ผลลัพธ์ ─── #}
+  <div class="card stack" style="gap:var(--s2);border-width:2px;border-color:{% if result.is_correct %}var(--ready){% else %}var(--missing){% endif %}">
+    {% if result.is_correct %}
+      <span class="pill ok" style="align-self:flex-start">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+        เรียงถูก
+      </span>
+    {% else %}
+      <span class="pill bad" style="align-self:flex-start">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        ยังไม่ใช่
+      </span>
+    {% endif %}
+
+    <div class="stack" style="gap:2px">
+      <span class="eyebrow">คุณเรียงว่า</span>
+      <span class="zh" style="font-size:var(--t-lead);{% if not result.is_correct %}text-decoration:line-through;color:var(--ink-3){% endif %}">{{ result.given }}</span>
+    </div>
+
+    <div class="stack" style="gap:2px">
+      <span class="eyebrow">เฉลย</span>
+      <span class="zh" style="font-size:var(--t-lead);color:var(--ready)">{{ result.main_answer }}</span>
+    </div>
+
+    {% if result.other_answers %}
+    <div class="stack" style="gap:2px">
+      <span class="eyebrow">เรียงแบบนี้ก็ถูก</span>
+      {% for a in result.other_answers %}<span class="zh muted">{{ a }}</span>{% endfor %}
+    </div>
+    {% endif %}
+
+    {% with ex=question.explanation %}
+    {% if ex.why_correct %}
+    <div class="stack" style="gap:var(--s2);padding-top:var(--s2);border-top:1px solid var(--line)">
+      <div class="layer l1">
+        <span class="wlab">ทำไมเรียงแบบนี้</span>
+        <p>{{ ex.why_correct }}</p>
+        {% if ex.hint %}<p class="muted">โครงสร้างที่บังคับลำดับ — {{ ex.hint }}</p>{% endif %}
+      </div>
+      {% if ex.key_vocab %}
+      <div class="layer l3">
+        <span class="wlab">คำที่ต้องรู้</span>
+        <div class="stack" style="gap:var(--s-half)">
+          {% for kv in ex.key_vocab %}
+          <div class="row" style="gap:var(--s1);align-items:baseline">
+            <span class="zh" style="min-width:3em">{{ kv.hanzi }}</span>
+            <span style="font-size:var(--t-sm);color:var(--ink-2)">{{ kv.note }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% if ex.rule %}
+      <div class="layer l4">
+        <span class="wlab">กฎที่เอาไปใช้ข้ออื่นได้</span>
+        <p>{{ ex.rule }}</p>
+      </div>
+      {% endif %}
+
+      {% if not ex.human_verified %}
+        {% include "core/partials/ai_notice.html" %}
+      {% else %}
+        <div class="ai-notice verified">
+          <span class="row" style="gap:var(--s1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ready)" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <b style="font-size:var(--t-sm)">คำอธิบายนี้มีคนตรวจยืนยันแล้ว</b>
+          </span>
+        </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% if not result.is_correct %}
+    <div class="note warn">
+      <b>ทำไงต่อ</b> — ข้อนี้วัดลำดับคำ ไม่ได้วัดคำศัพท์ ถ้าผิดบ่อยให้ไปทบทวนรูปประโยค
+      ไม่ใช่ท่องศัพท์เพิ่ม · ระบบบันทึกไว้แล้วและจะเอากลับมาถามในชุดวันถัดไป
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="actionbar">
+    <a class="btn block" href="{% url 'word_order' %}">
+      ข้อต่อไป
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+
+{% else %}
+  {# ─── ข้อใหม่ ─── #}
+  {{ words|json_script:"wordpool-data" }}
+  <div x-data="{
+        pool: JSON.parse(document.getElementById('wordpool-data').textContent),
+        picked: [],
+        take(i) { this.picked.push(this.pool[i]); this.pool.splice(i, 1); },
+        undo() { if (this.picked.length) this.pool.push(this.picked.pop()); },
+        reset() { this.pool = this.pool.concat(this.picked); this.picked = []; },
+        get sentence() { return this.picked.join(''); }
+      }" class="stack">
+
+    <div class="card stack" style="gap:var(--s3)">
+      <span class="muted">แตะคำตามลำดับที่ควรอยู่ในประโยค</span>
+
+      {# ช่องประโยคที่กำลังสร้าง #}
+      <div class="sentence-box">
+        <template x-if="picked.length === 0">
+          <span class="muted">แตะคำด้านล่างเพื่อเริ่มเรียง</span>
+        </template>
+        <template x-for="(w, i) in picked" :key="i">
+          <span class="zh chip-word placed" x-text="w"></span>
+        </template>
+      </div>
+
+      {# คำที่เหลือให้เลือก #}
+      <div class="wordpool">
+        <template x-for="(w, i) in pool" :key="w + i">
+          <button type="button" class="zh chip-word" x-text="w" @click="take(i)"></button>
+        </template>
+      </div>
+
+      <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+        <button type="button" class="btn ghost sm" style="width:auto" @click="undo()" :disabled="picked.length === 0">ถอยหนึ่งคำ</button>
+        <button type="button" class="btn ghost sm" style="width:auto" @click="reset()" :disabled="picked.length === 0">เริ่มใหม่</button>
+      </div>
+    </div>
+
+    <form method="post" class="actionbar">
+      {% csrf_token %}
+      <input type="hidden" name="question_id" value="{{ question.pk }}">
+      <input type="hidden" name="given" :value="sentence">
+      <button class="btn block" type="submit" :disabled="pool.length > 0"
+              x-text="pool.length > 0 ? 'ยังเหลืออีก ' + pool.length + ' คำ' : 'ตรวจคำตอบ'"></button>
+    </form>
+  </div>
+{% endif %}
+
+<p class="muted" style="font-size:var(--t-sm)">
+  พาร์ทนี้ทำคะแนนได้ง่ายที่สุดในข้อสอบ — เป็นกฎลำดับคำตายตัว ไม่ต้องรู้ศัพท์เยอะเหมือนพาร์ทอ่าน
+</p>
+
+{% endblock %}

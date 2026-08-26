@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}จบชุด · HSK5 Trainer{% endblock %}
+{% block content %}
+<div class="stack" style="gap:6px">
+  <span class="eyebrow">จบชุดแล้ว · {{ session.started_at|date:"j M Y" }}</span>
+  <h1>วันนี้ทำได้เท่านี้</h1>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>{{ session.answered }}</b><span>ตอบไป</span></div>
+  <div class="stat"><b>{{ session.correct }}</b><span>ถูก</span></div>
+  <div class="stat"><b>{% if session.accuracy %}{{ session.accuracy|floatformat:0 }}%{% else %}—{% endif %}</b><span>ความแม่น</span></div>
+  <div class="stat"><b>{{ session.minutes }}</b><span>นาทีที่ใช้</span></div>
+</div>
+
+{% if wrong %}
+<div class="card stack">
+  <h3>ข้อที่ผิด — จะกลับมาถามอีกในวันถัดๆ ไป</h3>
+  <div class="stack" style="gap:9px">
+    {% for a in wrong %}
+    <div class="row" style="gap:10px;padding-bottom:9px;border-bottom:1px solid var(--line)">
+      {% if a.card %}
+        <span class="zh" style="font-size:1.2rem">{{ a.card.vocab.hanzi }}</span>
+        <span class="mono muted">{{ a.card.vocab.pinyin }}</span>
+        <span class="muted grow">{{ a.card.vocab.meaning_th|truncatechars:48 }}</span>
+      {% else %}
+        <span class="zh grow">{{ a.question.prompt_zh|truncatechars:60 }}</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<div class="note">ไม่มีข้อผิดเลยในชุดนี้ — ถ้าเป็นแบบนี้ติดกันหลายวัน แปลว่าชุดง่ายเกินไป ระบบจะเพิ่มความยากให้เอง</div>
+{% endif %}
+
+<div class="row" style="flex-wrap:wrap">
+  <a class="btn" href="{% url 'home' %}">กลับหน้าแรก</a>
+  <a class="btn ghost" href="{% url 'history' %}">ดูทีละข้อในประวัติ</a>
+  <a class="btn ghost" href="{% url 'stats' %}">ดูสถิติ</a>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{# ตัวกรอง "พบในข้อสอบกี่ชุด" — เลือกได้หลายค่า กดซ้ำเพื่อเอาออก #}
+{% if found_chips %}
+<div class="found-filter">
+  <span class="muted" style="font-size:.82rem">พบในข้อสอบ</span>
+  <a class="chip {% if not found_values %}on{% endif %}" href="?{{ found_clear_url }}">ทั้งหมด</a>
+  {% for c in found_chips %}
+    <a class="chip {% if c.on %}on{% endif %}" href="?{{ c.url }}"
+       title="{% if c.value %}คำที่พบใน {{ c.value }} จาก 9 ชุด{% else %}คำที่ไม่พบในข้อสอบเลย{% endif %}">
+      {% if c.value %}{{ c.value }}/9{% else %}ไม่พบ{% endif %}
+    </a>
+  {% endfor %}
+  {% if found_values %}
+    <span class="muted" style="font-size:.78rem">เลือก {{ found_values|length }} ค่า · กดซ้ำเพื่อเอาออก</span>
+  {% endif %}
+</div>
+{% endif %}

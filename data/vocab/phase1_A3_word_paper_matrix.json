@@ -1,0 +1,11452 @@
+{
+ "generated": "2026-08-25",
+ "method": "pdfminer.six text extraction + jieba (HMM=False, vocab words boosted into dict); question paper + listening transcript counted; answer-key section and repeated instruction/example boilerplate excluded",
+ "level5_word_count": 1298,
+ "papers_analyzed": [
+  "H51001",
+  "H51002",
+  "H51003",
+  "H51004",
+  "H51005",
+  "H51327",
+  "H51328",
+  "H51330",
+  "H51332"
+ ],
+ "paper_info": {
+  "H51001": {
+   "chars": 17809,
+   "has_listening_script": true,
+   "has_answer_key": true
+  },
+  "H51002": {
+   "chars": 17855,
+   "has_listening_script": true,
+   "has_answer_key": true
+  },
+  "H51003": {
+   "chars": 18410,
+   "has_listening_script": true,
+   "has_answer_key": true
+  },
+  "H51004": {
+   "chars": 18611,
+   "has_listening_script": true,
+   "has_answer_key": true
+  },
+  "H51005": {
+   "chars": 18272,
+   "has_listening_script": true,
+   "has_answer_key": true
+  },
+  "H51327": {
+   "chars": 13616,
+   "has_listening_script": false,
+   "has_answer_key": true
+  },
+  "H51328": {
+   "chars": 13550,
+   "has_listening_script": false,
+   "has_answer_key": true
+  },
+  "H51330": {
+   "chars": 13595,
+   "has_listening_script": false,
+   "has_answer_key": true
+  },
+  "H51332": {
+   "chars": 13641,
+   "has_listening_script": false,
+   "has_answer_key": true
+  }
+ },
+ "words": {
+  "所": {
+   "total": 14,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 12,
+    "writing": 1
+   }
+  },
+  "正": {
+   "total": 11,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 8,
+    "listening": 3
+   }
+  },
+  "搞": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "如何": {
+   "total": 15,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 13
+   }
+  },
+  "作为": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51004",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 6
+   }
+  },
+  "唯一": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "表现": {
+   "total": 23,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 17,
+    "listening": 5,
+    "writing": 1
+   }
+  },
+  "对于": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 5
+   }
+  },
+  "方式": {
+   "total": 24,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 20,
+    "listening": 3,
+    "writing": 1
+   }
+  },
+  "处理": {
+   "total": 11,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 9,
+    "listening": 2
+   }
+  },
+  "政府": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "系统": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "是否": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 2
+   }
+  },
+  "杀": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "以及": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "片": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "同时": {
+   "total": 11,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 11
+   }
+  },
+  "拍": {
+   "total": 12,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 5,
+    "reading": 7
+   }
+  },
+  "控制": {
+   "total": 11,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 11
+   }
+  },
+  "整个": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "根本": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 8
+   }
+  },
+  "目前": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 5
+   }
+  },
+  "重": {
+   "total": 6,
+   "papers": [
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "信息": {
+   "total": 9,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 2,
+    "writing": 2
+   }
+  },
+  "存在": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "个人": {
+   "total": 62,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 8,
+    "reading": 52,
+    "writing": 2
+   }
+  },
+  "保持": {
+   "total": 9,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 8,
+    "writing": 1
+   }
+  },
+  "来自": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 2
+   }
+  },
+  "确定": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 7,
+    "reading": 2
+   }
+  },
+  "目标": {
+   "total": 26,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 13,
+    "listening": 13
+   }
+  },
+  "中心": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 2
+   }
+  },
+  "行动": {
+   "total": 7,
+   "papers": [
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 7
+   }
+  },
+  "开心": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3,
+    "writing": 1,
+    "reading": 2
+   }
+  },
+  "合作": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 5,
+    "reading": 3
+   }
+  },
+  "人员": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 3
+   }
+  },
+  "哈": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "报告": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1
+   }
+  },
+  "治疗": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "家庭": {
+   "total": 14,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 13,
+    "listening": 1
+   }
+  },
+  "明显": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 6
+   }
+  },
+  "曾经": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "行为": {
+   "total": 9,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 7
+   }
+  },
+  "克": {
+   "total": 2,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "装": {
+   "total": 12,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 8,
+    "listening": 4
+   }
+  },
+  "绝对": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 4,
+    "writing": 1,
+    "listening": 1
+   }
+  },
+  "派": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 1
+   }
+  },
+  "设计": {
+   "total": 10,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 7,
+    "reading": 2,
+    "writing": 1
+   }
+  },
+  "未来": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "利用": {
+   "total": 14,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 13,
+    "listening": 1
+   }
+  },
+  "看来": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 3
+   }
+  },
+  "倒": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 4
+   }
+  },
+  "建议": {
+   "total": 16,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 11
+   }
+  },
+  "意义": {
+   "total": 12,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 8,
+    "listening": 3
+   }
+  },
+  "便": {
+   "total": 32,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 30,
+    "listening": 2
+   }
+  },
+  "力量": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 2
+   }
+  },
+  "项目": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 3
+   }
+  },
+  "造成": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 7
+   }
+  },
+  "某": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "支": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "提": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "人生": {
+   "total": 16,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 15,
+    "listening": 1
+   }
+  },
+  "非": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "失去": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 7,
+    "listening": 1
+   }
+  },
+  "则": {
+   "total": 14,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 14
+   }
+  },
+  "面对": {
+   "total": 13,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 10,
+    "listening": 3
+   }
+  },
+  "训练": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "部门": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 7
+   }
+  },
+  "似乎": {
+   "total": 5,
+   "papers": [
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "位置": {
+   "total": 11,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 10
+   }
+  },
+  "方": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "参与": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "显示": {
+   "total": 11,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 11
+   }
+  },
+  "秒": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 5,
+    "reading": 1
+   }
+  },
+  "属于": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 4,
+    "writing": 1
+   }
+  },
+  "人类": {
+   "total": 24,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 24
+   }
+  },
+  "手术": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 6
+   }
+  },
+  "比如": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "自由": {
+   "total": 2,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "事实": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "基本": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "居然": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "类": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "专家": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 4,
+    "writing": 1
+   }
+  },
+  "分析": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 2
+   }
+  },
+  "享受": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 2
+   }
+  },
+  "以来": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "反应": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 3
+   }
+  },
+  "地区": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 2
+   }
+  },
+  "资料": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 7
+   }
+  },
+  "冠军": {
+   "total": 5,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 5
+   }
+  },
+  "价值": {
+   "total": 13,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 10
+   }
+  },
+  "相当": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "实现": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 7,
+    "listening": 1
+   }
+  },
+  "产生": {
+   "total": 19,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 16,
+    "listening": 3
+   }
+  },
+  "对方": {
+   "total": 10,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 8,
+    "listening": 2
+   }
+  },
+  "状态": {
+   "total": 9,
+   "papers": [
+    "H51004",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 7
+   }
+  },
+  "心理": {
+   "total": 11,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 10,
+    "listening": 1
+   }
+  },
+  "根": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "建立": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "更加": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "老板": {
+   "total": 49,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 48,
+    "listening": 1
+   }
+  },
+  "抢": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "节": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "傻": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "亲爱": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "救": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "恢复": {
+   "total": 11,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 7
+   }
+  },
+  "棒": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "达到": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "投资": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 2
+   }
+  },
+  "现实": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "不断": {
+   "total": 12,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 12
+   }
+  },
+  "导致": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "writing": 2
+   }
+  },
+  "集中": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 7
+   }
+  },
+  "战争": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "理由": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "感受": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "完美": {
+   "total": 7,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 4,
+    "writing": 1
+   }
+  },
+  "真实": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "错误": {
+   "total": 10,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 7,
+    "writing": 1
+   }
+  },
+  "记录": {
+   "total": 11,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 9,
+    "listening": 2
+   }
+  },
+  "空间": {
+   "total": 14,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 13,
+    "listening": 1
+   }
+  },
+  "期待": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "政治": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "朝": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2,
+    "writing": 2
+   }
+  },
+  "一旦": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 7
+   }
+  },
+  "承认": {
+   "total": 7,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "writing": 1,
+    "listening": 1
+   }
+  },
+  "执行": {
+   "total": 2,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "接着": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 1
+   }
+  },
+  "痛苦": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 1
+   }
+  },
+  "文件": {
+   "total": 26,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 9,
+    "reading": 16,
+    "writing": 1
+   }
+  },
+  "显然": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "传统": {
+   "total": 17,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 14,
+    "writing": 1,
+    "listening": 2
+   }
+  },
+  "状况": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 3
+   }
+  },
+  "翻": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "作品": {
+   "total": 10,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 6,
+    "writing": 1,
+    "reading": 3
+   }
+  },
+  "时代": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "的确": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "颗": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "身份": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "充满": {
+   "total": 10,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 9,
+    "listening": 1
+   }
+  },
+  "人物": {
+   "total": 11,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 5
+   }
+  },
+  "要是": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "系": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1
+   }
+  },
+  "直": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "产品": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 7,
+    "writing": 1,
+    "reading": 1
+   }
+  },
+  "枪": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "保险": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "年代": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 2
+   }
+  },
+  "领导": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 3
+   }
+  },
+  "寻找": {
+   "total": 5,
+   "papers": [
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 1
+   }
+  },
+  "胜利": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1
+   }
+  },
+  "受伤": {
+   "total": 10,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 8,
+    "reading": 2
+   }
+  },
+  "程度": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "理论": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 5
+   }
+  },
+  "宣布": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51002"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "姑娘": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "创造": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "呆": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51002"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "数据": {
+   "total": 10,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 8,
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "武器": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "思想": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "破坏": {
+   "total": 5,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "消失": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 3
+   }
+  },
+  "稳定": {
+   "total": 12,
+   "papers": [
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 9,
+    "writing": 1
+   }
+  },
+  "巨大": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "龙": {
+   "total": 14,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 14
+   }
+  },
+  "英雄": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "满足": {
+   "total": 6,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "威胁": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "等待": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 2
+   }
+  },
+  "挑战": {
+   "total": 10,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 9,
+    "listening": 1
+   }
+  },
+  "秘密": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 3,
+    "reading": 1
+   }
+  },
+  "设备": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "紧": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "对手": {
+   "total": 5,
+   "papers": [
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 4
+   }
+  },
+  "俱乐部": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "想象": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "所谓": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "背": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "恐怖": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "特殊": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "具体": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "风格": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 3
+   }
+  },
+  "建筑": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2,
+    "writing": 1
+   }
+  },
+  "角色": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "彻底": {
+   "total": 7,
+   "papers": [
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 7
+   }
+  },
+  "幅": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "出口": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "采取": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6,
+    "writing": 1
+   }
+  },
+  "意外": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 3
+   }
+  },
+  "风险": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "时刻": {
+   "total": 2,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "平": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "观察": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 3,
+    "writing": 1
+   }
+  },
+  "钟": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "恨": {
+   "total": 3,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "接近": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "敌人": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "表明": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "时尚": {
+   "total": 16,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 5,
+    "reading": 11
+   }
+  },
+  "程序": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "持续": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "合同": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "食物": {
+   "total": 18,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 15,
+    "listening": 2
+   }
+  },
+  "发表": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1
+   }
+  },
+  "相关": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "简直": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "退": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "情绪": {
+   "total": 17,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 13,
+    "listening": 3,
+    "writing": 1
+   }
+  },
+  "信号": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "掌握": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 1
+   }
+  },
+  "幸运": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 7,
+    "listening": 1
+   }
+  },
+  "制作": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "教练": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 6
+   }
+  },
+  "记忆": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "公开": {
+   "total": 2,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "资金": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 2
+   }
+  },
+  "摆": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "吓": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "立即": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 2,
+    "writing": 1
+   }
+  },
+  "经营": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "writing": 1
+   }
+  },
+  "发挥": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 4
+   }
+  },
+  "立刻": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 6
+   }
+  },
+  "独立": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 2
+   }
+  },
+  "实验": {
+   "total": 11,
+   "papers": [
+    "H51004",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 9
+   }
+  },
+  "吹": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "取消": {
+   "total": 16,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 12,
+    "reading": 4
+   }
+  },
+  "表情": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "采访": {
+   "total": 9,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 7,
+    "reading": 2
+   }
+  },
+  "通常": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "针对": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "角度": {
+   "total": 7,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "writing": 1,
+    "listening": 1
+   }
+  },
+  "遗憾": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "对象": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "接触": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "规则": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 5
+   }
+  },
+  "损失": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "合理": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "依然": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 7,
+    "listening": 1
+   }
+  },
+  "阶段": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "一致": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "刺激": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "反正": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "赶紧": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "移动": {
+   "total": 2,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "销售": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 7
+   }
+  },
+  "可怕": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "确认": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 2
+   }
+  },
+  "出色": {
+   "total": 8,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 4
+   }
+  },
+  "不必": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "现金": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "调整": {
+   "total": 9,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 5,
+    "writing": 1
+   }
+  },
+  "滚": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "逃": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "婚姻": {
+   "total": 16,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 14,
+    "listening": 2
+   }
+  },
+  "喊": {
+   "total": 6,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 6
+   }
+  },
+  "紧急": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "宣传": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 2
+   }
+  },
+  "优势": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "随时": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 1
+   }
+  },
+  "卷": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 5,
+    "reading": 2
+   }
+  },
+  "时期": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "措施": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 2
+   }
+  },
+  "导演": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 5
+   }
+  },
+  "存": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "评价": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "形象": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "方案": {
+   "total": 8,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4,
+    "writing": 3,
+    "reading": 1
+   }
+  },
+  "欠": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "商业": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 3
+   }
+  },
+  "答应": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "到达": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 1
+   }
+  },
+  "功能": {
+   "total": 7,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "避免": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "生产": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "女士": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "成长": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 2
+   }
+  },
+  "彼此": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "推荐": {
+   "total": 9,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 5,
+    "reading": 3,
+    "writing": 1
+   }
+  },
+  "指导": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "原则": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 3
+   }
+  },
+  "微笑": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 7
+   }
+  },
+  "观点": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 2
+   }
+  },
+  "强烈": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "争取": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 2
+   }
+  },
+  "公平": {
+   "total": 2,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "洞": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "病毒": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 1
+   }
+  },
+  "良好": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 3
+   }
+  },
+  "权力": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "思考": {
+   "total": 14,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 9,
+    "listening": 5
+   }
+  },
+  "自从": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "命运": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "尽量": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "娱乐": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "不然": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 3
+   }
+  },
+  "企业": {
+   "total": 10,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 5,
+    "writing": 1
+   }
+  },
+  "追求": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 7,
+    "listening": 1
+   }
+  },
+  "命令": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 6
+   }
+  },
+  "欣赏": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 8,
+    "listening": 1
+   }
+  },
+  "政策": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "神经": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "放松": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 3
+   }
+  },
+  "举": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 2
+   }
+  },
+  "碎": {
+   "total": 2,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "阻止": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "资源": {
+   "total": 9,
+   "papers": [
+    "H51004",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 9
+   }
+  },
+  "决赛": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 6
+   }
+  },
+  "形成": {
+   "total": 10,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 9,
+    "listening": 1
+   }
+  },
+  "一辈子": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "行业": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 4,
+    "writing": 2
+   }
+  },
+  "士兵": {
+   "total": 11,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 10
+   }
+  },
+  "配合": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "单位": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "显得": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "亲自": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "物质": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "承担": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 1
+   }
+  },
+  "面临": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "费用": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "神秘": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "自动": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "明确": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "结合": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "writing": 6
+   }
+  },
+  "登记": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "writing": 2,
+    "listening": 1
+   }
+  },
+  "充分": {
+   "total": 10,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 7
+   }
+  },
+  "除": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "批": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "主人": {
+   "total": 15,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 10,
+    "writing": 1,
+    "listening": 4
+   }
+  },
+  "经典": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "醉": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "工人": {
+   "total": 22,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 20,
+    "listening": 2
+   }
+  },
+  "背景": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 2
+   }
+  },
+  "狼": {
+   "total": 8,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 8
+   }
+  },
+  "进步": {
+   "total": 8,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 3,
+    "writing": 1
+   }
+  },
+  "闻": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51002"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "对待": {
+   "total": 3,
+   "papers": [
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "现象": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 7
+   }
+  },
+  "道德": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "编辑": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 7
+   }
+  },
+  "私人": {
+   "total": 8,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 8
+   }
+  },
+  "领域": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "服装": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4,
+    "writing": 1,
+    "reading": 1
+   }
+  },
+  "形式": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 6
+   }
+  },
+  "毕竟": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "万一": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "如今": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "成立": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 2,
+    "writing": 1,
+    "reading": 1
+   }
+  },
+  "细节": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 5
+   }
+  },
+  "道理": {
+   "total": 10,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 8,
+    "listening": 2
+   }
+  },
+  "迅速": {
+   "total": 5,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "出席": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "writing": 1,
+    "reading": 2
+   }
+  },
+  "深刻": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 2,
+    "reading": 4
+   }
+  },
+  "庆祝": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "婚礼": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 1
+   }
+  },
+  "全面": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "体验": {
+   "total": 5,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 4
+   }
+  },
+  "财产": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "玻璃": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "话题": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "坚强": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 5
+   }
+  },
+  "军事": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "咬": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "合法": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "至于": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "贷款": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "缺乏": {
+   "total": 11,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6,
+    "writing": 2,
+    "listening": 3
+   }
+  },
+  "重复": {
+   "total": 2,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "自信": {
+   "total": 13,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 6,
+    "writing": 1
+   }
+  },
+  "个性": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "批准": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "writing": 1,
+    "listening": 1
+   }
+  },
+  "骂": {
+   "total": 3,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "机器": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 2
+   }
+  },
+  "标志": {
+   "total": 3,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "公布": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 2,
+    "writing": 1
+   }
+  },
+  "工厂": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 5
+   }
+  },
+  "人才": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 1
+   }
+  },
+  "黄金": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "魅力": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 3
+   }
+  },
+  "不如": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 2
+   }
+  },
+  "指挥": {
+   "total": 2,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "伙伴": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 2
+   }
+  },
+  "双方": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "离婚": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "股票": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 4,
+    "writing": 1
+   }
+  },
+  "温暖": {
+   "total": 7,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6,
+    "writing": 1
+   }
+  },
+  "祝福": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "承受": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "人口": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "咨询": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 3
+   }
+  },
+  "表面": {
+   "total": 5,
+   "papers": [
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "地位": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "青": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "结构": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 3
+   }
+  },
+  "妇女": {
+   "total": 6,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 6
+   }
+  },
+  "矛盾": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "不好意思": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "完整": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "谈判": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "请求": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "纪念": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "插": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "分别": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "愿望": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "广场": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "度过": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "保留": {
+   "total": 3,
+   "papers": [
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 2
+   }
+  },
+  "频道": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "公寓": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "弱": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "不足": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "业务": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 1
+   }
+  },
+  "驾驶": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "writing": 1
+   }
+  },
+  "计算": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "开发": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 6
+   }
+  },
+  "乘": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "始终": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "出版": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "诊断": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "临时": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 2,
+    "reading": 2
+   }
+  },
+  "单独": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "平衡": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "瞧": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "展开": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "把握": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 3,
+    "writing": 1
+   }
+  },
+  "酒吧": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 2
+   }
+  },
+  "胃": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "成就": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 5
+   }
+  },
+  "课程": {
+   "total": 2,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "踩": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "激烈": {
+   "total": 3,
+   "papers": [
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "想念": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "固定": {
+   "total": 3,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "勇气": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "writing": 1,
+    "reading": 4
+   }
+  },
+  "注册": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "摇": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1,
+    "writing": 3
+   }
+  },
+  "愤怒": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 8
+   }
+  },
+  "培养": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 1
+   }
+  },
+  "平静": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6
+   }
+  },
+  "传说": {
+   "total": 4,
+   "papers": [
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "转变": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "至今": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "餐厅": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 8
+   }
+  },
+  "维护": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "无数": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "后果": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "气氛": {
+   "total": 6,
+   "papers": [
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6
+   }
+  },
+  "违反": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "石头": {
+   "total": 16,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 15,
+    "listening": 1
+   }
+  },
+  "主持": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "关闭": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "聚会": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 1
+   }
+  },
+  "摄影": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "交换": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "文明": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "挡": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "运气": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 2
+   }
+  },
+  "玩具": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1
+   }
+  },
+  "年纪": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "智慧": {
+   "total": 13,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 12,
+    "listening": 1
+   }
+  },
+  "摔": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "教训": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "沟通": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 4
+   }
+  },
+  "手指": {
+   "total": 3,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "结论": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "化学": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "总之": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "天空": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "统一": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "制度": {
+   "total": 3,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "玉米": {
+   "total": 3,
+   "papers": [
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "工业": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "身材": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "设施": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "从事": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "writing": 1,
+    "reading": 1
+   }
+  },
+  "义务": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "奇迹": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 3
+   }
+  },
+  "肺": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "制定": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 1
+   }
+  },
+  "沉默": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "独特": {
+   "total": 3,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "厕所": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "糟糕": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 2
+   }
+  },
+  "砍": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "拆": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "退休": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 7,
+    "reading": 2
+   }
+  },
+  "成果": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "蛇": {
+   "total": 12,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 12
+   }
+  },
+  "精力": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 8,
+    "listening": 1
+   }
+  },
+  "宗教": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "概念": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "能源": {
+   "total": 16,
+   "papers": [
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 15,
+    "listening": 1
+   }
+  },
+  "核心": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "据说": {
+   "total": 3,
+   "papers": [
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "去世": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 3
+   }
+  },
+  "平均": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "询问": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 4
+   }
+  },
+  "事物": {
+   "total": 6,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "writing": 1
+   }
+  },
+  "软件": {
+   "total": 11,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 8,
+    "reading": 3
+   }
+  },
+  "严肃": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 3
+   }
+  },
+  "脖子": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "否认": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "肌肉": {
+   "total": 2,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "安慰": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 6,
+    "writing": 1
+   }
+  },
+  "过分": {
+   "total": 2,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "寂寞": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "反而": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "体会": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "豪华": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "高速": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "此外": {
+   "total": 3,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "安装": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "怀念": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "荣誉": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "假如": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "幻想": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "相对": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "改善": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "功夫": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "拥抱": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "晒": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "感激": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6
+   }
+  },
+  "乖": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "农民": {
+   "total": 18,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 12,
+    "reading": 6
+   }
+  },
+  "商品": {
+   "total": 3,
+   "papers": [
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "形势": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "劝": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "运输": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "利润": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "珍惜": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 2
+   }
+  },
+  "传播": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "好奇": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "集体": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 2
+   }
+  },
+  "收获": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 4
+   }
+  },
+  "装饰": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "锅": {
+   "total": 2,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "太太": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "落后": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "蹲": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "强调": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "冒险": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "分配": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "账户": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "修改": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 5,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "宇宙": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "要不": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 4
+   }
+  },
+  "辞职": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 7,
+    "reading": 1
+   }
+  },
+  "遵守": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "相处": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 7
+   }
+  },
+  "保存": {
+   "total": 4,
+   "papers": [
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "阵": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "日期": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2,
+    "writing": 1
+   }
+  },
+  "从此": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 3
+   }
+  },
+  "地震": {
+   "total": 8,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 8
+   }
+  },
+  "发明": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 4
+   }
+  },
+  "挥": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "突出": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "writing": 2
+   }
+  },
+  "电池": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "乐观": {
+   "total": 10,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 8,
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "青少年": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "老鼠": {
+   "total": 18,
+   "papers": [
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 18
+   }
+  },
+  "涨": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "热烈": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "相似": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "移民": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "担任": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "趁": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "宿舍": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 3
+   }
+  },
+  "秩序": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "善良": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "可靠": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "其余": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "规模": {
+   "total": 9,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 4
+   }
+  },
+  "决心": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "忍不住": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 5
+   }
+  },
+  "球迷": {
+   "total": 3,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "捡": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 1
+   }
+  },
+  "蔬菜": {
+   "total": 11,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 10,
+    "writing": 1
+   }
+  },
+  "消灭": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "哪怕": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "补充": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 2
+   }
+  },
+  "最初": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "克服": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "摩托车": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "成分": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "召开": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "借口": {
+   "total": 2,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "有利": {
+   "total": 2,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "博物馆": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 4,
+    "writing": 1
+   }
+  },
+  "体现": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "总裁": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "协调": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "论文": {
+   "total": 10,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 10
+   }
+  },
+  "从而": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 1
+   }
+  },
+  "整体": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "形容": {
+   "total": 2,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "青春": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "吸收": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "迎接": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "改进": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "小伙子": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "舒适": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "建设": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "文学": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "会计": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 6
+   }
+  },
+  "仿佛": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "屋子": {
+   "total": 2,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "排队": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "应付": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "雾": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "家乡": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "奋斗": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "消费": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 4,
+    "listening": 1
+   }
+  },
+  "实行": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "吵架": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "口味": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "具备": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "干脆": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 2,
+    "reading": 2
+   }
+  },
+  "不安": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "谨慎": {
+   "total": 7,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 3
+   }
+  },
+  "尽力": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "陌生": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "扶": {
+   "total": 2,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "下载": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 7
+   }
+  },
+  "构成": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "肩膀": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "发言": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "观念": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "秘书": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 3
+   }
+  },
+  "卧室": {
+   "total": 8,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 2
+   }
+  },
+  "假装": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "反复": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "尊敬": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "宠物": {
+   "total": 21,
+   "papers": [
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 16,
+    "reading": 5
+   }
+  },
+  "模仿": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "破产": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "烫": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "说不定": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "自豪": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "单纯": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "比例": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "输入": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "逃避": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 4
+   }
+  },
+  "劳动": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 7
+   }
+  },
+  "事先": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "失业": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "规律": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "待遇": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 4,
+    "writing": 1
+   }
+  },
+  "淡": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "前途": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "营养": {
+   "total": 12,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 8
+   }
+  },
+  "说服": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "打工": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "总算": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "汽油": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "浓": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "活跃": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "毛病": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "逻辑": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "兔子": {
+   "total": 29,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 18,
+    "reading": 11
+   }
+  },
+  "弯": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "忽视": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 1
+   }
+  },
+  "密切": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "哲学": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "嘉宾": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "本质": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "提问": {
+   "total": 2,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "录取": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2,
+    "writing": 2
+   }
+  },
+  "犹豫": {
+   "total": 9,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 3
+   }
+  },
+  "实践": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "从前": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "日常": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "老实": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "预防": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "效率": {
+   "total": 6,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 3,
+    "listening": 2
+   }
+  },
+  "情景": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "必然": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "皇帝": {
+   "total": 5,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "业余": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "古老": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2,
+    "writing": 1
+   }
+  },
+  "倒霉": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "胳膊": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "危害": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "writing": 1
+   }
+  },
+  "手续": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 6,
+    "writing": 2
+   }
+  },
+  "争论": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "休闲": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "签字": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "难怪": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "歪": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "缩小": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "偶然": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 4,
+    "writing": 1
+   }
+  },
+  "规矩": {
+   "total": 2,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "模糊": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "差别": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "赞成": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 3
+   }
+  },
+  "复制": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "消化": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "录音": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "接待": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "疑问": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "包裹": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "真理": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 1
+   }
+  },
+  "客观": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "writing": 1
+   }
+  },
+  "善于": {
+   "total": 7,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 7
+   }
+  },
+  "应用": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 3
+   }
+  },
+  "包含": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 3
+   }
+  },
+  "过敏": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 8
+   }
+  },
+  "电台": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "宝贵": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 2
+   }
+  },
+  "工程师": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "展览": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "客厅": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "完善": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "参考": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "重量": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51002"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "缓解": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 2,
+    "writing": 1,
+    "reading": 2
+   }
+  },
+  "多余": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "发达": {
+   "total": 2,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "自私": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "爱心": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "撕": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "天真": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "沙漠": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "语气": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1
+   }
+  },
+  "形状": {
+   "total": 6,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4,
+    "listening": 2
+   }
+  },
+  "学期": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "了不起": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "证件": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "幼儿园": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "罪犯": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "影子": {
+   "total": 2,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "延长": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "地道": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "盆": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "实习": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "性质": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "神话": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 1
+   }
+  },
+  "推广": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "营业": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 4,
+    "writing": 1,
+    "reading": 1
+   }
+  },
+  "古代": {
+   "total": 12,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 12
+   }
+  },
+  "棉花": {
+   "total": 2,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "点头": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "农业": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "服从": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "面积": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 5
+   }
+  },
+  "广泛": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "手套": {
+   "total": 2,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "品种": {
+   "total": 2,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "讽刺": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "总共": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "reading": 2
+   }
+  },
+  "粮食": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 5
+   }
+  },
+  "特意": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "糊涂": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "豆腐": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "促进": {
+   "total": 6,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 4
+   }
+  },
+  "何必": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "优惠": {
+   "total": 7,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 6,
+    "writing": 1
+   }
+  },
+  "恶劣": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "高档": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "个别": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "利息": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "否定": {
+   "total": 5,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "灵活": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 1
+   }
+  },
+  "主张": {
+   "total": 2,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "辣椒": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "嫩": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "沙滩": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "亲切": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "预订": {
+   "total": 8,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 5,
+    "reading": 2
+   }
+  },
+  "地毯": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "办理": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 5,
+    "writing": 2
+   }
+  },
+  "趋势": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "艰苦": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "名牌": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "学术": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "透明": {
+   "total": 2,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "地理": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "翅膀": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "阳台": {
+   "total": 6,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 6
+   }
+  },
+  "鼓舞": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "佩服": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "writing": 2,
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "妨碍": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "名片": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "荣幸": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "液体": {
+   "total": 3,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "降落": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "宴会": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 5
+   }
+  },
+  "岸": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "尾巴": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "题目": {
+   "total": 9,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 3
+   }
+  },
+  "节省": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "何况": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "删除": {
+   "total": 12,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "writing": 1,
+    "reading": 10
+   }
+  },
+  "车厢": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "失眠": {
+   "total": 10,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 5,
+    "reading": 5
+   }
+  },
+  "优美": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 2
+   }
+  },
+  "传染": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "分布": {
+   "total": 3,
+   "papers": [
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "卫生间": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "赞美": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "疲劳": {
+   "total": 6,
+   "papers": [
+    "H51001",
+    "H51005",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5,
+    "writing": 1
+   }
+  },
+  "挣钱": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "台阶": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "耽误": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "彩虹": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 2,
+    "listening": 3
+   }
+  },
+  "柜台": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 2,
+    "writing": 1
+   }
+  },
+  "打听": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "促使": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "怪不得": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1
+   }
+  },
+  "老百姓": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "未必": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "牛仔裤": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "writing": 1
+   }
+  },
+  "浏览": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "大方": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "启发": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "壶": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "浇": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "生动": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "步骤": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "梨": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "人事": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "热心": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 5,
+    "listening": 2
+   }
+  },
+  "郊区": {
+   "total": 8,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 2
+   }
+  },
+  "蜡烛": {
+   "total": 8,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 8
+   }
+  },
+  "纷纷": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "缘故": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "流传": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "海关": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "简历": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "writing": 1
+   }
+  },
+  "自觉": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "醋": {
+   "total": 9,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 8,
+    "writing": 1
+   }
+  },
+  "夸": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "嗓子": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 6,
+    "reading": 1
+   }
+  },
+  "专心": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "中介": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "征求": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "繁荣": {
+   "total": 3,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "车库": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "宁可": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "打交道": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "用途": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "零件": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "招待": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "关怀": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "称赞": {
+   "total": 7,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 6,
+    "listening": 1
+   }
+  },
+  "时髦": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1
+   }
+  },
+  "拥挤": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 2
+   }
+  },
+  "预报": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "支票": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "逐步": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 3
+   }
+  },
+  "常识": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "可见": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "凡是": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "无奈": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "格外": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "讲座": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 6
+   }
+  },
+  "迷路": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 2
+   }
+  },
+  "舍不得": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "日程": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "景色": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "零食": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "因而": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 4
+   }
+  },
+  "巧妙": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "付款": {
+   "total": 7,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 7
+   }
+  },
+  "痛快": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "家务": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "海鲜": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51327",
+    "H51328"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 3
+   }
+  },
+  "描写": {
+   "total": 5,
+   "papers": [
+    "H51001",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 2
+   }
+  },
+  "窗帘": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51004",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 1
+   }
+  },
+  "开幕式": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 5,
+    "writing": 1
+   }
+  },
+  "缩短": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "房东": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "广大": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "剪刀": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "合影": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "熟练": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "过期": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "及格": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "谦虚": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51327",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 3
+   }
+  },
+  "讲究": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "发票": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 7
+   }
+  },
+  "抽屉": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "叙述": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "傍晚": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "不要紧": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "狡猾": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "行人": {
+   "total": 2,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "小吃": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 2
+   }
+  },
+  "信封": {
+   "total": 2,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "光滑": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "发抖": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "硬件": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "改正": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "结实": {
+   "total": 5,
+   "papers": [
+    "H51327",
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "writing": 1,
+    "listening": 2
+   }
+  },
+  "幸亏": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "明信片": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "爱护": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "悲观": {
+   "total": 7,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 6
+   }
+  },
+  "祖先": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "肥皂": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "委屈": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 2
+   }
+  },
+  "本领": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "勤奋": {
+   "total": 4,
+   "papers": [
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "寿命": {
+   "total": 4,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "动画片": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "周到": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "操场": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "皮鞋": {
+   "total": 1,
+   "papers": [
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "酱油": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "滑冰": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "惭愧": {
+   "total": 3,
+   "papers": [
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "字幕": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51327",
+    "H51328",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 6
+   }
+  },
+  "感想": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "邮局": {
+   "total": 3,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "执照": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "提倡": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "坦率": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "均匀": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "诚恳": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "多亏": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51003"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "丝绸": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "转告": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "调皮": {
+   "total": 2,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "麦克风": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "公元": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "健身房": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51328"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 1
+   }
+  },
+  "游览": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "抽象": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "悠久": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "陆续": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2
+   }
+  },
+  "应聘": {
+   "total": 12,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51003",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 10,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "责备": {
+   "total": 7,
+   "papers": [
+    "H51001",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 4
+   }
+  },
+  "刻苦": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "单调": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "矿泉水": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "小气": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51327"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "再三": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "不耐烦": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "零钱": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "嚷": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "灾害": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "轻视": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 1
+   }
+  },
+  "排球": {
+   "total": 3,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "样式": {
+   "total": 6,
+   "papers": [
+    "H51004",
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 3,
+    "reading": 3
+   }
+  },
+  "疼爱": {
+   "total": 1,
+   "papers": [
+    "H51001"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "苗条": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "writing": 1
+   }
+  },
+  "连续剧": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "学问": {
+   "total": 2,
+   "papers": [
+    "H51327",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "光盘": {
+   "total": 5,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 4,
+    "reading": 1
+   }
+  },
+  "与其": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "鲜艳": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "看不起": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "照常": {
+   "total": 2,
+   "papers": [
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "象棋": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "慌张": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 3,
+    "listening": 1
+   }
+  },
+  "勺子": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "能干": {
+   "total": 2,
+   "papers": [
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "中旬": {
+   "total": 10,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 7,
+    "writing": 3
+   }
+  },
+  "风俗": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51327",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 2,
+    "writing": 1
+   }
+  },
+  "油炸": {
+   "total": 1,
+   "papers": [
+    "H51002"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "班主任": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51002"
+   ],
+   "sections": {
+    "listening": 2,
+    "writing": 1
+   }
+  },
+  "田野": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "教材": {
+   "total": 3,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "躲藏": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "馒头": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "书架": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "煤炭": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "充电器": {
+   "total": 3,
+   "papers": [
+    "H51002",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "朴素": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "片面": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "清淡": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51328"
+   ],
+   "sections": {
+    "reading": 2,
+    "listening": 2
+   }
+  },
+  "不见得": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "孝顺": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51327"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1,
+    "writing": 1
+   }
+  },
+  "嘱咐": {
+   "total": 1,
+   "papers": [
+    "H51330"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "元旦": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51003"
+   ],
+   "sections": {
+    "reading": 1,
+    "listening": 1
+   }
+  },
+  "急忙": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "结账": {
+   "total": 4,
+   "papers": [
+    "H51001",
+    "H51002",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 3
+   }
+  },
+  "打喷嚏": {
+   "total": 6,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 6
+   }
+  },
+  "国庆节": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "爱惜": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "灰心": {
+   "total": 3,
+   "papers": [
+    "H51327",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 2,
+    "writing": 1
+   }
+  },
+  "退步": {
+   "total": 3,
+   "papers": [
+    "H51005",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 1
+   }
+  },
+  "雄伟": {
+   "total": 1,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "划船": {
+   "total": 2,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "着凉": {
+   "total": 3,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 3
+   }
+  },
+  "登机牌": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "胆小鬼": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "池子": {
+   "total": 4,
+   "papers": [
+    "H51005",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 4
+   }
+  },
+  "厘米": {
+   "total": 2,
+   "papers": [
+    "H51005"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "日用品": {
+   "total": 1,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "成语": {
+   "total": 5,
+   "papers": [
+    "H51328",
+    "H51330",
+    "H51332"
+   ],
+   "sections": {
+    "reading": 5
+   }
+  },
+  "不免": {
+   "total": 1,
+   "papers": [
+    "H51328"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "虚心": {
+   "total": 5,
+   "papers": [
+    "H51003",
+    "H51004",
+    "H51005",
+    "H51328",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2,
+    "writing": 2,
+    "listening": 1
+   }
+  },
+  "叉子": {
+   "total": 1,
+   "papers": [
+    "H51332"
+   ],
+   "sections": {
+    "reading": 1
+   }
+  },
+  "烤鸭": {
+   "total": 4,
+   "papers": [
+    "H51003",
+    "H51005",
+    "H51328"
+   ],
+   "sections": {
+    "listening": 4
+   }
+  },
+  "推辞": {
+   "total": 2,
+   "papers": [
+    "H51001",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "提纲": {
+   "total": 2,
+   "papers": [
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "挂号": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "礼拜天": {
+   "total": 1,
+   "papers": [
+    "H51003"
+   ],
+   "sections": {
+    "listening": 1
+   }
+  },
+  "尺子": {
+   "total": 2,
+   "papers": [
+    "H51004",
+    "H51330"
+   ],
+   "sections": {
+    "reading": 2
+   }
+  },
+  "占线": {
+   "total": 2,
+   "papers": [
+    "H51002",
+    "H51005"
+   ],
+   "sections": {
+    "writing": 1,
+    "listening": 1
+   }
+  },
+  "干活儿": {
+   "total": 2,
+   "papers": [
+    "H51003",
+    "H51330"
+   ],
+   "sections": {
+    "listening": 1,
+    "reading": 1
+   }
+  },
+  "连忙": {
+   "total": 3,
+   "papers": [
+    "H51001",
+    "H51002"
+   ],
+   "sections": {
+    "reading": 3
+   }
+  },
+  "短信": {
+   "total": 2,
+   "papers": [
+    "H51005",
+    "H51332"
+   ],
+   "sections": {
+    "listening": 2
+   }
+  },
+  "系领带": {
+   "total": 4,
+   "papers": [
+    "H51002",
+    "H51003",
+    "H51004"
+   ],
+   "sections": {
+    "listening": 2,
+    "reading": 2
+   }
+  }
+ }
+}

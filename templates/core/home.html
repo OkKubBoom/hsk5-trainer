@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}วันนี้ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}วันนี้{% endblock %}
+{% block content %}
+
+{# ─── 1 · งานหลักของวันนี้ — เด่นที่สุด อยู่บนสุดเสมอ ─── #}
+{% if today_session and today_session.finished_at %}
+  <div class="card hero stack" style="gap:var(--s2)">
+    <div class="row" style="gap:var(--s1)">
+      <span class="pill ok">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+        ทำครบแล้ววันนี้
+      </span>
+    </div>
+    <h1>ตอบไป {{ today_session.answered }} ข้อ ถูก {{ today_session.correct }}</h1>
+    <p class="muted">พรุ่งนี้ระบบจะเอาข้อที่ผิดวันนี้กลับมาถามให้เอง</p>
+    <div class="row" style="flex-wrap:wrap;gap:var(--s1)">
+      <a class="btn" href="{% url 'drill_done' today_session.pk %}">ดูสรุปของวันนี้</a>
+      <a class="btn ghost" href="{% url 'history' %}">ดูย้อนหลัง</a>
+    </div>
+  </div>
+
+{% elif today_session %}
+  <div class="card hero stack" style="gap:var(--s2)">
+    <span class="eyebrow">ชุดฝึกวันนี้ · ยังไม่จบ</span>
+    <h1>เหลืออีก {{ today_session.remaining }} ข้อ</h1>
+    <div class="bar" role="progressbar" aria-valuenow="{{ today_session.answered }}" aria-valuemin="0" aria-valuemax="{{ today_session.planned_size }}">
+      <div style="width:{% widthratio today_session.answered today_session.planned_size 100 %}%"></div>
+    </div>
+    <p class="muted">ทำไปแล้ว {{ today_session.answered }} จาก {{ today_session.planned_size }} ข้อ</p>
+    <a class="btn lg block" href="{% url 'drill_run' %}">
+      ทำต่อจากข้อที่ค้าง
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+
+{% else %}
+  <div class="card hero stack" style="gap:var(--s2)">
+    <span class="eyebrow">ชุดฝึกวันนี้</span>
+    <h1>{{ summary.drill_size }} ข้อ · ราว 45 นาที</h1>
+    <p class="muted">คละพาร์ทกันโดยตั้งใจ — หยุดกลางคันแล้วกลับมาต่อได้</p>
+    <a class="btn lg block" href="{% url 'drill_start' %}">
+      เริ่มชุดวันนี้
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+{% endif %}
+
+{# ─── 2 · สิ่งที่ควรรู้ก่อนเริ่ม ─── #}
+{% if summary.in_freeze %}
+  <div class="note warn"><b>ช่วงก่อนสอบ</b> — หยุดคำใหม่แล้ว เหลือทบทวนล้วนจนถึงวันสอบ</div>
+{% elif summary.new_quota == 0 %}
+  <div class="note warn">ของค้างเกินเพดาน ระบบหยุดจ่ายคำใหม่วันนี้อัตโนมัติ — เคลียร์ของค้างก่อน</div>
+{% endif %}
+
+{% if not placement %}
+<div class="card stack" style="gap:var(--s2);border-left:3px solid var(--partial)">
+  <h3>ยังไม่ได้วัดระดับ</h3>
+  <p class="muted">จำนวนคำใหม่ต่อวันตอนนี้เป็นค่าเริ่มต้น ไม่ใช่ค่าที่วัดมา · ใช้เวลาราว 20 นาที ทำครั้งเดียว</p>
+  <div><a class="btn ghost" href="{% url 'placement_start' %}">เริ่มวัดระดับ</a></div>
+</div>
+{% endif %}
+
+{# ─── 3 · ตัวเลขของวันนี้ ─── #}
+<div class="stats">
+  <div class="stat"><b>{{ summary.due }}</b><span>ถึงกำหนดทบทวน</span></div>
+  <div class="stat"><b>{{ summary.wrong_open }}</b><span>ข้อที่ยังผิดค้าง</span></div>
+  <div class="stat"><b>{{ summary.new_quota }}</b><span>โควตาคำใหม่</span></div>
+  <div class="stat">
+    <b>{% if summary.days_to_exam >= 0 %}{{ summary.days_to_exam }}{% else %}—{% endif %}</b>
+    <span>วันถึงวันสอบ</span>
+  </div>
+</div>
+
+{# ─── 4 · ผลวัดระดับ (ถ้ามี) ─── #}
+{% if placement %}
+<div class="card flat stack" style="gap:var(--s1)">
+  <span class="eyebrow">ผลวัดระดับ · {{ placement.finished_at|date:"j M Y" }}</span>
+  <div class="row" style="flex-wrap:wrap;gap:var(--s3)">
+    <div class="stack" style="gap:0">
+      <b class="mono" style="font-size:var(--t-h2)">{{ placement.result.known_vocab_estimate }}</b>
+      <span class="muted">คำที่รู้แล้ว</span>
+    </div>
+    <div class="stack" style="gap:0">
+      <b class="mono" style="font-size:var(--t-h2)">{{ placement.result.suggested_new_words_per_day }}</b>
+      <span class="muted">คำใหม่ต่อวัน</span>
+    </div>
+    <a class="btn ghost sm" style="margin-left:auto" href="{% url 'placement_result' placement.pk %}">ดูละเอียด</a>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

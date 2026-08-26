@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}ผลจำลองสอบ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ผลจำลองสอบ{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:var(--s-half)">
+  <span class="eyebrow">ผลจำลองสอบ · {{ exam.finished_at|date:"j F Y" }}</span>
+  <h1>ต้องแก้อะไรก่อน</h1>
+</div>
+
+{% if exam.auto_submitted %}
+<div class="note warn"><b>หมดเวลา</b> — ระบบส่งคำตอบให้อัตโนมัติ ข้อที่ยังไม่ได้ตอบนับเป็นผิด</div>
+{% endif %}
+
+{# ─── 1 · สาเหตุที่ผิด มาก่อนคะแนน ─── #}
+{% if causes %}
+<div class="card stack">
+  <h3>ผิดเพราะอะไรมากที่สุด</h3>
+  <div class="stack" style="gap:var(--s2)">
+    {% for c in causes %}
+    <div class="stack" style="gap:2px">
+      <div class="row"><span class="mono" style="color:var(--missing);min-width:32px">{{ c.n }}</span><span class="grow">{{ c.label }}</span></div>
+      <p class="muted">{{ c.advice }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{# ─── 2 · คะแนน ─── #}
+<div class="stats">
+  <div class="stat"><b>{{ exam.reading }}</b><span>คะแนนพาร์ทอ่าน (เต็ม 100)</span></div>
+  <div class="stat"><b>{{ exam.correct_count }}/{{ exam.question_count }}</b><span>ตอบถูก</span></div>
+  <div class="stat"><b>{% if exam.minutes_used %}{{ exam.minutes_used }}{% else %}—{% endif %}</b><span>นาทีที่ใช้</span></div>
+  <div class="stat"><b>{{ stats.times }}</b><span>สอบจำลองมาแล้ว (ครั้ง)</span></div>
+</div>
+
+<div class="note">
+  พาร์ทอ่านคิดเป็น 100 จาก 300 คะแนนของข้อสอบจริง ผ่านที่ 180 รวมทุกพาร์ท —
+  {% if exam.reading >= 60 %}
+    คะแนนนี้อยู่ในระดับที่ช่วยดันให้ถึงเกณฑ์ได้
+  {% else %}
+    ถ้าพาร์ทอื่นทำได้พอๆ กัน คะแนนรวมจะยังไม่ถึงเกณฑ์ ต้องดันพาร์ทที่ทำคะแนนง่ายกว่า
+  {% endif %}
+  {% if stats.times > 1 and stats.average is not None %}· เฉลี่ยจากทุกครั้งของคุณคือ {{ stats.average }}{% endif %}
+</div>
+
+{# ─── 3 · ทบทวนทีละข้อ ─── #}
+<div x-data="{ only_wrong: true }" class="stack">
+  <div class="row" style="flex-wrap:wrap;gap:var(--s2)">
+    <h3 class="grow">ทบทวนทีละข้อ</h3>
+    <label class="row" style="gap:7px;cursor:pointer;font-size:var(--t-sm)">
+      <input type="checkbox" x-model="only_wrong"> แสดงเฉพาะข้อที่ผิด ({{ wrong|length }})
+    </label>
+  </div>
+
+  {% for r in review %}
+  <div class="card stack" style="gap:var(--s2)"
+       {% if r.is_correct %}x-show="!only_wrong" x-cloak{% endif %}>
+    <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+      <span class="rank {% if not r.is_correct %}top{% endif %}">{{ r.number }}</span>
+      {% if r.is_correct %}
+        <span class="pill ok">ถูก</span>
+      {% elif r.skipped %}
+        <span class="pill warn">ไม่ได้ตอบ</span>
+      {% else %}
+        <span class="pill bad">ผิด</span>
+      {% endif %}
+      <span class="muted" style="margin-left:auto">{{ r.question.source_ref }}</span>
+    </div>
+
+    <p class="zh">{{ r.question.prompt_zh|truncatechars:160 }}</p>
+
+    <div class="stack" style="gap:2px">
+      {% if not r.skipped %}
+        <span class="wlab">คุณตอบ</span>
+        <span class="zh" style="{% if not r.is_correct %}text-decoration:line-through;color:var(--ink-3){% endif %}">{{ r.given }}</span>
+      {% endif %}
+      <span class="wlab" style="margin-top:var(--s1)">คำตอบที่ถูก</span>
+      <span class="zh" style="color:var(--ready)">{{ r.right }}</span>
+    </div>
+
+    {% if not r.is_correct %}
+      {% with ex=r.question.explanation %}
+      {% if ex.why_correct %}
+      <div class="stack" style="gap:var(--s2);padding-top:var(--s2);border-top:1px solid var(--line)">
+        <div class="layer l1">
+          <span class="wlab">ทำไมข้อนี้ถูก</span>
+          <p>{{ ex.why_correct }}</p>
+          {% if ex.hint %}<p class="muted">หลักฐานในบทอ่าน — {{ ex.hint }}</p>{% endif %}
+        </div>
+        {% if r.distractors %}
+        <div class="layer l2">
+          <span class="wlab">ตัวเลือกอื่นผิดเพราะอะไร</span>
+          <div class="stack" style="gap:var(--s1)">
+            {% for d in r.distractors %}
+            <div class="row" style="gap:var(--s1);align-items:flex-start">
+              <span class="zh cfw">{{ d.text|truncatechars:24 }}</span>
+              <span style="font-size:var(--t-sm);color:var(--ink-2)">{{ d.rationale_th }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+        {% if ex.rule %}
+        <div class="layer l4">
+          <span class="wlab">กฎที่เอาไปใช้ข้ออื่นได้</span>
+          <p>{{ ex.rule }}</p>
+        </div>
+        {% endif %}
+        {% if not ex.human_verified %}
+          {% with question=r.question %}{% include "core/partials/ai_notice.html" %}{% endwith %}
+        {% endif %}
+      </div>
+      {% endif %}
+      {% endwith %}
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+<div class="row" style="flex-wrap:wrap;gap:var(--s1)">
+  <a class="btn" href="{% url 'mock_home' %}" style="width:auto">กลับหน้าจำลองสอบ</a>
+  <a class="btn ghost" href="{% url 'home' %}" style="width:auto">ไปทำชุดฝึกวันนี้</a>
+</div>
+
+<p class="muted" style="font-size:var(--t-sm)">
+  ข้อที่ตอบผิดถูกบันทึกไว้แล้ว และจะกลับมาอยู่ในชุดฝึกรายวันโดยอัตโนมัติ
+</p>
+
+{% endblock %}

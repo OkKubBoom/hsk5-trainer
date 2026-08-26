@@ -1,0 +1,14 @@
+{# ตัวเลือกจำนวนแถวต่อหน้า — เก็บค่าอื่นใน URL ไว้ครบ #}
+<form method="get" class="perpage" x-data>
+  {% for key, value in request.GET.items %}
+    {% if key != 'per' and key != 'page' %}<input type="hidden" name="{{ key }}" value="{{ value }}">{% endif %}
+  {% endfor %}
+  <label for="per-select" class="muted">แสดงทีละ</label>
+  <select id="per-select" name="per" @change="$el.form.submit()">
+    {% for n in per_choices %}
+      <option value="{{ n }}" {% if n == per_page %}selected{% endif %}>{{ n }}</option>
+    {% endfor %}
+  </select>
+  <span class="muted">แถว</span>
+  <noscript><button class="btn ghost sm" type="submit">ตกลง</button></noscript>
+</form>

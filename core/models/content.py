@@ -100,6 +100,12 @@ class Question(Provenance, TimeStamped):
         help_text="ใช้กับข้อที่ไม่ใช่ปรนัย เช่น เรียงคำ หรือ 听写",
     )
     explanation_th = models.TextField(blank=True, verbose_name="คำอธิบายเฉลย (ไทย)")
+    # คำอธิบายแบบมีโครงสร้าง 4 ชั้น — เก็บเป็น JSON เพื่อให้หน้าเว็บจัดวางเองได้
+    # และตรวจสอบภายหลังได้ว่าชั้นไหนขาด ต่างจากการยัดทุกอย่างลงข้อความก้อนเดียว
+    explanation = models.JSONField(
+        default=dict, blank=True, verbose_name="คำอธิบาย 4 ชั้น",
+        help_text='{"why_correct": "...", "hint": "...", "key_vocab": [...], "rule": "...", "error_code": "..."}',
+    )
 
     difficulty = models.PositiveSmallIntegerField(default=3, db_index=True, verbose_name="ความยาก")
     target_seconds = models.PositiveSmallIntegerField(

@@ -185,10 +185,13 @@ def build_daily_drill(
 
     # ยังขาดอยู่ → เติมด้วยคำถามจากคลังที่ยังไม่ได้ใช้
     if shortfall > 0:
+        # เฉพาะข้อที่มีตัวเลือกให้กด — ข้อเรียงคำและข้อเขียนเรียงความยังไม่มีหน้าจอรองรับ
+        # ถ้าปล่อยเข้ามาผู้เรียนจะเจอข้อที่ตอบไม่ได้จริง แล้วถูกนับว่าผิด
         extra_qs = (
             Question.objects
-            .filter(status=QuestionStatus.ACTIVE)
+            .filter(status=QuestionStatus.ACTIVE, options__isnull=False)
             .exclude(pk__in=used_questions)
+            .distinct()
             .order_by("?")[:shortfall]
         )
         for q in extra_qs:

@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}โปรไฟล์ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}โปรไฟล์{% endblock %}
+{% block content %}
+
+<div class="row" style="gap:var(--s2)">
+  <span class="avatar" style="width:56px;height:56px;font-size:var(--t-h2)">{{ user.first_name|default:user.username|slice:":1" }}</span>
+  <div class="stack" style="gap:2px">
+    <h1>{{ user.first_name|default:user.username }}</h1>
+    <span class="muted">ชื่อผู้ใช้ {{ user.username }} · {{ user.get_role_display }}</span>
+  </div>
+</div>
+
+{% if learner %}
+
+{# ─── ตัวเลขรวมของบัญชีนี้ ─── #}
+<div class="stats">
+  <div class="stat"><b>{{ days_practiced }}</b><span>วันที่ฝึกจบชุด</span></div>
+  <div class="stat"><b>{{ answered }}</b><span>ข้อที่ตอบไปแล้ว</span></div>
+  <div class="stat"><b>{% if accuracy %}{{ accuracy }}%{% else %}—{% endif %}</b><span>ความแม่นรวม</span></div>
+  <div class="stat"><b>{{ cards_total }}</b><span>การ์ดในระบบ</span></div>
+</div>
+
+{# ─── เป้าหมายการสอบ ─── #}
+<div class="card stack">
+  <div class="row">
+    <h3 class="grow">เป้าหมายการสอบ</h3>
+    {% if in_freeze %}<span class="pill warn">ช่วงหยุดคำใหม่</span>{% endif %}
+  </div>
+  <dl class="deflist">
+    <dt>วันสอบเป้าหมาย</dt>
+    <dd>{{ learner.target_exam_date|date:"j F Y" }}
+      {% if days_to_exam >= 0 %}<span class="muted">· เหลือ {{ days_to_exam }} วัน</span>{% endif %}
+    </dd>
+
+    <dt>วันสอบสำรอง</dt>
+    <dd>{% if learner.backup_exam_date %}{{ learner.backup_exam_date|date:"j F Y" }}{% else %}<span class="muted">ยังไม่ได้ตั้ง</span>{% endif %}</dd>
+
+    <dt>ระดับเป้าหมาย</dt>
+    <dd>HSK{{ learner.target_level }} · ผ่านที่ 180 จาก 300</dd>
+  </dl>
+</div>
+
+{# ─── ค่าตั้งต้นการฝึก ─── #}
+<div class="card stack">
+  <h3>ค่าตั้งต้นการฝึก</h3>
+  <dl class="deflist">
+    <dt>ขนาดชุดต่อวัน</dt>
+    <dd>{{ learner.drill_size }} ข้อ</dd>
+
+    <dt>คำใหม่ต่อวัน</dt>
+    <dd>{{ learner.new_words_per_day }} คำ
+      {% if placement %}<span class="muted">· มาจากผลวัดระดับ</span>
+      {% else %}<span class="muted">· ค่าเริ่มต้น ยังไม่ได้วัดระดับ</span>{% endif %}
+    </dd>
+
+    <dt>งบเวลาต่อวัน</dt>
+    <dd>{{ learner.daily_minutes_budget }} นาที</dd>
+
+    <dt>ประมาณคำที่รู้แล้ว</dt>
+    <dd>{% if learner.known_vocab_estimate %}{{ learner.known_vocab_estimate }} คำ{% else %}<span class="muted">ยังไม่ได้วัด</span>{% endif %}</dd>
+  </dl>
+</div>
+
+{# ─── จำลองสอบ ─── #}
+<div class="card stack">
+  <div class="row">
+    <h3 class="grow">จำลองสอบ</h3>
+    <a class="btn ghost sm" href="{% url 'mock_home' %}" style="width:auto">ไปหน้าจำลองสอบ</a>
+  </div>
+  {% if mock.times %}
+  <dl class="deflist">
+    <dt>สอบจำลองไปแล้ว</dt><dd><b>{{ mock.times }} ครั้ง</b></dd>
+    <dt>คะแนนล่าสุด</dt><dd>{{ mock.latest }} / 100 (พาร์ทอ่าน)</dd>
+    <dt>ดีที่สุด</dt><dd>{{ mock.best }} / 100</dd>
+    <dt>เฉลี่ย</dt><dd>{{ mock.average }} / 100</dd>
+    <dt>เวลาที่ใช้รวม</dt><dd>{{ mock.total_minutes }} นาที</dd>
+  </dl>
+  {% else %}
+  <p class="muted">ยังไม่เคยจำลองสอบ — ควรทำสัปดาห์ละครั้งเพื่อวัดว่าตอนนี้ทำได้เท่าไร</p>
+  {% endif %}
+</div>
+
+{# ─── คะแนนฐาน ─── #}
+<div class="card stack">
+  <div class="row">
+    <h3 class="grow">คะแนนฐานจากข้อสอบเก่า</h3>
+    {% if learner.has_baseline %}
+      <span class="pill ok">วัดแล้ว</span>
+    {% else %}
+      <span class="pill warn">ยังไม่ได้วัด</span>
+    {% endif %}
+  </div>
+
+  {% if learner.has_baseline %}
+  <dl class="deflist">
+    <dt>ฟัง</dt><dd>{{ learner.baseline_listening|default:"—" }} / 100</dd>
+    <dt>อ่าน</dt><dd>{{ learner.baseline_reading|default:"—" }} / 100</dd>
+    <dt>เขียน</dt><dd>{{ learner.baseline_writing|default:"—" }} / 100</dd>
+    <dt>รวม</dt><dd><b>{{ learner.baseline_total }} / 300</b></dd>
+    <dt>วันที่วัด</dt><dd>{{ learner.baseline_taken_on|date:"j F Y" }}</dd>
+  </dl>
+  {% else %}
+  <p class="muted">
+    ยังไม่ได้ทำข้อสอบเก่าจับเวลาจริง — ตราบใดที่ยังไม่มีคะแนนนี้
+    ตัวเลขคาดการณ์เรื่องวันสอบทั้งหมดยังเป็นการประมาณ
+  </p>
+  {% endif %}
+</div>
+
+{# ─── ผลวัดระดับ ─── #}
+{% if placement %}
+<div class="card stack">
+  <div class="row">
+    <h3 class="grow">ผลวัดระดับล่าสุด</h3>
+    <span class="muted">{{ placement.finished_at|date:"j M Y" }}</span>
+  </div>
+  <dl class="deflist">
+    <dt>ประมาณคำที่รู้</dt><dd>{{ placement.result.known_vocab_estimate }} คำ</dd>
+    <dt>เหลือถึง 2,500</dt><dd>{{ placement.result.remaining_to_2500 }} คำ</dd>
+    <dt>ระดับที่ควรเริ่มอุด</dt><dd>HSK{{ placement.result.start_level }}</dd>
+  </dl>
+  <div><a class="btn ghost sm" href="{% url 'placement_result' placement.pk %}" style="width:auto">ดูผลแบบละเอียด</a></div>
+</div>
+{% else %}
+<div class="card stack" style="border-left:3px solid var(--partial)">
+  <h3>ยังไม่ได้วัดระดับ</h3>
+  <p class="muted">ใช้เวลาราว 20 นาที ทำครั้งเดียว แล้วระบบจะตั้งจำนวนคำใหม่ต่อวันให้พอดีกับคุณ</p>
+  <div><a class="btn ghost" href="{% url 'placement_start' %}" style="width:auto">เริ่มวัดระดับ</a></div>
+</div>
+{% endif %}
+
+{# ─── โค้ช ─── #}
+{% if coaches %}
+<div class="card stack">
+  <h3>โค้ชที่ดูข้อมูลของคุณได้</h3>
+  <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+    {% for coach in coaches %}
+      <span class="pill accent">{{ coach.first_name|default:coach.username }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% else %}
+<div class="card empty">
+  <span class="empty-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+  </span>
+  <h3>บัญชีนี้ยังไม่มีโปรไฟล์ผู้เรียน</h3>
+  <p class="muted">ต้องมีวันสอบเป้าหมายก่อนถึงจะใช้ชุดฝึกรายวันได้ — ให้เจ้าของระบบตั้งให้</p>
+</div>
+{% endif %}
+
+<div class="card flat stack">
+  <h3>บัญชี</h3>
+  <dl class="deflist">
+    <dt>เข้าใช้ครั้งล่าสุด</dt>
+    <dd>{% if user.last_login %}{{ user.last_login|date:"j F Y · H:i น." }}{% else %}<span class="muted">—</span>{% endif %}</dd>
+    <dt>สมัครเมื่อ</dt>
+    <dd>{{ user.date_joined|date:"j F Y" }}</dd>
+  </dl>
+  <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn ghost" style="width:auto">ออกจากระบบ</button>
+    </form>
+  </div>
+  <p class="muted">ตอนนี้หน้านี้ดูได้อย่างเดียว — การแก้วันสอบหรือค่าตั้งต้นยังต้องให้เจ้าของระบบทำให้</p>
+</div>
+
+{% endblock %}

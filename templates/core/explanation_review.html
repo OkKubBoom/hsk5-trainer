@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}ตรวจคำอธิบาย · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ตรวจคำอธิบาย{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:var(--s-half)">
+  <span class="eyebrow">ผู้ดูแลระบบ</span>
+  <h1>คำอธิบายที่คนส่งมาตรวจ</h1>
+  <p class="muted">กดรับแล้วคำอธิบายของผู้ใช้จะแทนที่ของ AI และป้ายเตือนสีแดงจะหายไป</p>
+</div>
+
+{% if open_notes %}
+<div class="stack">
+  {% for note in open_notes %}
+  <div class="card stack" style="gap:var(--s2)">
+    <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+      <span class="pill {% if note.verdict == 'confirmed' %}ok{% else %}bad{% endif %}">{{ note.get_verdict_display }}</span>
+      <span class="muted">{{ note.author.first_name|default:note.author.username }} · {{ note.created_at|date:"j M · H:i" }}</span>
+      <span class="muted" style="margin-left:auto">{{ note.target_label }}</span>
+    </div>
+
+    {% if note.vocab %}
+      <div class="stack" style="gap:var(--s-half)">
+        <span class="wlab">คำศัพท์</span>
+        <div class="row" style="gap:var(--s1);align-items:baseline">
+          <span class="zh" style="font-size:var(--t-h2)">{{ note.vocab.hanzi }}</span>
+          <span class="mono muted">{{ note.vocab.pinyin }}</span>
+        </div>
+      </div>
+      <div class="stack" style="gap:var(--s-half)">
+        <span class="wlab">คำแปลปัจจุบัน (จาก AI)</span>
+        <p style="font-size:var(--t-sm);color:var(--ink-2)">{{ note.vocab.meaning_th }}</p>
+      </div>
+    {% else %}
+      <div class="stack" style="gap:var(--s-half)">
+        <span class="wlab">โจทย์</span>
+        <span class="zh">{{ note.question.prompt_zh|truncatechars:120 }}</span>
+        <span class="muted">เฉลย: <span class="zh">{{ note.question.answer_text|truncatechars:60 }}</span></span>
+      </div>
+      <div class="stack" style="gap:var(--s-half)">
+        <span class="wlab">คำอธิบายของ AI</span>
+        <p style="font-size:var(--t-sm);color:var(--ink-2)">{{ note.question.explanation.why_correct|default:"—" }}</p>
+      </div>
+    {% endif %}
+
+    {% if note.body %}
+    <div class="layer l1">
+      <span class="wlab">คำอธิบายที่ผู้ใช้ส่งมา</span>
+      <p>{{ note.body }}</p>
+      {% if note.source %}<p class="muted">อ้างอิง — {{ note.source }}</p>{% endif %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="row" style="gap:var(--s1);flex-wrap:wrap">
+      {% csrf_token %}
+      <input type="hidden" name="note_id" value="{{ note.pk }}">
+      {% if note.body %}
+        <button class="btn sm" type="submit" name="action" value="accept" style="width:auto">{% if note.vocab %}ใช้คำแปลนี้แทน{% else %}รับมาใช้แทนของ AI{% endif %}</button>
+      {% endif %}
+      <button class="btn ghost sm" type="submit" name="action" value="reject" style="width:auto">ไม่รับ</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card empty">
+  <span class="empty-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+  </span>
+  <h3>ยังไม่มีรายการรอตรวจ</h3>
+  <p class="muted">เมื่อผู้เรียนกด "ช่วยตรวจข้อนี้" ในการ์ดเฉลย รายการจะมาโผล่ที่นี่</p>
+</div>
+{% endif %}
+
+{% if handled %}
+<div class="card stack">
+  <h3>ที่ตรวจไปแล้ว</h3>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>ข้อ</th><th>ผู้ส่ง</th><th>ผลการตรวจ</th><th>สถานะ</th></tr></thead>
+      <tbody>
+        {% for n in handled %}
+        <tr>
+          <td class="cell-word" data-label="ข้อ">{{ n.target_label }}</td>
+          <td data-label="ผู้ส่ง">{{ n.author.first_name|default:n.author.username|default:"—" }}</td>
+          <td data-label="ผลการตรวจ">{{ n.get_verdict_display }}</td>
+          <td data-label="สถานะ"><span class="pill {% if n.status == 'accepted' %}ok{% endif %}">{{ n.get_status_display }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
