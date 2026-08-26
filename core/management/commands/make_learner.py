@@ -19,13 +19,19 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("username")
         parser.add_argument("--name", default="", help="ชื่อที่แสดงในระบบ")
-        parser.add_argument("--password", default="hsk5trainer", help="รหัสผ่านตั้งต้น")
+        # ไม่มีค่าตั้งต้นโดยตั้งใจ — รหัสผ่านที่เขียนไว้ในโค้ดสาธารณะคือรหัสที่ทุกคนรู้
+        parser.add_argument("--password", required=True,
+                            help="รหัสผ่านตั้งต้น (อย่างน้อย 8 ตัวอักษร) — ต้องตั้งเอง")
         parser.add_argument("--exam-date", required=True, help="YYYY-MM-DD")
         parser.add_argument("--backup-exam-date", default=None, help="วันสอบสำรอง YYYY-MM-DD")
         parser.add_argument("--coach", default=None, help="username ของโค้ชที่ดูข้อมูลได้")
 
     @transaction.atomic
     def handle(self, *args, **opts):
+        if len(opts["password"]) < 8:
+            self.stderr.write("รหัสผ่านต้องยาวอย่างน้อย 8 ตัวอักษร")
+            return
+
         user, created = User.objects.get_or_create(
             username=opts["username"],
             defaults={"first_name": opts["name"], "role": Role.LEARNER},

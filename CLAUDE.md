@@ -141,7 +141,7 @@ source .venv/bin/activate
 python manage.py migrate
 python manage.py seed_hsk5          # ใส่คำศัพท์ + 近义词 + 完成句子 ตั้งต้น
 python manage.py import_vocab       # นำเข้าคำศัพท์ 2,496 คำจาก data/vocab/hsk5_merged.json
-python manage.py make_learner mint --name มิ้นท์ --exam-date 2026-11-07
+python manage.py make_learner mint --name มิ้นท์ --exam-date 2026-11-07 --password '<ตั้งเอง>'
 python manage.py createsuperuser
 python manage.py runserver
 python manage.py test               # ทดสอบ SRS + drill engine

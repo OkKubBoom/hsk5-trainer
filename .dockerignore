@@ -1,0 +1,15 @@
+.git/
+.venv/
+.venv*/
+__pycache__/
+*.py[cod]
+*.sqlite3
+.env
+.DS_Store
+staticfiles/
+media/
+SampleExamQuestions/
+data/exam_corpus/
+data/vocab/batch_inputs/
+data/vocab/verify/
+.claude/
