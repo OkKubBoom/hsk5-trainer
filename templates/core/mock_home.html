@@ -14,10 +14,22 @@
 
 {% if running %}
 <div class="card hero stack" style="gap:var(--s2)">
-  <span class="pill warn" style="align-self:flex-start">มีชุดที่ทำค้างอยู่</span>
-  <h2>ตอบไปแล้ว {{ running.answered_count }} / {{ running.question_count }} ข้อ</h2>
-  <p class="muted">เหลือเวลา {{ running.seconds_left }} วินาที — เวลายังเดินอยู่</p>
-  <a class="btn lg block" href="{% url 'mock_run' running.pk %}">กลับไปทำต่อ</a>
+  {% if running.is_expired %}
+    {# หมดเวลาแล้วแต่ยังไม่ได้ส่ง — กดแล้วระบบจะตรวจให้ทันที #}
+    <span class="pill bad" style="align-self:flex-start">หมดเวลาแล้ว</span>
+    <h2>ตอบไปได้ {{ running.answered_count }} / {{ running.question_count }} ข้อ</h2>
+    <p class="muted">เวลา {{ running.time_limit_minutes }} นาทีหมดลงแล้ว — กดเพื่อส่งและดูคะแนน</p>
+    <a class="btn lg block" href="{% url 'mock_run' running.pk %}">ส่งคำตอบ · ดูผล</a>
+  {% else %}
+    <span class="pill warn" style="align-self:flex-start">มีชุดที่ทำค้างอยู่ · เวลายังเดินอยู่</span>
+    <h2>ตอบไปแล้ว {{ running.answered_count }} / {{ running.question_count }} ข้อ</h2>
+    <div x-data="{ left: {{ running.seconds_left }} }" x-init="setInterval(() => { if (left > 0) left--; }, 1000)">
+      <p class="muted">เหลือเวลาอีก
+        <b class="mono" x-text="Math.floor(left/60) + ':' + String(left%60).padStart(2,'0')"></b> นาที
+      </p>
+    </div>
+    <a class="btn lg block" href="{% url 'mock_run' running.pk %}">กลับไปทำต่อ</a>
+  {% endif %}
 </div>
 {% else %}
 <div class="card hero stack" style="gap:var(--s2)">
