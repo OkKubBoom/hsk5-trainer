@@ -1,0 +1,2864 @@
+{
+ "meta": {
+  "generated_at": "2026-08-25",
+  "papers_analyzed": [
+   "H51001",
+   "H51002",
+   "H51003",
+   "H51004",
+   "H51005",
+   "H51327",
+   "H51328",
+   "H51330",
+   "H51332"
+  ],
+  "what": "ชุดตัวเลือก 4 คำจาก 阅读第一部分 (ข้อ 46-60) — กลุ่มคำที่ข้อสอบยืนยันเองว่าสับสนกันได้",
+  "raw_sets": 108,
+  "merged_groups": 100,
+  "source_type": "official_past_paper",
+  "commercial_safe": false
+ },
+ "raw_sets": [
+  {
+   "paper": "H51001",
+   "number": 46,
+   "words": [
+    "穿",
+    "带",
+    "挂",
+    "戴"
+   ],
+   "answer_letter": "D",
+   "answer_word": "戴"
+  },
+  {
+   "paper": "H51001",
+   "number": 47,
+   "words": [
+    "皮肤",
+    "身体",
+    "头发",
+    "胳膊"
+   ],
+   "answer_letter": "A",
+   "answer_word": "皮肤"
+  },
+  {
+   "paper": "H51001",
+   "number": 48,
+   "words": [
+    "形成",
+    "包括",
+    "充满",
+    "实现"
+   ],
+   "answer_letter": "C",
+   "answer_word": "充满"
+  },
+  {
+   "paper": "H51001",
+   "number": 49,
+   "words": [
+    "办法",
+    "意思",
+    "方式",
+    "能力"
+   ],
+   "answer_letter": "A",
+   "answer_word": "办法"
+  },
+  {
+   "paper": "H51001",
+   "number": 50,
+   "words": [
+    "好像",
+    "相似",
+    "表示",
+    "相同"
+   ],
+   "answer_letter": "A",
+   "answer_word": "好像"
+  },
+  {
+   "paper": "H51001",
+   "number": 51,
+   "words": [
+    "平静",
+    "着急",
+    "生气",
+    "担心"
+   ],
+   "answer_letter": "C",
+   "answer_word": "生气"
+  },
+  {
+   "paper": "H51001",
+   "number": 54,
+   "words": [
+    "允许",
+    "注意",
+    "反对",
+    "赞成"
+   ],
+   "answer_letter": "D",
+   "answer_word": "赞成"
+  },
+  {
+   "paper": "H51001",
+   "number": 55,
+   "words": [
+    "相信",
+    "考虑",
+    "笑话",
+    "确认"
+   ],
+   "answer_letter": "C",
+   "answer_word": "笑话"
+  },
+  {
+   "paper": "H51001",
+   "number": 56,
+   "words": [
+    "发展",
+    "努力",
+    "到达",
+    "成功"
+   ],
+   "answer_letter": "D",
+   "answer_word": "成功"
+  },
+  {
+   "paper": "H51001",
+   "number": 57,
+   "words": [
+    "旅游",
+    "追求",
+    "欣赏",
+    "想像"
+   ],
+   "answer_letter": "C",
+   "answer_word": "欣赏"
+  },
+  {
+   "paper": "H51001",
+   "number": 59,
+   "words": [
+    "疲劳",
+    "兴奋",
+    "热情",
+    "幸运"
+   ],
+   "answer_letter": "D",
+   "answer_word": "幸运"
+  },
+  {
+   "paper": "H51001",
+   "number": 60,
+   "words": [
+    "理解",
+    "等待",
+    "休息",
+    "交谈"
+   ],
+   "answer_letter": "B",
+   "answer_word": "等待"
+  },
+  {
+   "paper": "H51002",
+   "number": 46,
+   "words": [
+    "反复",
+    "分别",
+    "互相",
+    "仍然"
+   ],
+   "answer_letter": "B",
+   "answer_word": "分别"
+  },
+  {
+   "paper": "H51002",
+   "number": 47,
+   "words": [
+    "现象",
+    "规则",
+    "道理",
+    "项目"
+   ],
+   "answer_letter": "A",
+   "answer_word": "现象"
+  },
+  {
+   "paper": "H51002",
+   "number": 48,
+   "words": [
+    "肚子",
+    "抽屉",
+    "物质",
+    "粮食"
+   ],
+   "answer_letter": "A",
+   "answer_word": "肚子"
+  },
+  {
+   "paper": "H51002",
+   "number": 49,
+   "words": [
+    "想像",
+    "观察",
+    "思考",
+    "幻想"
+   ],
+   "answer_letter": "C",
+   "answer_word": "思考"
+  },
+  {
+   "paper": "H51002",
+   "number": 50,
+   "words": [
+    "表现",
+    "包含",
+    "保持",
+    "采取"
+   ],
+   "answer_letter": "B",
+   "answer_word": "包含"
+  },
+  {
+   "paper": "H51002",
+   "number": 52,
+   "words": [
+    "面临",
+    "逃避",
+    "参考",
+    "承担"
+   ],
+   "answer_letter": "A",
+   "answer_word": "面临"
+  },
+  {
+   "paper": "H51002",
+   "number": 53,
+   "words": [
+    "忍不住",
+    "怪不得",
+    "舍不得",
+    "说不定"
+   ],
+   "answer_letter": "A",
+   "answer_word": "忍不住"
+  },
+  {
+   "paper": "H51002",
+   "number": 54,
+   "words": [
+    "总共",
+    "全面",
+    "整个",
+    "完整"
+   ],
+   "answer_letter": "C",
+   "answer_word": "整个"
+  },
+  {
+   "paper": "H51002",
+   "number": 55,
+   "words": [
+    "愿望",
+    "情绪",
+    "运气",
+    "原则"
+   ],
+   "answer_letter": "B",
+   "answer_word": "情绪"
+  },
+  {
+   "paper": "H51002",
+   "number": 57,
+   "words": [
+    "掌握",
+    "阻止",
+    "迎接",
+    "控制"
+   ],
+   "answer_letter": "C",
+   "answer_word": "迎接"
+  },
+  {
+   "paper": "H51002",
+   "number": 59,
+   "words": [
+    "执照",
+    "文件",
+    "支票",
+    "合同"
+   ],
+   "answer_letter": "A",
+   "answer_word": "执照"
+  },
+  {
+   "paper": "H51002",
+   "number": 60,
+   "words": [
+    "抢",
+    "逃",
+    "瞧",
+    "滚"
+   ],
+   "answer_letter": "B",
+   "answer_word": "逃"
+  },
+  {
+   "paper": "H51003",
+   "number": 46,
+   "words": [
+    "强调",
+    "欣赏",
+    "忽视",
+    "启发"
+   ],
+   "answer_letter": "B",
+   "answer_word": "欣赏"
+  },
+  {
+   "paper": "H51003",
+   "number": 47,
+   "words": [
+    "同时",
+    "随时",
+    "临时",
+    "暂时"
+   ],
+   "answer_letter": "A",
+   "answer_word": "同时"
+  },
+  {
+   "paper": "H51003",
+   "number": 48,
+   "words": [
+    "何况",
+    "要不",
+    "毕竟",
+    "假如"
+   ],
+   "answer_letter": "D",
+   "answer_word": "假如"
+  },
+  {
+   "paper": "H51003",
+   "number": 49,
+   "words": [
+    "想像",
+    "观察",
+    "思考",
+    "幻想"
+   ],
+   "answer_letter": "C",
+   "answer_word": "思考"
+  },
+  {
+   "paper": "H51003",
+   "number": 50,
+   "words": [
+    "表现",
+    "包含",
+    "保持",
+    "采取"
+   ],
+   "answer_letter": "B",
+   "answer_word": "包含"
+  },
+  {
+   "paper": "H51003",
+   "number": 52,
+   "words": [
+    "面临",
+    "逃避",
+    "参考",
+    "承担"
+   ],
+   "answer_letter": "A",
+   "answer_word": "面临"
+  },
+  {
+   "paper": "H51003",
+   "number": 54,
+   "words": [
+    "轻视",
+    "确认",
+    "称赞",
+    "询问"
+   ],
+   "answer_letter": "C",
+   "answer_word": "称赞"
+  },
+  {
+   "paper": "H51003",
+   "number": 55,
+   "words": [
+    "特意",
+    "逐步",
+    "分别",
+    "始终"
+   ],
+   "answer_letter": "A",
+   "answer_word": "特意"
+  },
+  {
+   "paper": "H51003",
+   "number": 56,
+   "words": [
+    "专心",
+    "意外",
+    "不要紧",
+    "了不起"
+   ],
+   "answer_letter": "D",
+   "answer_word": "了不起"
+  },
+  {
+   "paper": "H51003",
+   "number": 57,
+   "words": [
+    "以来",
+    "未来",
+    "过去",
+    "事先"
+   ],
+   "answer_letter": "B",
+   "answer_word": "未来"
+  },
+  {
+   "paper": "H51003",
+   "number": 59,
+   "words": [
+    "相对",
+    "相似",
+    "神秘",
+    "所谓"
+   ],
+   "answer_letter": "D",
+   "answer_word": "所谓"
+  },
+  {
+   "paper": "H51003",
+   "number": 60,
+   "words": [
+    "利用",
+    "达到",
+    "应付",
+    "批准"
+   ],
+   "answer_letter": "C",
+   "answer_word": "应付"
+  },
+  {
+   "paper": "H51004",
+   "number": 46,
+   "words": [
+    "记忆",
+    "前途",
+    "命运",
+    "价值"
+   ],
+   "answer_letter": "B",
+   "answer_word": "前途"
+  },
+  {
+   "paper": "H51004",
+   "number": 47,
+   "words": [
+    "善良",
+    "谨慎",
+    "糟糕",
+    "倒霉"
+   ],
+   "answer_letter": "D",
+   "answer_word": "倒霉"
+  },
+  {
+   "paper": "H51004",
+   "number": 48,
+   "words": [
+    "坚强",
+    "宝贵",
+    "明显",
+    "熟练"
+   ],
+   "answer_letter": "A",
+   "answer_word": "坚强"
+  },
+  {
+   "paper": "H51004",
+   "number": 49,
+   "words": [
+    "委屈",
+    "慌张",
+    "沉默",
+    "犹豫"
+   ],
+   "answer_letter": "B",
+   "answer_word": "慌张"
+  },
+  {
+   "paper": "H51004",
+   "number": 50,
+   "words": [
+    "完美",
+    "时髦",
+    "成熟",
+    "专业"
+   ],
+   "answer_letter": "D",
+   "answer_word": "专业"
+  },
+  {
+   "paper": "H51004",
+   "number": 51,
+   "words": [
+    "情绪",
+    "心理",
+    "逻辑",
+    "思想"
+   ],
+   "answer_letter": "A",
+   "answer_word": "情绪"
+  },
+  {
+   "paper": "H51004",
+   "number": 54,
+   "words": [
+    "轻视",
+    "确认",
+    "称赞",
+    "询问"
+   ],
+   "answer_letter": "C",
+   "answer_word": "称赞"
+  },
+  {
+   "paper": "H51004",
+   "number": 55,
+   "words": [
+    "特意",
+    "逐步",
+    "分别",
+    "始终"
+   ],
+   "answer_letter": "A",
+   "answer_word": "特意"
+  },
+  {
+   "paper": "H51004",
+   "number": 56,
+   "words": [
+    "专心",
+    "意外",
+    "不要紧",
+    "了不起"
+   ],
+   "answer_letter": "D",
+   "answer_word": "了不起"
+  },
+  {
+   "paper": "H51004",
+   "number": 57,
+   "words": [
+    "具备",
+    "显示",
+    "发表",
+    "领导"
+   ],
+   "answer_letter": "B",
+   "answer_word": "显示"
+  },
+  {
+   "paper": "H51004",
+   "number": 58,
+   "words": [
+    "情景",
+    "景色",
+    "背景",
+    "奇迹"
+   ],
+   "answer_letter": "A",
+   "answer_word": "情景"
+  },
+  {
+   "paper": "H51004",
+   "number": 59,
+   "words": [
+    "说服",
+    "批准",
+    "咨询",
+    "接待"
+   ],
+   "answer_letter": "D",
+   "answer_word": "接待"
+  },
+  {
+   "paper": "H51005",
+   "number": 46,
+   "words": [
+    "始终",
+    "陆续",
+    "未必",
+    "急忙"
+   ],
+   "answer_letter": "D",
+   "answer_word": "急忙"
+  },
+  {
+   "paper": "H51005",
+   "number": 47,
+   "words": [
+    "弯",
+    "岸",
+    "田野",
+    "池子"
+   ],
+   "answer_letter": "B",
+   "answer_word": "岸"
+  },
+  {
+   "paper": "H51005",
+   "number": 48,
+   "words": [
+    "事物",
+    "状况",
+    "精力",
+    "业务"
+   ],
+   "answer_letter": "A",
+   "answer_word": "事物"
+  },
+  {
+   "paper": "H51005",
+   "number": 49,
+   "words": [
+    "周到",
+    "谨慎",
+    "沉默",
+    "专心"
+   ],
+   "answer_letter": "B",
+   "answer_word": "谨慎"
+  },
+  {
+   "paper": "H51005",
+   "number": 50,
+   "words": [
+    "承认",
+    "确定",
+    "否定",
+    "珍惜"
+   ],
+   "answer_letter": "C",
+   "answer_word": "否定"
+  },
+  {
+   "paper": "H51005",
+   "number": 51,
+   "words": [
+    "显然",
+    "居然",
+    "竟然",
+    "依然"
+   ],
+   "answer_letter": "A",
+   "answer_word": "显然"
+  },
+  {
+   "paper": "H51005",
+   "number": 53,
+   "words": [
+    "基本",
+    "根本",
+    "毕竟",
+    "反正"
+   ],
+   "answer_letter": "A",
+   "answer_word": "基本"
+  },
+  {
+   "paper": "H51005",
+   "number": 55,
+   "words": [
+    "推荐",
+    "询问",
+    "处理",
+    "促使"
+   ],
+   "answer_letter": "B",
+   "answer_word": "询问"
+  },
+  {
+   "paper": "H51005",
+   "number": 56,
+   "words": [
+    "统一",
+    "修改",
+    "传染",
+    "恢复"
+   ],
+   "answer_letter": "D",
+   "answer_word": "恢复"
+  },
+  {
+   "paper": "H51005",
+   "number": 57,
+   "words": [
+    "表现",
+    "表面",
+    "抽象",
+    "道理"
+   ],
+   "answer_letter": "B",
+   "answer_word": "表面"
+  },
+  {
+   "paper": "H51005",
+   "number": 59,
+   "words": [
+    "简直",
+    "再三",
+    "片面",
+    "更加"
+   ],
+   "answer_letter": "D",
+   "answer_word": "更加"
+  },
+  {
+   "paper": "H51005",
+   "number": 60,
+   "words": [
+    "智慧",
+    "后果",
+    "幻想",
+    "魅力"
+   ],
+   "answer_letter": "A",
+   "answer_word": "智慧"
+  },
+  {
+   "paper": "H51327",
+   "number": 46,
+   "words": [
+    "缓解",
+    "消失",
+    "消灭",
+    "降低"
+   ],
+   "answer_letter": "A",
+   "answer_word": "缓解"
+  },
+  {
+   "paper": "H51327",
+   "number": 47,
+   "words": [
+    "真实",
+    "原来",
+    "正确",
+    "合法"
+   ],
+   "answer_letter": "C",
+   "answer_word": "正确"
+  },
+  {
+   "paper": "H51327",
+   "number": 48,
+   "words": [
+    "情绪",
+    "语气",
+    "观点",
+    "表情"
+   ],
+   "answer_letter": "A",
+   "answer_word": "情绪"
+  },
+  {
+   "paper": "H51327",
+   "number": 49,
+   "words": [
+    "例如",
+    "不如",
+    "好像",
+    "据说"
+   ],
+   "answer_letter": "C",
+   "answer_word": "好像"
+  },
+  {
+   "paper": "H51327",
+   "number": 50,
+   "words": [
+    "彻底",
+    "反复",
+    "陆续",
+    "绝对"
+   ],
+   "answer_letter": "A",
+   "answer_word": "彻底"
+  },
+  {
+   "paper": "H51327",
+   "number": 52,
+   "words": [
+    "感想",
+    "勇气",
+    "风格",
+    "行为"
+   ],
+   "answer_letter": "B",
+   "answer_word": "勇气"
+  },
+  {
+   "paper": "H51327",
+   "number": 53,
+   "words": [
+    "凡是",
+    "根本",
+    "格外",
+    "总算"
+   ],
+   "answer_letter": "B",
+   "answer_word": "根本"
+  },
+  {
+   "paper": "H51327",
+   "number": 54,
+   "words": [
+    "对于",
+    "通过",
+    "自从",
+    "按照"
+   ],
+   "answer_letter": "D",
+   "answer_word": "按照"
+  },
+  {
+   "paper": "H51327",
+   "number": 55,
+   "words": [
+    "形象",
+    "位置",
+    "号码",
+    "形势"
+   ],
+   "answer_letter": "C",
+   "answer_word": "号码"
+  },
+  {
+   "paper": "H51327",
+   "number": 57,
+   "words": [
+    "陪伴",
+    "协调",
+    "组织",
+    "执行"
+   ],
+   "answer_letter": "A",
+   "answer_word": "陪伴"
+  },
+  {
+   "paper": "H51327",
+   "number": 59,
+   "words": [
+    "直接",
+    "正式",
+    "紧急",
+    "明显"
+   ],
+   "answer_letter": "A",
+   "answer_word": "直接"
+  },
+  {
+   "paper": "H51327",
+   "number": 60,
+   "words": [
+    "命令",
+    "答应",
+    "欣赏",
+    "称赞"
+   ],
+   "answer_letter": "D",
+   "answer_word": "称赞"
+  },
+  {
+   "paper": "H51328",
+   "number": 46,
+   "words": [
+    "制定",
+    "制作",
+    "建立",
+    "形成"
+   ],
+   "answer_letter": "B",
+   "answer_word": "制作"
+  },
+  {
+   "paper": "H51328",
+   "number": 47,
+   "words": [
+    "广大",
+    "普通",
+    "普遍",
+    "经典"
+   ],
+   "answer_letter": "C",
+   "answer_word": "普遍"
+  },
+  {
+   "paper": "H51328",
+   "number": 48,
+   "words": [
+    "出现",
+    "成立",
+    "构成",
+    "实现"
+   ],
+   "answer_letter": "A",
+   "answer_word": "出现"
+  },
+  {
+   "paper": "H51328",
+   "number": 49,
+   "words": [
+    "深刻",
+    "激烈",
+    "强烈",
+    "彻底"
+   ],
+   "answer_letter": "B",
+   "answer_word": "激烈"
+  },
+  {
+   "paper": "H51328",
+   "number": 51,
+   "words": [
+    "唯一",
+    "一致",
+    "特意",
+    "照常"
+   ],
+   "answer_letter": "B",
+   "answer_word": "一致"
+  },
+  {
+   "paper": "H51328",
+   "number": 52,
+   "words": [
+    "获得",
+    "达到",
+    "积累",
+    "保持"
+   ],
+   "answer_letter": "A",
+   "answer_word": "获得"
+  },
+  {
+   "paper": "H51328",
+   "number": 53,
+   "words": [
+    "结构",
+    "成分",
+    "比例",
+    "规模"
+   ],
+   "answer_letter": "A",
+   "answer_word": "结构"
+  },
+  {
+   "paper": "H51328",
+   "number": 54,
+   "words": [
+    "光滑",
+    "寒冷",
+    "清淡",
+    "模糊"
+   ],
+   "answer_letter": "B",
+   "answer_word": "寒冷"
+  },
+  {
+   "paper": "H51328",
+   "number": 56,
+   "words": [
+    "控制",
+    "克服",
+    "节省",
+    "争取"
+   ],
+   "answer_letter": "C",
+   "answer_word": "节省"
+  },
+  {
+   "paper": "H51328",
+   "number": 57,
+   "words": [
+    "提",
+    "摆",
+    "举",
+    "插"
+   ],
+   "answer_letter": "B",
+   "answer_word": "摆"
+  },
+  {
+   "paper": "H51328",
+   "number": 59,
+   "words": [
+    "多余",
+    "诚实",
+    "均匀",
+    "超级"
+   ],
+   "answer_letter": "A",
+   "answer_word": "多余"
+  },
+  {
+   "paper": "H51328",
+   "number": 60,
+   "words": [
+    "掌握",
+    "享受",
+    "承受",
+    "承担"
+   ],
+   "answer_letter": "B",
+   "answer_word": "享受"
+  },
+  {
+   "paper": "H51330",
+   "number": 46,
+   "words": [
+    "出示",
+    "值得",
+    "显示",
+    "显得"
+   ],
+   "answer_letter": "D",
+   "answer_word": "显得"
+  },
+  {
+   "paper": "H51330",
+   "number": 47,
+   "words": [
+    "要不",
+    "以及",
+    "不然",
+    "从此"
+   ],
+   "answer_letter": "B",
+   "answer_word": "以及"
+  },
+  {
+   "paper": "H51330",
+   "number": 48,
+   "words": [
+    "支",
+    "阵",
+    "朵",
+    "颗"
+   ],
+   "answer_letter": "D",
+   "answer_word": "颗"
+  },
+  {
+   "paper": "H51330",
+   "number": 49,
+   "words": [
+    "突出",
+    "体现",
+    "提倡",
+    "发挥"
+   ],
+   "answer_letter": "A",
+   "answer_word": "突出"
+  },
+  {
+   "paper": "H51330",
+   "number": 51,
+   "words": [
+    "违反",
+    "威胁",
+    "妨碍",
+    "阻止"
+   ],
+   "answer_letter": "C",
+   "answer_word": "妨碍"
+  },
+  {
+   "paper": "H51330",
+   "number": 52,
+   "words": [
+    "故意",
+    "专门",
+    "合法",
+    "自动"
+   ],
+   "answer_letter": "B",
+   "answer_word": "专门"
+  },
+  {
+   "paper": "H51330",
+   "number": 53,
+   "words": [
+    "传播",
+    "休闲",
+    "交往",
+    "开发"
+   ],
+   "answer_letter": "B",
+   "answer_word": "休闲"
+  },
+  {
+   "paper": "H51330",
+   "number": 54,
+   "words": [
+    "愿望",
+    "风俗",
+    "秘密",
+    "事实"
+   ],
+   "answer_letter": "A",
+   "answer_word": "愿望"
+  },
+  {
+   "paper": "H51330",
+   "number": 56,
+   "words": [
+    "相似",
+    "密切",
+    "相关",
+    "整齐"
+   ],
+   "answer_letter": "A",
+   "answer_word": "相似"
+  },
+  {
+   "paper": "H51330",
+   "number": 57,
+   "words": [
+    "观点",
+    "核心",
+    "话题",
+    "道理"
+   ],
+   "answer_letter": "C",
+   "answer_word": "话题"
+  },
+  {
+   "paper": "H51330",
+   "number": 59,
+   "words": [
+    "归纳",
+    "推辞",
+    "躲藏",
+    "批准"
+   ],
+   "answer_letter": "B",
+   "answer_word": "推辞"
+  },
+  {
+   "paper": "H51330",
+   "number": 60,
+   "words": [
+    "照常",
+    "忽然",
+    "反复",
+    "强烈"
+   ],
+   "answer_letter": "D",
+   "answer_word": "强烈"
+  },
+  {
+   "paper": "H51332",
+   "number": 46,
+   "words": [
+    "感想",
+    "感动",
+    "判断",
+    "成果"
+   ],
+   "answer_letter": "C",
+   "answer_word": "判断"
+  },
+  {
+   "paper": "H51332",
+   "number": 47,
+   "words": [
+    "从事",
+    "接受",
+    "担任",
+    "接待"
+   ],
+   "answer_letter": "B",
+   "answer_word": "接受"
+  },
+  {
+   "paper": "H51332",
+   "number": 48,
+   "words": [
+    "性质",
+    "程度",
+    "规格",
+    "角度"
+   ],
+   "answer_letter": "B",
+   "answer_word": "程度"
+  },
+  {
+   "paper": "H51332",
+   "number": 50,
+   "words": [
+    "否认",
+    "面对",
+    "否定",
+    "面临"
+   ],
+   "answer_letter": "B",
+   "answer_word": "面对"
+  },
+  {
+   "paper": "H51332",
+   "number": 51,
+   "words": [
+    "风格",
+    "前途",
+    "爱心",
+    "力量"
+   ],
+   "answer_letter": "C",
+   "answer_word": "爱心"
+  },
+  {
+   "paper": "H51332",
+   "number": 52,
+   "words": [
+    "度过",
+    "相处",
+    "利用",
+    "交往"
+   ],
+   "answer_letter": "B",
+   "answer_word": "相处"
+  },
+  {
+   "paper": "H51332",
+   "number": 54,
+   "words": [
+    "玩具",
+    "零件",
+    "硬件",
+    "工具"
+   ],
+   "answer_letter": "D",
+   "answer_word": "工具"
+  },
+  {
+   "paper": "H51332",
+   "number": 55,
+   "words": [
+    "根本",
+    "总共",
+    "一律",
+    "基本"
+   ],
+   "answer_letter": "D",
+   "answer_word": "基本"
+  },
+  {
+   "paper": "H51332",
+   "number": 56,
+   "words": [
+    "浓",
+    "正",
+    "深",
+    "嫩"
+   ],
+   "answer_letter": "C",
+   "answer_word": "深"
+  },
+  {
+   "paper": "H51332",
+   "number": 57,
+   "words": [
+    "不然",
+    "要不",
+    "何况",
+    "假如"
+   ],
+   "answer_letter": "D",
+   "answer_word": "假如"
+  },
+  {
+   "paper": "H51332",
+   "number": 59,
+   "words": [
+    "赞美",
+    "微笑",
+    "情绪",
+    "决心"
+   ],
+   "answer_letter": "B",
+   "answer_word": "微笑"
+  },
+  {
+   "paper": "H51332",
+   "number": 60,
+   "words": [
+    "生长",
+    "冒险",
+    "流传",
+    "收获"
+   ],
+   "answer_letter": "D",
+   "answer_word": "收获"
+  }
+ ],
+ "merged_groups": [
+  {
+   "words": [
+    "带",
+    "戴",
+    "挂",
+    "穿"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 46,
+     "answer_word": "戴"
+    }
+   ]
+  },
+  {
+   "words": [
+    "头发",
+    "皮肤",
+    "胳膊",
+    "身体"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 47,
+     "answer_word": "皮肤"
+    }
+   ]
+  },
+  {
+   "words": [
+    "充满",
+    "包括",
+    "实现",
+    "形成"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 48,
+     "answer_word": "充满"
+    }
+   ]
+  },
+  {
+   "words": [
+    "办法",
+    "意思",
+    "方式",
+    "能力"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 49,
+     "answer_word": "办法"
+    }
+   ]
+  },
+  {
+   "words": [
+    "好像",
+    "相似",
+    "相同",
+    "表示"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 50,
+     "answer_word": "好像"
+    }
+   ]
+  },
+  {
+   "words": [
+    "平静",
+    "担心",
+    "生气",
+    "着急"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 51,
+     "answer_word": "生气"
+    }
+   ]
+  },
+  {
+   "words": [
+    "允许",
+    "反对",
+    "注意",
+    "赞成"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 54,
+     "answer_word": "赞成"
+    }
+   ]
+  },
+  {
+   "words": [
+    "相信",
+    "确认",
+    "笑话",
+    "考虑"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 55,
+     "answer_word": "笑话"
+    }
+   ]
+  },
+  {
+   "words": [
+    "到达",
+    "努力",
+    "发展",
+    "成功"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 56,
+     "answer_word": "成功"
+    }
+   ]
+  },
+  {
+   "words": [
+    "想像",
+    "旅游",
+    "欣赏",
+    "追求"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 57,
+     "answer_word": "欣赏"
+    }
+   ]
+  },
+  {
+   "words": [
+    "兴奋",
+    "幸运",
+    "热情",
+    "疲劳"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 59,
+     "answer_word": "幸运"
+    }
+   ]
+  },
+  {
+   "words": [
+    "交谈",
+    "休息",
+    "理解",
+    "等待"
+   ],
+   "sources": [
+    {
+     "paper": "H51001",
+     "number": 60,
+     "answer_word": "等待"
+    }
+   ]
+  },
+  {
+   "words": [
+    "互相",
+    "仍然",
+    "分别",
+    "反复"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 46,
+     "answer_word": "分别"
+    }
+   ]
+  },
+  {
+   "words": [
+    "现象",
+    "规则",
+    "道理",
+    "项目"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 47,
+     "answer_word": "现象"
+    }
+   ]
+  },
+  {
+   "words": [
+    "抽屉",
+    "物质",
+    "粮食",
+    "肚子"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 48,
+     "answer_word": "肚子"
+    }
+   ]
+  },
+  {
+   "words": [
+    "幻想",
+    "思考",
+    "想像",
+    "观察"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 49,
+     "answer_word": "思考"
+    },
+    {
+     "paper": "H51003",
+     "number": 49,
+     "answer_word": "思考"
+    }
+   ]
+  },
+  {
+   "words": [
+    "保持",
+    "包含",
+    "表现",
+    "采取"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 50,
+     "answer_word": "包含"
+    },
+    {
+     "paper": "H51003",
+     "number": 50,
+     "answer_word": "包含"
+    }
+   ]
+  },
+  {
+   "words": [
+    "参考",
+    "承担",
+    "逃避",
+    "面临"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 52,
+     "answer_word": "面临"
+    },
+    {
+     "paper": "H51003",
+     "number": 52,
+     "answer_word": "面临"
+    }
+   ]
+  },
+  {
+   "words": [
+    "忍不住",
+    "怪不得",
+    "舍不得",
+    "说不定"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 53,
+     "answer_word": "忍不住"
+    }
+   ]
+  },
+  {
+   "words": [
+    "全面",
+    "完整",
+    "总共",
+    "整个"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 54,
+     "answer_word": "整个"
+    }
+   ]
+  },
+  {
+   "words": [
+    "原则",
+    "情绪",
+    "愿望",
+    "运气"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 55,
+     "answer_word": "情绪"
+    }
+   ]
+  },
+  {
+   "words": [
+    "掌握",
+    "控制",
+    "迎接",
+    "阻止"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 57,
+     "answer_word": "迎接"
+    }
+   ]
+  },
+  {
+   "words": [
+    "合同",
+    "执照",
+    "支票",
+    "文件"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 59,
+     "answer_word": "执照"
+    }
+   ]
+  },
+  {
+   "words": [
+    "抢",
+    "滚",
+    "瞧",
+    "逃"
+   ],
+   "sources": [
+    {
+     "paper": "H51002",
+     "number": 60,
+     "answer_word": "逃"
+    }
+   ]
+  },
+  {
+   "words": [
+    "启发",
+    "强调",
+    "忽视",
+    "欣赏"
+   ],
+   "sources": [
+    {
+     "paper": "H51003",
+     "number": 46,
+     "answer_word": "欣赏"
+    }
+   ]
+  },
+  {
+   "words": [
+    "临时",
+    "同时",
+    "暂时",
+    "随时"
+   ],
+   "sources": [
+    {
+     "paper": "H51003",
+     "number": 47,
+     "answer_word": "同时"
+    }
+   ]
+  },
+  {
+   "words": [
+    "不然",
+    "何况",
+    "假如",
+    "毕竟",
+    "要不"
+   ],
+   "sources": [
+    {
+     "paper": "H51003",
+     "number": 48,
+     "answer_word": "假如"
+    },
+    {
+     "paper": "H51332",
+     "number": 57,
+     "answer_word": "假如"
+    }
+   ]
+  },
+  {
+   "words": [
+    "确认",
+    "称赞",
+    "询问",
+    "轻视"
+   ],
+   "sources": [
+    {
+     "paper": "H51003",
+     "number": 54,
+     "answer_word": "称赞"
+    },
+    {
+     "paper": "H51004",
+     "number": 54,
+     "answer_word": "称赞"
+    }
+   ]
+  },
+  {
+   "words": [
+    "分别",
+    "始终",
+    "特意",
+    "逐步"
+   ],
+   "sources": [
+    {
+     "paper": "H51003",
+     "number": 55,
+     "answer_word": "特意"
+    },
+    {
+     "paper": "H51004",
+     "number": 55,
+     "answer_word": "特意"
+    }
+   ]
+  },
+  {
+   "words": [
+    "不要紧",
+    "专心",
+    "了不起",
+    "意外"
+   ],
+   "sources": [
+    {
+     "paper": "H51003",
+     "number": 56,
+     "answer_word": "了不起"
+    },
+    {
+     "paper": "H51004",
+     "number": 56,
+     "answer_word": "了不起"
+    }
+   ]
+  },
+  {
+   "words": [
+    "事先",
+    "以来",
+    "未来",
+    "过去"
+   ],
+   "sources": [
+    {
+     "paper": "H51003",
+     "number": 57,
+     "answer_word": "未来"
+    }
+   ]
+  },
+  {
+   "words": [
+    "所谓",
+    "相似",
+    "相对",
+    "神秘"
+   ],
+   "sources": [
+    {
+     "paper": "H51003",
+     "number": 59,
+     "answer_word": "所谓"
+    }
+   ]
+  },
+  {
+   "words": [
+    "利用",
+    "应付",
+    "批准",
+    "达到"
+   ],
+   "sources": [
+    {
+     "paper": "H51003",
+     "number": 60,
+     "answer_word": "应付"
+    }
+   ]
+  },
+  {
+   "words": [
+    "价值",
+    "前途",
+    "命运",
+    "记忆"
+   ],
+   "sources": [
+    {
+     "paper": "H51004",
+     "number": 46,
+     "answer_word": "前途"
+    }
+   ]
+  },
+  {
+   "words": [
+    "倒霉",
+    "善良",
+    "糟糕",
+    "谨慎"
+   ],
+   "sources": [
+    {
+     "paper": "H51004",
+     "number": 47,
+     "answer_word": "倒霉"
+    }
+   ]
+  },
+  {
+   "words": [
+    "坚强",
+    "宝贵",
+    "明显",
+    "熟练"
+   ],
+   "sources": [
+    {
+     "paper": "H51004",
+     "number": 48,
+     "answer_word": "坚强"
+    }
+   ]
+  },
+  {
+   "words": [
+    "委屈",
+    "慌张",
+    "沉默",
+    "犹豫"
+   ],
+   "sources": [
+    {
+     "paper": "H51004",
+     "number": 49,
+     "answer_word": "慌张"
+    }
+   ]
+  },
+  {
+   "words": [
+    "专业",
+    "完美",
+    "成熟",
+    "时髦"
+   ],
+   "sources": [
+    {
+     "paper": "H51004",
+     "number": 50,
+     "answer_word": "专业"
+    }
+   ]
+  },
+  {
+   "words": [
+    "心理",
+    "思想",
+    "情绪",
+    "逻辑"
+   ],
+   "sources": [
+    {
+     "paper": "H51004",
+     "number": 51,
+     "answer_word": "情绪"
+    }
+   ]
+  },
+  {
+   "words": [
+    "具备",
+    "发表",
+    "显示",
+    "领导"
+   ],
+   "sources": [
+    {
+     "paper": "H51004",
+     "number": 57,
+     "answer_word": "显示"
+    }
+   ]
+  },
+  {
+   "words": [
+    "奇迹",
+    "情景",
+    "景色",
+    "背景"
+   ],
+   "sources": [
+    {
+     "paper": "H51004",
+     "number": 58,
+     "answer_word": "情景"
+    }
+   ]
+  },
+  {
+   "words": [
+    "咨询",
+    "批准",
+    "接待",
+    "说服"
+   ],
+   "sources": [
+    {
+     "paper": "H51004",
+     "number": 59,
+     "answer_word": "接待"
+    }
+   ]
+  },
+  {
+   "words": [
+    "始终",
+    "急忙",
+    "未必",
+    "陆续"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 46,
+     "answer_word": "急忙"
+    }
+   ]
+  },
+  {
+   "words": [
+    "岸",
+    "弯",
+    "池子",
+    "田野"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 47,
+     "answer_word": "岸"
+    }
+   ]
+  },
+  {
+   "words": [
+    "业务",
+    "事物",
+    "状况",
+    "精力"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 48,
+     "answer_word": "事物"
+    }
+   ]
+  },
+  {
+   "words": [
+    "专心",
+    "周到",
+    "沉默",
+    "谨慎"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 49,
+     "answer_word": "谨慎"
+    }
+   ]
+  },
+  {
+   "words": [
+    "否定",
+    "承认",
+    "珍惜",
+    "确定"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 50,
+     "answer_word": "否定"
+    }
+   ]
+  },
+  {
+   "words": [
+    "依然",
+    "居然",
+    "显然",
+    "竟然"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 51,
+     "answer_word": "显然"
+    }
+   ]
+  },
+  {
+   "words": [
+    "一律",
+    "反正",
+    "基本",
+    "总共",
+    "根本",
+    "毕竟"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 53,
+     "answer_word": "基本"
+    },
+    {
+     "paper": "H51332",
+     "number": 55,
+     "answer_word": "基本"
+    }
+   ]
+  },
+  {
+   "words": [
+    "促使",
+    "处理",
+    "推荐",
+    "询问"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 55,
+     "answer_word": "询问"
+    }
+   ]
+  },
+  {
+   "words": [
+    "传染",
+    "修改",
+    "恢复",
+    "统一"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 56,
+     "answer_word": "恢复"
+    }
+   ]
+  },
+  {
+   "words": [
+    "抽象",
+    "表现",
+    "表面",
+    "道理"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 57,
+     "answer_word": "表面"
+    }
+   ]
+  },
+  {
+   "words": [
+    "再三",
+    "更加",
+    "片面",
+    "简直"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 59,
+     "answer_word": "更加"
+    }
+   ]
+  },
+  {
+   "words": [
+    "后果",
+    "幻想",
+    "智慧",
+    "魅力"
+   ],
+   "sources": [
+    {
+     "paper": "H51005",
+     "number": 60,
+     "answer_word": "智慧"
+    }
+   ]
+  },
+  {
+   "words": [
+    "消失",
+    "消灭",
+    "缓解",
+    "降低"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 46,
+     "answer_word": "缓解"
+    }
+   ]
+  },
+  {
+   "words": [
+    "原来",
+    "合法",
+    "正确",
+    "真实"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 47,
+     "answer_word": "正确"
+    }
+   ]
+  },
+  {
+   "words": [
+    "情绪",
+    "表情",
+    "观点",
+    "语气"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 48,
+     "answer_word": "情绪"
+    }
+   ]
+  },
+  {
+   "words": [
+    "不如",
+    "例如",
+    "好像",
+    "据说"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 49,
+     "answer_word": "好像"
+    }
+   ]
+  },
+  {
+   "words": [
+    "反复",
+    "彻底",
+    "绝对",
+    "陆续"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 50,
+     "answer_word": "彻底"
+    }
+   ]
+  },
+  {
+   "words": [
+    "勇气",
+    "感想",
+    "行为",
+    "风格"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 52,
+     "answer_word": "勇气"
+    }
+   ]
+  },
+  {
+   "words": [
+    "凡是",
+    "总算",
+    "根本",
+    "格外"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 53,
+     "answer_word": "根本"
+    }
+   ]
+  },
+  {
+   "words": [
+    "对于",
+    "按照",
+    "自从",
+    "通过"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 54,
+     "answer_word": "按照"
+    }
+   ]
+  },
+  {
+   "words": [
+    "位置",
+    "号码",
+    "形势",
+    "形象"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 55,
+     "answer_word": "号码"
+    }
+   ]
+  },
+  {
+   "words": [
+    "协调",
+    "执行",
+    "组织",
+    "陪伴"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 57,
+     "answer_word": "陪伴"
+    }
+   ]
+  },
+  {
+   "words": [
+    "明显",
+    "正式",
+    "直接",
+    "紧急"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 59,
+     "answer_word": "直接"
+    }
+   ]
+  },
+  {
+   "words": [
+    "命令",
+    "欣赏",
+    "称赞",
+    "答应"
+   ],
+   "sources": [
+    {
+     "paper": "H51327",
+     "number": 60,
+     "answer_word": "称赞"
+    }
+   ]
+  },
+  {
+   "words": [
+    "制作",
+    "制定",
+    "建立",
+    "形成"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 46,
+     "answer_word": "制作"
+    }
+   ]
+  },
+  {
+   "words": [
+    "广大",
+    "普通",
+    "普遍",
+    "经典"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 47,
+     "answer_word": "普遍"
+    }
+   ]
+  },
+  {
+   "words": [
+    "出现",
+    "实现",
+    "成立",
+    "构成"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 48,
+     "answer_word": "出现"
+    }
+   ]
+  },
+  {
+   "words": [
+    "强烈",
+    "彻底",
+    "深刻",
+    "激烈"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 49,
+     "answer_word": "激烈"
+    }
+   ]
+  },
+  {
+   "words": [
+    "一致",
+    "唯一",
+    "照常",
+    "特意"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 51,
+     "answer_word": "一致"
+    }
+   ]
+  },
+  {
+   "words": [
+    "保持",
+    "积累",
+    "获得",
+    "达到"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 52,
+     "answer_word": "获得"
+    }
+   ]
+  },
+  {
+   "words": [
+    "成分",
+    "比例",
+    "结构",
+    "规模"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 53,
+     "answer_word": "结构"
+    }
+   ]
+  },
+  {
+   "words": [
+    "光滑",
+    "寒冷",
+    "模糊",
+    "清淡"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 54,
+     "answer_word": "寒冷"
+    }
+   ]
+  },
+  {
+   "words": [
+    "争取",
+    "克服",
+    "控制",
+    "节省"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 56,
+     "answer_word": "节省"
+    }
+   ]
+  },
+  {
+   "words": [
+    "举",
+    "提",
+    "插",
+    "摆"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 57,
+     "answer_word": "摆"
+    }
+   ]
+  },
+  {
+   "words": [
+    "均匀",
+    "多余",
+    "诚实",
+    "超级"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 59,
+     "answer_word": "多余"
+    }
+   ]
+  },
+  {
+   "words": [
+    "享受",
+    "承受",
+    "承担",
+    "掌握"
+   ],
+   "sources": [
+    {
+     "paper": "H51328",
+     "number": 60,
+     "answer_word": "享受"
+    }
+   ]
+  },
+  {
+   "words": [
+    "值得",
+    "出示",
+    "显得",
+    "显示"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 46,
+     "answer_word": "显得"
+    }
+   ]
+  },
+  {
+   "words": [
+    "不然",
+    "从此",
+    "以及",
+    "要不"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 47,
+     "answer_word": "以及"
+    }
+   ]
+  },
+  {
+   "words": [
+    "支",
+    "朵",
+    "阵",
+    "颗"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 48,
+     "answer_word": "颗"
+    }
+   ]
+  },
+  {
+   "words": [
+    "体现",
+    "发挥",
+    "提倡",
+    "突出"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 49,
+     "answer_word": "突出"
+    }
+   ]
+  },
+  {
+   "words": [
+    "妨碍",
+    "威胁",
+    "违反",
+    "阻止"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 51,
+     "answer_word": "妨碍"
+    }
+   ]
+  },
+  {
+   "words": [
+    "专门",
+    "合法",
+    "故意",
+    "自动"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 52,
+     "answer_word": "专门"
+    }
+   ]
+  },
+  {
+   "words": [
+    "交往",
+    "休闲",
+    "传播",
+    "开发"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 53,
+     "answer_word": "休闲"
+    }
+   ]
+  },
+  {
+   "words": [
+    "事实",
+    "愿望",
+    "秘密",
+    "风俗"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 54,
+     "answer_word": "愿望"
+    }
+   ]
+  },
+  {
+   "words": [
+    "密切",
+    "整齐",
+    "相似",
+    "相关"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 56,
+     "answer_word": "相似"
+    }
+   ]
+  },
+  {
+   "words": [
+    "核心",
+    "观点",
+    "话题",
+    "道理"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 57,
+     "answer_word": "话题"
+    }
+   ]
+  },
+  {
+   "words": [
+    "归纳",
+    "批准",
+    "推辞",
+    "躲藏"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 59,
+     "answer_word": "推辞"
+    }
+   ]
+  },
+  {
+   "words": [
+    "反复",
+    "强烈",
+    "忽然",
+    "照常"
+   ],
+   "sources": [
+    {
+     "paper": "H51330",
+     "number": 60,
+     "answer_word": "强烈"
+    }
+   ]
+  },
+  {
+   "words": [
+    "判断",
+    "感动",
+    "感想",
+    "成果"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 46,
+     "answer_word": "判断"
+    }
+   ]
+  },
+  {
+   "words": [
+    "从事",
+    "担任",
+    "接受",
+    "接待"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 47,
+     "answer_word": "接受"
+    }
+   ]
+  },
+  {
+   "words": [
+    "性质",
+    "程度",
+    "规格",
+    "角度"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 48,
+     "answer_word": "程度"
+    }
+   ]
+  },
+  {
+   "words": [
+    "否定",
+    "否认",
+    "面临",
+    "面对"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 50,
+     "answer_word": "面对"
+    }
+   ]
+  },
+  {
+   "words": [
+    "前途",
+    "力量",
+    "爱心",
+    "风格"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 51,
+     "answer_word": "爱心"
+    }
+   ]
+  },
+  {
+   "words": [
+    "交往",
+    "利用",
+    "度过",
+    "相处"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 52,
+     "answer_word": "相处"
+    }
+   ]
+  },
+  {
+   "words": [
+    "工具",
+    "玩具",
+    "硬件",
+    "零件"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 54,
+     "answer_word": "工具"
+    }
+   ]
+  },
+  {
+   "words": [
+    "嫩",
+    "正",
+    "浓",
+    "深"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 56,
+     "answer_word": "深"
+    }
+   ]
+  },
+  {
+   "words": [
+    "决心",
+    "微笑",
+    "情绪",
+    "赞美"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 59,
+     "answer_word": "微笑"
+    }
+   ]
+  },
+  {
+   "words": [
+    "冒险",
+    "收获",
+    "流传",
+    "生长"
+   ],
+   "sources": [
+    {
+     "paper": "H51332",
+     "number": 60,
+     "answer_word": "收获"
+    }
+   ]
+  }
+ ]
+}

@@ -14,7 +14,16 @@ from django.db import transaction
 
 from core.models import SynonymGroup, VocabItem
 
-DATA = Path(settings.BASE_DIR) / "data" / "exam_corpus" / "synonym_sets.json"
+# บนเซิร์ฟเวอร์ไม่มี data/exam_corpus/ (อยู่ใน .gitignore) จึงเก็บสำเนาไว้ใน data/ ด้วย
+# ค้นจากที่แรกที่เจอ — เครื่องพัฒนาใช้ต้นฉบับ เซิร์ฟเวอร์ใช้สำเนา
+CANDIDATES = [
+    Path(settings.BASE_DIR) / "data" / "exam_corpus" / "synonym_sets.json",
+    Path(settings.BASE_DIR) / "data" / "synonym_sets.json",
+]
+
+
+def _source() -> Path | None:
+    return next((p for p in CANDIDATES if p.exists()), None)
 
 
 class Command(BaseCommand):
@@ -22,11 +31,12 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **opts):
-        if not DATA.exists():
-            self.stderr.write(f"ไม่พบไฟล์ {DATA}")
+        path = _source()
+        if path is None:
+            self.stderr.write("ไม่พบไฟล์ synonym_sets.json ทั้งใน data/ และ data/exam_corpus/")
             return
 
-        doc = json.loads(DATA.read_text(encoding="utf-8"))
+        doc = json.loads(path.read_text(encoding="utf-8"))
         created = updated = 0
         for g in doc.get("merged_groups", []):
             words = g.get("words") or []

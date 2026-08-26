@@ -8,7 +8,7 @@
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
-from core.models import Question, SynonymGroup, VocabItem
+from core.models import ExamSpec, GrammarPoint, Question, SynonymGroup, VocabItem, WritingTemplate
 
 
 class Command(BaseCommand):
@@ -19,27 +19,33 @@ class Command(BaseCommand):
                             help="ข้ามการโหลดข้อสอบ (เช่นเซิร์ฟเวอร์สาธิตที่ไม่ควรมีข้อสอบลิขสิทธิ์)")
 
     def handle(self, *args, **opts):
-        self.stdout.write("1/3 คำศัพท์…")
+        self.stdout.write("1/4 คำศัพท์…")
         call_command("import_vocab")
 
         if opts["skip_exams"]:
-            self.stdout.write("2/3 ข้อสอบ — ข้ามตามที่สั่ง")
+            self.stdout.write("2/4 ข้อสอบ — ข้ามตามที่สั่ง")
         elif Question.objects.filter(source_type="official_past_paper").exists():
-            self.stdout.write("2/3 ข้อสอบ — มีอยู่แล้ว ข้าม")
+            self.stdout.write("2/4 ข้อสอบ — มีอยู่แล้ว ข้าม")
         else:
-            self.stdout.write("2/3 ข้อสอบ…")
+            self.stdout.write("2/4 ข้อสอบ…")
             call_command("loaddata", "data/exam_fixture.json")
 
-        self.stdout.write("3/3 กลุ่มคำใกล้เคียง…")
+        # ต้องมาหลังโหลดข้อสอบ — ข้อของ seed อยู่ในไฟล์ fixture อยู่แล้ว
+        # ถ้ารันก่อน loaddata จะเขียนทับกันด้วยเลข id
+        self.stdout.write("3/4 สเปกข้อสอบ · ไวยากรณ์ · เทมเพลตเรียงความ…")
+        call_command("seed_hsk5")
+
+        self.stdout.write("4/4 กลุ่มคำใกล้เคียง…")
         try:
             call_command("import_synonyms")
         except Exception:
-            # ต้องใช้ data/exam_corpus/ ซึ่งไม่ได้อยู่ในรีโป — ไม่ใช่เรื่องผิดปกติ
-            self.stdout.write("   ข้าม (ไม่มีไฟล์ต้นทางบนเครื่องนี้)")
+            self.stdout.write("   ข้าม (ไม่พบไฟล์ต้นทางบนเครื่องนี้)")
 
         self.stdout.write(self.style.SUCCESS(
             f"\nพร้อมใช้งาน — คำศัพท์ {VocabItem.objects.count()} คำ · "
-            f"ข้อสอบ {Question.objects.count()} ข้อ · กลุ่มคำ {SynonymGroup.objects.count()} กลุ่ม"
+            f"ข้อสอบ {Question.objects.count()} ข้อ · กลุ่มคำ {SynonymGroup.objects.count()} กลุ่ม · "
+            f"ไวยากรณ์ {GrammarPoint.objects.count()} · เทมเพลต {WritingTemplate.objects.count()} · "
+            f"สเปกข้อสอบ {ExamSpec.objects.count()}"
         ))
         self.stdout.write(
             "\nขั้นต่อไป:\n"
