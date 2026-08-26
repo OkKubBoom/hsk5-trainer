@@ -1,5 +1,7 @@
-{# กล่องแย้งคำแปล — ใช้ร่วมกันทุกหน้าที่แสดงข้อมูลคำศัพท์จาก AI
-   หน้าที่ include ต้องมี x-data ที่ประกาศตัวแปร report ไว้ #}
+{% comment %}
+กล่องแย้งคำแปล — ใช้ร่วมกันทุกหน้าที่แสดงข้อมูลคำศัพท์จาก AI
+หน้าที่ include ต้องมี x-data ที่ประกาศตัวแปร report ไว้
+{% endcomment %}
 <div x-show="report" x-cloak @click="report = null"
      style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30"></div>
 <div x-show="report" x-cloak @keydown.window.escape="report = null" class="report-modal">

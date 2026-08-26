@@ -1,7 +1,15 @@
 {% extends "base.html" %}{% load hsk %}
 {% block title %}เก็งข้อสอบ · HSK5 Trainer{% endblock %}
 {% block content %}
-<div x-data="{ showMeaning: true, report: null }" class="stack">
+{# ใช้คีย์เดียวกับหน้าคลังคำศัพท์ — ตั้งค่าที่หน้าไหนก็ตามไปทั้งสองหน้า #}
+<div x-data="{
+    showMeaning: JSON.parse(localStorage.getItem('vocabShowMeaning') ?? 'true'),
+    showPinyin:  JSON.parse(localStorage.getItem('vocabShowPinyin')  ?? 'true'),
+    report: null
+  }"
+     x-init="$watch('showMeaning', v => localStorage.setItem('vocabShowMeaning', v));
+           $watch('showPinyin',  v => localStorage.setItem('vocabShowPinyin', v))"
+     class="stack">
 
   <div class="stack" style="gap:6px">
     <span class="eyebrow">เก็งข้อสอบ</span>
@@ -44,6 +52,9 @@
   {% endif %}
 
   {% if is_groups %}
+    <div class="row" style="gap:14px;flex-wrap:wrap">
+      {% include "core/partials/show_toggles.html" %}
+    </div>
     <div class="stack" style="gap:10px">
       {% for g in page %}
       <div class="card flat stack" style="gap:9px">
@@ -55,7 +66,8 @@
           {% for w in g.items.all %}
             <span class="pill accent" style="font-size:.95rem;padding:5px 12px">
               <span class="zh">{{ w.hanzi }}</span>
-              <span class="mono" style="opacity:.75;font-size:.78rem">{{ w.pinyin }}</span>
+              <span class="mono" style="opacity:.75;font-size:.78rem"
+                    :class="showPinyin ? '' : 'hidden-cell'">{{ w.pinyin }}</span>
             </span>
           {% endfor %}
         </div>
@@ -74,7 +86,7 @@
   {% else %}
     <div class="row" style="gap:14px;flex-wrap:wrap">
       {% include "core/partials/found_filter.html" %}
-      <label class="row" style="gap:7px;cursor:pointer;margin-left:auto"><input type="checkbox" x-model="showMeaning"> เห็นคำแปล</label>
+      {% include "core/partials/show_toggles.html" %}
     </div>
     <div class="table-scroll">
       <table>
@@ -90,7 +102,7 @@
           <tr>
             <td class="cell-rank"><span class="{{ rank|rank_class }}">{{ rank }}</span></td>
             <td class="cell-word" data-label="คำ"><span class="zh" style="font-size:1.2rem">{{ w.hanzi }}</span></td>
-            <td class="num muted" data-label="pinyin">{{ w.pinyin }}</td>
+            <td class="num muted" data-label="pinyin"><span :class="showPinyin ? '' : 'hidden-cell'">{{ w.pinyin }}</span></td>
             <td data-label="ความหมาย"><span :class="showMeaning ? '' : 'hidden-cell'">{{ w.meaning_th|truncatechars:60 }}</span></td>
             <td data-label="พบในข้อสอบ">
               <span class="dots" title="พบใน {{ w.exam_papers_count }} จาก 9 ชุด">

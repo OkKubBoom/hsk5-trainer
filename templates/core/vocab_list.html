@@ -1,7 +1,17 @@
 {% extends "base.html" %}{% load hsk %}
 {% block title %}คลังคำศัพท์ HSK{{ level }} · HSK5 Trainer{% endblock %}
 {% block content %}
-<div x-data="{ showMeaning: true, showHanzi: true, filters: false, report: null }" class="stack">
+{# จำค่าที่เลือกไว้ข้ามหน้า — เปลี่ยนหน้าตารางแล้วไม่ต้องปิดใหม่ทุกครั้ง #}
+<div x-data="{
+    showMeaning: JSON.parse(localStorage.getItem('vocabShowMeaning') ?? 'true'),
+    showHanzi:   JSON.parse(localStorage.getItem('vocabShowHanzi')   ?? 'true'),
+    showPinyin:  JSON.parse(localStorage.getItem('vocabShowPinyin')  ?? 'true'),
+    filters: false, report: null
+  }"
+     x-init="$watch('showMeaning', v => localStorage.setItem('vocabShowMeaning', v));
+           $watch('showHanzi',   v => localStorage.setItem('vocabShowHanzi', v));
+           $watch('showPinyin',  v => localStorage.setItem('vocabShowPinyin', v))"
+     class="stack">
 
   <div class="stack" style="gap:6px">
     <span class="eyebrow">คลังคำศัพท์</span>
@@ -33,10 +43,7 @@
            href="?level={{ lv }}&sort={{ sort }}{% if query %}&q={{ query }}{% endif %}">HSK{{ lv }} <span class="mono muted">{{ n }}</span></a>
       {% endfor %}
     </div>
-    <div class="row" style="margin-left:auto;gap:14px;flex-wrap:wrap">
-      <label class="row" style="gap:7px;cursor:pointer"><input type="checkbox" x-model="showMeaning"> เห็นคำแปล</label>
-      <label class="row" style="gap:7px;cursor:pointer"><input type="checkbox" x-model="showHanzi"> เห็นตัวอักษร</label>
-    </div>
+    {% include "core/partials/show_toggles.html" with with_hanzi=True %}
   </div>
 
   <div class="row" style="gap:6px;flex-wrap:wrap">
@@ -63,7 +70,7 @@
         <tr>
           <td class="cell-rank"><span class="{{ rank|rank_class }}">{{ rank }}</span></td>
           <td class="cell-word" data-label="คำ"><span class="zh" style="font-size:1.2rem" :class="showHanzi ? '' : 'hidden-cell'">{{ w.hanzi }}</span></td>
-          <td class="num muted" data-label="pinyin">{{ w.pinyin }}</td>
+          <td class="num muted" data-label="pinyin"><span :class="showPinyin ? '' : 'hidden-cell'">{{ w.pinyin }}</span></td>
           <td data-label="ความหมาย"><span :class="showMeaning ? '' : 'hidden-cell'">{{ w.meaning_th|truncatechars:70 }}</span></td>
           <td data-label="พบในข้อสอบ">
             <span class="dots" title="พบใน {{ w.exam_papers_count }} จาก 9 ชุด">
@@ -107,7 +114,9 @@
   {% endif %}
 
   <p class="muted" style="font-size:.82rem">
-    แถบจุดคือจำนวนชุดข้อสอบ (จาก 9 ชุด) ที่พบคำนี้ · ปิดคำแปลหรือปิดตัวอักษรเพื่อทดสอบตัวเองสองทาง
+    แถบจุดคือจำนวนชุดข้อสอบ (จาก 9 ชุด) ที่พบคำนี้ ·
+    ปิดพินอินเพื่อฝึกอ่านตัวอักษรโดยไม่พึ่งตัวช่วย · ปิดคำแปลเพื่อทดสอบว่าจำความหมายได้ ·
+    ปิดตัวอักษรเพื่อฝึกย้อนจากความหมายกลับไปหาคำ
   </p>
 
   <div class="note" style="border-left-color:var(--missing)">

@@ -1,0 +1,9 @@
+{% comment %}
+สวิตช์ปิด/เปิดคอลัมน์ช่วยจำ — ต้องมีอยู่ทุกหน้าที่ผูกค่าพวกนี้
+ไม่งั้นผู้ใช้ปิดพินอินที่หน้าหนึ่ง แล้วไปอีกหน้าที่ไม่มีสวิตช์ จะเปิดกลับไม่ได้
+{% endcomment %}
+<div class="row" style="margin-left:auto;gap:14px;flex-wrap:wrap">
+  {% if with_hanzi %}<label class="row" style="gap:7px;cursor:pointer"><input type="checkbox" x-model="showHanzi"> เห็นตัวอักษร</label>{% endif %}
+  <label class="row" style="gap:7px;cursor:pointer"><input type="checkbox" x-model="showPinyin"> เห็นพินอิน</label>
+  <label class="row" style="gap:7px;cursor:pointer"><input type="checkbox" x-model="showMeaning"> เห็นคำแปล</label>
+</div>
