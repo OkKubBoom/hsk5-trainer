@@ -534,3 +534,16 @@ textarea{
   display:flex; flex-direction:column; gap:2px; padding:var(--s2);
   border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--surface);
 }
+
+/* ── ช่องรหัสผ่านที่มีปุ่มดูรหัส ── */
+.pwfield{position:relative; display:flex; align-items:center}
+.pwfield input{padding-right:calc(var(--tap) + var(--s-half))}
+.pweye{
+  position:absolute; right:2px; top:50%; transform:translateY(-50%);
+  width:var(--tap); height:var(--tap); min-height:var(--tap);
+  display:flex; align-items:center; justify-content:center;
+  border:none; background:transparent; cursor:pointer;
+  color:var(--ink-3); border-radius:var(--radius-sm);
+}
+.pweye:hover{color:var(--ink); background:var(--surface-2)}
+.pweye[aria-pressed="true"]{color:var(--accent)}

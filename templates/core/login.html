@@ -8,20 +8,74 @@
     <p class="muted">ฝึกวันละชุด ระบบเลือกให้เองว่าวันนี้ควรเจออะไร</p>
   </div>
 
-  <form method="post" class="card stack">
+  <form method="post" class="card stack" x-data="{ show: false, caps: false }">
     {% csrf_token %}
-    {% if form.errors %}
-      <div class="note" style="border-left-color:var(--missing)">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง ลองอีกครั้ง</div>
+
+    {% comment %}
+    แยกสามกรณีออกจากกัน — เดิมรวมเป็นข้อความเดียวว่า "รหัสผ่านไม่ถูกต้อง"
+    ทั้งที่บางครั้งคือลืมกรอก ซึ่งทำให้ไล่หาสาเหตุผิดทาง
+    non_field_errors = ตรวจสอบแล้วไม่ผ่าน · field errors = ยังกรอกไม่ครบ
+    {% endcomment %}
+    {% if form.username.errors or form.password.errors %}
+      <div class="note" style="border-left-color:var(--partial)">
+        {% if form.username.errors and form.password.errors %}ยังไม่ได้กรอกทั้งชื่อผู้ใช้และรหัสผ่าน
+        {% elif form.username.errors %}ยังไม่ได้กรอกชื่อผู้ใช้
+        {% else %}ยังไม่ได้กรอกรหัสผ่าน{% endif %}
+      </div>
+    {% elif form.non_field_errors %}
+      <div class="note" style="border-left-color:var(--missing)">
+        <b>ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</b> —
+        กดรูปตาท้ายช่องรหัสผ่านเพื่อดูว่าพิมพ์อะไรไป
+        และเช็กว่าชื่อผู้ใช้พิมพ์เล็กใหญ่ตรงกับตอนสร้างบัญชี (<span class="mono">Bam</span> กับ <span class="mono">bam</span> ถือว่าคนละคน)
+      </div>
     {% endif %}
+
     <div class="stack" style="gap:6px">
       <label for="id_username">ชื่อผู้ใช้</label>
       {{ form.username }}
     </div>
+
     <div class="stack" style="gap:6px">
       <label for="id_password">รหัสผ่าน</label>
-      {{ form.password }}
+      <div class="pwfield">
+        {{ form.password }}
+        <button type="button" class="pweye"
+                @click="show = !show; document.getElementById('id_password').type = show ? 'text' : 'password'"
+                :aria-pressed="show ? 'true' : 'false'"
+                :aria-label="show ? 'ซ่อนรหัสผ่าน' : 'แสดงรหัสผ่าน'"
+                :title="show ? 'ซ่อนรหัสผ่าน' : 'แสดงรหัสผ่าน'">
+          {# ตาเปิด — ตอนนี้ซ่อนอยู่ กดเพื่อดู #}
+          <svg x-show="!show" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          {# ตาขีดทับ — ตอนนี้เห็นอยู่ กดเพื่อซ่อน #}
+          <svg x-show="show" x-cloak width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M2 12s3.5-7 10-7c2 0 3.7.7 5.1 1.6"/><path d="M22 12s-3.5 7-10 7c-2 0-3.7-.7-5.1-1.6"/><path d="m3 3 18 18"/>
+          </svg>
+        </button>
+      </div>
+      {# Caps Lock ค้างคือสาเหตุที่พบบ่อยและมองไม่เห็นเลยเมื่อรหัสถูกปิดไว้ #}
+      <p x-show="caps" x-cloak class="muted" style="color:var(--partial)">
+        Caps Lock เปิดอยู่ — ตัวพิมพ์ใหญ่เล็กมีผลกับรหัสผ่าน
+      </p>
     </div>
+
     <button class="btn" type="submit">เข้าสู่ระบบ</button>
   </form>
 </div>
+
+<script>
+  // ตรวจ Caps Lock ที่ช่องรหัสผ่าน — ต้องผูกหลังจาก Alpine สร้าง scope แล้ว
+  document.addEventListener('alpine:init', () => {
+    const pw = document.getElementById('id_password');
+    if (!pw) return;
+    const update = (e) => {
+      const on = e.getModifierState && e.getModifierState('CapsLock');
+      const scope = pw.closest('form');
+      if (scope && scope._x_dataStack) scope._x_dataStack[0].caps = !!on;
+    };
+    pw.addEventListener('keydown', update);
+    pw.addEventListener('keyup', update);
+  });
+</script>
 {% endblock %}
