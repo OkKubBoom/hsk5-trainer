@@ -305,3 +305,90 @@ class WritingFeedback(TimeStamped):
 
     def __str__(self):
         return f"{self.submission} → {self.total_100}/100"
+
+
+class ReviewMode(models.TextChoices):
+    """รูปแบบการถามในโหมดทบทวนอิสระ — เรียงจากง่ายไปยาก
+
+    ขั้นที่ยากกว่าใกล้ข้อสอบจริงมากกว่า: การเห็นคำแล้วนึกความหมายออก
+    ไม่ได้แปลว่าเห็นความหมายแล้วจะนึกคำออก ซึ่งเป็นทักษะที่พาร์ทเขียนต้องใช้
+    """
+    MEANING = "meaning", "เห็นตัวอักษร → เลือกความหมาย"
+    HANZI = "hanzi", "เห็นความหมาย → เลือกตัวอักษร"
+
+
+class ReviewPhase(models.TextChoices):
+    """สองขั้นของหนึ่งรอบ — ดูก่อน แล้วค่อยทดสอบ
+
+    ขั้น 'ดู' มีอยู่เพราะการทดสอบคำที่ยังไม่ได้ทบทวนคือการ *วัดผล* ไม่ใช่การ *ฝึก*
+    ผู้เรียนต้องได้เห็นคำพร้อมความหมายก่อน แล้วจึงกดเองว่าพร้อม
+    ช่องว่างระหว่างสองขั้นนี้คือสิ่งที่ทำให้ตัวเลขความแม่นมีความหมาย
+    """
+    STUDY = "study", "กำลังดูคำ"
+    TEST = "test", "กำลังทดสอบ"
+
+
+class ReviewSession(TimeStamped):
+    """หนึ่งครั้งที่ผู้เรียนกดทบทวนเองนอกชุดฝึกรายวัน
+
+    ตั้งใจแยกจาก DrillSession และ *ไม่* เลื่อนตารางทบทวนของ SRS
+    เพราะถ้าทบทวนคำเดิมสิบรอบในวันเดียวแล้วเลื่อนตารางทุกรอบ ตัวจัดตารางจะเข้าใจว่า
+    ผู้เรียนจำแม่นแล้วทั้งที่เพิ่งเห็นไปเมื่อครู่ แล้วนัดครั้งถัดไปไกลเกินจริง
+    = การทิ้งคำนั้นโดยไม่ตั้งใจ
+
+    แต่ "ตอบผิด" ยังถูกบันทึกเข้า ErrorLog เพราะนั่นคือสัญญาณจริง
+    ชุดฝึกวันถัดไปมีโควตา 30% ให้คำที่เคยผิดอยู่แล้ว มันจะถูกหยิบไปเองอัตโนมัติ
+    """
+    learner = models.ForeignKey(
+        LearnerProfile, on_delete=models.CASCADE, related_name="review_sessions",
+        verbose_name="ผู้เรียน",
+    )
+    started_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name="เริ่ม")
+    studied_at = models.DateTimeField(null=True, blank=True, verbose_name="กดว่าจำเสร็จแล้วเมื่อ")
+    finished_at = models.DateTimeField(null=True, blank=True, verbose_name="จบ")
+
+    phase = models.CharField(
+        max_length=8, choices=ReviewPhase.choices, default=ReviewPhase.STUDY,
+        verbose_name="อยู่ขั้นไหน",
+    )
+    mode = models.CharField(
+        max_length=16, choices=ReviewMode.choices, default=ReviewMode.MEANING,
+        verbose_name="รูปแบบการถาม",
+    )
+    scope = models.JSONField(
+        default=dict, blank=True, verbose_name="เงื่อนไขที่เลือก",
+        help_text='เช่น {"tier": "fresh", "window": 7, "level": 5} — เก็บไว้ให้ย้อนดูได้ว่าทบทวนอะไรไป',
+    )
+    queue = models.JSONField(default=list, blank=True, verbose_name="คิวการ์ดที่ล็อกไว้")
+    position = models.PositiveSmallIntegerField(default=0, verbose_name="ทำถึงข้อที่")
+    answered = models.PositiveSmallIntegerField(default=0, verbose_name="ตอบไปแล้ว")
+    correct = models.PositiveSmallIntegerField(default=0, verbose_name="ถูก")
+
+    class Meta:
+        verbose_name = "ทบทวนอิสระ"
+        verbose_name_plural = "ทบทวนอิสระ"
+        ordering = ["-started_at"]
+        indexes = [models.Index(fields=["learner", "-started_at"])]
+
+    def __str__(self):
+        return f"ทบทวน {self.answered}/{len(self.queue or [])} ข้อ"
+
+    @property
+    def size(self):
+        return len(self.queue or [])
+
+    @property
+    def is_running(self):
+        return self.finished_at is None
+
+    @property
+    def in_study(self):
+        return self.finished_at is None and self.phase == ReviewPhase.STUDY
+
+    @property
+    def wrong(self):
+        return max(0, self.answered - self.correct)
+
+    @property
+    def accuracy(self):
+        return round(self.correct / self.answered * 100) if self.answered else 0

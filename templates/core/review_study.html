@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}ดูคำก่อนทดสอบ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ดูคำ {{ cards|length }} คำ{% endblock %}
+{% block content %}
+<div x-data="{ hide: false }" class="stack">
+
+  <div class="stack" style="gap:6px">
+    <span class="eyebrow">ขั้นที่ 1 จาก 2 · ดูคำ</span>
+    <h1>จำให้ได้ก่อน {{ cards|length }} คำ</h1>
+    <p class="muted">ดูจนมั่นใจแล้วค่อยกดเริ่มทดสอบ — ยังไม่มีการจับเวลาและยังไม่นับคะแนน</p>
+  </div>
+
+  <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+    <button type="button" class="btn ghost sm" style="width:auto" @click="hide = !hide">
+      <span x-text="hide ? 'เปิดความหมาย' : 'ปิดความหมายลองทดสอบตัวเอง'"></span>
+    </button>
+    <span class="muted grow" style="font-size:.82rem">ปิดความหมายเพื่อเช็กตัวเองก่อนของจริง</span>
+  </div>
+
+  <div class="studygrid">
+    {% for c in cards %}
+    <div class="scard">
+      <div class="row" style="gap:var(--s1);align-items:baseline">
+        <span class="mono muted" style="font-size:.75rem">{{ forloop.counter }}</span>
+        <span class="zh grow" style="font-size:1.6rem">{{ c.vocab.hanzi }}</span>
+        <span class="pill accent" style="font-size:.7rem">HSK{{ c.vocab.hsk_level }}</span>
+      </div>
+      <span class="mono muted" :class="hide ? 'hidden-cell' : ''">{{ c.vocab.pinyin }}</span>
+      <span :class="hide ? 'hidden-cell' : ''">{{ c.vocab.meaning_th }}</span>
+      {% if c.vocab.example_zh %}
+        <p class="zh" style="font-size:.92rem;color:var(--ink-2);margin-top:var(--s-half)">{{ c.vocab.example_zh }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="actionbar">
+    <form method="post" action="{% url 'review_begin_test' session.pk %}" style="width:100%">
+      {% csrf_token %}
+      <button class="btn block lg" type="submit">จำได้แล้ว · เริ่มทดสอบ</button>
+    </form>
+  </div>
+
+  <p class="muted" style="font-size:.82rem">
+    กดเริ่มทดสอบแล้วจะกลับมาหน้านี้ไม่ได้ — ถ้าออกกลางคันระบบจะพากลับไปที่ข้อที่ค้างไว้
+  </p>
+
+  <div class="row">
+    <a class="btn ghost sm" href="{% url 'review_home' %}" style="width:auto">เปลี่ยนกองที่จะทวน</a>
+  </div>
+</div>
+{% endblock %}

@@ -7,7 +7,7 @@
   lexicon      ExamSpec, VocabItem, SynonymGroup, GrammarPoint, WritingTemplate
   srs          Card, ReviewLog
   content      AudioClip, ItemGroup, Question, QuestionOption
-  practice     DrillSession, AnswerRecord, DailyRecord, MockExam,
+  practice     DrillSession, AnswerRecord, DailyRecord, MockExam, ReviewSession,
                DictationAttempt, WritingSubmission, WritingFeedback
   diagnostics  ErrorLog
   placement    PlacementTest, PlacementAnswer
@@ -23,7 +23,7 @@ from .content import (
 )
 from .practice import (
     AnswerRecord, DailyRecord, DictationAttempt, DrillSession,
-    MockExam, WritingFeedback, WritingSubmission,
+    MockExam, ReviewMode, ReviewPhase, ReviewSession, WritingFeedback, WritingSubmission,
 )
 from .diagnostics import ErrorLog
 from .placement import PlacementAnswer, PlacementTest
@@ -37,6 +37,7 @@ __all__ = [
     "AudioClip", "ItemGroup", "GroupKind", "Question", "QuestionType",
     "QuestionStatus", "QuestionOption", "DistractorType",
     "DrillSession", "AnswerRecord", "DailyRecord", "MockExam",
+    "ReviewSession", "ReviewMode", "ReviewPhase",
     "DictationAttempt", "WritingSubmission", "WritingFeedback",
     "ErrorLog",
     "PlacementTest", "PlacementAnswer",

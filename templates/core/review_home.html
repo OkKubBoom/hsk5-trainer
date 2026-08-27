@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %}ฝึกจำคำศัพท์ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ฝึกจำคำศัพท์{% endblock %}
+{% block content %}
+<div class="stack">
+
+  <div class="stack" style="gap:6px">
+    <span class="eyebrow">โหมดฝึกจำคำศัพท์</span>
+    <h1>ดูคำก่อน แล้วค่อยทดสอบ</h1>
+    <p class="muted">เลือกกองที่อยากทวน · ระบบจะให้ดูคำพร้อมความหมายก่อน · พร้อมแล้วค่อยกดเริ่มทดสอบ</p>
+  </div>
+
+  {% if running %}
+  <div class="card hero stack" style="gap:var(--s2)">
+    <span class="pill warn" style="align-self:flex-start">มีรอบที่ทำค้างอยู่</span>
+    {% if running.in_study %}
+      <h2>ยังอยู่ขั้นดูคำ · {{ running.size }} คำ</h2>
+      <p class="muted">กลับไปดูต่อได้ ยังไม่ได้เริ่มทดสอบ</p>
+      <a class="btn lg block" href="{% url 'review_study' running.pk %}">กลับไปดูคำต่อ</a>
+    {% else %}
+      <h2>ทดสอบไปแล้ว {{ running.answered }} / {{ running.size }} ข้อ</h2>
+      <p class="muted">กลับไปทำต่อจากข้อที่ค้างไว้ได้เลย</p>
+      <a class="btn lg block" href="{% url 'review_run' running.pk %}">ทำต่อจากข้อที่ค้าง</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if drill_pending %}
+  <div class="note warn">
+    <b>วันนี้ยังไม่ได้ทำชุดฝึกหลัก</b> — โหมดนี้ทวนได้ไม่จำกัด แต่แทนชุดฝึกรายวันไม่ได้
+    เพราะชุดหลักมีข้อสอบจริงปนและคละพาร์ทให้ด้วย
+    <a href="{% url 'drill_start' %}">ไปทำชุดฝึกวันนี้</a>
+  </div>
+  {% endif %}
+
+  {# ── วัดผลรายวัน ── #}
+  <div class="stats">
+    <div class="stat"><b>{{ stats.today_rounds }}</b><span>รอบวันนี้</span></div>
+    <div class="stat"><b>{{ stats.today_answered }}</b><span>คำที่ทดสอบวันนี้</span></div>
+    <div class="stat">
+      <b>{% if stats.today_accuracy is not None %}{{ stats.today_accuracy }}%{% else %}—{% endif %}</b>
+      <span>จำได้วันนี้</span>
+    </div>
+    <div class="stat">
+      <b>{% if stats.accuracy_recent is not None %}{{ stats.accuracy_recent }}%{% else %}—{% endif %}</b>
+      <span>เฉลี่ย 7 วัน</span>
+    </div>
+  </div>
+
+  <form method="post" action="{% url 'review_start' %}" class="stack">
+    {% csrf_token %}
+    <input type="hidden" name="tier" value="{{ tier }}">
+    <input type="hidden" name="window" value="{{ window }}">
+    <input type="hidden" name="level" value="{{ level }}">
+
+    {# ── แกน 2: ช่วงเวลา ── #}
+    <div class="card flat stack" style="gap:var(--s1)">
+      <span class="wlab">ทวนคำที่จำได้ตอนไหน</span>
+      <div class="row" style="gap:6px;flex-wrap:wrap">
+        {% for key, label in windows %}
+          <a class="pill {% if key == window %}accent{% endif %}"
+             style="text-decoration:none;{% if key != window %}border:1px solid var(--line);color:var(--ink-2){% endif %}"
+             href="?window={{ key }}{% if tier %}&tier={{ tier }}{% endif %}{% if level %}&level={{ level }}{% endif %}">{{ label }}</a>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# ── แกน 1: ระดับความแม่น ── #}
+    <div class="card flat stack" style="gap:var(--s1)">
+      <span class="wlab">ระดับความแม่น</span>
+      <div class="tiergrid">
+        {% for t in tiers %}
+          <a class="tier {% if t.key == tier %}on{% endif %} {% if not t.count %}empty{% endif %}"
+             href="?tier={{ t.key }}{% if window %}&window={{ window }}{% endif %}{% if level %}&level={{ level }}{% endif %}">
+            <span class="row" style="gap:var(--s1)">
+              <b class="grow">{{ t.label }}</b>
+              <span class="mono">{{ t.count }}</span>
+            </span>
+            <span class="muted" style="font-size:.78rem">{{ t.hint }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# ── แกน 3: ระดับ HSK ── #}
+    <div class="card flat stack" style="gap:var(--s1)">
+      <span class="wlab">ระดับ HSK</span>
+      <div class="row" style="gap:6px;flex-wrap:wrap">
+        <a class="pill {% if not level %}accent{% endif %}"
+           style="text-decoration:none;{% if level %}border:1px solid var(--line);color:var(--ink-2){% endif %}"
+           href="?{% if tier %}tier={{ tier }}&{% endif %}{% if window %}window={{ window }}{% endif %}">ทุกระดับ</a>
+        {% for lv, n in levels %}
+          <a class="pill {% if lv == level %}accent{% endif %}"
+             style="text-decoration:none;{% if lv != level %}border:1px solid var(--line);color:var(--ink-2){% endif %}"
+             href="?level={{ lv }}{% if tier %}&tier={{ tier }}{% endif %}{% if window %}&window={{ window }}{% endif %}">HSK{{ lv }} <span class="mono muted">{{ n }}</span></a>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# ── ขนาดชุด + รูปแบบการถาม ── #}
+    <div class="card flat stack" style="gap:var(--s2)">
+      <div class="stack" style="gap:var(--s1)">
+        <span class="wlab">กี่คำต่อรอบ</span>
+        <div class="row" style="gap:6px;flex-wrap:wrap">
+          {% for n in sizes %}
+          <label class="radio-chip">
+            <input type="radio" name="size" value="{{ n }}" {% if n == 20 %}checked{% endif %}> {{ n }} คำ
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="stack" style="gap:var(--s1)">
+        <span class="wlab">ถามแบบไหน</span>
+        <div class="row" style="gap:6px;flex-wrap:wrap">
+          {% for value, label in modes %}
+          <label class="radio-chip">
+            <input type="radio" name="mode" value="{{ value }}" {% if forloop.first %}checked{% endif %}> {{ label }}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="actionbar">
+      {% if available %}
+        <button class="btn block lg" type="submit">เริ่มดูคำ · มีให้ทวน {{ available }} คำ</button>
+      {% else %}
+        <span class="btn block lg" aria-disabled="true">ยังไม่มีคำที่เข้าเงื่อนไขนี้</span>
+      {% endif %}
+    </div>
+  </form>
+
+  {% if not available %}
+  <div class="card empty">
+    <h3>ยังไม่มีคำในกองนี้</h3>
+    <p class="muted">
+      โหมดนี้ทวนเฉพาะคำที่<b>เคยเจอในชุดฝึกมาแล้ว</b> — คำที่ยังไม่เคยเรียนจะไม่ถูกหยิบมา
+      เพราะการทวนสิ่งที่ยังไม่เคยเห็นไม่ใช่การทบทวน
+    </p>
+    <a class="btn ghost" href="{% url 'drill_start' %}">ไปทำชุดฝึกวันนี้ก่อน</a>
+  </div>
+  {% endif %}
+
+  <p class="muted" style="font-size:.82rem">
+    โหมดนี้ไม่เลื่อนตารางทบทวนและไม่นับใน streak โดยตั้งใจ — ทวนกี่รอบก็ได้โดยไม่ทำให้สถิติเพี้ยน
+    แต่คำที่ตอบผิดจะถูกส่งเข้าชุดฝึกวันถัดไปให้อัตโนมัติ
+  </p>
+</div>
+{% endblock %}

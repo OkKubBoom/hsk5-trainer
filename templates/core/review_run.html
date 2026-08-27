@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}ทดสอบ {{ q.index }}/{{ q.total }} · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ข้อ {{ q.index }}/{{ q.total }}{% endblock %}
+{% block content %}
+<div x-data="{ started: Date.now(), picked: null }" class="stack"
+     @keydown.window="
+       const n = ['1','2','3','4'].indexOf($event.key);
+       if (n >= 0) { const b = $el.querySelectorAll('.choices button'); if (b[n]) b[n].click(); }
+     ">
+
+  <div class="stack" style="gap:var(--s1)">
+    <div class="row">
+      <span class="eyebrow grow">ขั้นที่ 2 จาก 2 · ทดสอบ</span>
+      <span class="mono muted">ข้อ {{ q.index }} / {{ q.total }}</span>
+    </div>
+    <div class="bar" role="progressbar" aria-valuenow="{{ q.index }}" aria-valuemin="1" aria-valuemax="{{ q.total }}">
+      <div style="width:{{ progress }}%"></div>
+    </div>
+  </div>
+
+  <div id="card" class="card stack" style="gap:var(--s3)">
+    <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+      <span class="pill accent">ฝึกจำคำศัพท์</span>
+      <span class="muted">{{ q.instruction }}</span>
+    </div>
+
+    <div class="stack" style="gap:var(--s-half);align-items:center;padding:var(--s2) 0">
+      <span class="{% if q.mode == 'meaning' %}zh{% endif %}"
+            style="font-size:{% if q.mode == 'meaning' %}2.5rem{% else %}var(--t-h2){% endif %};line-height:1.6;text-align:center">{{ q.prompt }}</span>
+      {% if q.prompt_sub %}<span class="mono muted">{{ q.prompt_sub }}</span>{% endif %}
+    </div>
+
+    <div class="choices hide-when-loading">
+      {% for choice in q.choices %}
+      <form hx-post="{% url 'review_answer' session.pk %}" hx-target="#card" hx-swap="outerHTML" hx-disabled-elt="find button">
+        {% csrf_token %}
+        <input type="hidden" name="given" value="{{ choice }}">
+        <input type="hidden" name="elapsed_ms" :value="Date.now() - started">
+        <button class="choice" type="submit" @click="picked = {{ forloop.counter0 }}"
+                :class="picked === {{ forloop.counter0 }} && 'right'">
+          <span class="key">{{ forloop.counter0|add:65|stringformat:"c" }}</span>
+          <span class="{% if q.mode == 'hanzi' %}zh{% endif %} grow"
+                {% if q.mode == 'hanzi' %}style="font-size:1.3rem"{% endif %}>{{ choice }}</span>
+          <span class="htmx-indicator"><span class="spinner"></span></span>
+        </button>
+      </form>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="row" style="flex-wrap:wrap;gap:var(--s1)">
+    <a class="btn ghost sm" href="{% url 'review_home' %}" style="width:auto">หยุดไว้ก่อน</a>
+    <span class="muted grow">บันทึกทุกข้อ กลับมาต่อจากข้อนี้ได้</span>
+    <span class="muted" style="white-space:nowrap">กด <span class="mono">1</span>–<span class="mono">4</span> ตอบได้</span>
+  </div>
+</div>
+{% endblock %}

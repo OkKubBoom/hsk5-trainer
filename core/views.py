@@ -19,13 +19,14 @@ from . import grammar as grammar_engine
 from . import progress as progress_engine
 from . import writing as writing_engine
 from . import mock as mock_engine
+from . import review as review_engine
 from .accounts import create_learner
 from . import placement as placement_engine
 from . import selection, srs
 from .models import (
     Card, DrillSession, ErrorCode, ErrorLog, LearnerProfile,
     ExplanationNote, MockExam, NoteStatus, NoteVerdict, PlacementTest, Question,
-    Role, SynonymGroup, User, VocabItem,
+    ReviewMode, ReviewPhase, ReviewSession, Role, SynonymGroup, User, VocabItem,
 )
 
 DRILL_SESSION_KEY = "drill_session_id"
@@ -199,6 +200,148 @@ def drill_done(request, session_id):
     return render(request, "core/drill_done.html", {
         "nav": "home", "session": session, "wrong": wrong, "learner": learner,
         "is_today": session.started_at.date() == timezone.localdate(),
+    })
+
+
+# ── ทบทวนอิสระ ─────────────────────────────────────────────
+
+def _review_filters(request) -> dict:
+    """อ่านตัวกรองสามแกนจาก query string — ค่าที่ไม่รู้จักถือว่าไม่ได้กรอง"""
+    tier = request.GET.get("tier", "")
+    window = request.GET.get("window", "")
+    level = request.GET.get("level", "")
+    return {
+        "tier": tier if tier in review_engine.TIERS else "",
+        "window": int(window) if window.isdigit() and int(window) in review_engine.WINDOWS else 0,
+        "level": int(level) if level.isdigit() and 1 <= int(level) <= 6 else 0,
+    }
+
+
+@login_required
+def review_home(request):
+    learner = _learner(request)
+    if not learner:
+        return render(request, "core/no_profile.html", {"nav": "memorize"})
+
+    f = _review_filters(request)
+    pool = review_engine.build_pool(learner, **f)
+    drill_today = drill_engine.today_session(learner)
+
+    return render(request, "core/review_home.html", {
+        "nav": "memorize", "learner": learner,
+        "tiers": review_engine.tier_counts(learner, window=f["window"], level=f["level"]),
+        "levels": review_engine.level_counts(learner, window=f["window"]),
+        "windows": review_engine.WINDOWS.items(),
+        "sizes": review_engine.SIZE_CHOICES,
+        "modes": ReviewMode.choices,
+        "available": pool.count(),
+        "running": review_engine.running(learner),
+        "stats": review_engine.stats(learner),
+        # เตือนให้ทำชุดหลักก่อน — ทบทวนอิสระเสริมได้ แต่แทนกันไม่ได้
+        "drill_pending": drill_today is None or not drill_today.is_finished,
+        **f,
+    })
+
+
+@login_required
+@require_POST
+def review_start(request):
+    learner = _learner(request)
+    size = int(request.POST.get("size") or review_engine.DEFAULT_SIZE)
+    mode = request.POST.get("mode", ReviewMode.MEANING)
+    session = review_engine.start(
+        learner,
+        tier=request.POST.get("tier", ""),
+        window=int(request.POST.get("window") or 0),
+        level=int(request.POST.get("level") or 0),
+        size=size if size in review_engine.SIZE_CHOICES else review_engine.DEFAULT_SIZE,
+        mode=mode if mode in ReviewMode.values else ReviewMode.MEANING,
+    )
+    if session is None:
+        messages.info(request, "ยังไม่มีคำที่เข้าเงื่อนไขนี้ — ลองผ่อนตัวกรองลง")
+        return redirect("review_home")
+    return redirect("review_study", session_id=session.pk)
+
+
+@login_required
+def review_study(request, session_id):
+    """ขั้นดูคำ — เห็นทั้งชุดพร้อมความหมายก่อน แล้วกดเองว่าพร้อม"""
+    learner = _learner(request)
+    session = get_object_or_404(ReviewSession, pk=session_id, learner=learner)
+    if session.finished_at:
+        return redirect("review_done", session_id=session.pk)
+    if session.phase != ReviewPhase.STUDY:
+        # กดเริ่มทดสอบไปแล้ว ห้ามย้อนกลับมาเปิดดูเฉลย
+        return redirect("review_run", session_id=session.pk)
+
+    return render(request, "core/review_study.html", {
+        "nav": "memorize", "session": session, "learner": learner,
+        "cards": review_engine.study_cards(session),
+    })
+
+
+@login_required
+@require_POST
+def review_begin_test(request, session_id):
+    learner = _learner(request)
+    session = get_object_or_404(ReviewSession, pk=session_id, learner=learner)
+    review_engine.begin_test(session)
+    return redirect("review_run", session_id=session.pk)
+
+
+@login_required
+def review_run(request, session_id):
+    learner = _learner(request)
+    session = get_object_or_404(ReviewSession, pk=session_id, learner=learner)
+    if session.finished_at:
+        return redirect("review_done", session_id=session.pk)
+    if session.phase == ReviewPhase.STUDY:
+        return redirect("review_study", session_id=session.pk)
+
+    card = review_engine.current_card(session)
+    if card is None:
+        review_engine.finish(session)
+        return redirect("review_done", session_id=session.pk)
+
+    q = review_engine.make_question(card, session.mode, session.position + 1, session.size)
+    return render(request, "core/review_run.html", {
+        "session": session, "q": q, "learner": learner,
+        "progress": round(session.position / session.size * 100) if session.size else 0,
+    })
+
+
+@login_required
+@require_POST
+def review_answer(request, session_id):
+    learner = _learner(request)
+    session = get_object_or_404(ReviewSession, pk=session_id, learner=learner)
+    card = review_engine.current_card(session)
+    if session.finished_at or card is None:
+        return redirect("review_done", session_id=session.pk)
+
+    outcome = review_engine.submit(
+        session, card, given=request.POST.get("given", ""),
+        elapsed_ms=int(request.POST.get("elapsed_ms") or 0),
+    )
+    review_engine.advance(session)
+    return render(request, "core/partials/review_feedback.html", {
+        "outcome": outcome, "session": session,
+        "given": request.POST.get("given", ""),
+        "is_last": session.position >= session.size,
+    })
+
+
+@login_required
+def review_done(request, session_id):
+    learner = _learner(request)
+    session = get_object_or_404(ReviewSession, pk=session_id, learner=learner)
+    if not session.finished_at and session.position >= session.size:
+        review_engine.finish(session)
+    return render(request, "core/review_done.html", {
+        "nav": "memorize", "session": session, "learner": learner,
+        "tier_label": review_engine.TIERS.get(session.scope.get("tier"), {}).get("label", "ทุกระดับ"),
+        "window_label": review_engine.WINDOWS.get(session.scope.get("window", 0), ""),
+        "stats": review_engine.stats(learner),
     })
 
 

@@ -1,0 +1,65 @@
+{% comment %}
+การ์ดเฉลยของโหมดฝึกจำคำศัพท์ — สั้นกว่าของชุดฝึกหลักโดยตั้งใจ
+ที่นี่ตอบผิดคือ "ยังจำไม่ได้" ซึ่งมีทางแก้เดียวคือดูคำนั้นอีกครั้ง
+ไม่ต้องมีคำอธิบายสี่ชั้นแบบข้อสอบจริง
+{% endcomment %}
+<div id="card" x-data @keydown.window.enter="$el.querySelector('.js-next').click()" class="stack" style="gap:var(--s2)">
+
+  <div class="card stack" style="gap:var(--s2);border-width:2px;border-color:{% if outcome.is_correct %}var(--ready){% else %}var(--missing){% endif %}">
+
+    <div class="row" style="gap:var(--s1)">
+      {% if outcome.is_correct %}
+        <span class="pill ok">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+          จำได้
+        </span>
+      {% else %}
+        <span class="pill bad">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          ยังจำไม่ได้
+        </span>
+      {% endif %}
+      <span class="mono muted" style="margin-left:auto">{{ session.answered }} / {{ session.size }}</span>
+    </div>
+
+    {% if not outcome.is_correct %}
+    <div class="stack" style="gap:var(--s2)">
+      <div class="stack" style="gap:2px">
+        <span class="eyebrow">คุณเลือก</span>
+        <span style="text-decoration:line-through;color:var(--ink-3)">{{ given }}</span>
+      </div>
+      <div class="stack" style="gap:2px">
+        <span class="eyebrow">คำตอบที่ถูก</span>
+        <span style="color:var(--ready);font-weight:500">{{ outcome.correct_answer }}</span>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">
+      <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+        <span class="zh" style="font-size:var(--t-h2)">{{ outcome.vocab.hanzi }}</span>
+        <span class="mono muted">{{ outcome.vocab.pinyin }}</span>
+        <span class="pill accent" style="margin-left:auto">HSK{{ outcome.vocab.hsk_level }}</span>
+      </div>
+      <span>{{ outcome.vocab.meaning_th }}</span>
+      {% if outcome.vocab.example_zh %}
+        <p class="zh" style="font-size:var(--t-lead)">{{ outcome.vocab.example_zh }}</p>
+        {% if outcome.vocab.example_th %}<p class="muted">{{ outcome.vocab.example_th }}</p>{% endif %}
+      {% endif %}
+    </div>
+
+    {% if not outcome.is_correct %}
+    <div class="note warn">
+      คำนี้ถูกส่งเข้าชุดฝึกวันถัดไปแล้ว — ระบบจะเอากลับมาถามเองโดยไม่ต้องจำว่าคำไหนพลาด
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="actionbar">
+    <a class="btn block js-next" href="{% if is_last %}{% url 'review_done' session.pk %}{% else %}{% url 'review_run' session.pk %}{% endif %}">
+      {% if is_last %}ดูสรุปรอบนี้{% else %}คำต่อไป{% endif %}
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+    <span class="muted" style="white-space:nowrap">Enter</span>
+  </div>
+</div>

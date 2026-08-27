@@ -19,6 +19,14 @@ urlpatterns = [
     path("drill/answer/", views.drill_answer, name="drill_answer"),
     path("drill/<int:session_id>/done/", views.drill_done, name="drill_done"),
 
+    path("review/", views.review_home, name="review_home"),
+    path("review/start/", views.review_start, name="review_start"),
+    path("review/<int:session_id>/study/", views.review_study, name="review_study"),
+    path("review/<int:session_id>/begin/", views.review_begin_test, name="review_begin_test"),
+    path("review/<int:session_id>/", views.review_run, name="review_run"),
+    path("review/<int:session_id>/answer/", views.review_answer, name="review_answer"),
+    path("review/<int:session_id>/done/", views.review_done, name="review_done"),
+
     path("history/", views.history, name="history"),
     path("vocab/", views.vocab_list, name="vocab_list"),
     path("predict/", views.predict, name="predict"),

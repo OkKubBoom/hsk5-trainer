@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}สรุปรอบทบทวน · HSK5 Trainer{% endblock %}
+{% block mobile_title %}สรุปรอบทบทวน{% endblock %}
+{% block content %}
+<div class="stack">
+
+  <div class="stack" style="gap:6px">
+    <span class="eyebrow">จบรอบแล้ว</span>
+    <h1>จำได้ {{ session.correct }} จาก {{ session.answered }} คำ</h1>
+    <p class="muted">
+      {{ tier_label }}{% if window_label %} · {{ window_label }}{% endif %} ·
+      {{ session.get_mode_display }}
+    </p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>{{ session.accuracy }}%</b><span>ความแม่นรอบนี้</span></div>
+    <div class="stat"><b>{{ session.correct }}</b><span>จำได้</span></div>
+    <div class="stat"><b>{{ session.wrong }}</b><span>ยังจำไม่ได้</span></div>
+  </div>
+
+  {% if session.accuracy >= 90 %}
+    <div class="note">
+      <b>แม่นแล้วสำหรับกองนี้</b> — ลองเปลี่ยนไปกองที่ยากขึ้น หรือสลับเป็น
+      "เห็นความหมาย → เลือกตัวอักษร" ซึ่งเป็นทิศทางที่พาร์ทเขียนต้องใช้
+    </div>
+  {% elif session.accuracy >= 60 %}
+    <div class="note warn">
+      <b>ยังไม่แน่น</b> — กองนี้ควรทวนซ้ำอีกรอบวันพรุ่งนี้ ไม่ใช่วันนี้
+      เพราะทวนซ้ำทันทีวัดได้แค่ความจำระยะสั้น
+    </div>
+  {% else %}
+    <div class="note" style="border-left-color:var(--missing)">
+      <b>กองนี้ยังไม่พร้อม</b> — ลองลดเหลือ 10 คำต่อรอบ แล้วอยู่ที่ขั้นดูคำให้นานขึ้น
+      จำน้อยแต่แม่นดีกว่าจำเยอะแล้วลืมหมด
+    </div>
+  {% endif %}
+
+  {# ── วัดผลรายวัน ── #}
+  <div class="card flat stack" style="gap:var(--s1)">
+    <span class="wlab">รวมวันนี้</span>
+    <div class="stats">
+      <div class="stat"><b>{{ stats.today_rounds }}</b><span>รอบ</span></div>
+      <div class="stat"><b>{{ stats.today_answered }}</b><span>คำที่ทดสอบ</span></div>
+      <div class="stat">
+        <b>{% if stats.today_accuracy is not None %}{{ stats.today_accuracy }}%{% else %}—{% endif %}</b>
+        <span>จำได้เฉลี่ย</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actionbar">
+    <a class="btn block" href="{% url 'review_home' %}">ทวนกองต่อไป</a>
+    <a class="btn ghost" href="{% url 'home' %}" style="width:auto;white-space:nowrap">กลับหน้าแรก</a>
+  </div>
+
+  <p class="muted" style="font-size:.82rem">
+    ตัวเลขในหน้านี้แยกจากสถิติหลักโดยตั้งใจ — ทวนกี่รอบก็ได้โดยไม่ทำให้ความแม่นของชุดฝึกรายวันเพี้ยน
+    ส่วนคำที่ยังจำไม่ได้ถูกส่งเข้าชุดฝึกวันถัดไปให้แล้ว
+  </p>
+</div>
+{% endblock %}
