@@ -79,6 +79,9 @@ a{color:var(--accent)}
   border-right:1px solid var(--line); background:var(--surface);
   padding:var(--s3) var(--s2); display:flex; flex-direction:column; gap:var(--s3);
   position:sticky; top:0; height:100vh;
+  /* จอเตี้ยหรือเมนูยาว เนื้อหาท้ายแถบจะตกขอบและกดไม่ได้เลย
+     โดยเฉพาะกล่องผู้ใช้กับปุ่มออกจากระบบซึ่งอยู่ล่างสุด */
+  overflow-y:auto; overscroll-behavior:contain;
 }
 .brand{
   display:flex; align-items:center; gap:var(--s1); text-decoration:none; color:var(--ink);
@@ -560,3 +563,16 @@ textarea{
 .passage .blank{border-radius:4px; padding:0 2px; font-weight:600}
 .passage .blank.now{background:var(--accent-soft); color:var(--accent-ink); box-shadow:0 0 0 2px var(--accent)}
 .passage .blank.other{color:var(--ink-3); opacity:.55}
+
+/* ── ป้ายเวอร์ชันที่กำลังให้บริการ ── */
+.verline{
+  display:flex; align-items:center; gap:var(--s1);
+  padding:var(--s-half) var(--s1);
+  font-size:0.6875rem; color:var(--ink-3); text-decoration:none;
+  border-top:1px solid var(--line);
+}
+.verline:hover{color:var(--ink-2)}
+.verdev{
+  background:var(--partial-bg); color:var(--partial);
+  border-radius:4px; padding:0 5px; font-size:0.625rem;
+}

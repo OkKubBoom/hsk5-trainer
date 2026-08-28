@@ -122,6 +122,16 @@
           ออกจากระบบ
         </button>
       </form>
+
+      {% comment %}
+      เวอร์ชันที่กำลังให้บริการ — เอาไว้ตอบว่า "โค้ดที่แก้ขึ้นแล้วหรือยัง"
+      ต้องอยู่บนหน้าจอจริง ไม่ใช่ซ่อนใน log ที่ผู้ใช้เข้าไม่ถึง
+      {% endcomment %}
+      <a class="verline" href="{% url 'version' %}" target="_blank"
+         title="{{ app_version.message|default:'' }}">
+        <span class="mono">{{ app_version.sha }}</span>
+        {% if app_version.source == 'dev' %}<span class="verdev">เครื่องพัฒนา</span>{% endif %}
+      </a>
     </div>
   </aside>
 
@@ -195,6 +205,9 @@
       <a class="navlink" href="{% url 'predict' %}">เก็งข้อสอบ</a>
       <a class="navlink" href="{% url 'history' %}">ประวัติการฝึก</a>
       <a class="navlink" href="{% url 'docs' %}">ที่มาข้อมูล</a>
+      <a class="navlink" href="{% url 'version' %}" target="_blank">
+        เวอร์ชันที่ใช้อยู่ <span class="mono muted" style="margin-left:auto">{{ app_version.sha }}</span>
+      </a>
       <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button type="submit" class="navlink" style="width:100%;border:none;background:transparent;font-family:inherit;cursor:pointer">ออกจากระบบ</button>

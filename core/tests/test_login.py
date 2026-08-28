@@ -52,3 +52,26 @@ class LoginTests(TestCase):
         res = self.client.get(reverse("login"))
         self.assertContains(res, "pweye")
         self.assertContains(res, "แสดงรหัสผ่าน")
+
+
+class VersionTests(TestCase):
+    """เวอร์ชันที่ให้บริการ — ต้องเช็คได้จากมือถือโดยไม่ต้องล็อกอิน"""
+
+    def test_เปิดดูได้โดยไม่ต้องล็อกอิน(self):
+        """ประโยชน์หลักคือเช็คตอน deploy ว่าโค้ดขึ้นหรือยัง ต้องทำได้ทันที"""
+        res = self.client.get(reverse("version"))
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertIn("commit", data)
+        self.assertIn("started_at", data)
+
+    def test_บอกด้วยว่าเป็นเครื่องพัฒนาหรือเซิร์ฟเวอร์(self):
+        """ถ้าแยกไม่ออก จะเผลอคิดว่ากำลังดูของจริงทั้งที่ดูของในเครื่อง"""
+        self.assertIn(self.client.get(reverse("version")).json()["source"],
+                      ("dev", "server", "unknown"))
+
+    def test_ขึ้นบนหน้าเว็บด้วยไม่ใช่มีแค่หน้า_json(self):
+        create_learner(username="ver", password="passpass1",
+                       exam_date=timezone.localdate() + timedelta(days=30))
+        self.client.login(username="ver", password="passpass1")
+        self.assertContains(self.client.get("/"), "verline")

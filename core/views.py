@@ -21,6 +21,7 @@ from . import writing as writing_engine
 from . import mock as mock_engine
 from . import reading as reading_engine
 from . import review as review_engine
+from . import version as version_info
 from .accounts import create_learner
 from . import placement as placement_engine
 from . import selection, srs
@@ -31,6 +32,16 @@ from .models import (
 )
 
 DRILL_SESSION_KEY = "drill_session_id"
+
+
+def version(request):
+    """เวอร์ชันที่กำลังให้บริการ — เปิดได้โดยไม่ต้องล็อกอิน
+
+    ตั้งใจไม่บังคับล็อกอิน เพราะประโยชน์หลักคือเช็คตอน deploy ว่าโค้ดขึ้นหรือยัง
+    ซึ่งต้องทำได้เร็วจากมือถือ และข้อมูลในนี้ไม่มีอะไรเป็นความลับ
+    """
+    from django.http import JsonResponse
+    return JsonResponse(version_info.as_dict(), json_dumps_params={"ensure_ascii": False})
 
 
 def _learner(request) -> LearnerProfile | None:
