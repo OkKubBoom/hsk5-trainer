@@ -24,7 +24,7 @@ from datetime import datetime
 from django.conf import settings
 from django.utils import timezone
 
-from . import srs
+from . import reading, srs
 from .models import Card, ErrorLog, LearnerProfile, Question, QuestionStatus
 
 
@@ -86,6 +86,43 @@ def _interleave(groups: list[list[DrillItem]], rng: random.Random) -> list[Drill
         out.append(pools[idx].pop(0))
         if not pools[idx]:
             pools.pop(idx)
+    return out
+
+
+def _cluster_groups(items: list[DrillItem]) -> list[DrillItem]:
+    """ข้อที่มาจากบทอ่านเดียวกันต้องอยู่ติดกัน
+
+    หนึ่งบทอ่านมี 3-4 คำถาม ถ้าปล่อยให้กระจายทั่วชุด ผู้เรียนต้องอ่านบทความ
+    250 ตัวอักษรเดิมซ้ำสี่รอบในชุดเดียว ทั้งเปลืองเวลาและไม่เหมือนของจริง
+    ข้อสอบจริงอ่านครั้งเดียวแล้วตอบรวด
+
+    ไม่ขัดกับหลักคละพาร์ท (interleaving) เพราะสิ่งที่ต้องคละคือ *ชนิดของโจทย์*
+    ไม่ใช่การฉีกคำถามของบทอ่านเดียวกันออกจากกัน
+    """
+    positions: dict[int, list[int]] = {}
+    for i, it in enumerate(items):
+        gid = it.question.group_id if it.question else None
+        if gid:
+            positions.setdefault(gid, []).append(i)
+
+    def order_key(index: int):
+        # เรียงตามเลขข้อในกระดาษจริง ให้ลำดับเหมือนตอนสอบ
+        return (reading.blank_number(items[index].question) or 0, items[index].question.pk)
+
+    out: list[DrillItem] = []
+    taken: set[int] = set()
+    for i, it in enumerate(items):
+        if i in taken:
+            continue
+        out.append(it)
+        taken.add(i)
+        gid = it.question.group_id if it.question else None
+        if not gid:
+            continue
+        siblings = sorted((j for j in positions[gid] if j not in taken), key=order_key)
+        for j in siblings:
+            out.append(items[j])
+            taken.add(j)
     return out
 
 
@@ -216,7 +253,7 @@ def build_daily_drill(
             used_new_vocabs.add(card.vocab_id)
             room -= 1
 
-    items = _interleave([due_items, wrong_items, new_items, filler_items], rng)
+    items = _cluster_groups(_interleave([due_items, wrong_items, new_items, filler_items], rng))
 
     return DrillPlan(
         items=items,

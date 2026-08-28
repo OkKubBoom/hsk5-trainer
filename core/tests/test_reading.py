@@ -155,3 +155,58 @@ class DrillShowsPassageTests(TestCase):
         res = self.client.get(reverse("drill_run"))
         self.assertContains(res, "一位著名的作家")
         self.assertContains(res, "根据上文")
+
+
+class ClusterTests(TestCase):
+    """ข้อจากบทอ่านเดียวกันต้องอยู่ติดกันในชุด ไม่กระจายให้อ่านซ้ำสี่รอบ"""
+
+    @classmethod
+    def setUpTestData(cls):
+        VocabItem.objects.create(hanzi="字", pinyin="zi", meaning_th="ตัวอักษร", hsk_level=5)
+        cls.learner, _ = create_learner(
+            username="kid2", password="passpass1",
+            exam_date=timezone.localdate() + timedelta(days=60),
+        )
+        cls.group = ItemGroup.objects.create(
+            kind="reading_passage", section=Section.READING,
+            passage_zh=LONG_PASSAGE, source_type=SourceType.OFFICIAL_PAST_PAPER,
+        )
+
+    def make(self, n, group=None, ref=""):
+        return add_options(Question.objects.create(
+            qtype="reading_mc", section=Section.READING, status=QuestionStatus.ACTIVE,
+            prompt_zh=f"โจทย์ {n}", answer_text="ถูก", group=group, source_ref=ref,
+            source_type=SourceType.OFFICIAL_PAST_PAPER,
+        ))
+
+    def test_ข้อบทอ่านเดียวกันมาติดกันและเรียงตามเลขข้อจริง(self):
+        from core.selection import DrillItem, _cluster_groups
+
+        a = self.make(71, self.group, "H51001 ข้อ 71")
+        b = self.make(72, self.group, "H51001 ข้อ 72")
+        c = self.make(73, self.group, "H51001 ข้อ 73")
+        other = self.make(99)
+
+        # สลับให้กระจายแบบที่ _interleave ทำจริง
+        scattered = [
+            DrillItem(source="due", question=b),
+            DrillItem(source="due", question=other),
+            DrillItem(source="due", question=c),
+            DrillItem(source="due", question=a),
+        ]
+        result = _cluster_groups(scattered)
+
+        order = [it.question.pk for it in result]
+        # b โผล่ก่อนในลิสต์เดิม จึงยึดตำแหน่งไว้ แล้วพี่น้องตามมาเรียงตามเลขข้อ 71 → 73
+        self.assertEqual(order, [b.pk, a.pk, c.pk, other.pk])
+
+    def test_ไม่ทำให้ข้อหายหรือซ้ำ(self):
+        from core.selection import DrillItem, _cluster_groups
+
+        items = [DrillItem(source="due", question=self.make(i, self.group, f"H1 ข้อ {i}"))
+                 for i in range(5)]
+        items += [DrillItem(source="new", card=Card.objects.filter(learner=self.learner).first())]
+        result = _cluster_groups(items)
+
+        self.assertEqual(len(result), len(items))
+        self.assertEqual({it.key for it in result}, {it.key for it in items})
