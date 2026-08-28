@@ -75,3 +75,9 @@ class VersionTests(TestCase):
                        exam_date=timezone.localdate() + timedelta(days=30))
         self.client.login(username="ver", password="passpass1")
         self.assertContains(self.client.get("/"), "verline")
+
+    def test_มีเลขเวอร์ชันที่คนอ่านรู้เรื่องไม่ใช่มีแค่เลข_commit(self):
+        """เลข commit บอกไม่ได้ว่าอันไหนใหม่กว่า — ต้องมีเลขเวอร์ชันคู่กัน"""
+        data = self.client.get(reverse("version")).json()
+        self.assertRegex(data["version"], r"^\d+\.\d+\.\d+$")
+        self.assertNotEqual(data["version"], "0.0.0")

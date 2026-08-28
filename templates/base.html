@@ -128,8 +128,8 @@
       ต้องอยู่บนหน้าจอจริง ไม่ใช่ซ่อนใน log ที่ผู้ใช้เข้าไม่ถึง
       {% endcomment %}
       <a class="verline" href="{% url 'version' %}" target="_blank"
-         title="{{ app_version.message|default:'' }}">
-        <span class="mono">{{ app_version.sha }}</span>
+         title="commit {{ app_version.sha }} — {{ app_version.message|default:'' }}">
+        <span>เวอร์ชัน <b class="mono">{{ app_version.release }}</b></span>
         {% if app_version.source == 'dev' %}<span class="verdev">เครื่องพัฒนา</span>{% endif %}
       </a>
     </div>
@@ -206,7 +206,7 @@
       <a class="navlink" href="{% url 'history' %}">ประวัติการฝึก</a>
       <a class="navlink" href="{% url 'docs' %}">ที่มาข้อมูล</a>
       <a class="navlink" href="{% url 'version' %}" target="_blank">
-        เวอร์ชันที่ใช้อยู่ <span class="mono muted" style="margin-left:auto">{{ app_version.sha }}</span>
+        เวอร์ชันที่ใช้อยู่ <span class="mono muted" style="margin-left:auto">{{ app_version.release }}</span>
       </a>
       <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}

@@ -16,8 +16,25 @@ from __future__ import annotations
 import os
 import subprocess
 from datetime import datetime
+from pathlib import Path
 
+from django.conf import settings
 from django.utils import timezone
+
+# เลขเวอร์ชันที่คนอ่านรู้เรื่อง อยู่ในไฟล์ VERSION ที่รากโปรเจกต์
+# แยกจากเลข commit เพราะคนละหน้าที่:
+#   เวอร์ชัน  บอกว่า "รุ่นไหน มีอะไรใหม่"      → ผู้ใช้อ่าน ดูคู่กับ CHANGELOG.md
+#   commit    บอกว่า "โค้ดบรรทัดไหนเป๊ะๆ"      → คนแก้บั๊กอ่าน
+# กติกาการเพิ่มเลขเขียนไว้ใน CHANGELOG.md
+DEFAULT_VERSION = "0.0.0"
+
+
+def _release() -> str:
+    try:
+        text = (Path(settings.BASE_DIR) / "VERSION").read_text(encoding="utf-8").strip()
+        return text or DEFAULT_VERSION
+    except Exception:
+        return DEFAULT_VERSION
 
 
 def _from_platform() -> dict:
@@ -62,6 +79,7 @@ def _resolve() -> dict:
     info = _from_platform() or _from_git() or {
         "sha": "unknown", "sha_full": "", "branch": "", "message": "", "source": "unknown",
     }
+    info["release"] = _release()
     # เวลาที่โปรเซสนี้เริ่ม = เวลาที่โค้ดชุดนี้เริ่มให้บริการ
     info["started_at"] = timezone.now()
     return info
@@ -75,6 +93,7 @@ def as_dict() -> dict:
     started: datetime = VERSION["started_at"]
     uptime = timezone.now() - started
     return {
+        "version": VERSION["release"],
         "commit": VERSION["sha"],
         "commit_full": VERSION["sha_full"],
         "branch": VERSION["branch"],
