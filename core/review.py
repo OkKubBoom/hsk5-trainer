@@ -38,30 +38,35 @@ DEFAULT_SIZE = 20
 # แบ่งจากข้อมูลที่ตัวจัดตารางเขียนไว้อยู่แล้ว ไม่ต้องเพิ่มฟิลด์ใหม่
 # เงื่อนไขต้องไม่ทับกัน มิฉะนั้นคำเดียวจะถูกนับสองระดับแล้วตัวเลขไม่ตรง
 TIERS = {
+    "unseen": {
+        "label": "ยังไม่เคยเจอ",
+        "hint": "คำใหม่ที่ยังไม่เคยถูกถาม — ดูก่อนแล้วลองทดสอบได้เลย",
+        "filter": Q(reps=0),
+    },
     "lapsed": {
         "label": "เคยจำได้แล้วลืม",
         "hint": "คำที่หลอกตัวเองว่าจำได้ — คุ้มที่สุดที่จะทวน",
-        "filter": Q(lapses__gte=1) | Q(state=CardState.LAPSED),
+        "filter": Q(reps__gte=1) & (Q(lapses__gte=1) | Q(state=CardState.LAPSED)),
     },
     "fresh": {
         "label": "เพิ่งเริ่มจำ",
         "hint": "ทบทวนไม่เกิน 2 ครั้ง ยังเปราะมาก",
-        "filter": Q(lapses=0, interval_days__lt=3),
+        "filter": Q(reps__gte=1, lapses=0, interval_days__lt=3),
     },
     "growing": {
         "label": "เริ่มอยู่ตัว",
         "hint": "ผ่านมาแล้วหลายรอบ แต่ยังไม่แน่น",
-        "filter": Q(lapses=0, interval_days__gte=3, interval_days__lt=15),
+        "filter": Q(reps__gte=1, lapses=0, interval_days__gte=3, interval_days__lt=15),
     },
     "solid": {
         "label": "จำได้แน่น",
         "hint": "ทวนไว้กันหลุด",
-        "filter": Q(lapses=0, interval_days__gte=15, interval_days__lt=45),
+        "filter": Q(reps__gte=1, lapses=0, interval_days__gte=15, interval_days__lt=45),
     },
     "mastered": {
         "label": "แม่นแล้ว",
         "hint": "เอาไว้สร้างความมั่นใจก่อนสอบ",
-        "filter": Q(lapses=0, interval_days__gte=45),
+        "filter": Q(reps__gte=1, lapses=0, interval_days__gte=45),
     },
 }
 
@@ -91,14 +96,19 @@ class ReviewQuestion:
 
 
 def learned_cards(learner):
-    """การ์ดที่ 'เคยเรียนไปแล้ว' — ฐานของทุกตัวกรองในหน้านี้
+    """ฐานของทุกตัวกรองในหน้านี้ — รวมคำใหม่ที่ยังไม่เคยเจอด้วย
 
-    ตัดคำที่ยังไม่เคยเจอออก เพราะหน้านี้คือการทบทวน ไม่ใช่การเรียนคำใหม่
-    คำใหม่มีที่ทางของมันอยู่ในชุดฝึกรายวันแล้ว (โควตา 20% ต่อวัน)
+    เดิมกรอง reps >= 1 ออกไป ด้วยเหตุผลว่า "ทบทวน ไม่ใช่เรียนใหม่"
+    แต่นั่นทำให้ผู้เรียนที่เพิ่งเริ่มเปิดหน้านี้มาแล้วเจอ 2 คำ ซึ่งใช้ทำอะไรไม่ได้
+    และเหตุผลเดิมก็ผิดด้วย — โหมดนี้มีขั้น 'ดูคำก่อน' อยู่แล้ว
+    ซึ่งเหมาะกับคำใหม่ยิ่งกว่าคำเก่า
+
+    การหยิบคำใหม่มาดูที่นี่ไม่กระทบตารางทบทวน คำนั้นยังคงสถานะ new
+    และจะถูกชุดฝึกรายวันหยิบไปสอนตามโควตา 20% ตามปกติ
     """
     return (
         Card.objects
-        .filter(learner=learner, reps__gte=1)
+        .filter(learner=learner)
         .exclude(state=CardState.SUSPENDED)
         .select_related("vocab")
     )
@@ -144,7 +154,7 @@ def tier_counts(learner, *, window: int = 0, level: int = 0, today=None) -> list
     if level:
         base = base.filter(vocab__hsk_level=level)
     out = [{
-        "key": "", "label": "ทุกระดับ", "hint": "คำที่เคยเรียนไปแล้วทั้งหมด",
+        "key": "", "label": "ทุกกอง", "hint": "คำทั้งหมดในคลังของคุณ ทั้งที่เคยเจอและยังไม่เคยเจอ",
         "count": base.count(),
     }]
     for key, spec in TIERS.items():

@@ -10,7 +10,7 @@ from dataclasses import dataclass
 
 from django.utils import timezone
 
-from . import placement, selection, srs
+from . import placement, reading, selection, srs
 from .models import (
     AnswerRecord, Card, DrillSession, ErrorCode, ErrorLog, Question,
     QuestionOption, Rating, Section,
@@ -32,13 +32,25 @@ class DrillQuestion:
     card_id: int | None = None
     question_id: int | None = None
     section: str = Section.VOCAB
+    # บทอ่านของข้อนี้ — ว่างสำหรับข้อคำศัพท์ ดู reading.py
+    passage_html: str = ""
+    blank_no: int | None = None
+    total_blanks: int = 0
+    answers_whole_passage: bool = False
 
 
+# ป้ายบอกว่าทำไมข้อนี้ถึงโผล่มาในชุดวันนี้ — เขียนด้วยภาษาผู้เรียน ไม่ใช่ภาษาระบบ
 SOURCE_LABEL = {
-    "due": "ถึงกำหนดทบทวน",
+    "due": "ถึงเวลาทวน",
     "wrong": "เคยตอบผิด",
     "new": "คำใหม่วันนี้",
-    "filler": "ทบทวนเพิ่ม",
+    "filler": "ทวนเสริม",
+}
+SOURCE_WHY = {
+    "due": "ระบบคำนวณว่าวันนี้คือวันที่ใกล้จะลืมคำนี้ที่สุด",
+    "wrong": "เคยตอบผิดมาก่อน เลยเอากลับมาถามซ้ำจนกว่าจะแม่น",
+    "new": "คำใหม่ตามโควตาของวันนี้",
+    "filler": "ของถึงกำหนดทวนมีไม่ครบชุด เลยเติมข้อที่ทวนไว้ก็ดี",
 }
 
 
@@ -113,12 +125,16 @@ def build_question(entry: dict, index: int, total: int) -> DrillQuestion | None:
     if not options:
         return None  # ข้อที่ยังไม่มีหน้าจอรองรับ (เรียงคำ / เรียงความ) — ข้ามไปข้อถัดไป
     correct = next((o.text for o in options if o.is_correct), question.answer_text)
+    view = reading.build(question)
     return DrillQuestion(
         kind="question", index=index, total=total, source=entry["source"],
-        prompt=question.prompt_zh, prompt_sub="",
-        instruction=question.prompt_th or "เลือกคำตอบที่ถูกต้อง",
+        prompt=view.prompt, prompt_sub="",
+        instruction=view.instruction,
         choices=[o.text for o in options], answer=correct,
         question_id=question.pk, section=question.section,
+        passage_html=view.passage_html, blank_no=view.blank_no,
+        total_blanks=view.total_blanks,
+        answers_whole_passage=view.answers_whole_passage,
     )
 
 

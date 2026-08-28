@@ -43,11 +43,29 @@ class ReviewBaseTests(TestCase):
 
 
 class PoolTests(ReviewBaseTests):
-    def test_ยังไม่เคยเรียนไม่ถูกหยิบมาทบทวน(self):
-        """โหมดนี้คือการทบทวน ไม่ใช่การเรียนคำใหม่ — คำใหม่มีที่ในชุดฝึกรายวันแล้ว"""
-        self.assertEqual(review.build_pool(self.learner).count(), 0)
+    def test_คำใหม่ที่ยังไม่เคยเจอก็ฝึกได้(self):
+        """เดิมกรองคำใหม่ออก ทำให้ผู้เรียนที่เพิ่งเริ่มเปิดหน้านี้มาแล้วเจอแค่ 2 คำ
+        โหมดนี้มีขั้นดูคำก่อนอยู่แล้ว จึงเหมาะกับคำใหม่ยิ่งกว่าคำเก่า
+        """
+        self.assertEqual(review.build_pool(self.learner).count(), 30)
+        counts = {t["key"]: t["count"] for t in review.tier_counts(self.learner)}
+        self.assertEqual(counts["unseen"], 30)
+
         self.learn(4)
-        self.assertEqual(review.build_pool(self.learner).count(), 4)
+        counts = {t["key"]: t["count"] for t in review.tier_counts(self.learner)}
+        self.assertEqual(counts["unseen"], 26)
+        self.assertEqual(counts[""], 30)
+
+    def test_ฝึกคำใหม่ที่นี่ไม่ทำให้มันหลุดจากโควตาคำใหม่ของชุดฝึก(self):
+        """คำต้องคงสถานะ new ไว้ ไม่งั้นชุดฝึกรายวันจะข้ามไปไม่สอนคำนั้น"""
+        card = Card.objects.filter(learner=self.learner, state=CardState.NEW).first()
+        session = review.start(self.learner, tier="unseen", size=1)
+        review.begin_test(session)
+        review.submit(session, card, given=card.vocab.meaning_th)
+
+        card.refresh_from_db()
+        self.assertEqual(card.state, CardState.NEW)
+        self.assertEqual(card.reps, 0)
 
     def test_ระดับความแม่นไม่ทับกัน(self):
         """คำหนึ่งคำต้องอยู่ระดับเดียว มิฉะนั้นผลรวมจะเกินจำนวนคำจริง"""
@@ -124,7 +142,8 @@ class FlowTests(ReviewBaseTests):
         self.assertEqual(review.running(self.learner).pk, second.pk)
 
     def test_ไม่มีคำเข้าเงื่อนไขคืนค่าว่างไม่ใช่รอบเปล่า(self):
-        self.assertIsNone(review.start(self.learner, size=10))
+        """ตัวกรองที่ไม่มีคำเข้าเลย ต้องไม่สร้างรอบว่างให้ผู้เรียนกดเข้าไปเจอหน้าเปล่า"""
+        self.assertIsNone(review.start(self.learner, tier="mastered", size=10))
         self.assertEqual(ReviewSession.objects.count(), 0)
 
 

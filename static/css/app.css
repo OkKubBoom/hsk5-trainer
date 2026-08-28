@@ -547,3 +547,16 @@ textarea{
 }
 .pweye:hover{color:var(--ink); background:var(--surface-2)}
 .pweye[aria-pressed="true"]{color:var(--accent)}
+
+/* ── โจทย์ที่มีบทอ่าน ── */
+.qhead{display:flex; align-items:baseline; gap:var(--s2); flex-wrap:wrap}
+.qinstruction{
+  font-size:var(--t-lead); font-weight:500; color:var(--ink); line-height:1.5;
+  flex-grow:1; min-width:0;
+}
+.qprompt{font-size:var(--t-lead); line-height:1.9}
+.qnote{font-size:var(--t-sm)}
+/* ช่องว่างในบทอ่าน — ช่องที่กำลังตอบต้องหาเจอในแวบเดียว ช่องอื่นต้องไม่แย่งสายตา */
+.passage .blank{border-radius:4px; padding:0 2px; font-weight:600}
+.passage .blank.now{background:var(--accent-soft); color:var(--accent-ink); box-shadow:0 0 0 2px var(--accent)}
+.passage .blank.other{color:var(--ink-3); opacity:.55}

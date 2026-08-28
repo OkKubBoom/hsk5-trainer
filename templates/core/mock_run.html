@@ -46,16 +46,7 @@
 
   {# ─── โจทย์ ─── #}
   <div class="card stack" style="gap:var(--s2)">
-    {% if question.qtype == 'synonym_cloze' %}
-      {# 选词填空 เก็บบทอ่านไว้ใน prompt_zh อยู่แล้ว แสดงกล่องบทอ่านซ้ำอีกจะอ่านสองรอบ #}
-      <div class="passage zh">{{ question.prompt_zh }}</div>
-      <p class="muted">เลือกคำที่เหมาะกับช่องว่างของข้อนี้</p>
-    {% else %}
-      {% if question.group and question.group.passage_zh %}
-        <div class="passage zh">{{ question.group.passage_zh }}</div>
-      {% endif %}
-      <p class="zh" style="font-size:var(--t-lead);line-height:1.9">{{ question.prompt_zh }}</p>
-    {% endif %}
+    {% include "core/partials/question_body.html" %}
 
     <form method="post" action="{% url 'mock_answer' exam.pk %}" class="choices">
       {% csrf_token %}

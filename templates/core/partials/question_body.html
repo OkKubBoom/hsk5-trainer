@@ -1,0 +1,30 @@
+{% comment %}
+โจทย์หนึ่งข้อ — ใช้ร่วมกันระหว่างชุดฝึกรายวันกับข้อสอบจำลอง
+เดิมสองหน้านี้เขียนแยกกัน ชุดฝึกรายวันจึงไม่แสดงบทอ่านเลยและตอบไม่ได้
+
+ลำดับบนหน้าจอสำคัญ: คำสั่ง → บทอ่าน → คำถาม
+คำสั่งต้องมาก่อนและต้องอ่านออกในแวบเดียว เพราะข้อสอบบางชนิดไม่มีคำถาม
+ถ้าคำสั่งเป็นตัวเทาเล็กๆ ผู้เรียนจะมองหาคำถามที่ไม่มีอยู่จริง
+
+ต้องการ: q.instruction · q.passage_html · q.prompt · q.blank_no · q.total_blanks
+{% endcomment %}
+
+<div class="qhead">
+  <p class="qinstruction">{{ q.instruction }}</p>
+  {% if q.total_blanks > 1 %}
+    <span class="pill" title="บทอ่านนี้มีช่องว่าง {{ q.total_blanks }} ช่อง ระบบถามทีละช่อง">
+      ช่อง {{ q.blank_no }} · มีทั้งหมด {{ q.total_blanks }} ช่องในบทนี้
+    </span>
+  {% endif %}
+</div>
+
+{% if q.passage_html %}
+  <div class="passage zh">{{ q.passage_html }}</div>
+{% endif %}
+
+{% if q.prompt %}
+  <p class="qprompt zh">{{ q.prompt }}</p>
+{% elif q.answers_whole_passage %}
+  {# ข้อสอบจริงชนิดนี้ไม่มีคำถาม — พูดออกมาตรงๆ ดีกว่าปล่อยให้ผู้เรียนมองหาคำถามที่ไม่มีอยู่ #}
+  <p class="muted qnote">ข้อนี้ไม่มีคำถามแยก — เลือกตัวเลือกที่ตรงกับเนื้อหาข้างบน</p>
+{% endif %}

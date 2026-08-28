@@ -19,6 +19,7 @@ from . import grammar as grammar_engine
 from . import progress as progress_engine
 from . import writing as writing_engine
 from . import mock as mock_engine
+from . import reading as reading_engine
 from . import review as review_engine
 from .accounts import create_learner
 from . import placement as placement_engine
@@ -159,6 +160,7 @@ def drill_run(request):
     return render(request, "core/drill.html", {
         "session": session, "q": question, "learner": learner,
         "source_label": drill_engine.SOURCE_LABEL.get(question.source, ""),
+        "source_why": drill_engine.SOURCE_WHY.get(question.source, ""),
         "progress": round((session.position / total) * 100) if total else 0,
     })
 
@@ -924,6 +926,8 @@ def mock_run(request, exam_id):
 
     return render(request, "core/mock_run.html", {
         "exam": exam, "question": question, "index": index,
+        # ใช้ตัวแปรชื่อ q เหมือนหน้าชุดฝึก เพื่อให้ partial เดียวกันใช้ได้ทั้งสองที่
+        "q": reading_engine.build(question) if question else None,
         "options": list(question.options.all().order_by("order", "id")) if question else [],
         "given": (exam.answers or {}).get(str(qid), ""),
         "is_flagged": qid in (exam.flagged or []),

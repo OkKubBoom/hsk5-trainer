@@ -20,14 +20,19 @@
 
   <div id="card" class="card stack" style="gap:var(--s3)">
     <div class="row" style="gap:var(--s1);flex-wrap:wrap">
-      <span class="pill accent">{{ source_label }}</span>
-      <span class="muted">{{ q.instruction }}</span>
+      <span class="pill accent" title="{{ source_why }}">{{ source_label }}</span>
+      <span class="muted" style="font-size:.8rem">{{ source_why }}</span>
     </div>
 
-    <div class="stack" style="gap:var(--s-half);align-items:center;padding:var(--s2) 0">
-      <span class="zh" style="font-size:{% if q.kind == 'vocab' %}2.5rem{% else %}var(--t-lead){% endif %};line-height:1.75;text-align:center">{{ q.prompt }}</span>
-      {% if q.prompt_sub %}<span class="mono muted">{{ q.prompt_sub }}</span>{% endif %}
-    </div>
+    {% if q.kind == 'vocab' %}
+      <div class="stack" style="gap:var(--s-half);align-items:center;padding:var(--s2) 0">
+        <span class="muted">{{ q.instruction }}</span>
+        <span class="zh" style="font-size:2.5rem;line-height:1.75;text-align:center">{{ q.prompt }}</span>
+        {% if q.prompt_sub %}<span class="mono muted">{{ q.prompt_sub }}</span>{% endif %}
+      </div>
+    {% else %}
+      {% include "core/partials/question_body.html" %}
+    {% endif %}
 
     <div class="choices hide-when-loading">
       {% for choice in q.choices %}
