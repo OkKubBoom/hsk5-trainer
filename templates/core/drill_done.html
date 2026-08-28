@@ -21,7 +21,7 @@
     <div class="row" style="gap:10px;padding-bottom:9px;border-bottom:1px solid var(--line)">
       {% if a.card %}
         <span class="zh" style="font-size:1.2rem">{{ a.card.vocab.hanzi }}</span>
-        <span class="mono muted">{{ a.card.vocab.pinyin }}</span>
+        <span class="mono muted py">{{ a.card.vocab.pinyin }}</span>
         <span class="muted grow">{{ a.card.vocab.meaning_th|truncatechars:48 }}</span>
       {% else %}
         <span class="zh grow">{{ a.question.prompt_zh|truncatechars:60 }}</span>

@@ -6,13 +6,16 @@
 """
 from datetime import timedelta
 
+from django.conf import settings
 from django.test import TestCase
 from django.utils import timezone
 
 from core import selection, srs
+from core.accounts import create_learner
 from core.models import (
     Card, CardState, CardType, ErrorCode, ErrorLog, LearnerProfile,
-    Question, QuestionStatus, QuestionType, Section, User, VocabItem,
+    Question, QuestionOption, QuestionStatus, QuestionType, Section,
+    SourceType, User, VocabItem,
 )
 
 
@@ -210,3 +213,47 @@ class TodaySummaryTests(TestCase):
         self.assertFalse(s["has_baseline"])
         self.assertEqual(s["days_to_exam"], 90)
         self.assertFalse(s["in_freeze"])
+
+
+class QuestionCapTests(TestCase):
+    """ชุดฝึกรายวันต้องเน้นคำศัพท์ ข้อสอบจริงมีเพดาน
+
+    ข้อสอบจริงยาวและกินเวลาต่อข้อมากกว่าการ์ดคำศัพท์หลายเท่า
+    ถ้าไม่มีเพดาน ชุด 40 ข้อจะกลายเป็นการอ่านบทความ 40 นาที
+    โดยได้คำศัพท์ใหม่แค่หยิบมือ
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        for i in range(200):
+            VocabItem.objects.create(
+                hanzi=f"詞{i}", pinyin=f"ci{i}", meaning_th=f"ความหมาย {i}", hsk_level=5,
+            )
+        for i in range(60):
+            q = Question.objects.create(
+                qtype="reading_mc", section=Section.READING, status=QuestionStatus.ACTIVE,
+                prompt_zh=f"โจทย์ {i}", answer_text="ถูก", source_type=SourceType.HAND_WRITTEN,
+            )
+            QuestionOption.objects.create(question=q, text="ถูก", is_correct=True, order=0)
+            QuestionOption.objects.create(question=q, text="ผิด", is_correct=False, order=1)
+        cls.learner, _ = create_learner(
+            username="capkid", password="passpass1",
+            exam_date=timezone.localdate() + timedelta(days=60),
+        )
+
+    def test_ข้อสอบจริงไม่เกินเพดานต่อชุด(self):
+        plan = selection.build_daily_drill(self.learner, size=40, seed=1)
+        questions = [it for it in plan.items if it.question]
+        self.assertLessEqual(len(questions), settings.DRILL_MAX_QUESTIONS)
+
+    def test_ที่ว่างที่เหลือตกเป็นของคำศัพท์ไม่ใช่ข้อสอบ(self):
+        """ก่อนมีเพดาน ช่องเติมดันข้อสอบจริงเข้ามาจนเต็มชุด"""
+        plan = selection.build_daily_drill(self.learner, size=40, seed=2)
+        cards = [it for it in plan.items if it.card]
+        self.assertGreaterEqual(len(cards), 40 - settings.DRILL_MAX_QUESTIONS)
+        self.assertEqual(plan.size, 40)
+
+    def test_บันทึกไว้ในสรุปว่าวันนั้นมีข้อสอบจริงกี่ข้อ(self):
+        plan = selection.build_daily_drill(self.learner, size=40, seed=3)
+        self.assertEqual(plan.mix["max_questions"], settings.DRILL_MAX_QUESTIONS)
+        self.assertLessEqual(plan.mix["questions"], settings.DRILL_MAX_QUESTIONS)

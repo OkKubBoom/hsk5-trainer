@@ -148,6 +148,8 @@ def build_daily_drill(
     n_wrong = round(size * mix_cfg["wrong"])
     n_new = size - n_due - n_wrong
 
+    max_questions = getattr(settings, "DRILL_MAX_QUESTIONS", size)
+
     used_cards: set[int] = set()
     used_questions: set[int] = set()
 
@@ -184,6 +186,8 @@ def build_daily_drill(
                 used_cards.add(card.pk)
                 continue
         if err.question_id and err.question_id not in used_questions:
+            if len(used_questions) >= max_questions:
+                continue  # เต็มเพดานข้อสอบจริงแล้ว ปล่อยให้คำศัพท์เข้าแทน
             q = err.question
             if q and q.status == QuestionStatus.ACTIVE:
                 wrong_items.append(DrillItem(source="wrong", question=q))
@@ -224,12 +228,13 @@ def build_daily_drill(
     if shortfall > 0:
         # เฉพาะข้อที่มีตัวเลือกให้กด — ข้อเรียงคำและข้อเขียนเรียงความยังไม่มีหน้าจอรองรับ
         # ถ้าปล่อยเข้ามาผู้เรียนจะเจอข้อที่ตอบไม่ได้จริง แล้วถูกนับว่าผิด
+        room_for_questions = max(0, max_questions - len(used_questions))
         extra_qs = (
             Question.objects
             .filter(status=QuestionStatus.ACTIVE, options__isnull=False)
             .exclude(pk__in=used_questions)
             .distinct()
-            .order_by("?")[:shortfall]
+            .order_by("?")[:min(shortfall, room_for_questions)]
         )
         for q in extra_qs:
             filler_items.append(DrillItem(source="filler", question=q))
@@ -253,6 +258,21 @@ def build_daily_drill(
             used_new_vocabs.add(card.vocab_id)
             room -= 1
 
+    # ยังขาดอยู่หลังเติมทุกทาง → เติมด้วยการ์ดที่ยังไม่เคยเรียน (ในโควตา) หรือการ์ดที่เหลือ
+    # ตั้งใจให้ที่ว่างตกเป็นของคำศัพท์เสมอ ไม่ใช่ดันข้อสอบจริงเกินเพดาน
+    shortfall = size - (len(due_items) + len(wrong_items) + len(new_items) + len(filler_items))
+    if shortfall > 0:
+        spare = (
+            Card.objects
+            .filter(learner=learner)
+            .exclude(pk__in=used_cards)
+            .select_related("vocab")
+            .order_by("due_at", "pk")[:shortfall]
+        )
+        for card in spare:
+            filler_items.append(DrillItem(source="filler", card=card))
+            used_cards.add(card.pk)
+
     items = _cluster_groups(_interleave([due_items, wrong_items, new_items, filler_items], rng))
 
     return DrillPlan(
@@ -262,6 +282,8 @@ def build_daily_drill(
             "wrong": len(wrong_items),
             "new": len(new_items),
             "filler": len(filler_items),
+            "questions": len(used_questions),
+            "max_questions": max_questions,
             "requested": size,
             "actual": len(items),
             "short_by": max(0, size - len(items)),

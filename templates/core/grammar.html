@@ -49,7 +49,7 @@
                   :aria-expanded="open === '{{ g.key }}-{{ w.pk }}'">
             <span class="zh wcard-hz">{{ w.hanzi }}</span>
             <span class="wcard-mid">
-              <span class="mono wcard-py">{{ w.pinyin }}</span>
+              <span class="mono wcard-py py">{{ w.pinyin }}</span>
               <span class="wcard-th" x-show="showTh">{{ w.meaning_th|truncatechars:34 }}</span>
             </span>
             <span class="dots wcard-dots" title="พบใน {{ w.exam_papers_count }} จาก 9 ชุด">
@@ -184,7 +184,7 @@
         <button type="button" class="wcard-head" @click="open = open === {{ w.pk }} ? null : {{ w.pk }}">
           <span class="zh wcard-hz">{{ w.hanzi }}</span>
           <span class="wcard-mid">
-            <span class="mono wcard-py">{{ w.pinyin }}</span>
+            <span class="mono wcard-py py">{{ w.pinyin }}</span>
             <span class="wcard-th" x-show="showTh">{{ w.meaning_th|truncatechars:34 }}</span>
           </span>
           <span class="dots wcard-dots"><span class="n">{{ w.exam_papers_count }}/9</span></span>

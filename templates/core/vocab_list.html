@@ -1,16 +1,14 @@
 {% extends "base.html" %}{% load hsk %}
 {% block title %}คลังคำศัพท์ HSK{{ level }} · HSK5 Trainer{% endblock %}
 {% block content %}
-{# จำค่าที่เลือกไว้ข้ามหน้า — เปลี่ยนหน้าตารางแล้วไม่ต้องปิดใหม่ทุกครั้ง #}
+{# สวิตช์พินอินอยู่ที่ base.html คุมทั้งเว็บ ที่นี่เก็บเฉพาะสองตัวที่ใช้แค่หน้านี้ #}
 <div x-data="{
     showMeaning: JSON.parse(localStorage.getItem('vocabShowMeaning') ?? 'true'),
     showHanzi:   JSON.parse(localStorage.getItem('vocabShowHanzi')   ?? 'true'),
-    showPinyin:  JSON.parse(localStorage.getItem('vocabShowPinyin')  ?? 'true'),
     filters: false, report: null
   }"
      x-init="$watch('showMeaning', v => localStorage.setItem('vocabShowMeaning', v));
-           $watch('showHanzi',   v => localStorage.setItem('vocabShowHanzi', v));
-           $watch('showPinyin',  v => localStorage.setItem('vocabShowPinyin', v))"
+            $watch('showHanzi',   v => localStorage.setItem('vocabShowHanzi', v))"
      class="stack">
 
   <div class="stack" style="gap:6px">
@@ -70,7 +68,7 @@
         <tr>
           <td class="cell-rank"><span class="{{ rank|rank_class }}">{{ rank }}</span></td>
           <td class="cell-word" data-label="คำ"><span class="zh" style="font-size:1.2rem" :class="showHanzi ? '' : 'hidden-cell'">{{ w.hanzi }}</span></td>
-          <td class="num muted" data-label="pinyin"><span :class="showPinyin ? '' : 'hidden-cell'">{{ w.pinyin }}</span></td>
+          <td class="num muted" data-label="pinyin"><span class="py">{{ w.pinyin }}</span></td>
           <td data-label="ความหมาย"><span :class="showMeaning ? '' : 'hidden-cell'">{{ w.meaning_th|truncatechars:70 }}</span></td>
           <td data-label="พบในข้อสอบ">
             <span class="dots" title="พบใน {{ w.exam_papers_count }} จาก 9 ชุด">

@@ -576,3 +576,21 @@ textarea{
   background:var(--partial-bg); color:var(--partial);
   border-radius:4px; padding:0 5px; font-size:0.625rem;
 }
+
+/* ── สวิตช์พินอินตัวเดียวคุมทั้งเว็บ ──
+   ผูกที่ .app แล้วให้ CSS ไล่ลงไปหา .py ทุกตัว
+   วิธีนี้ครอบคลุมของที่ htmx สลับเข้ามาทีหลังด้วย ซึ่ง Alpine ที่ผูกล่วงหน้าทำไม่ได้ */
+.app[data-pinyin="off"] .py{
+  background:var(--sunken); border-radius:5px;
+  color:transparent; user-select:none;
+}
+.pytoggle{
+  display:flex; align-items:center; gap:var(--s1);
+  width:100%; min-height:var(--tap); padding:0 var(--s1);
+  border:1px solid var(--line); border-radius:var(--radius-sm);
+  background:transparent; color:var(--ink-2);
+  font-family:inherit; font-size:var(--t-sm); cursor:pointer; text-align:left;
+}
+.pytoggle:hover{background:var(--surface-2); color:var(--ink)}
+.pytoggle[aria-pressed="true"]{border-color:var(--accent); color:var(--accent-ink); background:var(--accent-soft)}
+.pystate{font-family:var(--font-mono); font-size:0.6875rem; opacity:.7}

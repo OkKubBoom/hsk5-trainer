@@ -25,7 +25,7 @@
         <span class="zh grow" style="font-size:1.6rem">{{ c.vocab.hanzi }}</span>
         <span class="pill accent" style="font-size:.7rem">HSK{{ c.vocab.hsk_level }}</span>
       </div>
-      <span class="mono muted" :class="hide ? 'hidden-cell' : ''">{{ c.vocab.pinyin }}</span>
+      <span class="mono muted py" :class="hide ? 'hidden-cell' : ''">{{ c.vocab.pinyin }}</span>
       <span :class="hide ? 'hidden-cell' : ''">{{ c.vocab.meaning_th }}</span>
       {% if c.vocab.example_zh %}
         <p class="zh" style="font-size:.92rem;color:var(--ink-2);margin-top:var(--s-half)">{{ c.vocab.example_zh }}</p>

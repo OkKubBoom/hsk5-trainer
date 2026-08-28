@@ -17,7 +17,22 @@
 
 {% if user.is_authenticated %}
 {% with g=nav_group|default:"" %}
-<div class="app{% if focus_mode %} focus{% endif %}" x-data="{ more: false }">
+{% comment %}
+สวิตช์พินอินอยู่ที่นี่ที่เดียวแล้วคุมทั้งเว็บผ่าน data-pinyin + CSS
+ไม่ผูกทีละ element เพราะพินอินโผล่ใน 12 เทมเพลต และบางส่วนถูก htmx สลับเข้ามาทีหลัง
+ซึ่ง Alpine ที่ผูกไว้ล่วงหน้าจะไม่ทำงานกับของที่เพิ่งโผล่
+
+ค่าตั้งต้นคือ "ปิด" โดยตั้งใจ — ตราบใดที่พินอินอยู่ข้างๆ ตาจะไปเกาะพินอินก่อนเสมอ
+กลายเป็นอ่านพินอินไม่ใช่อ่านตัวอักษร แต่วันสอบจริงไม่มีพินอินให้เลย
+{% endcomment %}
+<div class="app{% if focus_mode %} focus{% endif %}"
+     x-data="{
+       more: false,
+       showPinyin: JSON.parse(localStorage.getItem('showPinyin') ?? 'false')
+     }"
+     x-init="$watch('showPinyin', v => localStorage.setItem('showPinyin', v))"
+     :data-pinyin="showPinyin ? 'on' : 'off'"
+     data-pinyin="off">
 
   {# ───────── แถบข้างซ้าย: เดสก์ท็อป ───────── #}
   <aside class="sidebar">
@@ -34,14 +49,14 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
         วันนี้
       </a>
-    </div>
-
-    <div class="navgroup">
-      <span class="navgroup-label">ฝึกจำคำศัพท์</span>
       <a class="navlink {% if nav == 'memorize' %}on{% endif %}" href="{% url 'review_home' %}">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3"/><path d="M12 5a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3"/><path d="M6 9H5a2 2 0 0 0 0 4h1"/><path d="M18 9h1a2 2 0 0 1 0 4h-1"/></svg>
         ฝึกจำคำศัพท์
       </a>
+    </div>
+
+    <div class="navgroup">
+      <span class="navgroup-label">คลังความรู้</span>
       <a class="navlink {% if nav == 'vocab' %}on{% endif %}" href="{% url 'vocab_list' %}">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><path d="M8 7h7"/><path d="M8 11h7"/></svg>
         คลังคำศัพท์
@@ -97,6 +112,16 @@
       </a>
     </div>
     {% endif %}
+
+    <button type="button" class="pytoggle" @click="showPinyin = !showPinyin"
+            :aria-pressed="showPinyin ? 'true' : 'false'">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+        <path x-show="!showPinyin" d="m3 3 18 18"/>
+      </svg>
+      <span class="grow" x-text="showPinyin ? 'ซ่อนพินอิน' : 'แสดงพินอิน'">แสดงพินอิน</span>
+      <span class="pystate" x-text="showPinyin ? 'เปิด' : 'ปิด'">ปิด</span>
+    </button>
 
     <div class="sidebar-foot navgroup">
       <a class="userbox {% if nav == 'profile' %}on{% endif %}" href="{% url 'profile' %}">
@@ -195,10 +220,21 @@
       </a>
       <button type="button" class="btn ghost sm" @click="more = false" style="width:auto">ปิด</button>
     </div>
+    {# บนมือถือไม่มีแถบข้าง สวิตช์พินอินจึงต้องมาอยู่ที่นี่ด้วย #}
+    <button type="button" class="pytoggle" style="margin-bottom:var(--s2)"
+            @click="showPinyin = !showPinyin"
+            :aria-pressed="showPinyin ? 'true' : 'false'">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+        <path x-show="!showPinyin" d="m3 3 18 18"/>
+      </svg>
+      <span class="grow" x-text="showPinyin ? 'ซ่อนพินอิน' : 'แสดงพินอิน'">แสดงพินอิน</span>
+      <span class="pystate" x-text="showPinyin ? 'เปิด' : 'ปิด'">ปิด</span>
+    </button>
+
     <div class="navgroup">
       <a class="navlink" href="{% url 'profile' %}">โปรไฟล์ของฉัน</a>
       <a class="navlink" href="{% url 'group_progress' %}">ความคืบหน้ากลุ่ม</a>
-      <a class="navlink" href="{% url 'review_home' %}">ฝึกจำคำศัพท์</a>
       <a class="navlink" href="{% url 'grammar' %}">คำเชื่อม &amp; จับคู่คำ</a>
       <a class="navlink" href="{% url 'word_order' %}">ฝึกเรียงคำ</a>
       <a class="navlink" href="{% url 'mock_home' %}">จำลองสอบ</a>

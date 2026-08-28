@@ -27,7 +27,7 @@
     <div class="stack" style="gap:var(--s-half);align-items:center;padding:var(--s2) 0">
       <span class="{% if q.mode == 'meaning' %}zh{% endif %}"
             style="font-size:{% if q.mode == 'meaning' %}2.5rem{% else %}var(--t-h2){% endif %};line-height:1.6;text-align:center">{{ q.prompt }}</span>
-      {% if q.prompt_sub %}<span class="mono muted">{{ q.prompt_sub }}</span>{% endif %}
+      {% if q.prompt_sub %}<span class="mono muted py">{{ q.prompt_sub }}</span>{% endif %}
     </div>
 
     <div class="choices hide-when-loading">

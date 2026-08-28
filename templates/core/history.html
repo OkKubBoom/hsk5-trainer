@@ -65,7 +65,7 @@
           <td class="cell-word" data-label="ข้อ">
             {% if a.card %}
               <span class="zh" style="font-size:1.15rem">{{ a.card.vocab.hanzi }}</span>
-              <span class="mono muted" style="margin-left:8px">{{ a.card.vocab.pinyin }}</span>
+              <span class="mono muted py" style="margin-left:8px">{{ a.card.vocab.pinyin }}</span>
             {% elif a.question %}
               <span class="zh">{{ a.question.prompt_zh|truncatechars:44 }}</span>
             {% else %}

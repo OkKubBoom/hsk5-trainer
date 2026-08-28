@@ -28,7 +28,7 @@
       <div class="stack" style="gap:var(--s-half);align-items:center;padding:var(--s2) 0">
         <span class="muted">{{ q.instruction }}</span>
         <span class="zh" style="font-size:2.5rem;line-height:1.75;text-align:center">{{ q.prompt }}</span>
-        {% if q.prompt_sub %}<span class="mono muted">{{ q.prompt_sub }}</span>{% endif %}
+        {% if q.prompt_sub %}<span class="mono muted py">{{ q.prompt_sub }}</span>{% endif %}
       </div>
     {% else %}
       {% include "core/partials/question_body.html" %}
