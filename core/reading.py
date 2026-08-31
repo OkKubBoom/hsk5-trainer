@@ -16,11 +16,18 @@
 """
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
+from functools import lru_cache
+from pathlib import Path
+
+from django.conf import settings
 
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
+
+from .models import VocabItem
 
 # เลขข้ออยู่ท้าย source_ref เช่น "H51001 ข้อ 46"
 _REF_NUMBER = re.compile(r"ข้อ\s*(\d+)\s*$")
@@ -136,3 +143,48 @@ def build(question) -> ReadingView:
         instruction=question.prompt_th or "เลือกคำตอบที่ถูกต้อง",
         passage_html="", prompt=prompt, blank_no=None, total_blanks=0,
     )
+
+
+@lru_cache(maxsize=1)
+def _extra_pinyin() -> dict:
+    """พินอินของคำที่อยู่นอกคลังคำศัพท์ — สำนวน คำ HSK6 คำประสม
+
+    คำสำคัญท้ายเฉลย 66% ไม่ได้อยู่ในลิสต์ HSK5 (เช่น 一事无成 · 怪圈 · 太阳眼镜)
+    จึงเตรียมพินอินไว้ล่วงหน้าเป็นไฟล์ แทนที่จะคำนวณตอนรัน
+    เพราะไม่อยากเพิ่ม dependency บนเซิร์ฟเวอร์เพื่อข้อมูลที่ไม่มีวันเปลี่ยน
+
+    สร้างด้วย pypinyin แบบตัดคำทั้งคำ (ไม่ใช่ทีละตัวอักษร) เพื่อให้เลือกเสียง
+    ของอักษรหลายเสียงได้ถูกตามบริบท — เป็นวิธีเดียวกับที่ใช้ตรวจคลังคำศัพท์หลัก
+    """
+    try:
+        path = Path(settings.BASE_DIR) / "data" / "key_vocab_pinyin.json"
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def key_vocab(question) -> list[dict]:
+    """คำสำคัญท้ายคำอธิบายเฉลย พร้อมพินอิน
+
+    คำอธิบายเก็บไว้แค่ hanzi กับคำแปล ไม่มีพินอิน เพราะตอนสร้างมองว่าซ้ำซ้อน
+    แต่ผู้เรียนอ่านถึงตรงนี้ตอนเพิ่งตอบผิด — คือจังหวะที่ต้องการรู้ว่า
+    "คำนี้อ่านว่าอะไร" มากที่สุด ถ้าไม่มีก็ต้องออกไปเปิดพจนานุกรมเอง
+
+    ดึงพินอินจากคลังคำศัพท์ในคิวรีเดียว ไม่ใช่ทีละคำในลูปของเทมเพลต
+    คำที่ไม่มีในคลัง (เช่น 怪圈 ที่อยู่นอกลิสต์ HSK5) ยังแสดงได้ แค่ไม่มีพินอิน
+    """
+    rows = (question.explanation or {}).get("key_vocab") or []
+    if not rows:
+        return []
+
+    hanzi = [r.get("hanzi", "") for r in rows if r.get("hanzi")]
+    # คลังคำศัพท์มาก่อนเสมอ เพราะมีคนตรวจแล้วบางส่วน ส่วนไฟล์เป็นตัวสำรอง
+    pinyin_of = dict(
+        VocabItem.objects.filter(hanzi__in=hanzi).exclude(pinyin="")
+        .values_list("hanzi", "pinyin")
+    )
+    extra = _extra_pinyin()
+    return [
+        {**r, "pinyin": pinyin_of.get(r.get("hanzi", "")) or extra.get(r.get("hanzi", ""), "")}
+        for r in rows
+    ]

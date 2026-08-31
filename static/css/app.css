@@ -594,3 +594,17 @@ textarea{
 .pytoggle:hover{background:var(--surface-2); color:var(--ink)}
 .pytoggle[aria-pressed="true"]{border-color:var(--accent); color:var(--accent-ink); background:var(--accent-soft)}
 .pystate{font-family:var(--font-mono); font-size:0.6875rem; opacity:.7}
+
+/* ── คำสำคัญท้ายเฉลย: 汉字 · พินอิน · คำแปล ──
+   จอแคบให้คำแปลตกลงบรรทัดใหม่ แทนที่จะบีบจนอ่านไม่ออก */
+.kvrow{
+  display:grid; grid-template-columns:auto auto 1fr;
+  align-items:baseline; gap:var(--s-half) var(--s1);
+}
+.kv-hanzi{font-size:var(--t-lead); min-width:3em}
+.kv-py{font-size:0.75rem; white-space:nowrap}
+.kv-note{font-size:var(--t-sm); color:var(--ink-2)}
+@media (max-width:520px){
+  .kvrow{grid-template-columns:auto 1fr}
+  .kv-note{grid-column:1 / -1}
+}

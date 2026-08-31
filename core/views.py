@@ -775,6 +775,7 @@ def word_order(request):
 
     return render(request, "core/word_order.html", {
         "nav": "writing", "question": question, "result": result,
+        "key_vocab": reading_engine.key_vocab(question) if question else [],
         "words": writing_engine.words_of(question) if question else [],
         "done_count": len(seen),
         "total": Question.objects.filter(qtype="word_order", status="active").count(),

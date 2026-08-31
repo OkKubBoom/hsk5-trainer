@@ -201,6 +201,8 @@ def submit(session: DrillSession, entry: dict, given: str, correct_answer: str,
         "vocab": card.vocab if card else None,
         "question": question,
         "distractors": distractors,
+        # คำสำคัญท้ายเฉลย เติมพินอินให้แล้ว — ดู reading.key_vocab
+        "key_vocab": reading.key_vocab(question) if question else [],
     }
 
 

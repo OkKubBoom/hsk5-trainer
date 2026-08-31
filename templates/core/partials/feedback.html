@@ -72,14 +72,15 @@
       {% endif %}
 
       {# ชั้น 3 — คำที่ต้องรู้ #}
-      {% if ex.key_vocab %}
+      {% if outcome.key_vocab %}
       <div class="layer l3">
         <span class="wlab">คำที่ต้องรู้เพื่อตอบข้อนี้</span>
-        <div class="stack" style="gap:var(--s-half)">
-          {% for kv in ex.key_vocab %}
-            <div class="row" style="gap:var(--s1);align-items:baseline">
-              <span class="zh" style="min-width:3em">{{ kv.hanzi }}</span>
-              <span style="font-size:var(--t-sm);color:var(--ink-2)">{{ kv.note }}</span>
+        <div class="stack" style="gap:var(--s1)">
+          {% for kv in outcome.key_vocab %}
+            <div class="kvrow">
+              <span class="zh kv-hanzi">{{ kv.hanzi }}</span>
+              {% if kv.pinyin %}<span class="mono muted py kv-py">{{ kv.pinyin }}</span>{% endif %}
+              <span class="kv-note">{{ kv.note }}</span>
             </div>
           {% endfor %}
         </div>

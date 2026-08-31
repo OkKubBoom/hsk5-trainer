@@ -210,3 +210,58 @@ class ClusterTests(TestCase):
 
         self.assertEqual(len(result), len(items))
         self.assertEqual({it.key for it in result}, {it.key for it in items})
+
+
+class KeyVocabTests(TestCase):
+    """คำสำคัญท้ายเฉลยต้องมีพินอิน — จังหวะที่ผู้เรียนอยากรู้ว่าอ่านว่าอะไรมากที่สุด"""
+
+    @classmethod
+    def setUpTestData(cls):
+        VocabItem.objects.create(hanzi="造成", pinyin="zàochéng", meaning_th="ก่อให้เกิด", hsk_level=5)
+        VocabItem.objects.create(hanzi="损失", pinyin="sǔnshī", meaning_th="ความสูญเสีย", hsk_level=5)
+        cls.q = Question.objects.create(
+            qtype="reading_mc", section=Section.READING, status=QuestionStatus.ACTIVE,
+            prompt_zh="โจทย์", answer_text="ถูก", source_type=SourceType.HAND_WRITTEN,
+            explanation={"key_vocab": [
+                {"hanzi": "造成", "note": "ก่อให้เกิด"},
+                {"hanzi": "损失", "note": "ความเสียหาย"},
+                {"hanzi": "怪圈", "note": "วงจรประหลาด"},  # นอกคลัง HSK5
+            ]},
+        )
+
+    def test_เติมพินอินจากคลังคำศัพท์(self):
+        rows = reading.key_vocab(self.q)
+        self.assertEqual(rows[0]["pinyin"], "zàochéng")
+        self.assertEqual(rows[1]["pinyin"], "sǔnshī")
+
+    def test_คำนอกคลังได้พินอินจากไฟล์สำรอง(self):
+        """คำสำคัญท้ายเฉลย 66% ไม่ได้อยู่ในลิสต์ HSK5 (สำนวน · คำ HSK6 · คำประสม)
+        ถ้าพึ่งคลังอย่างเดียว ผู้เรียนจะเห็นพินอินแค่หนึ่งในสามของคำที่ต้องรู้
+        """
+        rows = reading.key_vocab(self.q)
+        self.assertEqual(len(rows), 3)
+        self.assertEqual(rows[2]["hanzi"], "怪圈")
+        self.assertEqual(rows[2]["pinyin"], "guàiquān")
+
+    def test_คำที่ไม่มีทั้งสองที่ยังแสดงได้แค่ไม่มีพินอิน(self):
+        """ห้ามหายไปจากรายการเพราะหาพินอินไม่เจอ"""
+        q = Question.objects.create(
+            qtype="reading_mc", section=Section.READING, status=QuestionStatus.ACTIVE,
+            prompt_zh="โจทย์", answer_text="ถูก", source_type=SourceType.HAND_WRITTEN,
+            explanation={"key_vocab": [{"hanzi": "龘龘龘", "note": "คำสมมติ"}]},
+        )
+        rows = reading.key_vocab(q)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["pinyin"], "")
+
+    def test_ไม่มีคำสำคัญก็ไม่พัง(self):
+        bare = Question.objects.create(
+            qtype="reading_mc", section=Section.READING, status=QuestionStatus.ACTIVE,
+            prompt_zh="ว่าง", answer_text="ถูก", source_type=SourceType.HAND_WRITTEN,
+        )
+        self.assertEqual(reading.key_vocab(bare), [])
+
+    def test_ใช้คิวรีเดียวไม่ใช่ถามทีละคำ(self):
+        """เฉลยหนึ่งข้อมีคำสำคัญ 4-5 คำ ถ้าถามทีละคำจะกลายเป็น N+1"""
+        with self.assertNumQueries(1):
+            reading.key_vocab(self.q)
