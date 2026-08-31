@@ -69,7 +69,18 @@
    "H51328",
    "H51330",
    "H51332"
-  ]
+  ],
+  "pinyin_provenance": {
+   "note": "คอลัมน์ pinyin ไม่ใช่ค่าจากลิสต์ทางการโดยตรง — ตรวจแล้วพบว่าตรงกับผล pypinyin แบบไม่ใส่ tone sandhi 2,178 จาก 2,206 คำ และรูปแบบ pinyin_numeric ใช้ 'lu:' แทน 'lü' ซึ่งเป็นฟอร์แมตของ CC-CEDICT ไม่ใช่ของลิสต์ทางการ",
+   "differs_from_official_2012": 23,
+   "breakdown": {
+    "tone_sandhi_yi_bu": 13,
+    "neutral_tone": 10,
+    "third_tone_sandhi": 0
+   },
+   "sandhi_stored_in": "VocabItem.pinyin_sandhi (เติมด้วย manage.py fix_pinyin_sandhi)",
+   "checked_at": "2026-08-31"
+  }
  },
  "words": [
   {

@@ -40,6 +40,12 @@ class ExplanationNote(TimeStamped):
     verdict = models.CharField(
         max_length=16, choices=NoteVerdict.choices, db_index=True, verbose_name="ผลการตรวจ",
     )
+    # แย้งคอลัมน์ไหนของคำศัพท์ — คำเดียวมีหลายอย่างให้แย้งได้
+    # ว่างไว้ = แย้งคำอธิบายเฉลยของข้อสอบ (พฤติกรรมเดิม)
+    field_name = models.CharField(
+        max_length=32, blank=True, default="", verbose_name="แย้งเรื่องอะไร",
+        help_text="pinyin · pinyin_sandhi · meaning_th",
+    )
     body = models.TextField(
         blank=True, verbose_name="คำอธิบายที่ถูกต้อง",
         help_text="สิ่งที่ผู้ใช้ค้นมาได้ — จะถูกแสดงแทนของ AI เมื่อเจ้าของระบบรับแล้ว",

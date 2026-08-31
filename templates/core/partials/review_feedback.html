@@ -41,6 +41,17 @@
         <span class="mono muted py">{{ outcome.vocab.pinyin }}</span>
         <span class="pill accent" style="margin-left:auto">HSK{{ outcome.vocab.hsk_level }}</span>
       </div>
+      {% if outcome.vocab.pinyin_sandhi %}
+        {% comment %}
+        อธิบายว่าทำไมมีสองรูป — นี่คือสิ่งที่ Anki/Quizlet ทำไม่ได้ ตรงกับ D8
+        {% endcomment %}
+        <div class="note" style="font-size:var(--t-sm)">
+          <b>คำนี้เปลี่ยนเสียงเวลาพูด</b> —
+          เขียนในพจนานุกรมว่า <span class="mono">{{ outcome.vocab.pinyin }}</span>
+          แต่ออกเสียงจริงว่า <span class="mono"><b>{{ outcome.vocab.pinyin_sandhi }}</b></span>
+          <br><span class="muted">ที่มา: ลิสต์คำศัพท์ทางการ HSK 2012</span>
+        </div>
+      {% endif %}
       {% if "review:error" in outcome.vocab.tags %}
         {# คำที่ด่านตรวจคุณภาพไม่ผ่าน ต้องเตือนตรงจุดที่ผู้เรียนกำลังจะจำ #}
         <div class="note" style="border-left-color:var(--partial);font-size:var(--t-sm)">

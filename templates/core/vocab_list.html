@@ -68,7 +68,18 @@
         <tr>
           <td class="cell-rank"><span class="{{ rank|rank_class }}">{{ rank }}</span></td>
           <td class="cell-word" data-label="คำ"><span class="zh" style="font-size:1.2rem" :class="showHanzi ? '' : 'hidden-cell'">{{ w.hanzi }}</span></td>
-          <td class="num muted" data-label="pinyin"><span class="py">{{ w.pinyin }}</span></td>
+          <td class="num muted" data-label="pinyin">
+            {% if w.pinyin_sandhi %}
+              {% comment %}
+              แสดงสองรูปคู่กัน ห้ามแทนที่ — ผู้เรียนจะเจอรูปพจนานุกรมในหนังสือและ Pleco
+              ตลอด ถ้าเห็นรูปเดียวจะสับสนว่าอันไหนผิด
+              {% endcomment %}
+              <span class="py"><b>{{ w.pinyin_sandhi }}</b></span>
+              <span class="py pysrc" title="รูปพจนานุกรม — ที่เห็นในหนังสือและ Pleco">{{ w.pinyin }}</span>
+            {% else %}
+              <span class="py">{{ w.pinyin }}</span>
+            {% endif %}
+          </td>
           <td data-label="ความหมาย"><span :class="showMeaning ? '' : 'hidden-cell'">{{ w.meaning_th|truncatechars:70 }}</span></td>
           <td data-label="พบในข้อสอบ">
             <span class="dots" title="พบใน {{ w.exam_papers_count }} จาก 9 ชุด">

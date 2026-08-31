@@ -87,6 +87,26 @@ class VocabItem(Provenance, TimeStamped):
         related_name="vocab_items", verbose_name="ไฟล์เสียง",
     )
 
+    # ── รูปที่ออกเสียงจริง (tone sandhi ของ 一 กับ 不) ──
+    #
+    # แยกคอลัมน์แทนการทับของเดิม เพราะผู้เรียนจะเจอรูปพจนานุกรมในหนังสือและ Pleco
+    # ตลอด ถ้าเห็นรูปเดียวจะสับสนว่าอันไหนผิด — การอธิบายว่า *ทำไมมีสองรูป*
+    # คือสิ่งที่ Anki/Quizlet ทำไม่ได้ ตรงกับ D8
+    #
+    # ค่าเหล่านี้คัดจากลิสต์คำศัพท์ทางการ HSK 2012 ไม่ได้คำนวณเอง และไม่ได้มาจาก AI
+    # ทดสอบแล้วว่าถ้าให้เครื่องคำนวณ (pypinyin เปิด sandhi) จะแก้ของถูกให้ผิด 21 จาก 26 คำ
+    pinyin_sandhi = models.CharField(
+        max_length=96, blank=True, verbose_name="พินอิน (รูปที่ออกเสียงจริง)",
+        help_text="ใส่ sandhi ของ 一/不 แล้ว — ว่างไว้ถ้าคำนี้ไม่มีการเปลี่ยนเสียง",
+    )
+    pinyin_sandhi_source = models.CharField(
+        max_length=24, blank=True, default="",
+        choices=[("official_list", "ลิสต์คำศัพท์ทางการ HSK 2012"),
+                 ("human", "ครูแก้เอง")],
+        verbose_name="ที่มาของรูปออกเสียง",
+    )
+    pinyin_sandhi_verified = models.BooleanField(default=False, verbose_name="ครูตรวจแล้ว")
+
     class Meta:
         verbose_name = "คำศัพท์"
         verbose_name_plural = "คำศัพท์"
