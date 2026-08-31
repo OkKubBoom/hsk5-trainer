@@ -409,3 +409,30 @@ class ReviewSession(TimeStamped):
     @property
     def accuracy(self):
         return round(self.correct / self.answered * 100) if self.answered else 0
+
+
+class WordOrderAttempt(TimeStamped):
+    """หนึ่งครั้งที่ผู้เรียนลองเรียงประโยค
+
+    เดิมการฝึกเรียงคำไม่ถูกบันทึกเป็นงานเลย บันทึกเฉพาะตอนตอบผิดผ่าน ErrorLog
+    ผู้เรียนที่ฝึกเรียงคำทั้งวันจึงขึ้นในหน้ากลุ่มว่า "เข้าระบบแต่ไม่ได้ทำอะไร"
+    ทั้งที่ 书写第一部分 คือ 8 ข้อจาก 10 ของพาร์ทเขียน
+    """
+    learner = models.ForeignKey(
+        LearnerProfile, on_delete=models.CASCADE, related_name="word_order_attempts",
+        verbose_name="ผู้เรียน",
+    )
+    question = models.ForeignKey(
+        Question, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="word_order_attempts", verbose_name="ข้อที่ทำ",
+    )
+    is_correct = models.BooleanField(default=False, verbose_name="เรียงถูก")
+
+    class Meta:
+        verbose_name = "ครั้งที่ฝึกเรียงคำ"
+        verbose_name_plural = "ครั้งที่ฝึกเรียงคำ"
+        ordering = ["-created_at"]
+        indexes = [models.Index(fields=["learner", "-created_at"])]
+
+    def __str__(self):
+        return f"{self.learner} · {'ถูก' if self.is_correct else 'ผิด'}"

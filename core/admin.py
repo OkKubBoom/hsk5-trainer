@@ -51,6 +51,11 @@ class ExamSpecAdmin(admin.ModelAdmin):
 
 @admin.register(VocabItem)
 class VocabItemAdmin(admin.ModelAdmin):
+    # ลบคำหนึ่งคำ = ลบการ์ดทบทวนและประวัติของทุกคนที่ผูกกับคำนั้นไปด้วย (CASCADE)
+    # และกู้คืนไม่ได้ — ถ้าคำผิดให้แก้คำแปล ไม่ใช่ลบทิ้ง
+    def has_delete_permission(self, request, obj=None):
+        return False
+
     list_display = ("hanzi", "pinyin", "meaning_th", "hsk_level", "frequency_rank",
                     "standard", "commercial_safe")
     list_filter = ("hsk_level", "standard", "source_type", "commercial_safe")

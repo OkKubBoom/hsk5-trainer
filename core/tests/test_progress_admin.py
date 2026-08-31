@@ -8,10 +8,11 @@ from datetime import timedelta
 from django.test import TestCase
 from django.utils import timezone
 
-from core import progress
+from core import progress, writing
 from core.accounts import create_learner
 from core.models import (
-    DrillSession, LearnerProfile, MockExam, ReviewSession, Role, User, VocabItem,
+    DrillSession, ErrorLog, LearnerProfile, MockExam, Question, QuestionStatus,
+    QuestionType, ReviewSession, Role, Section, SourceType, User, VocabItem,
 )
 
 
@@ -207,3 +208,58 @@ class ExamCountdownTests(TestCase):
         res = self.client.get("/")
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.context["exam_rounds"], [])
+
+
+class WordOrderCountedTests(TestCase):
+    """ฝึกเรียงคำต้องนับเป็นงาน — 书写第一部分 คือ 8 ข้อจาก 10 ของพาร์ทเขียน"""
+
+    @classmethod
+    def setUpTestData(cls):
+        VocabItem.objects.create(hanzi="字", pinyin="zi", meaning_th="ตัวอักษร", hsk_level=5)
+        cls.learner, _ = create_learner(
+            username="wo", password="passpass1",
+            exam_date=timezone.localdate() + timedelta(days=60),
+        )
+        cls.question = Question.objects.create(
+            qtype=QuestionType.WORD_ORDER, section=Section.WRITING,
+            status=QuestionStatus.ACTIVE, prompt_zh="ก / ข / ค", answer_text="กขค",
+            source_type=SourceType.HAND_WRITTEN,
+        )
+
+    def row(self):
+        return next(r for r in progress.group_progress() if r["learner"] == self.learner)
+
+    def test_เรียงถูกก็ต้องถูกนับ_ไม่ใช่นับแต่ตอนผิด(self):
+        """เดิมบันทึกเฉพาะตอนผิดผ่าน ErrorLog คนที่ทำถูกหมดจึงขึ้นว่าไม่ได้ทำอะไร"""
+        writing.record_result(self.learner, self.question, {"is_correct": True})
+        writing.record_result(self.learner, self.question, {"is_correct": False})
+
+        acts = {a["key"]: a for a in self.row()["activities"]}
+        self.assertEqual(acts["word_order"]["count"], 2)
+
+    def test_วันที่ฝึกเรียงคำไม่ใช่วันที่หายไป(self):
+        writing.record_result(self.learner, self.question, {"is_correct": True})
+        today = timezone.localdate()
+        cal = {c["date"]: c for c in self.row()["calendar"]}
+        self.assertEqual(cal[today]["level"], "some")
+        self.assertIn("ฝึกเรียงคำ", cal[today]["label"])
+
+    def test_เรียงถูกแล้วปิดบันทึกข้อผิดเดิม(self):
+        writing.record_result(self.learner, self.question, {"is_correct": False})
+        self.assertTrue(ErrorLog.objects.filter(
+            learner=self.learner, question=self.question, resolved_at__isnull=True).exists())
+
+        writing.record_result(self.learner, self.question, {"is_correct": True})
+        self.assertFalse(ErrorLog.objects.filter(
+            learner=self.learner, question=self.question, resolved_at__isnull=True).exists())
+
+
+class AdminSafetyTests(TestCase):
+    def test_ลบคำศัพท์จากหน้า_admin_ไม่ได้(self):
+        """ลบคำหนึ่งคำ = ลบการ์ดและประวัติของทุกคนที่ผูกกับคำนั้นไปด้วย กู้ไม่ได้"""
+        from django.contrib import admin as dj_admin
+
+        from core.models import VocabItem as V
+
+        model_admin = dj_admin.site._registry[V]
+        self.assertFalse(model_admin.has_delete_permission(None))

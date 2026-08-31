@@ -23,7 +23,8 @@ from .content import (
 )
 from .practice import (
     AnswerRecord, DailyRecord, DictationAttempt, DrillSession,
-    MockExam, ReviewMode, ReviewPhase, ReviewSession, WritingFeedback, WritingSubmission,
+    MockExam, ReviewMode, ReviewPhase, ReviewSession, WordOrderAttempt,
+    WritingFeedback, WritingSubmission,
 )
 from .diagnostics import ErrorLog
 from .placement import PlacementAnswer, PlacementTest
@@ -37,7 +38,7 @@ __all__ = [
     "AudioClip", "ItemGroup", "GroupKind", "Question", "QuestionType",
     "QuestionStatus", "QuestionOption", "DistractorType",
     "DrillSession", "AnswerRecord", "DailyRecord", "MockExam",
-    "ReviewSession", "ReviewMode", "ReviewPhase",
+    "ReviewSession", "ReviewMode", "ReviewPhase", "WordOrderAttempt",
     "DictationAttempt", "WritingSubmission", "WritingFeedback",
     "ErrorLog",
     "PlacementTest", "PlacementAnswer",

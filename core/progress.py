@@ -16,17 +16,18 @@ from django.utils import timezone
 
 from .models import (
     DrillSession, LearnerProfile, LoginDay, MockExam, PlacementTest, ReviewSession,
+    WordOrderAttempt,
 )
 
 CALENDAR_DAYS = 30
 
 # ชนิดกิจกรรมที่ระบบเก็บได้จริง เรียงตามน้ำหนักที่ให้กับการสอบ
-# หมายเหตุ: หน้าฝึกเรียงคำยังไม่มีตารางเก็บเซสชัน จึงนับไม่ได้ (ดู core/writing.py)
 ACTIVITY_LABEL = {
     "drill": "ชุดฝึกวันนี้",
     "review": "ฝึกจำคำศัพท์",
     "mock": "จำลองสอบ",
     "placement": "แบบวัดระดับ",
+    "word_order": "ฝึกเรียงคำ",
 }
 
 
@@ -66,7 +67,8 @@ def _activity_by_date(learner, window: list) -> dict:
     เก็บเป็น dict ของวันที่ เพื่อให้เทมเพลตหยิบไปแสดงในปฏิทินได้โดยไม่ต้องคิวรีซ้ำ
     """
     first = window[0]
-    by_date = {d: {"drill": 0, "review": 0, "mock": 0, "answered": 0} for d in window}
+    by_date = {d: {"drill": 0, "review": 0, "mock": 0, "word_order": 0, "answered": 0}
+               for d in window}
 
     for s in DrillSession.objects.filter(learner=learner, started_at__date__gte=first):
         day = by_date.get(s.started_at.date())
@@ -85,6 +87,12 @@ def _activity_by_date(learner, window: list) -> dict:
         if day is not None:
             day["mock"] += 1
 
+    for a in WordOrderAttempt.objects.filter(learner=learner, created_at__date__gte=first):
+        day = by_date.get(a.created_at.date())
+        if day is not None:
+            day["word_order"] += 1
+            day["answered"] += 1
+
     return by_date
 
 
@@ -100,6 +108,8 @@ def _day_label(date, act: dict) -> str:
         parts.append(f"ฝึกจำคำศัพท์ {act['review']} รอบ")
     if act["mock"]:
         parts.append(f"จำลองสอบ {act['mock']} ครั้ง")
+    if act["word_order"]:
+        parts.append(f"ฝึกเรียงคำ {act['word_order']} ข้อ")
     if not parts:
         return "เข้าระบบแต่ไม่ได้ทำอะไร" if act.get("login") else "ไม่ได้ทำอะไร"
     if act["answered"]:
@@ -113,6 +123,7 @@ def _activity_summary(learner) -> list[dict]:
     reviews = ReviewSession.objects.filter(learner=learner, answered__gte=1)
     mocks = MockExam.objects.filter(learner=learner, finished_at__isnull=False)
     placements = PlacementTest.objects.filter(learner=learner, finished_at__isnull=False)
+    word_orders = WordOrderAttempt.objects.filter(learner=learner)
 
     return [
         {"key": "drill", "label": ACTIVITY_LABEL["drill"], "count": drills.count(),
@@ -121,6 +132,8 @@ def _activity_summary(learner) -> list[dict]:
          "unit": "รอบ", "answered": sum(s.answered for s in reviews)},
         {"key": "mock", "label": ACTIVITY_LABEL["mock"], "count": mocks.count(),
          "unit": "ครั้ง", "answered": 0},
+        {"key": "word_order", "label": ACTIVITY_LABEL["word_order"], "count": word_orders.count(),
+         "unit": "ข้อ", "answered": 0},
         {"key": "placement", "label": ACTIVITY_LABEL["placement"], "count": placements.count(),
          "unit": "ครั้ง", "answered": 0},
     ]
@@ -155,7 +168,7 @@ def group_progress(today=None) -> list[dict]:
             # แยกระดับกลางออกมาเพราะวันที่ทวนคำศัพท์อย่างเดียวไม่ใช่วันที่หายไป
             if act["drill"]:
                 level = "full"
-            elif act["review"] or act["mock"]:
+            elif act["review"] or act["mock"] or act["word_order"]:
                 level = "some"
             elif act["login"]:
                 # เข้ามาแล้วแต่ไม่ได้ทำอะไร ต่างจากไม่ได้เข้าเลย

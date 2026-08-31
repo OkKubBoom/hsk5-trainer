@@ -8,7 +8,11 @@ from __future__ import annotations
 import random
 import re
 
-from .models import ErrorCode, ErrorLog, Question, QuestionStatus, Section
+from django.utils import timezone
+
+from .models import (
+    ErrorCode, ErrorLog, Question, QuestionStatus, Section, WordOrderAttempt,
+)
 
 PUNCT = "。，、！？；：“”‘’（）《》 \t\n"
 
@@ -66,7 +70,17 @@ def record_result(learner, question: Question, result: dict) -> None:
     ใช้สาเหตุ STRUCTURE เสมอ เพราะข้อเรียงคำวัดลำดับคำ ไม่ได้วัดว่ารู้ศัพท์ไหม
     ผู้เรียนที่รู้ศัพท์ครบแต่เรียงผิด ต้องไปทบทวนไวยากรณ์ ไม่ใช่ท่องคำเพิ่ม
     """
+    # นับทุกครั้งที่ทำ ไม่ใช่เฉพาะตอนผิด — ไม่งั้นหน้ากลุ่มมองไม่เห็นการฝึกนี้เลย
+    # และผู้เรียนที่ฝึกเรียงคำทั้งวันจะขึ้นว่า "ไม่ได้ทำอะไร"
+    WordOrderAttempt.objects.create(
+        learner=learner, question=question, is_correct=result["is_correct"],
+    )
+
     if result["is_correct"]:
+        # เรียงถูกแล้ว = แก้ได้แล้ว ต้องปิดบันทึกข้อผิดเดิมของข้อนี้
+        ErrorLog.objects.filter(
+            learner=learner, question=question, resolved_at__isnull=True,
+        ).update(resolved_at=timezone.now())
         return
     ErrorLog.record(
         learner, ErrorCode.STRUCTURE,
