@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}งานเขียนรอตรวจ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}งานเขียนรอตรวจ{% endblock %}
+{% block content %}
+<div class="stack">
+
+  <div class="stack" style="gap:6px">
+    <span class="eyebrow">ผู้ดูแลระบบ · 书写第二部分</span>
+    <h1>งานเขียนที่รอตรวจ</h1>
+    <p class="muted">
+      กดคัดลอกพรอมต์ → เปิด Claude แล้ววาง → ก๊อป JSON ที่ได้กลับมาวางในช่องล่าง
+      ระบบจะตัดสินระดับเองจากสิ่งที่ Claude รายงาน
+    </p>
+  </div>
+
+  {% comment %}
+  บอกเหตุผลของทางนี้ไว้บนหน้าจอ เพราะอีกหกเดือนจะจำไม่ได้ว่าทำไมไม่ต่อ API ตรงๆ
+  {% endcomment %}
+  <div class="note">
+    <b>ทำไมต้องผ่านมือคุณ</b> — ระบบไม่เก็บกุญแจ API ไว้เลย จึงไม่มีอะไรให้หลุด
+    ไม่มีค่าใช้จ่ายต่อครั้ง และคุณได้อ่านผลก่อนที่ผู้เรียนจะเห็น ถ้าตอบมั่วก็ไม่ต้องวางลง
+  </div>
+
+  {% if waiting %}
+  <div class="stack" style="gap:var(--s3)">
+    {% for s in waiting %}
+    <div class="card stack" style="gap:var(--s2)" x-data="{ copied: false }">
+
+      <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+        <b>{{ s.learner.user.display_name|default:s.learner.user.username }}</b>
+        <span class="pill">ข้อ {{ s.task_no }}</span>
+        <span class="pill {% if s.meets_length %}ok{% else %}warn{% endif %}">{{ s.char_count }} ตัวอักษร</span>
+        <span class="muted" style="margin-left:auto">ขอเมื่อ {{ s.requested_at|date:"j M · H:i" }}</span>
+      </div>
+
+      {% if s.learner_note %}
+        <div class="note" style="font-size:var(--t-sm)">
+          <b>ผู้เรียนฝากมา</b> — {{ s.learner_note }}
+        </div>
+      {% endif %}
+
+      <div class="stack" style="gap:2px">
+        <span class="wlab">งานเขียน</span>
+        <p class="zh" style="font-size:var(--t-lead);line-height:2">{{ s.text_zh }}</p>
+      </div>
+
+      <div class="stack" style="gap:var(--s1)">
+        <div class="row" style="gap:var(--s1)">
+          <span class="wlab grow">พรอมต์ที่จะเอาไปถาม</span>
+          <button class="btn sm ghost" type="button" style="width:auto"
+                  @click="navigator.clipboard.writeText($refs.p{{ s.pk }}.value).then(() => { copied = true; setTimeout(() => copied = false, 2000) })">
+            <span x-text="copied ? 'คัดลอกแล้ว' : 'คัดลอกพรอมต์'">คัดลอกพรอมต์</span>
+          </button>
+        </div>
+        {% comment %}
+        เก็บพรอมต์ไว้ใน textarea ที่ย่อได้ ไม่ใช่ซ่อนด้วย display:none
+        เพราะถ้าคลิปบอร์ดใช้ไม่ได้ (Safari บนมือถือบางรุ่น) ต้องยังเลือกก๊อปเองได้
+        {% endcomment %}
+        <details>
+          <summary class="muted" style="cursor:pointer">ดูพรอมต์เต็ม</summary>
+          <textarea x-ref="p{{ s.pk }}" rows="10" readonly
+                    style="margin-top:var(--s1);font-family:var(--font-mono);font-size:.8rem">{{ s.prompt_text }}</textarea>
+        </details>
+      </div>
+
+      <form method="post" action="{% url 'essay_queue_answer' s.pk %}" class="stack" style="gap:var(--s1)">
+        {% csrf_token %}
+        <label for="paste-{{ s.pk }}">วางคำตอบ JSON ที่ Claude ให้มา</label>
+        <textarea id="paste-{{ s.pk }}" name="pasted" rows="6" required
+                  placeholder='{"coherent_logical": true, "content_rich": true, "issues": [...]}'
+                  style="font-family:var(--font-mono);font-size:.8rem"></textarea>
+        <div><button class="btn sm" type="submit" style="width:auto">บันทึกผลให้ผู้เรียน</button></div>
+      </form>
+
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="card empty">
+    <h3>ยังไม่มีใครขอให้ตรวจ</h3>
+    <p class="muted">เมื่อผู้เรียนกดขอตรวจงานเขียน งานจะมาโผล่ที่นี่</p>
+  </div>
+  {% endif %}
+
+  {% if done %}
+  <div class="stack" style="gap:var(--s1)">
+    <span class="wlab">ตรวจไปแล้ว</span>
+    {% for s in done %}
+      <div class="card flat row" style="gap:var(--s2)">
+        <span class="stack grow" style="gap:2px">
+          <b>{{ s.learner.user.display_name|default:s.learner.user.username }}</b>
+          <span class="muted">{{ s.created_at|date:"j M · H:i" }} · {{ s.char_count }} ตัวอักษร</span>
+        </span>
+        {% if s.feedback %}
+          <span class="pill {% if s.feedback.scores.band == 'high' %}ok{% elif s.feedback.scores.band == 'low' %}bad{% else %}warn{% endif %}">
+            {{ s.feedback.scores.band_label }}
+          </span>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

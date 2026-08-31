@@ -82,6 +82,14 @@ class LearnerProfile(TimeStamped):
     )
     notes = models.TextField(blank=True, verbose_name="บันทึก")
 
+    # ยินยอมให้คัดลอกงานเขียนออกไปให้ Claude ตรวจ
+    # เก็บในฐาน ไม่ใช่ใน session เพราะระบบดีดออกทุกเที่ยงคืน (core/daily_session.py)
+    # ถ้าเก็บใน session ผู้เรียนจะต้องกดยินยอมใหม่ทุกวัน จนกลายเป็นการกดผ่านโดยไม่อ่าน
+    # และเก็บเป็นเวลาไม่ใช่ True/False เพราะต้องตอบได้ว่ายินยอมเมื่อไหร่
+    essay_consent_at = models.DateTimeField(
+        null=True, blank=True, verbose_name="ยินยอมให้ส่งงานเขียนไปตรวจเมื่อ",
+    )
+
     class Meta:
         verbose_name = "โปรไฟล์ผู้เรียน"
         verbose_name_plural = "โปรไฟล์ผู้เรียน"

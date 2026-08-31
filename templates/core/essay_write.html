@@ -16,14 +16,16 @@
     <div class="stack" style="gap:var(--s1)">
       <p><b>ส่งออกไป:</b> ข้อความที่คุณเขียน และคำที่โจทย์กำหนด</p>
       <p><b>ไม่ส่ง:</b> ชื่อ อีเมล หรือข้อมูลที่ระบุตัวคุณได้ · ข้อสอบและเฉลยในระบบ</p>
+      <p><b>ใครเป็นคนส่ง:</b> เจ้าของระบบ — เขาจะคัดลอกงานของคุณไปถาม Claude ให้เอง
+        แล้วเอาผลมาลงในระบบ ไม่ได้ตรวจอัตโนมัติทันที</p>
       <p class="muted">
-        ตัวตรวจคือ Claude ซึ่งเป็นบริการภายนอก — อย่าเขียนข้อมูลส่วนตัวจริงลงในเรียงความ
+        Claude เป็นบริการภายนอก — อย่าเขียนข้อมูลส่วนตัวจริงลงในเรียงความ
         ถ้าไม่อยากส่ง ยังเขียนและบันทึกไว้ตรวจเองได้
       </p>
     </div>
     <form method="post" action="{% url 'essay_consent' %}" class="row" style="gap:var(--s1);flex-wrap:wrap">
       {% csrf_token %}
-      <button class="btn" type="submit" name="agree" value="1">ยอมรับ ส่งตรวจอัตโนมัติได้</button>
+      <button class="btn" type="submit" name="agree" value="1">ยอมรับ ส่งให้ตรวจได้</button>
       <button class="btn ghost" type="submit" name="agree" value="0" style="width:auto">ไม่ ฉันจะตรวจเอง</button>
     </form>
   </div>
@@ -66,8 +68,22 @@
     </form>
   </div>
 
-  <p class="muted" style="font-size:.82rem">
-    ⓘ ถ้าเลือกให้ตรวจอัตโนมัติ ข้อความที่คุณเขียนจะถูกส่งไปประมวลผลที่ Claude
-  </p>
+  <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+    <p class="muted grow" style="font-size:.82rem;margin:0">
+      ⓘ ถ้ากดขอตรวจ เจ้าของระบบจะคัดลอกข้อความที่คุณเขียนไปถาม Claude ให้
+    </p>
+    {% if consented %}
+      {% comment %}
+      ยินยอมแล้วเก็บถาวรในโปรไฟล์ จึงต้องมีทางถอนคืนให้เห็นตลอด
+      ไม่ใช่ให้ยินยอมครั้งเดียวแล้วถอนไม่ได้อีกเลย
+      {% endcomment %}
+      <form method="post" action="{% url 'essay_consent' %}">
+        {% csrf_token %}
+        <button class="btn ghost sm" type="submit" name="agree" value="0" style="width:auto">
+          ถอนความยินยอม
+        </button>
+      </form>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

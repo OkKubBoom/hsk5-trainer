@@ -290,6 +290,25 @@ class WritingSubmission(TimeStamped):
     char_count = models.PositiveSmallIntegerField(default=0, verbose_name="จำนวนตัวอักษรจีน")
     minutes_spent = models.PositiveSmallIntegerField(default=0, verbose_name="นาทีที่ใช้")
 
+    # ── สถานะการขอตรวจ ──
+    #
+    # ทางหลักคือผู้เรียนกดขอ แล้วเจ้าของระบบเอาโจทย์ไปถาม Claude เองแล้ววางผลกลับมา
+    # เลือกทางนี้เพราะไม่ต้องมีกุญแจ API ในระบบ (ไม่มีอะไรให้หลุด) ไม่มีค่าใช้จ่ายต่อครั้ง
+    # และเจ้าของได้เห็นผลก่อนผู้เรียน ถ้าตอบมั่วก็ไม่ต้องวางลงระบบ
+    #
+    # แลกกับการที่ผู้เรียนต้องรอ และเจ้าของกลายเป็นคอขวด
+    review_state = models.CharField(
+        max_length=12, default="draft", db_index=True, verbose_name="สถานะการตรวจ",
+        choices=[("draft", "ยังไม่ได้ขอตรวจ"),
+                 ("requested", "รอเจ้าของระบบตรวจ"),
+                 ("answered", "ตรวจแล้ว")],
+    )
+    requested_at = models.DateTimeField(null=True, blank=True, verbose_name="ขอตรวจเมื่อ")
+    learner_note = models.CharField(
+        max_length=300, blank=True, verbose_name="อยากให้ดูตรงไหนเป็นพิเศษ",
+        help_text="ผู้เรียนเขียนบอกได้ตอนกดขอตรวจ",
+    )
+
     class Meta:
         verbose_name = "งานเขียนที่ส่ง"
         verbose_name_plural = "งานเขียนที่ส่ง"

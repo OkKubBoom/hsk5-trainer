@@ -110,6 +110,11 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
         จัดการผู้ใช้
       </a>
+      <a class="navlink {% if nav == 'queue' %}on{% endif %}" href="{% url 'essay_queue' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        <span class="grow">งานเขียนรอตรวจ</span>
+        {% if pending_essays %}<span class="pill bad" style="padding:1px 8px">{{ pending_essays }}</span>{% endif %}
+      </a>
       <a class="navlink {% if nav == 'review' %}on{% endif %}" href="{% url 'explanation_review' %}">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
         ตรวจคำอธิบาย

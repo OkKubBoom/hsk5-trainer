@@ -78,6 +78,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "core.version.context",
                 "core.context.exam_countdown",
+                "core.context.pending_work",
             ],
         },
     },

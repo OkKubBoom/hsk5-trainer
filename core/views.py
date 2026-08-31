@@ -416,7 +416,13 @@ def review_done(request, session_id):
 
 # ── เรียงความ 书写第二部分 ──────────────────────────────
 
-ESSAY_CONSENT_KEY = "essay_consent"
+def _essay_consented(learner) -> bool:
+    """ยินยอมให้คัดลอกงานเขียนไปตรวจแล้วหรือยัง
+
+    เคยเก็บใน session แต่ระบบดีดออกทุกเที่ยงคืน ผู้เรียนจึงเจอแบนเนอร์ทุกวัน
+    ซึ่งจบลงที่การกดผ่านโดยไม่อ่าน — ตรงข้ามกับจุดประสงค์ของการขอความยินยอม
+    """
+    return bool(learner and learner.essay_consent_at)
 
 
 @login_required
@@ -428,7 +434,7 @@ def essay_home(request):
         "nav": "essay", "learner": learner,
         "past": WritingSubmission.objects.filter(learner=learner)
                 .select_related("feedback")[:20],
-        "consented": bool(request.session.get(ESSAY_CONSENT_KEY)),
+        "consented": _essay_consented(learner),
         "grader_ready": essay_grader.is_configured(),
     })
 
@@ -438,8 +444,14 @@ def essay_home(request):
 @require_POST
 def essay_consent(request):
     """ยินยอมให้ส่งงานเขียนไปตรวจ — ต้องกดเองก่อนใช้ครั้งแรก"""
-    request.session[ESSAY_CONSENT_KEY] = request.POST.get("agree") == "1"
-    return redirect("essay_write")
+    learner = _learner(request)
+    learner.essay_consent_at = timezone.now() if request.POST.get("agree") == "1" else None
+    learner.save(update_fields=["essay_consent_at", "updated_at"])
+
+    # กลับไปหน้าที่กดมา ไม่ใช่โยนไปหน้าเขียนเสมอ — คนที่กดจากหน้าผลตรวจ
+    # กำลังจะกดขอตรวจต่อ ถ้าพากลับไปหน้าเขียนจะเสียงานที่เพิ่งเขียนไปทั้งความคิด
+    back = request.POST.get("next") or ""
+    return redirect(back if back.startswith("/essay/") else reverse("essay_write"))
 
 
 @login_required
@@ -456,7 +468,7 @@ def essay_write(request):
     return render(request, "core/essay_write.html", {
         "nav": "essay", "learner": learner, "words": words,
         "target_chars": essay_engine.TARGET_CHARS,
-        "consented": bool(request.session.get(ESSAY_CONSENT_KEY)),
+        "consented": _essay_consented(learner),
         "grader_ready": essay_grader.is_configured(),
     })
 
@@ -504,20 +516,78 @@ def essay_result(request, pk):
     return render(request, "core/essay_result.html", {
         "nav": "essay", "learner": learner, "submission": submission,
         "feedback": feedback,
-        "consented": bool(request.session.get(ESSAY_CONSENT_KEY)),
+        "consented": _essay_consented(learner),
         "grader_ready": essay_grader.is_configured(),
     })
+
+
+def _save_essay_feedback(submission, observation, *, graded_by, usage=None):
+    """เขียนผลตรวจลงฐาน — ใช้ร่วมกันทั้งทางถ่ายทอดและทางเรียก API ตรง
+
+    รวมไว้ที่เดียวเพราะสองทางต้องได้ผลหน้าตาเหมือนกันเป๊ะ ถ้าแยกกันเขียน
+    วันหนึ่งจะเพี้ยนกัน แล้วผู้เรียนเห็นผลไม่เหมือนกันโดยไม่รู้ว่าทำไม
+    """
+    usage = usage or {}
+    missing = essay_engine.missing_words(submission.text_zh, submission.required_words)
+    scores = essay_engine.decide_band(
+        char_count=submission.char_count, missing=missing,
+        task_no=submission.task_no, observation=observation,
+    )
+    scores["observation"] = {
+        k: observation.get(k) for k in
+        ("suggestions_th", "strengths_th", "next_step_th", "dropped_issues")
+    }
+    WritingFeedback.objects.update_or_create(
+        submission=submission,
+        defaults={
+            "scores": scores,
+            "total_100": scores["estimated_30"] * 100 // 30,
+            "issues": observation.get("issues") or [],
+            "graded_by": graded_by,
+            "input_tokens": usage.get("input_tokens", 0),
+            "output_tokens": usage.get("output_tokens", 0),
+        },
+    )
+    submission.review_state = "answered"
+    submission.save(update_fields=["review_state", "updated_at"])
+    return scores
+
+
+@login_required
+@learner_required
+@require_POST
+def essay_request(request, pk):
+    """ผู้เรียนขอให้เจ้าของระบบเอางานไปถาม Claude ให้
+
+    ทางนี้เป็นทางหลัก — ไม่มีกุญแจ API ในระบบจึงไม่มีอะไรให้หลุด ไม่มีค่าใช้จ่ายต่อครั้ง
+    และเจ้าของระบบได้อ่านผลก่อนวางลง ถ้าตอบมั่วก็ไม่ต้องให้ผู้เรียนเห็น
+    """
+    learner = _learner(request)
+    submission = get_object_or_404(WritingSubmission, pk=pk, learner=learner)
+
+    if not _essay_consented(learner):
+        messages.info(request, "ต้องกดยินยอมก่อน เพราะงานเขียนจะถูกคัดลอกไปให้ AI ตรวจ")
+        return redirect("essay_result", pk=pk)
+
+    # ขอใหม่ได้แม้เคยตรวจแล้ว — ผู้เรียนอาจแย้งผลเดิมแล้วอยากให้ดูซ้ำ
+    # ผลใหม่จะเขียนทับของเดิมผ่าน update_or_create
+    submission.learner_note = (request.POST.get("note") or "").strip()[:300]
+    submission.review_state = "requested"
+    submission.requested_at = timezone.now()
+    submission.save(update_fields=["review_state", "requested_at", "learner_note", "updated_at"])
+    messages.info(request, "ส่งให้เจ้าของระบบแล้ว — ผลจะขึ้นที่หน้านี้และในประวัติของวันนี้")
+    return redirect("essay_result", pk=pk)
 
 
 @login_required
 @learner_required
 @require_POST
 def essay_grade(request, pk):
-    """สั่งตรวจ — ต้องยินยอมก่อน เพราะงานเขียนถูกส่งออกนอกระบบ"""
+    """ทางเสริม: เรียก API ตรงๆ — เปิดใช้เมื่อตั้ง ANTHROPIC_API_KEY เท่านั้น"""
     learner = _learner(request)
     submission = get_object_or_404(WritingSubmission, pk=pk, learner=learner)
 
-    if not request.session.get(ESSAY_CONSENT_KEY):
+    if not _essay_consented(learner):
         messages.info(request, "ต้องกดยินยอมก่อน เพราะงานเขียนจะถูกส่งไปให้ AI ตรวจ")
         return redirect("essay_result", pk=pk)
 
@@ -532,27 +602,73 @@ def essay_grade(request, pk):
         messages.info(request, str(exc))
         return redirect("essay_result", pk=pk)
 
-    scores = essay_engine.decide_band(
-        char_count=submission.char_count, missing=missing,
-        task_no=submission.task_no, observation=observation,
-    )
-    WritingFeedback.objects.update_or_create(
-        submission=submission,
-        defaults={
-            "scores": scores,
-            "total_100": scores["estimated_30"] * 100 // 30,
-            "issues": observation.get("issues") or [],
-            "graded_by": essay_grader.MODEL,
-            "input_tokens": usage["input_tokens"],
-            "output_tokens": usage["output_tokens"],
-        },
-    )
-    submission.feedback.scores["observation"] = {
-        k: observation.get(k) for k in
-        ("suggestions_th", "strengths_th", "next_step_th", "dropped_issues")
-    }
-    submission.feedback.save(update_fields=["scores", "updated_at"])
+    _save_essay_feedback(submission, observation,
+                         graded_by=essay_grader.MODEL, usage=usage)
     return redirect("essay_result", pk=pk)
+
+
+# ── คิวงานเขียนที่รอเจ้าของระบบตรวจ ────────────────────────
+
+def _essay_prompt(submission) -> str:
+    missing = essay_engine.missing_words(submission.text_zh, submission.required_words)
+    return essay_grader.full_prompt(
+        text_zh=submission.text_zh, task_no=submission.task_no,
+        required_words=submission.required_words,
+        char_count=submission.char_count, missing=missing,
+    )
+
+
+@login_required
+def essay_queue(request):
+    """หน้าของเจ้าของระบบ — ใครขอให้ตรวจอะไรมาบ้าง
+
+    ขั้นตอน: กดคัดลอกพรอมต์ → วางถาม Claude เอง → เอา JSON ที่ได้มาวางกลับ
+    ระบบตัดสินระดับเองจากสิ่งที่ Claude รายงาน (ดู essay.py ชั้นที่ 3)
+    """
+    if not _is_admin(request.user):
+        return render(request, "core/forbidden.html", {"nav": ""}, status=403)
+
+    waiting = list(
+        WritingSubmission.objects.filter(review_state="requested")
+        .select_related("learner__user").order_by("requested_at")
+    )
+    for sub in waiting:
+        sub.prompt_text = _essay_prompt(sub)
+
+    return render(request, "core/essay_queue.html", {
+        "nav": "queue",
+        "waiting": waiting,
+        "done": WritingSubmission.objects.filter(review_state="answered")
+                .select_related("learner__user", "feedback")[:15],
+    })
+
+
+@login_required
+@require_POST
+def essay_queue_answer(request, pk):
+    """เจ้าของระบบวางผลที่ได้จาก Claude กลับเข้าระบบ
+
+    ตรวจรูปแบบก่อนเสมอ และบอกให้ชัดว่าผิดตรงไหน เพราะคนที่วางกำลังสลับหน้าต่างอยู่
+    ข้อความว่า "ผิดพลาด" เฉยๆ จะทำให้ต้องเดาว่าก๊อปมาไม่ครบตรงไหน
+    """
+    if not _is_admin(request.user):
+        return render(request, "core/forbidden.html", {"nav": ""}, status=403)
+
+    submission = get_object_or_404(WritingSubmission, pk=pk)
+    try:
+        observation = essay_grader.parse_pasted(request.POST.get("pasted") or "")
+    except essay_grader.PasteError as exc:
+        messages.info(request, f"ยังบันทึกไม่ได้ — {exc}")
+        return redirect("essay_queue")
+
+    observation = essay_grader._clean(observation, submission.text_zh)
+    scores = _save_essay_feedback(submission, observation,
+                                  graded_by=essay_grader.RELAY_LABEL)
+    messages.info(
+        request,
+        f"บันทึกผลของ {submission.learner.user} แล้ว — ระบบตัดสินเป็น {scores['band_label']}",
+    )
+    return redirect("essay_queue")
 
 
 @login_required
@@ -582,6 +698,7 @@ def history(request):
     sessions = DrillSession.objects.filter(learner=learner).order_by("-started_at")
 
     picked = request.GET.get("date")
+    day = None
     session = None
     if picked:
         try:
@@ -592,12 +709,22 @@ def history(request):
             session = sessions.filter(started_at__date=day).first()
     else:
         session = sessions.first()
+        day = session.started_at.date() if session else timezone.localdate()
 
     answers = []
     if session:
         answers = list(
             session.answers.select_related("card__vocab", "question").order_by("id")
         )
+
+    # งานเขียนของวันนั้น — ผู้เรียนขอตรวจแล้วมารอผลที่นี่ตามที่หน้าผลตรวจบอกไว้
+    # ต้องดูจากวันที่ที่เลือก ไม่ใช่จากชุดฝึก เพราะวันที่เขียนเรียงความอย่างเดียว
+    # โดยไม่ได้ทำชุดฝึก จะไม่มี DrillSession ให้เกาะ แล้วงานจะหายไปจากประวัติ
+    essays = (
+        WritingSubmission.objects.filter(learner=learner, created_at__date=day)
+        .select_related("feedback")
+        if day else WritingSubmission.objects.none()
+    )
 
     days = [
         {"date": s.started_at.date(), "answered": s.answered, "correct": s.correct,
@@ -607,7 +734,8 @@ def history(request):
     ]
     return render(request, "core/history.html", {
         "nav": "history", "days": days, "session": session, "answers": answers,
-        "picked": session.started_at.date().isoformat() if session else picked,
+        "essays": essays,
+        "picked": day.isoformat() if day else picked,
         "learner": learner,
     })
 

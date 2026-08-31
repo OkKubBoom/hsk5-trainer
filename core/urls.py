@@ -40,6 +40,7 @@ urlpatterns = [
     path("essay/write/new/", views.essay_new_words, name="essay_new_words"),
     path("essay/submit/", views.essay_submit, name="essay_submit"),
     path("essay/<int:pk>/", views.essay_result, name="essay_result"),
+    path("essay/<int:pk>/request/", views.essay_request, name="essay_request"),
     path("essay/<int:pk>/grade/", views.essay_grade, name="essay_grade"),
     path("essay/<int:pk>/dispute/", views.essay_dispute, name="essay_dispute"),
     path("mock/", views.mock_home, name="mock_home"),
@@ -60,4 +61,6 @@ urlpatterns = [
     path("explanation/<int:question_id>/note/", views.explanation_note, name="explanation_note"),
     path("vocab/<int:vocab_id>/note/", views.vocab_note, name="vocab_note"),
     path("explanation/review/", views.explanation_review, name="explanation_review"),
+    path("essay/queue/list/", views.essay_queue, name="essay_queue"),
+    path("essay/queue/<int:pk>/answer/", views.essay_queue_answer, name="essay_queue_answer"),
 ]

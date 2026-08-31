@@ -9,6 +9,11 @@
           ชื่อผู้เรียน · อีเมล · ข้อมูลใดที่ระบุตัวตนได้
 ผู้เรียนต้องกดยินยอมก่อนใช้ครั้งแรก และมีบรรทัดบอกอยู่บนหน้าจอตลอด
 
+ระบบมีสองทางที่เขียนผลลงที่เดียวกัน:
+  ทางหลัก  ผู้เรียนกดขอ → เจ้าของเอาพรอมต์ไปถาม Claude เอง → วางผล JSON กลับมา
+           ไม่ต้องมีกุญแจ ไม่มีค่าใช้จ่ายต่อครั้ง เจ้าของเห็นผลก่อนผู้เรียน
+  ทางเสริม เรียก API ตรงๆ — เปิดใช้เมื่อตั้ง ANTHROPIC_API_KEY เท่านั้น
+
 **ห้ามสร้าง client ที่ระดับโมดูล** — Dockerfile รัน collectstatic ตอน build
 โดยไม่มี ANTHROPIC_API_KEY ถ้าสร้างตอน import จะทำให้ build image พัง
 """
@@ -21,6 +26,10 @@ import os
 # ถ้าคำอธิบายผิด ผู้เรียนจำผิดไปสอบ ซึ่งแย่กว่าไม่มีระบบตรวจเลย จึงไม่ลดรุ่นเพื่อประหยัด
 MODEL = "claude-opus-5"
 MAX_TOKENS = 4000
+
+# ชื่อที่ติดไว้ในช่อง "ตรวจโดย" ของแต่ละทาง — ต้องแยกกันให้เห็น
+# เพราะทางถ่ายทอดมีคนอ่านผลก่อนวางลงระบบ ส่วนทาง API ไม่มีใครดูเลย
+RELAY_LABEL = f"{MODEL} · เจ้าของระบบถามให้"
 
 # ชนิดข้อผิด — ชั้นที่ 3 นับจากคำนำหน้า typo_ กับ grammar_ จึงห้ามเปลี่ยนคำนำหน้า
 ISSUE_KINDS = [
@@ -182,3 +191,69 @@ def _friendly(exc: Exception) -> str:
     if "Timeout" in name or "APIConnection" in name:
         return "เรียกตัวตรวจไม่สำเร็จภายในเวลาที่กำหนด งานเขียนถูกบันทึกแล้ว กดตรวจใหม่ได้"
     return "ตรวจไม่สำเร็จตอนนี้ งานเขียนถูกบันทึกไว้แล้ว กดตรวจใหม่ได้"
+
+
+# ── ทางหลัก: ให้เจ้าของระบบเอาไปถาม Claude เองแล้ววางผลกลับมา ──
+
+def full_prompt(*, text_zh: str, task_no: int, required_words: list[str],
+                char_count: int, missing: list[str]) -> str:
+    """พรอมต์เต็มที่ก๊อปไปวางใน Claude ได้เลย
+
+    รวมคำสั่งระบบ โจทย์ และโครง JSON ไว้ในก้อนเดียว เพราะเจ้าของระบบจะก๊อปทีเดียว
+    ไม่ควรต้องประกอบเอง — ทุกขั้นที่ต้องทำเองคือโอกาสที่จะทำพลาด
+    """
+    schema_hint = json.dumps(OBSERVATION_SCHEMA, ensure_ascii=False, indent=1)
+    return "\n".join([
+        SYSTEM,
+        "",
+        "── โจทย์และงานเขียน ──",
+        build_prompt(text_zh=text_zh, task_no=task_no, required_words=required_words,
+                     char_count=char_count, missing=missing),
+        "",
+        "── รูปแบบคำตอบ ──",
+        "ตอบกลับเป็น JSON ก้อนเดียวตาม schema นี้ ห้ามมีข้อความอื่นนอกก้อน JSON",
+        "```json",
+        schema_hint,
+        "```",
+    ])
+
+
+class PasteError(ValueError):
+    """ผลที่วางกลับมาอ่านไม่ได้ — ต้องบอกเจ้าของระบบว่าผิดตรงไหน"""
+
+
+def parse_pasted(raw: str) -> dict:
+    """แกะ JSON ที่เจ้าของระบบวางกลับมา
+
+    ยอมรับทั้งก้อน JSON ล้วน และก้อนที่ห่อด้วย ```json เพราะคนก๊อปมักติดมาด้วย
+    """
+    text = (raw or "").strip()
+    if not text:
+        raise PasteError("ยังไม่ได้วางอะไรมา")
+
+    if "```" in text:
+        parts = text.split("```")
+        text = next((p for p in parts if p.strip().startswith(("{", "json"))), text)
+        text = text.strip()
+        if text.startswith("json"):
+            text = text[4:].strip()
+
+    start, end = text.find("{"), text.rfind("}")
+    if start == -1 or end == -1:
+        raise PasteError("หาก้อน JSON ไม่เจอ — ต้องมีวงเล็บปีกกาเปิดและปิด")
+
+    try:
+        data = json.loads(text[start:end + 1])
+    except json.JSONDecodeError as exc:
+        raise PasteError(f"อ่าน JSON ไม่ได้ที่บรรทัด {exc.lineno} — {exc.msg}") from exc
+
+    missing = [k for k in ("coherent_logical", "content_rich", "issues") if k not in data]
+    if missing:
+        raise PasteError("ขาดข้อมูลที่จำเป็น: " + " · ".join(missing))
+    if not isinstance(data.get("issues"), list):
+        raise PasteError("ช่อง issues ต้องเป็นรายการ")
+
+    for key in ("suggestions_th", "strengths_th"):
+        data.setdefault(key, [])
+    data.setdefault("next_step_th", "")
+    return data

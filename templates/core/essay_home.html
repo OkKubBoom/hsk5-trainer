@@ -9,12 +9,10 @@
     <p class="muted">โจทย์ให้คำมา 5 คำ ต้องใช้ครบทุกคำ เขียนราว 80 ตัวอักษร</p>
   </div>
 
-  {% if not grader_ready %}
-  <div class="note warn">
-    <b>ตอนนี้ยังตรวจอัตโนมัติไม่ได้</b> — เจ้าของระบบยังไม่ได้ตั้งค่ากุญแจสำหรับเรียกตัวตรวจ
-    เขียนและบันทึกได้ตามปกติ กดตรวจทีหลังได้
+  <div class="note">
+    เขียนเสร็จแล้วกด <b>ส่งให้เจ้าของระบบตรวจ</b> — เขาจะเอาไปถาม Claude ให้
+    แล้วผลจะมาขึ้นที่หน้างานชิ้นนั้นและในหน้าประวัติของวันที่เขียน
   </div>
-  {% endif %}
 
   <div class="actionbar">
     <a class="btn block lg" href="{% url 'essay_write' %}">เริ่มเขียน</a>
@@ -34,8 +32,10 @@
           <span class="pill {% if s.feedback.scores.band == 'high' %}ok{% elif s.feedback.scores.band == 'low' %}bad{% else %}warn{% endif %}">
             {{ s.feedback.scores.band_label }}
           </span>
+        {% elif s.review_state == 'requested' %}
+          <span class="pill warn">รอเจ้าของระบบตรวจ</span>
         {% else %}
-          <span class="pill">ยังไม่ได้ตรวจ</span>
+          <span class="pill">ยังไม่ได้ส่งตรวจ</span>
         {% endif %}
       </a>
     {% endfor %}

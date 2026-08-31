@@ -34,6 +34,34 @@
 </div>
 {% endif %}
 
+{% comment %}
+งานเขียนของวันนั้น — ผลตรวจกลับมาถึงผู้เรียนที่นี่ ตามที่หน้าผลตรวจสัญญาไว้
+วางไว้ก่อนบล็อกชุดฝึก เพราะวันที่เขียนอย่างเดียวจะไม่มีชุดฝึกให้แสดงเลย
+{% endcomment %}
+{% if essays %}
+<div class="stack" style="gap:var(--s1)">
+  <span class="eyebrow">เรียงความของวันนี้</span>
+  {% for e in essays %}
+    <a class="card flat row" href="{% url 'essay_result' e.pk %}"
+       style="text-decoration:none;color:inherit;gap:var(--s2)">
+      <span class="stack grow" style="gap:2px">
+        <b>ข้อ {{ e.task_no }} · {{ e.char_count }} ตัวอักษร</b>
+        <span class="muted zh">{{ e.text_zh|truncatechars:40 }}</span>
+      </span>
+      {% if e.feedback %}
+        <span class="pill {% if e.feedback.scores.band == 'high' %}ok{% elif e.feedback.scores.band == 'low' %}bad{% else %}warn{% endif %}">
+          {{ e.feedback.scores.band_label }}
+        </span>
+      {% elif e.review_state == 'requested' %}
+        <span class="pill warn">รอเจ้าของระบบตรวจ</span>
+      {% else %}
+        <span class="pill">ยังไม่ได้ส่งตรวจ</span>
+      {% endif %}
+    </a>
+  {% endfor %}
+</div>
+{% endif %}
+
 {% if session %}
   <div class="stats">
     <div class="stat"><b>{{ session.answered }}</b><span>ตอบไป</span></div>
@@ -92,12 +120,15 @@
     <div class="note">วันนี้ยังไม่ได้ตอบข้อไหน</div>
   {% endif %}
 
-{% else %}
+{% elif not essays %}
+  {# ถ้าวันนั้นเขียนเรียงความไว้ ไม่นับว่า "ไม่มีประวัติ" — งานเขียนขึ้นอยู่ด้านบนแล้ว #}
   <div class="card stack" style="align-items:center;text-align:center;padding:40px 22px">
     <h3>ยังไม่มีประวัติของวันนั้น</h3>
     <p class="muted">เลือกวันอื่นจากปุ่มด้านบน หรือเริ่มชุดของวันนี้</p>
     <a class="btn" href="{% url 'drill_start' %}">เริ่มชุดวันนี้</a>
   </div>
+{% else %}
+  <div class="note">วันนั้นไม่ได้ทำชุดฝึก แต่มีงานเขียนอยู่ด้านบน</div>
 {% endif %}
 
 {% endblock %}

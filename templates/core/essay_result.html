@@ -95,30 +95,74 @@
     <p class="zh" style="font-size:var(--t-lead);line-height:2">{{ submission.text_zh }}</p>
   </div>
 
-  <div class="actionbar">
-    {% if not feedback %}
-      {% if consented and grader_ready %}
-        <form method="post" action="{% url 'essay_grade' submission.pk %}" style="width:100%">
-          {% csrf_token %}
-          <button class="btn block lg" type="submit">ส่งให้ AI ตรวจ</button>
-        </form>
-      {% else %}
-        <a class="btn block lg ghost" href="{% url 'essay_write' %}">
-          {% if not grader_ready %}ยังตรวจอัตโนมัติไม่ได้ · เขียนชิ้นใหม่{% else %}ยังไม่ได้ยินยอมให้ส่งตรวจ{% endif %}
-        </a>
-      {% endif %}
+  {% comment %}
+  ทางหลักคือกดขอให้เจ้าของระบบเอาไปถาม Claude ให้ ไม่ได้ยิงเข้า AI ตรงจากที่นี่
+  ต้องเขียนให้ตรงว่า "รอ" เพราะผู้เรียนที่คิดว่าผลจะขึ้นทันทีจะกดซ้ำแล้วคิดว่าระบบพัง
+  {% endcomment %}
+  {% if submission.review_state == 'requested' %}
+    <div class="note warn">
+      <b>ส่งให้เจ้าของระบบแล้ว</b> — ขอไว้เมื่อ {{ submission.requested_at|date:"j M · H:i" }}
+      {% if feedback %}ผลด้านบนเป็นของรอบก่อน{% else %}ผลจะขึ้นที่หน้านี้และในหน้าประวัติของวันที่เขียน{% endif %}
+      ไม่ต้องกดซ้ำ
+      {% if submission.learner_note %}<br><span class="muted">ที่ฝากไว้: {{ submission.learner_note }}</span>{% endif %}
+    </div>
+  {% endif %}
+
+  {% if not feedback and submission.review_state != 'requested' %}
+    {% if consented %}
+      <form method="post" action="{% url 'essay_request' submission.pk %}" class="card stack" style="gap:var(--s2)">
+        {% csrf_token %}
+        <span class="wlab">ขอให้ตรวจ</span>
+        <p class="muted">
+          เจ้าของระบบจะเอางานชิ้นนี้ไปถาม Claude ให้ แล้วเอาผลมาลงให้ที่นี่
+          ไม่ได้ตรวจทันที ต้องรอเจ้าของระบบเปิดดู
+        </p>
+        <label for="note">อยากให้ดูตรงไหนเป็นพิเศษไหม <span class="muted">(ไม่ใส่ก็ได้)</span></label>
+        <input id="note" type="text" name="note" maxlength="300"
+               placeholder="เช่น ไม่แน่ใจประโยคสุดท้าย">
+        <div><button class="btn lg" type="submit" style="width:auto">ส่งให้เจ้าของระบบตรวจ</button></div>
+      </form>
     {% else %}
-      <a class="btn block" href="{% url 'essay_write' %}">เขียนชิ้นใหม่</a>
+      {% comment %}
+      ให้กดยินยอมได้ตรงนี้เลย ไม่ใช่ไล่กลับไปหน้าเขียน — คนที่เพิ่งเขียนเสร็จ
+      กำลังอยากรู้ผล ถ้าต้องเดินอ้อมไปหน้าอื่นก่อน ส่วนใหญ่จะเลิกกลางทาง
+      {% endcomment %}
+      <div class="card stack" style="gap:var(--s2);border-color:var(--partial)">
+        <b>ก่อนส่งตรวจ — งานเขียนของคุณจะถูกส่งไปที่ไหน</b>
+        <p class="muted">
+          เจ้าของระบบจะคัดลอกเฉพาะข้อความที่คุณเขียนกับคำที่โจทย์กำหนดไปถาม Claude ให้
+          ไม่ส่งชื่อ อีเมล หรือข้อมูลที่ระบุตัวคุณได้ — อย่าเขียนข้อมูลส่วนตัวจริงลงในเรียงความ
+        </p>
+        <form method="post" action="{% url 'essay_consent' %}" class="row" style="gap:var(--s1);flex-wrap:wrap">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{% url 'essay_result' submission.pk %}">
+          <button class="btn" type="submit" name="agree" value="1" style="width:auto">ยอมรับ ส่งให้ตรวจได้</button>
+          <span class="muted">ไม่ยอมรับก็เก็บงานไว้ตรวจเองได้</span>
+        </form>
+      </div>
+    {% endif %}
+  {% endif %}
+
+  <div class="actionbar">
+    <a class="btn block{% if feedback %}{% else %} ghost{% endif %}" href="{% url 'essay_write' %}">เขียนชิ้นใหม่</a>
+    {% if feedback %}
+      <form method="post" action="{% url 'essay_request' submission.pk %}">
+        {% csrf_token %}
+        <button class="btn ghost" type="submit" style="width:auto;white-space:nowrap">ขอตรวจใหม่</button>
+      </form>
+    {% endif %}
+    {% comment %}ทางเรียก API ตรง เปิดเมื่อเจ้าของระบบตั้งกุญแจไว้เท่านั้น{% endcomment %}
+    {% if grader_ready and consented %}
       <form method="post" action="{% url 'essay_grade' submission.pk %}">
         {% csrf_token %}
-        <button class="btn ghost" type="submit" style="width:auto;white-space:nowrap">ตรวจใหม่</button>
+        <button class="btn ghost sm" type="submit" style="width:auto;white-space:nowrap">ตรวจอัตโนมัติเลย</button>
       </form>
     {% endif %}
   </div>
 
   {% if feedback %}
   <p class="muted" style="font-size:.82rem">
-    ตรวจโดย {{ feedback.graded_by }} · ใช้โทเคน {{ feedback.input_tokens }} เข้า / {{ feedback.output_tokens }} ออก
+    ตรวจโดย {{ feedback.graded_by }}{% if feedback.output_tokens %} · ใช้โทเคน {{ feedback.input_tokens }} เข้า / {{ feedback.output_tokens }} ออก{% endif %}
     {% if sc.observation.dropped_issues %}
       · ตัดข้อผิดที่หาไม่เจอในงานเขียนจริงออก {{ sc.observation.dropped_issues }} จุด
     {% endif %}
