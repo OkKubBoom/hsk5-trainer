@@ -15,6 +15,7 @@ import random
 from django.db.models import Q
 from django.utils import timezone
 
+from . import diagnose
 from .models import (
     ErrorCode, ErrorLog, MockExam, Question, QuestionStatus, Section,
 )
@@ -121,10 +122,15 @@ def grade(exam: MockExam, *, auto: bool = False) -> MockExam:
         right = next((o.text for o in question.options.all() if o.is_correct), question.answer_text)
         if given and given == (right or "").strip():
             correct += 1
+            # ตอบถูกในข้อสอบจำลอง = แก้ได้แล้ว ต้องปิดบันทึกข้อผิดเดิมด้วย
+            ErrorLog.objects.filter(
+                learner=exam.learner, question=question, resolved_at__isnull=True,
+            ).update(resolved_at=timezone.now())
         elif given:
             # ตอบผิด (ไม่ใช่ไม่ได้ตอบ) → เข้าคิวตามตื้อในชุดฝึกวันถัดไป
+            # ไม่จับเวลารายข้อในโหมดนี้ จึงส่ง elapsed_ms=0 แล้วให้เดาจากชนิดโจทย์
             ErrorLog.record(
-                exam.learner, ErrorCode.MEANING,
+                exam.learner, diagnose.code_for(question=question),
                 label=(question.source_ref or question.prompt_zh[:60])[:200],
                 section=question.section, question=question,
                 vocab=question.vocab,

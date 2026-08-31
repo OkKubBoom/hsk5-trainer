@@ -16,6 +16,13 @@
     <div class="bar" role="progressbar" aria-valuenow="{{ q.index }}" aria-valuemin="1" aria-valuemax="{{ q.total }}">
       <div style="width:{{ progress }}%"></div>
     </div>
+    {% if session.mix.short_by %}
+      {# กฎของระบบคือห้ามดันคำใหม่เกินโควตาเพื่อให้ชุดครบ — แต่ต้องบอกเหตุผลด้วย #}
+      <p class="muted" style="font-size:.8rem">
+        วันนี้ {{ q.total }} ข้อ (น้อยกว่าเป้า {{ session.mix.short_by }} ข้อ) —
+        ยังไม่มีของถึงกำหนดทวนมากพอ และระบบไม่ดันคำใหม่เกินโควตาของวัน
+      </p>
+    {% endif %}
   </div>
 
   <div id="card" class="card stack" style="gap:var(--s3)">

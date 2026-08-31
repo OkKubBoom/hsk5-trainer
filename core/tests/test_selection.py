@@ -250,8 +250,25 @@ class QuestionCapTests(TestCase):
         """ก่อนมีเพดาน ช่องเติมดันข้อสอบจริงเข้ามาจนเต็มชุด"""
         plan = selection.build_daily_drill(self.learner, size=40, seed=2)
         cards = [it for it in plan.items if it.card]
-        self.assertGreaterEqual(len(cards), 40 - settings.DRILL_MAX_QUESTIONS)
-        self.assertEqual(plan.size, 40)
+        questions = [it for it in plan.items if it.question]
+        self.assertGreater(len(cards), len(questions))
+
+    def test_ชุดสั้นกว่าเป้าได้ถ้ายังไม่มีอะไรให้ทวน(self):
+        """ผู้เรียนใหม่ยังไม่มีการ์ดที่เคยเรียน ชุดจึงสั้นกว่า 40 — ถูกต้องแล้ว
+
+        โควตาคำใหม่คือขีดจำกัดการเรียนรู้ ดันเกินเพื่อให้ครบ 40
+        = สร้างหนี้การ์ดที่จะกลับมาถล่มในอีกสามวัน (เขียนไว้ใน selection.py:244)
+        แต่ต้องบอกผู้เรียนตรงๆ ว่าทำไมสั้น
+        """
+        plan = selection.build_daily_drill(self.learner, size=40, seed=2)
+        self.assertLess(plan.size, 40)
+        self.assertEqual(plan.mix["short_by"], 40 - plan.size)
+
+    def test_ช่องทวนเสริมห้ามมีการ์ดที่ไม่เคยเรียน(self):
+        """ไม่งั้นกลายเป็นดันคำใหม่เกินโควตาโดยเรียกว่า 'ทวน'"""
+        plan = selection.build_daily_drill(self.learner, size=40, seed=5)
+        filler = [it.card for it in plan.items if it.source == "filler" and it.card]
+        self.assertTrue(all(c.reps >= 1 for c in filler))
 
     def test_บันทึกไว้ในสรุปว่าวันนั้นมีข้อสอบจริงกี่ข้อ(self):
         plan = selection.build_daily_drill(self.learner, size=40, seed=3)

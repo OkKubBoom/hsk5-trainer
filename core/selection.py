@@ -264,7 +264,10 @@ def build_daily_drill(
     if shortfall > 0:
         spare = (
             Card.objects
-            .filter(learner=learner)
+            # ต้องเคยเรียนมาก่อน — ช่องนี้ชื่อ "ทวนเสริม" ไม่ใช่ช่องสอนคำใหม่
+            # ถ้าปล่อยการ์ด reps=0 เข้ามา จะกลายเป็นการดันคำใหม่เกินโควตาของวัน
+            # ซึ่งขัดกับตัวคุมโหลดที่เขียนไว้เองอีก 20 บรรทัดก่อนหน้า
+            .filter(learner=learner, reps__gte=1)
             .exclude(pk__in=used_cards)
             .select_related("vocab")
             .order_by("due_at", "pk")[:shortfall]

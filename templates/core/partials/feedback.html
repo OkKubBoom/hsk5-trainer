@@ -114,8 +114,15 @@
 
     {% if outcome.advice %}<div class="note warn"><b>ทำไงต่อ</b> — {{ outcome.advice }}</div>{% endif %}
 
-    {% if outcome.question %}
-    <div><button class="btn ghost sm" type="button" style="width:auto">เฉลยนี้ผิด บอกเรา</button></div>
+    {% comment %}
+    ข้อที่ไม่มีคำอธิบาย 4 ชั้นก็ต้องแย้งได้ — เดิมฟอร์มแย้งอยู่ในบล็อกของคำอธิบาย
+    ข้อที่ไม่มีคำอธิบายจึงเหลือแค่ปุ่มเปล่าที่กดแล้วไม่เกิดอะไร
+    CLAUDE.md ข้อ 11 เขียนไว้ว่าห้ามเชื่อเฉลย AI โดยไม่มีทางให้ผู้ใช้กดว่าผิด
+    {% endcomment %}
+    {% if outcome.question and not outcome.question.explanation.why_correct %}
+      {% with question=outcome.question ex=outcome.question.explanation %}
+        {% include "core/partials/ai_notice.html" %}
+      {% endwith %}
     {% endif %}
   </div>
 

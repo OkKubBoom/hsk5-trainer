@@ -145,3 +145,25 @@ class LoginDaysOnGroupPageTests(TestCase):
         cal = {c["date"]: c for c in row["calendar"]}
         self.assertEqual(cal[yesterday]["level"], "seen")
         self.assertIn("เข้าระบบแต่ไม่ได้ทำอะไร", cal[yesterday]["label"])
+
+
+class SettingsSafetyTests(TestCase):
+    """ค่าตั้งต้นต้องปลอดภัย — พิมพ์ชื่อ env ผิดครั้งเดียวต้องไม่เปิดโหมดดีบัก"""
+
+    def test_debug_ตั้งต้นเป็นปิด(self):
+        """หน้า error ของโหมดดีบักพ่นค่า env ทั้งหมดรวมถึงรหัสผ่านฐานข้อมูล"""
+        import os
+        from config import settings as conf
+
+        self.assertFalse(conf.env_bool("DJANGO_A_NAME_THAT_DOES_NOT_EXIST"))
+        self.assertNotIn("DJANGO_A_NAME_THAT_DOES_NOT_EXIST", os.environ)
+
+    def test_ค่าสำรองของ_secret_key_ไม่อยู่ในโค้ดสำหรับ_production(self):
+        """คีย์สำรองเดิมอยู่ใน repo สาธารณะ ใครก็ปลอม session cookie ได้"""
+        from pathlib import Path
+
+        from django.conf import settings as dj
+
+        source = (Path(dj.BASE_DIR) / "config" / "settings.py").read_text(encoding="utf-8")
+        self.assertIn("ImproperlyConfigured", source)
+        self.assertNotIn("dev-insecure-key-change-me", source)

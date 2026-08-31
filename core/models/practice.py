@@ -177,7 +177,24 @@ class MockExam(TimeStamped):
         return self.listening + self.reading + self.writing
 
     @property
+    def is_full_exam(self):
+        """วัดครบทั้งสามพาร์ทหรือยัง
+
+        ระบบยังจำลองได้แค่พาร์ทอ่าน (core/mock.py เขียนเฉพาะ reading)
+        คะแนนรวมจึงไม่มีทางถึง 180 ได้เลยไม่ว่าจะทำดีแค่ไหน
+        """
+        return bool(self.listening and self.writing)
+
+    @property
     def passed(self):
+        """ผ่านเกณฑ์ไหม — คืน None ถ้ายังวัดไม่ครบสามพาร์ท
+
+        เดิมคืน False เสมอเมื่อวัดแค่พาร์ทอ่าน ซึ่งอ่านได้ว่า "สอบตก"
+        ทั้งที่ความจริงคือ "ยังวัดไม่ครบ" — คนละความหมายกันคนละเรื่อง
+        และเป็นตัวเลขที่จะถูกใช้ตัดสินใจว่าสมัครสอบรอบไหน
+        """
+        if not self.is_full_exam:
+            return None
         threshold = self.spec.pass_score if self.spec else 180
         return self.total >= threshold
 

@@ -8,18 +8,34 @@ import os
 import sys
 
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 
+TESTING = "test" in sys.argv
+
+
 def env_bool(key, default=False):
     return os.getenv(key, str(int(default))).strip().lower() in ("1", "true", "yes", "on")
 
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-insecure-key-change-me")
-DEBUG = env_bool("DJANGO_DEBUG", True)
+# ค่าตั้งต้นต้องปลอดภัยเสมอ — ถ้าลืมตั้ง DJANGO_DEBUG บนเซิร์ฟเวอร์
+# หรือพิมพ์ชื่อตัวแปรผิด ระบบต้องเลือกทางที่ปลอดภัยไว้ก่อน ไม่ใช่เปิดโหมดดีบัก
+# เพราะหน้า error ของโหมดดีบักพ่นค่า env ทั้งหมดรวมถึงรหัสผ่านฐานข้อมูล
+DEBUG = env_bool("DJANGO_DEBUG", False)
+
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "")
+if not SECRET_KEY:
+    if DEBUG or TESTING:
+        SECRET_KEY = "dev-only-key-never-used-in-production"
+    else:
+        raise ImproperlyConfigured(
+            "ต้องตั้ง DJANGO_SECRET_KEY บนเซิร์ฟเวอร์ — "
+            "สร้างด้วย python -c \"import secrets; print(secrets.token_urlsafe(64))\""
+        )
 ALLOWED_HOSTS = [h.strip() for h in os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if h.strip()]
 CSRF_TRUSTED_ORIGINS = [
     o.strip() for o in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()
@@ -99,7 +115,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 # ตอนรันเทสต์ยังไม่ได้ collectstatic — ถ้าใช้ manifest storage เทสต์ที่ render
 # เทมเพลตจะพังด้วย "Missing staticfiles manifest entry" ซึ่งไม่เกี่ยวกับสิ่งที่กำลังทดสอบ
-TESTING = "test" in sys.argv
 
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},

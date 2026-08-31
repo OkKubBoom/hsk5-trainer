@@ -10,7 +10,7 @@ from dataclasses import dataclass
 
 from django.utils import timezone
 
-from . import placement, reading, selection, srs
+from . import diagnose, placement, reading, selection, srs
 from .models import (
     AnswerRecord, Card, DrillSession, ErrorCode, ErrorLog, Question,
     QuestionOption, Rating, Section,
@@ -151,6 +151,15 @@ def _rating_for(is_correct: bool, elapsed_ms: int) -> int:
     return Rating.GOOD
 
 
+def _resolve_errors(learner, *, card=None, question=None) -> None:
+    """ปิดบันทึกข้อผิดที่แก้ได้แล้ว — ทั้งฝั่งคำศัพท์และฝั่งข้อสอบ"""
+    base = ErrorLog.objects.filter(learner=learner, resolved_at__isnull=True)
+    if card is not None:
+        base.filter(vocab=card.vocab).update(resolved_at=timezone.now())
+    elif question is not None:
+        base.filter(question=question).update(resolved_at=timezone.now())
+
+
 def submit(session: DrillSession, entry: dict, given: str, correct_answer: str,
            *, elapsed_ms: int = 0, error_code: str = "") -> dict:
     """บันทึกคำตอบหนึ่งข้อ — เขียนครบทั้ง AnswerRecord, SRS และ ErrorLog"""
@@ -172,7 +181,10 @@ def submit(session: DrillSession, entry: dict, given: str, correct_answer: str,
     wrong_reason = ""
     if not is_correct:
         label = card.vocab.hanzi if card else (question.prompt_zh[:60] if question else given[:60])
-        code = error_code or (ErrorCode.VOCAB if card else ErrorCode.MEANING)
+        # เดาสาเหตุจากชนิดโจทย์และเวลาที่ใช้ แทนป้ายตายตัว — ดู core/diagnose.py
+        code = error_code or diagnose.code_for(
+            card=card, question=question, elapsed_ms=elapsed_ms,
+        )
         ErrorLog.record(
             session.learner, code, label,
             section=(Section.VOCAB if card else (question.section if question else Section.READING)),
@@ -180,11 +192,11 @@ def submit(session: DrillSession, entry: dict, given: str, correct_answer: str,
             question=question,
         )
         wrong_reason = ErrorCode.advice(code)
-    elif card:
-        # ตอบถูกแล้วก็ปิดบันทึกข้อผิดเดิมของคำนั้น ไม่ให้ตามตื้อคำที่แก้ได้แล้ว
-        ErrorLog.objects.filter(
-            learner=session.learner, vocab=card.vocab, resolved_at__isnull=True,
-        ).update(resolved_at=timezone.now())
+    else:
+        # ตอบถูกแล้วต้องปิดบันทึกข้อผิดเดิม ไม่ให้ตามตื้อสิ่งที่แก้ได้แล้ว
+        # เดิมปิดเฉพาะข้อคำศัพท์ ข้อสอบจึงค้างอยู่ในคิว 30% ตลอดกาล
+        # ต่อให้ตอบถูกกี่ครั้งก็ตาม แล้วหน้าแรกก็โชว์ตัวเลขที่ขึ้นทางเดียว
+        _resolve_errors(session.learner, card=card, question=question)
 
     # เหตุผลว่าตัวลวงแต่ละตัวผิดเพราะอะไร — ชั้นที่ 2 ของการ์ดเฉลย
     distractors = []

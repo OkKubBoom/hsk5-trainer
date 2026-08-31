@@ -25,3 +25,6 @@ __pycache__/
 
 # ข้อสอบต้นฉบับ (ลิขสิทธิ์)
 /SampleExamQuestions/
+
+# ไฟล์สำรอง — มีข้อมูลผู้เรียนจริง ห้าม commit
+/backups/
