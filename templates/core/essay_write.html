@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}เขียนเรียงความ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}เขียนเรียงความ{% endblock %}
+{% block content %}
+<div class="stack" x-data="{
+       text: '',
+       started: Date.now(),
+       get chars() { return (this.text.match(/[一-鿿]/g) || []).length },
+       used(w) { return this.text.includes(w) }
+     }">
+
+  {% if not consented %}
+  {# ต้องยินยอมก่อนใช้ครั้งแรก เพราะงานเขียนถูกส่งออกนอกระบบ #}
+  <div class="card stack" style="gap:var(--s2);border-color:var(--partial)">
+    <h2>ก่อนเริ่ม — งานเขียนของคุณจะถูกส่งไปตรวจที่ไหน</h2>
+    <div class="stack" style="gap:var(--s1)">
+      <p><b>ส่งออกไป:</b> ข้อความที่คุณเขียน และคำที่โจทย์กำหนด</p>
+      <p><b>ไม่ส่ง:</b> ชื่อ อีเมล หรือข้อมูลที่ระบุตัวคุณได้ · ข้อสอบและเฉลยในระบบ</p>
+      <p class="muted">
+        ตัวตรวจคือ Claude ซึ่งเป็นบริการภายนอก — อย่าเขียนข้อมูลส่วนตัวจริงลงในเรียงความ
+        ถ้าไม่อยากส่ง ยังเขียนและบันทึกไว้ตรวจเองได้
+      </p>
+    </div>
+    <form method="post" action="{% url 'essay_consent' %}" class="row" style="gap:var(--s1);flex-wrap:wrap">
+      {% csrf_token %}
+      <button class="btn" type="submit" name="agree" value="1">ยอมรับ ส่งตรวจอัตโนมัติได้</button>
+      <button class="btn ghost" type="submit" name="agree" value="0" style="width:auto">ไม่ ฉันจะตรวจเอง</button>
+    </form>
+  </div>
+  {% endif %}
+
+  <div class="card stack" style="gap:var(--s2)">
+    <div class="row" style="flex-wrap:wrap;gap:var(--s1)">
+      <span class="eyebrow grow">ข้อ 99 · ใช้คำทั้ง 5 คำนี้ให้ครบ</span>
+      <form method="post" action="{% url 'essay_new_words' %}">
+        {% csrf_token %}
+        <button class="btn ghost sm" type="submit" style="width:auto">สุ่มคำใหม่</button>
+      </form>
+    </div>
+
+    <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+      {% for w in words %}
+        <span class="wordchip zh" :class="used('{{ w|escapejs }}') && 'on'">{{ w }}</span>
+      {% endfor %}
+    </div>
+
+    <form method="post" action="{% url 'essay_submit' %}" class="stack" style="gap:var(--s1)">
+      {% csrf_token %}
+      <textarea name="text_zh" x-model="text" rows="9" class="zh essaybox"
+                placeholder="พิมพ์ภาษาจีนด้วยแป้นพิมพ์จีนของเครื่องคุณเอง"></textarea>
+      <input type="hidden" name="minutes" :value="Math.round((Date.now() - started) / 60000)">
+
+      <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+        <span class="mono muted">
+          <b x-text="chars">0</b> / {{ target_chars }} ตัวอักษรจีน
+        </span>
+        <span class="muted grow" x-show="chars > 0 && chars < {{ target_chars }}" x-cloak>
+          เกณฑ์ระบุว่าสั้นเกินไปจะไม่ได้ระดับสูงสุด
+        </span>
+      </div>
+
+      <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+        <button class="btn" type="submit" :disabled="chars === 0">บันทึกงานเขียน</button>
+        <span class="muted">บันทึกก่อน แล้วค่อยเลือกว่าจะให้ตรวจไหม</span>
+      </div>
+    </form>
+  </div>
+
+  <p class="muted" style="font-size:.82rem">
+    ⓘ ถ้าเลือกให้ตรวจอัตโนมัติ ข้อความที่คุณเขียนจะถูกส่งไปประมวลผลที่ Claude
+  </p>
+</div>
+{% endblock %}

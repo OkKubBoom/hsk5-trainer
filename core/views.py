@@ -16,6 +16,8 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from . import diagnose
+from . import essay as essay_engine
+from . import essay_grader
 from . import drill as drill_engine
 from . import grammar as grammar_engine
 from . import progress as progress_engine
@@ -31,6 +33,7 @@ from .models import (
     Card, DrillSession, ErrorCode, ErrorLog, LearnerProfile,
     ExplanationNote, MockExam, NoteStatus, NoteVerdict, PlacementTest, Question,
     ReviewMode, ReviewPhase, ReviewSession, Role, SynonymGroup, User, VocabItem,
+    WritingFeedback, WritingSubmission,
 )
 
 DRILL_SESSION_KEY = "drill_session_id"
@@ -409,6 +412,164 @@ def review_done(request, session_id):
         "window_label": review_engine.WINDOWS.get(session.scope.get("window", 0), ""),
         "stats": review_engine.stats(learner),
     })
+
+
+# ── เรียงความ 书写第二部分 ──────────────────────────────
+
+ESSAY_CONSENT_KEY = "essay_consent"
+
+
+@login_required
+@learner_required
+def essay_home(request):
+    """หน้าแรกของการเขียน — โจทย์ใหม่ กับงานที่เคยส่ง"""
+    learner = _learner(request)
+    return render(request, "core/essay_home.html", {
+        "nav": "essay", "learner": learner,
+        "past": WritingSubmission.objects.filter(learner=learner)
+                .select_related("feedback")[:20],
+        "consented": bool(request.session.get(ESSAY_CONSENT_KEY)),
+        "grader_ready": essay_grader.is_configured(),
+    })
+
+
+@login_required
+@learner_required
+@require_POST
+def essay_consent(request):
+    """ยินยอมให้ส่งงานเขียนไปตรวจ — ต้องกดเองก่อนใช้ครั้งแรก"""
+    request.session[ESSAY_CONSENT_KEY] = request.POST.get("agree") == "1"
+    return redirect("essay_write")
+
+
+@login_required
+@learner_required
+def essay_write(request):
+    """หน้าเขียน — โจทย์ข้อ 99 สุ่มคำจากคลังของเราเอง ไม่ใช้โจทย์ลิขสิทธิ์"""
+    learner = _learner(request)
+    words = request.session.get("essay_words")
+    if not words:
+        pool = VocabItem.objects.filter(hsk_level=5).exclude(hanzi="")[:400]
+        words = essay_engine.pick_words(pool)
+        request.session["essay_words"] = words
+
+    return render(request, "core/essay_write.html", {
+        "nav": "essay", "learner": learner, "words": words,
+        "target_chars": essay_engine.TARGET_CHARS,
+        "consented": bool(request.session.get(ESSAY_CONSENT_KEY)),
+        "grader_ready": essay_grader.is_configured(),
+    })
+
+
+@login_required
+@learner_required
+@require_POST
+def essay_new_words(request):
+    request.session.pop("essay_words", None)
+    return redirect("essay_write")
+
+
+@login_required
+@learner_required
+@require_POST
+def essay_submit(request):
+    """บันทึกงานเขียนก่อนเสมอ แล้วค่อยเรียกตัวตรวจ
+
+    ลำดับนี้สำคัญ — ถ้าเรียกตัวตรวจก่อนแล้วพัง งานที่ผู้เรียนพิมพ์มาจะหายไปทั้งหมด
+    """
+    learner = _learner(request)
+    text = (request.POST.get("text_zh") or "").strip()
+    words = request.session.get("essay_words") or []
+
+    if not text:
+        messages.info(request, "ยังไม่ได้เขียนอะไรเลย")
+        return redirect("essay_write")
+
+    char_count = essay_engine.count_chars(text)
+    submission = WritingSubmission.objects.create(
+        learner=learner, task_no=99, required_words=words,
+        prompt_zh=" ".join(words), text_zh=text, char_count=char_count,
+        minutes_spent=int(request.POST.get("minutes") or 0),
+    )
+    request.session.pop("essay_words", None)
+    return redirect("essay_result", pk=submission.pk)
+
+
+@login_required
+@learner_required
+def essay_result(request, pk):
+    learner = _learner(request)
+    submission = get_object_or_404(WritingSubmission, pk=pk, learner=learner)
+    feedback = getattr(submission, "feedback", None)
+    return render(request, "core/essay_result.html", {
+        "nav": "essay", "learner": learner, "submission": submission,
+        "feedback": feedback,
+        "consented": bool(request.session.get(ESSAY_CONSENT_KEY)),
+        "grader_ready": essay_grader.is_configured(),
+    })
+
+
+@login_required
+@learner_required
+@require_POST
+def essay_grade(request, pk):
+    """สั่งตรวจ — ต้องยินยอมก่อน เพราะงานเขียนถูกส่งออกนอกระบบ"""
+    learner = _learner(request)
+    submission = get_object_or_404(WritingSubmission, pk=pk, learner=learner)
+
+    if not request.session.get(ESSAY_CONSENT_KEY):
+        messages.info(request, "ต้องกดยินยอมก่อน เพราะงานเขียนจะถูกส่งไปให้ AI ตรวจ")
+        return redirect("essay_result", pk=pk)
+
+    missing = essay_engine.missing_words(submission.text_zh, submission.required_words)
+    try:
+        observation, usage = essay_grader.observe(
+            text_zh=submission.text_zh, task_no=submission.task_no,
+            required_words=submission.required_words,
+            char_count=submission.char_count, missing=missing,
+        )
+    except essay_grader.GraderUnavailable as exc:
+        messages.info(request, str(exc))
+        return redirect("essay_result", pk=pk)
+
+    scores = essay_engine.decide_band(
+        char_count=submission.char_count, missing=missing,
+        task_no=submission.task_no, observation=observation,
+    )
+    WritingFeedback.objects.update_or_create(
+        submission=submission,
+        defaults={
+            "scores": scores,
+            "total_100": scores["estimated_30"] * 100 // 30,
+            "issues": observation.get("issues") or [],
+            "graded_by": essay_grader.MODEL,
+            "input_tokens": usage["input_tokens"],
+            "output_tokens": usage["output_tokens"],
+        },
+    )
+    submission.feedback.scores["observation"] = {
+        k: observation.get(k) for k in
+        ("suggestions_th", "strengths_th", "next_step_th", "dropped_issues")
+    }
+    submission.feedback.save(update_fields=["scores", "updated_at"])
+    return redirect("essay_result", pk=pk)
+
+
+@login_required
+@learner_required
+@require_POST
+def essay_dispute(request, pk):
+    """ผู้เรียนแย้งว่าจุดที่ AI บอกว่าผิด จริงๆ ไม่ได้ผิด"""
+    learner = _learner(request)
+    submission = get_object_or_404(WritingSubmission, pk=pk, learner=learner)
+    ExplanationNote.objects.create(
+        author=request.user, verdict=NoteVerdict.WRONG,
+        submission=submission, field_name="essay_issue",
+        body=(request.POST.get("body") or "")[:4000],
+        source=(request.POST.get("source") or "").strip()[:300],
+    )
+    messages.info(request, "ส่งคำแย้งแล้ว — เจ้าของระบบจะตรวจให้")
+    return redirect("essay_result", pk=submission.pk)
 
 
 # ── ประวัติรายวัน ──────────────────────────────────────────

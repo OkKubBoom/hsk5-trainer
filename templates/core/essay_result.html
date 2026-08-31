@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}ผลตรวจเรียงความ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ผลตรวจเรียงความ{% endblock %}
+{% block content %}
+{% with sc=feedback.scores %}
+<div class="stack">
+
+  <div class="stack" style="gap:6px">
+    <span class="eyebrow">书写第二部分 · ข้อ {{ submission.task_no }}</span>
+    <h1>{% if feedback %}{{ sc.band_label }}{% else %}ยังไม่ได้ตรวจ{% endif %}</h1>
+    <p class="muted">{{ submission.created_at|date:"j M Y · H:i" }} · {{ submission.char_count }} ตัวอักษร</p>
+  </div>
+
+  {% if feedback %}
+    <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+      <span class="pill {% if sc.task_ok %}ok{% else %}bad{% endif %}">
+        {% if sc.task_ok %}ใช้คำครบ{% else %}ยังไม่ได้ใช้ {{ sc.missing_words|join:" " }}{% endif %}
+      </span>
+      <span class="pill {% if sc.length_ok %}ok{% else %}warn{% endif %}">
+        ยาว {{ sc.char_count }} ตัวอักษร
+      </span>
+      <span class="pill {% if sc.typo_count %}bad{% else %}ok{% endif %}">错别字 {{ sc.typo_count }}</span>
+      <span class="pill {% if sc.grammar_errors %}bad{% else %}ok{% endif %}">语法错误 {{ sc.grammar_errors }}</span>
+    </div>
+
+    {# ตัวเลขนี้ระบบเดาเอง 汉办 ไม่เคยประกาศว่าแต่ละช่วงคือกี่คะแนน #}
+    <div class="note">
+      <span class="ai-star">✱✱✱</span>
+      <b>ระบบประมาณให้ ≈ {{ sc.estimated_30 }}/30</b> — ไม่ใช่คะแนนของ 汉办
+      เอกสารทางการไม่เคยระบุว่าแต่ละระดับคือกี่คะแนน และคะแนนดิบยังถูกแปลงเป็นคะแนนมาตรฐานอีกชั้น
+      <br>ให้ดู<b>ระดับ</b>เป็นหลัก อย่าเอาตัวเลขนี้ไปคาดเดาคะแนนสอบจริง
+    </div>
+
+    {% if sc.band_rule_note %}
+      <div class="note warn"><b>หมายเหตุการตัดสิน</b> — {{ sc.band_rule_note }}</div>
+    {% endif %}
+
+    {% if feedback.issues %}
+    <div class="stack" style="gap:var(--s2)">
+      <span class="wlab">จุดที่ควรแก้ <span class="ai-star">✱✱✱</span></span>
+      {% for i in feedback.issues %}
+      <div class="card flat stack issuecard {% if i.certainty == 'unsure' %}unsure{% endif %}" style="gap:6px">
+        <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+          <span class="pill">{{ i.kind }}</span>
+          {% if i.certainty == 'unsure' %}<span class="pill warn">ไม่แน่ใจ · ไม่ถูกนับในการตัดสินระดับ</span>{% endif %}
+        </div>
+        <div class="stack" style="gap:2px">
+          <span class="muted">ที่เขียน</span>
+          <span class="zh" style="text-decoration:line-through;color:var(--ink-3)">{{ i.wrong }}</span>
+        </div>
+        <div class="stack" style="gap:2px">
+          <span class="muted">ที่ถูก</span>
+          <span class="zh" style="color:var(--ready)">{{ i.right }}</span>
+        </div>
+        <p>{{ i.why_th }}</p>
+      </div>
+      {% endfor %}
+
+      {% comment %}ปุ่มแย้ง — ทุกอย่างที่ AI สร้างต้องมีทางให้ผู้ใช้บอกว่าผิด{% endcomment %}
+      <details class="card flat">
+        <summary style="cursor:pointer">ตรงไหนที่ AI บอกว่าผิด แต่จริงๆ ไม่ผิด</summary>
+        <form method="post" action="{% url 'essay_dispute' submission.pk %}" class="stack" style="gap:var(--s1);margin-top:var(--s2)">
+          {% csrf_token %}
+          <label for="d-body">บอกว่าจุดไหนและทำไมถึงไม่ผิด</label>
+          <textarea id="d-body" name="body" rows="3" placeholder="เช่น ครูบอกว่า 很好的一个礼物 ก็พูดได้"></textarea>
+          <label for="d-src">ได้ข้อมูลมาจากไหน</label>
+          <input id="d-src" type="text" name="source" placeholder="เช่น ครูที่สอน · หนังสือหน้า 42">
+          <div><button class="btn sm" type="submit" style="width:auto">ส่งให้เจ้าของระบบ</button></div>
+        </form>
+      </details>
+    </div>
+    {% endif %}
+
+    {% with ob=sc.observation %}
+    {% if ob.strengths_th %}
+      <div class="card flat stack" style="gap:6px">
+        <span class="wlab">ที่ทำได้ดี</span>
+        {% for s in ob.strengths_th %}<p>· {{ s }}</p>{% endfor %}
+      </div>
+    {% endif %}
+    {% if ob.suggestions_th %}
+      <div class="card flat stack" style="gap:6px">
+        <span class="wlab">ข้อเสนอแนะ <span class="muted">(ไม่นับเป็นข้อผิด)</span></span>
+        {% for s in ob.suggestions_th %}<p>· {{ s }}</p>{% endfor %}
+      </div>
+    {% endif %}
+    {% if ob.next_step_th %}
+      <div class="note"><b>สิ่งเดียวที่ควรฝึกต่อ</b> — {{ ob.next_step_th }}</div>
+    {% endif %}
+    {% endwith %}
+  {% endif %}
+
+  <div class="card flat stack" style="gap:6px">
+    <span class="wlab">งานเขียนของคุณ</span>
+    <p class="zh" style="font-size:var(--t-lead);line-height:2">{{ submission.text_zh }}</p>
+  </div>
+
+  <div class="actionbar">
+    {% if not feedback %}
+      {% if consented and grader_ready %}
+        <form method="post" action="{% url 'essay_grade' submission.pk %}" style="width:100%">
+          {% csrf_token %}
+          <button class="btn block lg" type="submit">ส่งให้ AI ตรวจ</button>
+        </form>
+      {% else %}
+        <a class="btn block lg ghost" href="{% url 'essay_write' %}">
+          {% if not grader_ready %}ยังตรวจอัตโนมัติไม่ได้ · เขียนชิ้นใหม่{% else %}ยังไม่ได้ยินยอมให้ส่งตรวจ{% endif %}
+        </a>
+      {% endif %}
+    {% else %}
+      <a class="btn block" href="{% url 'essay_write' %}">เขียนชิ้นใหม่</a>
+      <form method="post" action="{% url 'essay_grade' submission.pk %}">
+        {% csrf_token %}
+        <button class="btn ghost" type="submit" style="width:auto;white-space:nowrap">ตรวจใหม่</button>
+      </form>
+    {% endif %}
+  </div>
+
+  {% if feedback %}
+  <p class="muted" style="font-size:.82rem">
+    ตรวจโดย {{ feedback.graded_by }} · ใช้โทเคน {{ feedback.input_tokens }} เข้า / {{ feedback.output_tokens }} ออก
+    {% if sc.observation.dropped_issues %}
+      · ตัดข้อผิดที่หาไม่เจอในงานเขียนจริงออก {{ sc.observation.dropped_issues }} จุด
+    {% endif %}
+  </p>
+  {% endif %}
+</div>
+{% endwith %}
+{% endblock %}

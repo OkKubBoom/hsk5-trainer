@@ -281,6 +281,12 @@ class WritingSubmission(TimeStamped):
         related_name="submissions", verbose_name="เทมเพลตที่ใช้",
     )
     text_zh = models.TextField(verbose_name="งานเขียน")
+    # ข้อ 99 = ใช้คำที่กำหนดให้ครบ 5 คำ · ข้อ 100 = เขียนจากรูปภาพ
+    task_no = models.PositiveSmallIntegerField(default=99, verbose_name="ข้อที่")
+    required_words = models.JSONField(
+        default=list, blank=True, verbose_name="คำที่ต้องใช้ให้ครบ",
+        help_text="ข้อ 99 เท่านั้น — ข้อ 100 เว้นว่าง",
+    )
     char_count = models.PositiveSmallIntegerField(default=0, verbose_name="จำนวนตัวอักษรจีน")
     minutes_spent = models.PositiveSmallIntegerField(default=0, verbose_name="นาทีที่ใช้")
 
@@ -302,11 +308,20 @@ class WritingFeedback(TimeStamped):
     submission = models.OneToOneField(
         WritingSubmission, on_delete=models.CASCADE, related_name="feedback", verbose_name="งานเขียน",
     )
+    # เกณฑ์ทางการของ 汉办 แบ่งเป็น "ช่วง" สี่ระดับ ไม่ได้แบ่งเป็นด้านแล้วให้คะแนนรายด้าน
+    # โครงเดิม {content, grammar, vocabulary, coherence, form} เป็นของที่แต่งขึ้นเอง
+    # แหล่ง: chinesetest.cn/userfiles/file/HSK-pingfen.pdf
     scores = models.JSONField(
-        default=dict, verbose_name="คะแนนรายมิติ",
-        help_text='{"content": 6, "grammar": 5, "vocabulary": 4, "coherence": 3, "form": 3}',
+        default=dict, verbose_name="ผลตรวจแบบมีโครงสร้าง",
+        help_text='{"band": "mid", "typo_count": 1, "grammar_errors": 2, "char_count": 96, ...}',
     )
-    total_100 = models.PositiveSmallIntegerField(default=0, verbose_name="คะแนนเต็ม 100")
+    total_100 = models.PositiveSmallIntegerField(
+        default=0, verbose_name="คะแนนประมาณ (เต็ม 100)",
+        help_text="ระบบประมาณจาก band — 汉办 ไม่เคยประกาศว่าแต่ละช่วงคือกี่คะแนน",
+    )
+    # เก็บโทเคนจริงเพื่อคำนวณค่าใช้จ่ายซ้ำหลังใช้จริง แทนการเชื่อตัวเลขประมาณ
+    input_tokens = models.PositiveIntegerField(default=0, verbose_name="โทเคนขาเข้า")
+    output_tokens = models.PositiveIntegerField(default=0, verbose_name="โทเคนขาออก")
     issues = models.JSONField(
         default=list, blank=True, verbose_name="จุดผิดรายจุด",
         help_text='[{"wrong": "...", "right": "...", "why": "...", "kind": "grammar"}]',

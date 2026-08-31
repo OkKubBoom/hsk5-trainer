@@ -40,6 +40,10 @@ class ExplanationNote(TimeStamped):
     verdict = models.CharField(
         max_length=16, choices=NoteVerdict.choices, db_index=True, verbose_name="ผลการตรวจ",
     )
+    submission = models.ForeignKey(
+        "core.WritingSubmission", null=True, blank=True, on_delete=models.CASCADE,
+        related_name="notes", verbose_name="งานเขียนที่แย้ง",
+    )
     # แย้งคอลัมน์ไหนของคำศัพท์ — คำเดียวมีหลายอย่างให้แย้งได้
     # ว่างไว้ = แย้งคำอธิบายเฉลยของข้อสอบ (พฤติกรรมเดิม)
     field_name = models.CharField(
@@ -71,8 +75,9 @@ class ExplanationNote(TimeStamped):
             models.CheckConstraint(
                 # ต้องผูกกับอย่างใดอย่างหนึ่งเสมอ ไม่ใช่ทั้งคู่ และไม่ใช่ไม่มีเลย
                 condition=(
-                    models.Q(question__isnull=False, vocab__isnull=True)
-                    | models.Q(question__isnull=True, vocab__isnull=False)
+                    models.Q(question__isnull=False, vocab__isnull=True, submission__isnull=True)
+                    | models.Q(question__isnull=True, vocab__isnull=False, submission__isnull=True)
+                    | models.Q(question__isnull=True, vocab__isnull=True, submission__isnull=False)
                 ),
                 name="note_targets_exactly_one",
             ),

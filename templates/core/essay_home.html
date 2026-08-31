@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}เขียนเรียงความ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}เขียนเรียงความ{% endblock %}
+{% block content %}
+<div class="stack">
+  <div class="stack" style="gap:6px">
+    <span class="eyebrow">书写第二部分</span>
+    <h1>เขียนเรียงความ</h1>
+    <p class="muted">โจทย์ให้คำมา 5 คำ ต้องใช้ครบทุกคำ เขียนราว 80 ตัวอักษร</p>
+  </div>
+
+  {% if not grader_ready %}
+  <div class="note warn">
+    <b>ตอนนี้ยังตรวจอัตโนมัติไม่ได้</b> — เจ้าของระบบยังไม่ได้ตั้งค่ากุญแจสำหรับเรียกตัวตรวจ
+    เขียนและบันทึกได้ตามปกติ กดตรวจทีหลังได้
+  </div>
+  {% endif %}
+
+  <div class="actionbar">
+    <a class="btn block lg" href="{% url 'essay_write' %}">เริ่มเขียน</a>
+  </div>
+
+  {% if past %}
+  <div class="stack" style="gap:var(--s1)">
+    <span class="wlab">งานที่เคยส่ง</span>
+    {% for s in past %}
+      <a class="card flat row" href="{% url 'essay_result' s.pk %}"
+         style="text-decoration:none;color:inherit;gap:var(--s2)">
+        <span class="stack grow" style="gap:2px">
+          <b>{{ s.created_at|date:"j M · H:i" }}</b>
+          <span class="muted">{{ s.char_count }} ตัวอักษร</span>
+        </span>
+        {% if s.feedback %}
+          <span class="pill {% if s.feedback.scores.band == 'high' %}ok{% elif s.feedback.scores.band == 'low' %}bad{% else %}warn{% endif %}">
+            {{ s.feedback.scores.band_label }}
+          </span>
+        {% else %}
+          <span class="pill">ยังไม่ได้ตรวจ</span>
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="card empty">
+    <h3>ยังไม่เคยส่งงานเขียน</h3>
+    <p class="muted">พาร์ทเขียนคือ 100 คะแนนจาก 300 และเป็นพาร์ทที่ฝึกแล้วเห็นผลเร็วที่สุด</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

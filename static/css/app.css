@@ -668,3 +668,18 @@ textarea{
 .pwrules{margin:0; padding-left:1.15rem; font-size:.78rem; color:var(--ink-3); line-height:1.7}
 /* รูปพจนานุกรมที่แสดงคู่กับรูปออกเสียงจริง — ต้องอ่านออกแต่ไม่แย่งสายตา */
 .pysrc{display:block; font-size:0.6875rem; opacity:.6}
+
+/* ── หน้าเขียนเรียงความ ── */
+.essaybox{
+  width:100%; padding:var(--s2); border:1px solid var(--line); border-radius:var(--radius-sm);
+  background:var(--surface); color:var(--ink); font-family:var(--font-zh);
+  font-size:var(--t-lead); line-height:2; resize:vertical;
+}
+.wordchip{
+  padding:6px 12px; border-radius:999px; font-size:var(--t-lead);
+  border:1px solid var(--line); background:var(--surface); color:var(--ink-2);
+}
+/* ชิปเปลี่ยนสีทันทีที่พิมพ์คำนั้นลงไป — ผู้เรียนไม่ต้องไล่ตรวจเองว่าใช้ครบยัง */
+.wordchip.on{border-color:var(--ready); background:var(--ready-bg); color:var(--ready); font-weight:500}
+.issuecard{border-left:3px solid var(--missing); padding-left:var(--s2)}
+.issuecard.unsure{border-left-color:var(--partial)}
