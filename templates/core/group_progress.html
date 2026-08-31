@@ -75,6 +75,12 @@
           {% if a.answered %}<span class="muted actans">· {{ a.answered }} ข้อ</span>{% endif %}
         </div>
       {% endfor %}
+      <div class="actrow {% if not r.login_days %}zero{% endif %}">
+        <span class="grow">เข้าระบบ</span>
+        <b class="mono">{{ r.login_days }}</b>
+        <span class="muted">วัน ใน 30 วัน</span>
+        {% if r.logged_in_today %}<span class="muted actans">· วันนี้เข้าแล้ว</span>{% endif %}
+      </div>
       <div class="actrow zero">
         <span class="grow">เข้าระบบล่าสุด</span>
         <span class="mono">{% if r.last_login %}{{ r.last_login|date:"j M · H:i" }}{% else %}ยังไม่เคยเข้า{% endif %}</span>
@@ -104,6 +110,7 @@
       <div class="row daylegend">
         <span><i class="sw lv-full"></i>ทำชุดหลัก</span>
         <span><i class="sw lv-some"></i>ทำอย่างอื่น</span>
+        <span><i class="sw lv-seen"></i>เข้ามาแต่ไม่ได้ทำ</span>
         <span><i class="sw lv-none"></i>ไม่ได้ทำ</span>
       </div>
     </div>

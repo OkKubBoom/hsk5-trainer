@@ -654,3 +654,6 @@ textarea{
 }
 /* โหมดโฟกัส (ตอนจำลองสอบ) ซ่อนเหมือนเมนูอื่น — ห้ามมีอะไรกวนตอนจับเวลา */
 .app.focus .examstrip{display:none}
+/* วันที่เข้าระบบแต่ไม่ได้ทำอะไร — ต่างจากวันที่หายไปเลย */
+.daygrid .day.lv-seen{background:var(--sunken); box-shadow:inset 0 0 0 1px var(--line-strong)}
+.sw.lv-seen{background:var(--sunken); box-shadow:inset 0 0 0 1px var(--line-strong)}

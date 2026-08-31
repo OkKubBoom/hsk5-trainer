@@ -14,7 +14,9 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-from .models import DrillSession, LearnerProfile, MockExam, PlacementTest, ReviewSession
+from .models import (
+    DrillSession, LearnerProfile, LoginDay, MockExam, PlacementTest, ReviewSession,
+)
 
 CALENDAR_DAYS = 30
 
@@ -99,7 +101,7 @@ def _day_label(date, act: dict) -> str:
     if act["mock"]:
         parts.append(f"จำลองสอบ {act['mock']} ครั้ง")
     if not parts:
-        return "ไม่ได้ทำอะไร"
+        return "เข้าระบบแต่ไม่ได้ทำอะไร" if act.get("login") else "ไม่ได้ทำอะไร"
     if act["answered"]:
         parts.append(f"รวม {act['answered']} ข้อ")
     return " · ".join(parts)
@@ -139,16 +141,26 @@ def group_progress(today=None) -> list[dict]:
         sessions = DrillSession.objects.filter(learner=learner)
         today_session = sessions.filter(started_at__date=today).first()
         acts = _activity_by_date(learner, window)
+        logins = set(
+            LoginDay.objects
+            .filter(user=learner.user, date__gte=window[0])
+            .values_list("date", flat=True)
+        )
 
         calendar = []
         for d in window:
             act = acts[d]
+            act["login"] = d in logins
             # สามระดับ: ทำชุดหลัก · ทำอย่างอื่น · ไม่ได้ทำ
             # แยกระดับกลางออกมาเพราะวันที่ทวนคำศัพท์อย่างเดียวไม่ใช่วันที่หายไป
             if act["drill"]:
                 level = "full"
             elif act["review"] or act["mock"]:
                 level = "some"
+            elif act["login"]:
+                # เข้ามาแล้วแต่ไม่ได้ทำอะไร ต่างจากไม่ได้เข้าเลย
+                # ระดับนี้บอกว่า "ตั้งใจจะทำแต่ไม่ได้ทำ" ซึ่งเป็นสัญญาณคนละแบบ
+                level = "seen"
             else:
                 level = "none"
             calendar.append({
@@ -172,6 +184,8 @@ def group_progress(today=None) -> list[dict]:
             "drill_days": sum(1 for c in calendar if c["level"] == "full"),
             "activities": _activity_summary(learner),
             "last_login": learner.user.last_login,
+            "login_days": sum(1 for d in window if d in logins),
+            "logged_in_today": today in logins,
         })
 
     rows.sort(key=lambda r: (r["done_today"], -r["streak"]))

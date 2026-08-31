@@ -43,6 +43,8 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    # ต้องอยู่หลัง auth (ต้องรู้ว่าใครล็อกอิน) และหลัง messages (ต้องฝากข้อความบอกเหตุผล)
+    "core.daily_session.DailyLogoutMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -122,6 +124,10 @@ TARGET_EXAM_DATE = os.getenv("TARGET_EXAM_DATE", "2026-12-13")
 # Daily Drill Engine
 DRILL_DEFAULT_SIZE = 40
 DRILL_MIX = {"due": 0.50, "wrong": 0.30, "new": 0.20}
+# เตะออกจากระบบเมื่อข้ามวัน เพื่อให้เห็นว่าผู้เรียนเข้ามาใหม่ทุกวันจริงไหม
+# ปิดได้ด้วย DJANGO_DAILY_LOGOUT=0 — การบันทึกวันเข้าระบบยังทำงานอยู่ไม่ว่าจะเปิดหรือปิด
+DAILY_LOGOUT = env_bool("DJANGO_DAILY_LOGOUT", True)
+
 # เพดานข้อสอบจริงต่อชุดฝึกหนึ่งวัน — ที่เหลือเป็นคำศัพท์ทั้งหมด
 #
 # ชุดฝึกรายวันมีหน้าที่ *สร้างฐานคำศัพท์* ซึ่งเป็นคอขวดจริงของ HSK5

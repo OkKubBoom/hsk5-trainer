@@ -102,3 +102,28 @@ class LearnerProfile(TimeStamped):
     def days_to_exam(self, today=None):
         from datetime import date
         return (self.target_exam_date - (today or date.today())).days
+
+
+class LoginDay(models.Model):
+    """วันที่ผู้ใช้เข้าระบบ — หนึ่งแถวต่อคนต่อวัน
+
+    User.last_login เก็บได้แค่ครั้งล่าสุด ตอบไม่ได้ว่า "เข้ามากี่วันใน 30 วัน"
+    ซึ่งเป็นตัวเลขที่บอกความสม่ำเสมอได้ตรงกว่าจำนวนชุดที่ทำจบ
+    เพราะบางวันเปิดมาแล้วทำไม่จบก็ยังนับว่าไม่ได้หายไป
+    """
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="login_days", verbose_name="ผู้ใช้",
+    )
+    date = models.DateField(db_index=True, verbose_name="วันที่")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="เข้าครั้งแรกของวันเมื่อ")
+
+    class Meta:
+        verbose_name = "วันที่เข้าระบบ"
+        verbose_name_plural = "วันที่เข้าระบบ"
+        ordering = ["-date"]
+        constraints = [
+            models.UniqueConstraint(fields=["user", "date"], name="uniq_login_per_day"),
+        ]
+
+    def __str__(self):
+        return f"{self.user} · {self.date}"

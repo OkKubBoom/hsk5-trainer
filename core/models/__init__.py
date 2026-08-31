@@ -3,7 +3,7 @@
 แบ่งเป็นหกโมดูลตามหน้าที่ แต่ import ออกมาที่นี่ให้ใช้ได้แบบ `from core.models import X`
 
   base         ค่าคงที่ + abstract (Provenance, TimeStamped, ErrorCode)
-  users        User, LearnerProfile
+  users        User, LearnerProfile, LoginDay
   lexicon      ExamSpec, VocabItem, SynonymGroup, GrammarPoint, WritingTemplate
   srs          Card, ReviewLog
   content      AudioClip, ItemGroup, Question, QuestionOption
@@ -14,7 +14,7 @@
   feedback     ExplanationNote — คนตรวจคำอธิบายของ AI
 """
 from .base import ErrorCode, Provenance, Section, SourceType, Standard, TimeStamped
-from .users import LearnerProfile, Role, User
+from .users import LearnerProfile, LoginDay, Role, User
 from .lexicon import ExamSpec, GrammarPoint, SynonymGroup, VocabItem, WritingTemplate
 from .srs import Card, CardState, CardType, Rating, ReviewLog
 from .content import (
@@ -31,7 +31,7 @@ from .feedback import ExplanationNote, NoteStatus, NoteVerdict
 
 __all__ = [
     "ErrorCode", "Provenance", "Section", "SourceType", "Standard", "TimeStamped",
-    "User", "Role", "LearnerProfile",
+    "User", "Role", "LearnerProfile", "LoginDay",
     "ExamSpec", "VocabItem", "SynonymGroup", "GrammarPoint", "WritingTemplate",
     "Card", "CardType", "CardState", "ReviewLog", "Rating",
     "AudioClip", "ItemGroup", "GroupKind", "Question", "QuestionType",
