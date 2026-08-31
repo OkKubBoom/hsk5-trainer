@@ -23,7 +23,8 @@
 
 <div class="peoplegrid">
   {% for r in rows %}
-  <div class="card stack person {% if r.done_today %}done{% endif %}" style="gap:var(--s2)">
+  <div class="card stack person {% if r.done_today %}done{% endif %}" style="gap:var(--s2)"
+       x-data="{ tip: '' }">
     <div class="row" style="gap:var(--s1)">
       <span class="avatar">{{ r.initial }}</span>
       <span class="userbox-text grow">
@@ -64,15 +65,46 @@
       </span>
     </div>
 
+    {# ── ใช้ส่วนไหนของระบบไปแล้วบ้าง ── #}
+    <div class="actlist">
+      {% for a in r.activities %}
+        <div class="actrow {% if not a.count %}zero{% endif %}">
+          <span class="grow">{{ a.label }}</span>
+          <b class="mono">{{ a.count }}</b>
+          <span class="muted">{{ a.unit }}</span>
+          {% if a.answered %}<span class="muted actans">· {{ a.answered }} ข้อ</span>{% endif %}
+        </div>
+      {% endfor %}
+      <div class="actrow zero">
+        <span class="grow">เข้าระบบล่าสุด</span>
+        <span class="mono">{% if r.last_login %}{{ r.last_login|date:"j M · H:i" }}{% else %}ยังไม่เคยเข้า{% endif %}</span>
+      </div>
+    </div>
+
     <div class="stack" style="gap:var(--s-half)">
       <div class="row">
         <span class="eyebrow grow">30 วันที่ผ่านมา</span>
-        <span class="mono muted">{{ r.active_days }}/30</span>
+        <span class="mono muted">ทำชุดหลัก {{ r.drill_days }} · แตะระบบ {{ r.active_days }}</span>
       </div>
+      {% comment %}
+      เดิมใช้ title ของ HTML ซึ่งบนไอแพดไม่ขึ้นเลยเพราะไม่มีการชี้เมาส์
+      เปลี่ยนเป็นปุ่มจริงที่ทั้งชี้และแตะได้ แล้วโชว์ข้อความใต้ปฏิทิน
+      {% endcomment %}
       <div class="daygrid">
         {% for d in r.calendar %}
-          <i class="{% if d.done %}on{% endif %}" title="{{ d.date|date:'j M' }}{% if d.done %} · ทำแล้ว{% else %} · ไม่ได้ทำ{% endif %}"></i>
+          <button type="button" class="day lv-{{ d.level }}"
+                  @mouseenter="tip = '{{ d.label|escapejs }}'"
+                  @mouseleave="tip = ''"
+                  @click="tip = tip === '{{ d.label|escapejs }}' ? '' : '{{ d.label|escapejs }}'"
+                  aria-label="{{ d.label }}"></button>
         {% endfor %}
+      </div>
+      <p class="daytip" x-text="tip || 'ชี้หรือแตะช่องเพื่อดูว่าวันนั้นทำอะไร'"
+         :class="tip && 'on'">ชี้หรือแตะช่องเพื่อดูว่าวันนั้นทำอะไร</p>
+      <div class="row daylegend">
+        <span><i class="sw lv-full"></i>ทำชุดหลัก</span>
+        <span><i class="sw lv-some"></i>ทำอย่างอื่น</span>
+        <span><i class="sw lv-none"></i>ไม่ได้ทำ</span>
       </div>
     </div>
   </div>

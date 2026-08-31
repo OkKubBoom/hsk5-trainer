@@ -173,6 +173,22 @@
               aria-label="บัญชีของฉัน">{{ user.first_name|default:user.username|slice:":1" }}</button>
     </header>
 
+    {% if exam_rounds %}
+    {% comment %}
+    นับถอยหลังวันสอบ อยู่บนทุกหน้าเพราะจำนวนวันที่เหลือเปลี่ยนความหมายของทุกอย่างบนจอ
+    ชิดซ้ายตามที่ต้องการ และไม่ตรึงติดจอ เพราะบังเนื้อหาตอนทำข้อสอบ
+    {% endcomment %}
+    <div class="examstrip">
+      {% for e in exam_rounds %}
+        <span class="examchip lv-{{ e.level }}">
+          <span class="examlabel">{{ e.label }}</span>
+          <b class="mono">{% if e.passed %}ผ่านไปแล้ว{% else %}{{ e.days }} วัน{% endif %}</b>
+          <span class="examdate mono">{{ e.date|date:"j M" }}</span>
+        </span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     <main>
       <div class="wrap stack">
         {% if messages %}{% for m in messages %}<div class="note">{{ m }}</div>{% endfor %}{% endif %}

@@ -397,8 +397,28 @@ label{font-size:var(--t-sm); color:var(--ink-2)}
 .peoplegrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:var(--s2)}
 .person.done{border-color:var(--ready-bg)}
 .daygrid{display:grid; grid-template-columns:repeat(15,1fr); gap:3px}
-.daygrid i{height:20px; border-radius:3px; background:var(--sunken); display:block}
-.daygrid i.on{background:var(--accent)}
+.daygrid .day{
+  height:22px; border-radius:3px; border:none; padding:0; cursor:pointer;
+  background:var(--sunken); display:block; width:100%;
+}
+.daygrid .day.lv-full{background:var(--accent)}
+.daygrid .day.lv-some{background:var(--accent-soft); box-shadow:inset 0 0 0 1px var(--accent)}
+.daygrid .day:hover, .daygrid .day:focus-visible{outline:2px solid var(--ink-3); outline-offset:1px}
+/* ข้อความบอกวันที่ ต้องกันที่ไว้ตลอด ไม่งั้นการ์ดกระตุกตอนชี้ */
+.daytip{min-height:1.4em; font-size:var(--t-sm); color:var(--ink-3)}
+.daytip.on{color:var(--ink-2)}
+.daylegend{gap:var(--s2); flex-wrap:wrap; font-size:0.6875rem; color:var(--ink-3)}
+.daylegend span{display:flex; align-items:center; gap:5px}
+.sw{width:11px; height:11px; border-radius:3px; background:var(--sunken); flex:none}
+.sw.lv-full{background:var(--accent)}
+.sw.lv-some{background:var(--accent-soft); box-shadow:inset 0 0 0 1px var(--accent)}
+
+/* รายการว่าใช้ส่วนไหนของระบบไปแล้วบ้าง */
+.actlist{display:flex; flex-direction:column; gap:2px; padding-top:var(--s1); border-top:1px solid var(--line)}
+.actrow{display:flex; align-items:baseline; gap:6px; font-size:var(--t-sm); min-height:26px}
+.actrow.zero{color:var(--ink-3)}
+.actrow b{font-size:var(--t-base)}
+.actans{font-size:0.75rem}
 .formgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:var(--s2)}
 @media (max-width:680px){
   .peoplegrid{grid-template-columns:1fr}
@@ -608,3 +628,29 @@ textarea{
   .kvrow{grid-template-columns:auto 1fr}
   .kv-note{grid-column:1 / -1}
 }
+
+/* ── แถบนับถอยหลังวันสอบ — มุมซ้ายบนของพื้นที่เนื้อหา ── */
+.examstrip{
+  display:flex; gap:var(--s1); flex-wrap:wrap;
+  padding:var(--s1) var(--s3) 0;
+  max-width:880px; margin:0 auto; width:100%;
+}
+.examchip{
+  display:inline-flex; align-items:baseline; gap:6px;
+  padding:4px 10px; border-radius:999px; font-size:var(--t-sm);
+  border:1px solid var(--line); background:var(--surface); color:var(--ink-2);
+}
+.examchip .examlabel{font-size:0.6875rem; color:var(--ink-3)}
+.examchip b{font-size:var(--t-sm)}
+.examchip .examdate{font-size:0.6875rem; color:var(--ink-3)}
+/* ยิ่งใกล้ยิ่งเด่น — 14 วันคือช่วง freeze ที่หยุดเรียนคำใหม่แล้ว */
+.examchip.lv-soon{border-color:var(--partial); color:var(--partial); background:var(--partial-bg)}
+.examchip.lv-soon .examlabel, .examchip.lv-soon .examdate{color:var(--partial)}
+.examchip.lv-now{border-color:var(--missing); color:var(--missing); background:var(--missing-bg); font-weight:500}
+.examchip.lv-now .examlabel, .examchip.lv-now .examdate{color:var(--missing)}
+.examchip.lv-passed{opacity:.5}
+@media (max-width:900px){
+  .examstrip{padding:var(--s1) var(--s2) 0}
+}
+/* โหมดโฟกัส (ตอนจำลองสอบ) ซ่อนเหมือนเมนูอื่น — ห้ามมีอะไรกวนตอนจับเวลา */
+.app.focus .examstrip{display:none}

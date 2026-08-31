@@ -3,6 +3,10 @@
 ตั้งใจไม่โชว์ความแม่นของคนอื่น เพราะเทียบกันไม่ได้จริง: คนที่การ์ดง่ายกว่า
 ย่อมแม่นกว่าโดยอัตโนมัติ ตัวเลขที่เอามาเทียบได้อย่างเป็นธรรมคือสิ่งที่
 ตัวเองควบคุมได้ — ทำหรือไม่ทำ ทำติดกันกี่วัน ตอบไปกี่ข้อ
+
+หน้านี้บอกด้วยว่าแต่ละคน *ทำอะไร* ไม่ใช่แค่ "ทำ/ไม่ทำ"
+เพราะวันที่ทวนคำศัพท์อย่างเดียวกับวันที่ไม่ได้แตะระบบเลย ไม่เหมือนกัน
+แต่ปฏิทินเดิมแสดงเป็นสีเทาเหมือนกันทั้งคู่
 """
 from __future__ import annotations
 
@@ -10,12 +14,27 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-from .models import DrillSession, LearnerProfile
+from .models import DrillSession, LearnerProfile, MockExam, PlacementTest, ReviewSession
 
 CALENDAR_DAYS = 30
 
+# ชนิดกิจกรรมที่ระบบเก็บได้จริง เรียงตามน้ำหนักที่ให้กับการสอบ
+# หมายเหตุ: หน้าฝึกเรียงคำยังไม่มีตารางเก็บเซสชัน จึงนับไม่ได้ (ดู core/writing.py)
+ACTIVITY_LABEL = {
+    "drill": "ชุดฝึกวันนี้",
+    "review": "ฝึกจำคำศัพท์",
+    "mock": "จำลองสอบ",
+    "placement": "แบบวัดระดับ",
+}
 
-def _finished_dates(learner) -> set:
+
+def _drill_dates(learner) -> set:
+    """วันที่ทำ *ชุดฝึกรายวันจบ* — ใช้นับ streak เท่านั้น
+
+    ไม่รวมกิจกรรมอื่นโดยตั้งใจ เพราะ streak คือคำสัญญาว่า "ทำชุดหลักทุกวัน"
+    ถ้านับรวมทุกอย่าง การเปิดทวนคำศัพท์ 2 นาทีจะรักษา streak ไว้ได้
+    ซึ่งทำให้ตัวเลขไม่ได้หมายถึงอะไรอีกต่อไป
+    """
     return set(
         DrillSession.objects
         .filter(learner=learner, finished_at__isnull=False)
@@ -39,6 +58,72 @@ def streak(dates: set, today=None) -> int:
     return count
 
 
+def _activity_by_date(learner, window: list) -> dict:
+    """สิ่งที่ทำในแต่ละวัน แยกตามชนิดกิจกรรม
+
+    เก็บเป็น dict ของวันที่ เพื่อให้เทมเพลตหยิบไปแสดงในปฏิทินได้โดยไม่ต้องคิวรีซ้ำ
+    """
+    first = window[0]
+    by_date = {d: {"drill": 0, "review": 0, "mock": 0, "answered": 0} for d in window}
+
+    for s in DrillSession.objects.filter(learner=learner, started_at__date__gte=first):
+        day = by_date.get(s.started_at.date())
+        if day is not None and s.finished_at:
+            day["drill"] += 1
+            day["answered"] += s.answered
+
+    for s in ReviewSession.objects.filter(learner=learner, started_at__date__gte=first, answered__gte=1):
+        day = by_date.get(s.started_at.date())
+        if day is not None:
+            day["review"] += 1
+            day["answered"] += s.answered
+
+    for e in MockExam.objects.filter(learner=learner, started_at__date__gte=first, finished_at__isnull=False):
+        day = by_date.get(e.started_at.date())
+        if day is not None:
+            day["mock"] += 1
+
+    return by_date
+
+
+def _day_label(date, act: dict) -> str:
+    """ข้อความที่ขึ้นตอนชี้/แตะช่องปฏิทิน — ต้องบอกวันที่เสมอ
+
+    เดิมใช้ title ของ HTML ซึ่งบนแท็บเล็ตไม่ขึ้นเลยเพราะไม่มีการชี้เมาส์
+    """
+    parts = []
+    if act["drill"]:
+        parts.append(f"ชุดฝึกวันนี้ {act['drill']} ชุด")
+    if act["review"]:
+        parts.append(f"ฝึกจำคำศัพท์ {act['review']} รอบ")
+    if act["mock"]:
+        parts.append(f"จำลองสอบ {act['mock']} ครั้ง")
+    if not parts:
+        return "ไม่ได้ทำอะไร"
+    if act["answered"]:
+        parts.append(f"รวม {act['answered']} ข้อ")
+    return " · ".join(parts)
+
+
+def _activity_summary(learner) -> list[dict]:
+    """แต่ละคนใช้ส่วนไหนของระบบไปแล้วบ้าง — ตลอดเวลาที่ผ่านมา ไม่ใช่แค่ 30 วัน"""
+    drills = DrillSession.objects.filter(learner=learner, finished_at__isnull=False)
+    reviews = ReviewSession.objects.filter(learner=learner, answered__gte=1)
+    mocks = MockExam.objects.filter(learner=learner, finished_at__isnull=False)
+    placements = PlacementTest.objects.filter(learner=learner, finished_at__isnull=False)
+
+    return [
+        {"key": "drill", "label": ACTIVITY_LABEL["drill"], "count": drills.count(),
+         "unit": "ชุด", "answered": sum(s.answered for s in drills)},
+        {"key": "review", "label": ACTIVITY_LABEL["review"], "count": reviews.count(),
+         "unit": "รอบ", "answered": sum(s.answered for s in reviews)},
+        {"key": "mock", "label": ACTIVITY_LABEL["mock"], "count": mocks.count(),
+         "unit": "ครั้ง", "answered": 0},
+        {"key": "placement", "label": ACTIVITY_LABEL["placement"], "count": placements.count(),
+         "unit": "ครั้ง", "answered": 0},
+    ]
+
+
 def group_progress(today=None) -> list[dict]:
     """สรุปของผู้เรียนทุกคนในระบบ เรียงตามคนที่ยังไม่ทำวันนี้ขึ้นก่อน
 
@@ -50,9 +135,26 @@ def group_progress(today=None) -> list[dict]:
 
     rows = []
     for learner in LearnerProfile.objects.select_related("user").order_by("user__first_name", "user__username"):
-        dates = _finished_dates(learner)
+        dates = _drill_dates(learner)
         sessions = DrillSession.objects.filter(learner=learner)
         today_session = sessions.filter(started_at__date=today).first()
+        acts = _activity_by_date(learner, window)
+
+        calendar = []
+        for d in window:
+            act = acts[d]
+            # สามระดับ: ทำชุดหลัก · ทำอย่างอื่น · ไม่ได้ทำ
+            # แยกระดับกลางออกมาเพราะวันที่ทวนคำศัพท์อย่างเดียวไม่ใช่วันที่หายไป
+            if act["drill"]:
+                level = "full"
+            elif act["review"] or act["mock"]:
+                level = "some"
+            else:
+                level = "none"
+            calendar.append({
+                "date": d, "level": level, "done": bool(act["drill"]),
+                "label": f"{d.strftime('%-d/%-m')} · {_day_label(d, act)}",
+            })
 
         rows.append({
             "learner": learner,
@@ -65,8 +167,11 @@ def group_progress(today=None) -> list[dict]:
             "sessions_done": len(dates),
             "answered_total": sum(s.answered for s in sessions),
             "days_to_exam": (learner.target_exam_date - today).days,
-            "calendar": [{"date": d, "done": d in dates} for d in window],
-            "active_days": sum(1 for d in window if d in dates),
+            "calendar": calendar,
+            "active_days": sum(1 for c in calendar if c["level"] != "none"),
+            "drill_days": sum(1 for c in calendar if c["level"] == "full"),
+            "activities": _activity_summary(learner),
+            "last_login": learner.user.last_login,
         })
 
     rows.sort(key=lambda r: (r["done_today"], -r["streak"]))

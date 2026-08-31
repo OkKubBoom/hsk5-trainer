@@ -10,7 +10,9 @@ from django.utils import timezone
 
 from core import progress
 from core.accounts import create_learner
-from core.models import DrillSession, LearnerProfile, Role, User, VocabItem
+from core.models import (
+    DrillSession, LearnerProfile, MockExam, ReviewSession, Role, User, VocabItem,
+)
 
 
 class StreakTests(TestCase):
@@ -104,3 +106,104 @@ class UserAdminAccessTests(TestCase):
     def test_everyone_can_see_group_progress(self):
         self.client.login(username="kid", password="passpass1")
         self.assertEqual(self.client.get("/progress/").status_code, 200)
+
+
+class ActivityTests(TestCase):
+    """หน้ากลุ่มต้องบอกว่าแต่ละคน *ทำอะไร* ไม่ใช่แค่ทำ/ไม่ทำ
+
+    วันที่ทวนคำศัพท์อย่างเดียวกับวันที่ไม่ได้แตะระบบเลย ไม่เหมือนกัน
+    แต่ปฏิทินเดิมแสดงเป็นสีเทาเหมือนกันทั้งคู่
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        VocabItem.objects.create(hanzi="字", pinyin="zi", meaning_th="ตัวอักษร", hsk_level=5)
+        cls.learner, _ = create_learner(
+            username="act", password="passpass1", display_name="แอค",
+            exam_date=timezone.localdate() + timedelta(days=60),
+        )
+
+    def at(self, model, days_ago, **kw):
+        obj = model.objects.create(learner=self.learner, **kw)
+        when = timezone.now() - timedelta(days=days_ago)
+        model.objects.filter(pk=obj.pk).update(started_at=when)
+        return obj
+
+    def row(self):
+        return next(r for r in progress.group_progress() if r["learner"] == self.learner)
+
+    def test_วันที่ทำชุดหลักกับวันที่ทำอย่างอื่นแยกระดับกัน(self):
+        self.at(DrillSession, 1, planned_size=40, answered=40, finished_at=timezone.now())
+        self.at(ReviewSession, 2, queue=[], answered=20, correct=15)
+
+        cal = {c["date"]: c["level"] for c in self.row()["calendar"]}
+        today = timezone.localdate()
+        self.assertEqual(cal[today - timedelta(days=1)], "full")
+        self.assertEqual(cal[today - timedelta(days=2)], "some")
+        self.assertEqual(cal[today - timedelta(days=3)], "none")
+
+    def test_ทุกช่องมีวันที่ในข้อความเสมอ(self):
+        """ข้อร้องเรียนเดิม: ชี้แล้วไม่ขึ้นวันที่เลย"""
+        for cell in self.row()["calendar"]:
+            self.assertRegex(cell["label"], r"^\d+/\d+ · ")
+
+    def test_ข้อความบอกด้วยว่าทำอะไรไป(self):
+        self.at(DrillSession, 1, planned_size=40, answered=40, finished_at=timezone.now())
+        cal = {c["date"]: c["label"] for c in self.row()["calendar"]}
+        label = cal[timezone.localdate() - timedelta(days=1)]
+        self.assertIn("ชุดฝึกวันนี้", label)
+        self.assertIn("40 ข้อ", label)
+
+    def test_วันที่ไม่ได้ทำบอกตรงๆ(self):
+        cal = {c["date"]: c["label"] for c in self.row()["calendar"]}
+        self.assertIn("ไม่ได้ทำอะไร", cal[timezone.localdate() - timedelta(days=5)])
+
+    def test_สรุปว่าใช้ส่วนไหนของระบบไปแล้วบ้าง(self):
+        self.at(DrillSession, 1, planned_size=40, answered=40, finished_at=timezone.now())
+        self.at(ReviewSession, 1, queue=[], answered=20, correct=15)
+        self.at(ReviewSession, 3, queue=[], answered=10, correct=8)
+
+        acts = {a["key"]: a for a in self.row()["activities"]}
+        self.assertEqual(acts["drill"]["count"], 1)
+        self.assertEqual(acts["review"]["count"], 2)
+        self.assertEqual(acts["review"]["answered"], 30)
+        self.assertEqual(acts["mock"]["count"], 0)
+
+    def test_ทวนคำศัพท์อย่างเดียวไม่นับเป็น_streak(self):
+        """streak คือคำสัญญาว่าทำชุดหลักทุกวัน — เปิดทวน 2 นาทีต้องไม่รักษาไว้ได้"""
+        self.at(ReviewSession, 0, queue=[], answered=20, correct=15)
+        self.at(ReviewSession, 1, queue=[], answered=20, correct=15)
+        self.assertEqual(self.row()["streak"], 0)
+
+
+class ExamCountdownTests(TestCase):
+    """แถบนับถอยหลังต้องอยู่ทุกหน้า และต้องไม่พังกับบัญชีที่ไม่มีวันสอบ"""
+
+    def test_แสดงทั้งรอบหลักและรอบสำรอง(self):
+        learner, _ = create_learner(
+            username="cd", password="passpass1",
+            exam_date=timezone.localdate() + timedelta(days=68),
+        )
+        learner.backup_exam_date = timezone.localdate() + timedelta(days=104)
+        learner.save()
+        self.client.login(username="cd", password="passpass1")
+
+        res = self.client.get("/")
+        rounds = res.context["exam_rounds"]
+        self.assertEqual([r["days"] for r in rounds], [68, 104])
+        self.assertContains(res, "รอบแรก")
+        self.assertContains(res, "รอบสำรอง")
+
+    def test_ไม่มีรอบสำรองก็แสดงรอบเดียว(self):
+        create_learner(username="cd2", password="passpass1",
+                       exam_date=timezone.localdate() + timedelta(days=30))
+        self.client.login(username="cd2", password="passpass1")
+        self.assertEqual(len(self.client.get("/").context["exam_rounds"]), 1)
+
+    def test_บัญชีผู้ดูแลที่ไม่มีโปรไฟล์ผู้เรียนไม่พัง(self):
+        """เคยเจอมาแล้วว่าบัญชี admin ไม่มี LearnerProfile"""
+        User.objects.create_user(username="boss", password="passpass1", role=Role.ADMIN)
+        self.client.login(username="boss", password="passpass1")
+        res = self.client.get("/")
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.context["exam_rounds"], [])
