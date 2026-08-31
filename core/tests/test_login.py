@@ -81,3 +81,41 @@ class VersionTests(TestCase):
         data = self.client.get(reverse("version")).json()
         self.assertRegex(data["version"], r"^\d+\.\d+\.\d+$")
         self.assertNotEqual(data["version"], "0.0.0")
+
+
+class PasswordChangeTests(TestCase):
+    """ผู้เรียนต้องเปลี่ยนรหัสเองได้ — รหัสตั้งต้นเคยอยู่ในประวัติ git สาธารณะ"""
+
+    @classmethod
+    def setUpTestData(cls):
+        create_learner(username="pw", password="passpass1",
+                       exam_date=timezone.localdate() + timedelta(days=30))
+
+    def setUp(self):
+        self.client.login(username="pw", password="passpass1")
+
+    def test_เปลี่ยนได้แล้วเข้าด้วยรหัสใหม่(self):
+        res = self.client.post(reverse("password_change"), {
+            "old_password": "passpass1",
+            "new_password1": "rahatmai2026",
+            "new_password2": "rahatmai2026",
+        })
+        self.assertEqual(res.status_code, 302)
+
+        self.client.logout()
+        self.assertTrue(self.client.login(username="pw", password="rahatmai2026"))
+        self.assertFalse(self.client.login(username="pw", password="passpass1"))
+
+    def test_ต้องรู้รหัสเดิมก่อน(self):
+        """ไม่งั้นใครยืมเครื่องที่เปิดค้างไว้ก็ยึดบัญชีได้"""
+        res = self.client.post(reverse("password_change"), {
+            "old_password": "เดามั่ว",
+            "new_password1": "rahatmai2026",
+            "new_password2": "rahatmai2026",
+        })
+        self.assertEqual(res.status_code, 200)
+        self.client.logout()
+        self.assertTrue(self.client.login(username="pw", password="passpass1"))
+
+    def test_มีลิงก์จากหน้าโปรไฟล์(self):
+        self.assertContains(self.client.get(reverse("profile")), reverse("password_change"))

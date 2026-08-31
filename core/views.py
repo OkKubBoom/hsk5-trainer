@@ -4,6 +4,7 @@
 ไฟล์นี้แค่รับคำขอ เรียกตรรกะ แล้วส่งค่าไปให้เทมเพลต (CLAUDE.md ข้อ 11)
 """
 from datetime import date
+from functools import wraps
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -49,6 +50,21 @@ def _learner(request) -> LearnerProfile | None:
     return LearnerProfile.objects.filter(user=request.user).first()
 
 
+def learner_required(view):
+    """view ที่ทำงานไม่ได้ถ้าไม่มีโปรไฟล์ผู้เรียน
+
+    บัญชีผู้ดูแลไม่มี LearnerProfile — เดิม 25 view เรียก _learner() แล้วใช้ต่อทันที
+    ทำให้ทุกหน้ายกเว้นหน้าแรกพัง 500 เมื่อเจ้าของระบบกดเข้าไปดู
+    ซึ่งเป็นสิ่งที่เจ้าของระบบทำบ่อยที่สุดเวลาตรวจว่าน้องเห็นอะไร
+    """
+    @wraps(view)
+    def wrapper(request, *args, **kwargs):
+        if not _learner(request):
+            return render(request, "core/no_profile.html", {"nav": ""})
+        return view(request, *args, **kwargs)
+    return wrapper
+
+
 @login_required
 def home(request):
     learner = _learner(request)
@@ -74,6 +90,7 @@ def home(request):
 # ── แบบวัดระดับ ────────────────────────────────────────────
 
 @login_required
+@learner_required
 def placement_start(request):
     learner = _learner(request)
     test = learner.placement_tests.filter(finished_at__isnull=True).first()
@@ -83,6 +100,7 @@ def placement_start(request):
 
 
 @login_required
+@learner_required
 def placement_run(request, test_id):
     learner = _learner(request)
     test = get_object_or_404(PlacementTest, pk=test_id, learner=learner)
@@ -105,6 +123,7 @@ def placement_run(request, test_id):
 
 
 @login_required
+@learner_required
 @require_POST
 def placement_answer(request, test_id):
     learner = _learner(request)
@@ -120,6 +139,7 @@ def placement_answer(request, test_id):
 
 
 @login_required
+@learner_required
 def placement_result(request, test_id):
     learner = _learner(request)
     test = get_object_or_404(PlacementTest, pk=test_id, learner=learner)
@@ -138,6 +158,7 @@ def placement_result(request, test_id):
 # ── ชุดฝึกรายวัน ───────────────────────────────────────────
 
 @login_required
+@learner_required
 def drill_start(request):
     """เริ่มชุดของวันนี้ — ถ้าทำไปแล้วจะพาไปดูสรุปแทน ไม่สร้างชุดใหม่"""
     learner = _learner(request)
@@ -150,6 +171,7 @@ def drill_start(request):
 
 
 @login_required
+@learner_required
 def drill_run(request):
     learner = _learner(request)
     session = drill_engine.today_session(learner)
@@ -178,6 +200,7 @@ def drill_run(request):
 
 
 @login_required
+@learner_required
 @require_POST
 def drill_answer(request):
     learner = _learner(request)
@@ -206,6 +229,7 @@ def drill_answer(request):
 
 
 @login_required
+@learner_required
 @require_POST
 def error_reason(request, log_id):
     """ผู้เรียนกดบอกเองว่าผิดเพราะอะไร — ทับค่าที่ระบบเดาไว้
@@ -226,6 +250,7 @@ def error_reason(request, log_id):
 
 
 @login_required
+@learner_required
 def drill_done(request, session_id):
     learner = _learner(request)
     session = get_object_or_404(DrillSession, pk=session_id, learner=learner)
@@ -279,6 +304,7 @@ def review_home(request):
 
 
 @login_required
+@learner_required
 @require_POST
 def review_start(request):
     learner = _learner(request)
@@ -299,6 +325,7 @@ def review_start(request):
 
 
 @login_required
+@learner_required
 def review_study(request, session_id):
     """ขั้นดูคำ — เห็นทั้งชุดพร้อมความหมายก่อน แล้วกดเองว่าพร้อม"""
     learner = _learner(request)
@@ -316,6 +343,7 @@ def review_study(request, session_id):
 
 
 @login_required
+@learner_required
 @require_POST
 def review_begin_test(request, session_id):
     learner = _learner(request)
@@ -325,6 +353,7 @@ def review_begin_test(request, session_id):
 
 
 @login_required
+@learner_required
 def review_run(request, session_id):
     learner = _learner(request)
     session = get_object_or_404(ReviewSession, pk=session_id, learner=learner)
@@ -346,6 +375,7 @@ def review_run(request, session_id):
 
 
 @login_required
+@learner_required
 @require_POST
 def review_answer(request, session_id):
     learner = _learner(request)
@@ -367,6 +397,7 @@ def review_answer(request, session_id):
 
 
 @login_required
+@learner_required
 def review_done(request, session_id):
     learner = _learner(request)
     session = get_object_or_404(ReviewSession, pk=session_id, learner=learner)
@@ -383,6 +414,7 @@ def review_done(request, session_id):
 # ── ประวัติรายวัน ──────────────────────────────────────────
 
 @login_required
+@learner_required
 def history(request):
     """ปฏิทินย้อนหลัง — เลือกวันแล้วเห็นชุดที่ทำวันนั้นทีละข้อ"""
     learner = _learner(request)
@@ -575,6 +607,7 @@ def predict(request):
 # ── สถิติ ─────────────────────────────────────────────────
 
 @login_required
+@learner_required
 def stats(request):
     learner = _learner(request)
     sessions = DrillSession.objects.filter(learner=learner).order_by("-started_at")[:14]
@@ -774,6 +807,7 @@ WORDORDER_SEEN_KEY = "wordorder_seen"
 
 
 @login_required
+@learner_required
 def word_order(request):
     """ฝึกเรียงคำทีละข้อ — พาร์ทที่ทำคะแนนได้ง่ายที่สุดในข้อสอบ
 
@@ -932,13 +966,22 @@ def mock_home(request):
 
 
 @login_required
+@learner_required
 def mock_start(request):
     learner = _learner(request)
     exam = mock_engine.start(learner)
+    if exam is None:
+        messages.info(
+            request,
+            "ยังสร้างชุดจำลองไม่ได้ — คลังข้อสอบพาร์ทอ่านมีไม่พอ "
+            "ให้เจ้าของระบบรัน bootstrap ใส่ข้อสอบก่อน",
+        )
+        return redirect("mock_home")
     return redirect("mock_run", exam_id=exam.pk)
 
 
 @login_required
+@learner_required
 def mock_run(request, exam_id):
     """หน้าทำข้อสอบ — ซ่อนเมนู จับเวลา ไม่เฉลยระหว่างทาง"""
     learner = _learner(request)
@@ -954,6 +997,10 @@ def mock_run(request, exam_id):
         index = max(1, min(int(request.GET.get("q") or 1), exam.question_count))
     except ValueError:
         index = 1
+
+    if not exam.queue:
+        messages.info(request, "ชุดข้อสอบนี้ว่างเปล่า — คลังข้อสอบอาจยังไม่ได้ใส่ข้อมูล")
+        return redirect("mock_home")
 
     qid = exam.queue[index - 1]
     question = Question.objects.filter(pk=qid).prefetch_related("options").select_related("group").first()
@@ -972,6 +1019,7 @@ def mock_run(request, exam_id):
 
 
 @login_required
+@learner_required
 @require_POST
 def mock_answer(request, exam_id):
     learner = _learner(request)
@@ -994,6 +1042,7 @@ def mock_answer(request, exam_id):
 
 
 @login_required
+@learner_required
 def mock_submit(request, exam_id):
     """หน้ายืนยันก่อนส่ง — บอกจำนวนข้อที่ยังไม่ตอบและที่ปักธงไว้"""
     learner = _learner(request)
@@ -1016,6 +1065,7 @@ def mock_submit(request, exam_id):
 
 
 @login_required
+@learner_required
 def mock_result(request, exam_id):
     """ผลสอบ — ขึ้นต้นด้วยสิ่งที่ต้องแก้ ไม่ใช่คะแนน"""
     learner = _learner(request)

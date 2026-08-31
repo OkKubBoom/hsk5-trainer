@@ -46,6 +46,43 @@ def _recently_used(learner, limit: int = RECENT_EXAMS_TO_AVOID) -> set[int]:
     return used
 
 
+def _pick_by_group(pool: list, count: int, rng: random.Random) -> list[int]:
+    """หยิบทั้งบทอ่าน ไม่ใช่หยิบทีละข้อ
+
+    ของเดิมสุ่มรายข้อ ทำให้ชุด 45 ข้อกระจายอยู่ใน 30 บทอ่าน (1.13 ข้อต่อบท)
+    ทั้งที่ข้อสอบจริงมีราว 4 ข้อต่อบท ผู้เรียนจึงต้องอ่านหนักกว่าของจริงเกือบสามเท่า
+    ในเวลาเท่ากัน — แล้วสรุปว่าตัวเองอ่านช้า ทั้งที่โจทย์ต่างหากที่ผิดรูป
+
+    รับ list ของ (pk, group_id) แล้วคืน pk ที่จัดกลุ่มแล้ว
+    """
+    by_group: dict[int, list[int]] = {}
+    solo: list[int] = []
+    for pk, gid in pool:
+        if gid:
+            by_group.setdefault(gid, []).append(pk)
+        else:
+            solo.append(pk)
+
+    groups = list(by_group.values())
+    rng.shuffle(groups)
+    rng.shuffle(solo)
+
+    chosen: list[int] = []
+    for group in groups:
+        if len(chosen) >= count:
+            break
+        # ยอมเกินเป้าเล็กน้อยเพื่อรักษาบทอ่านให้ครบ ดีกว่าตัดกลางบท
+        chosen.extend(group)
+
+    # บทอ่านไม่พอ ค่อยเติมด้วยข้อเดี่ยว
+    for pk in solo:
+        if len(chosen) >= count:
+            break
+        chosen.append(pk)
+
+    return chosen[:count] if len(chosen) > count else chosen
+
+
 def build_reading_set(learner, *, seed: int | None = None) -> list[int]:
     """สุ่มชุดข้อสอบพาร์ทอ่านตามสัดส่วนจริง และเปลี่ยนไปทุกครั้งที่สอบ"""
     rng = random.Random(seed)
@@ -53,24 +90,24 @@ def build_reading_set(learner, *, seed: int | None = None) -> list[int]:
     picked: list[int] = []
 
     for part in READING_BLUEPRINT:
-        pool = list(
+        rows = list(
             Question.objects
             .filter(part["filter"], status=QuestionStatus.ACTIVE)
             .exclude(pk__in=picked)
-            .values_list("pk", flat=True)
+            .values_list("pk", "group_id")
         )
-        fresh = [pk for pk in pool if pk not in avoid]
-        # ถ้าของใหม่ไม่พอ ค่อยยอมใช้ของเก่า — ขนาดชุดต้องคงที่เสมอ
-        chosen = rng.sample(fresh, min(part["count"], len(fresh)))
+        fresh = [r for r in rows if r[0] not in avoid]
+        chosen = _pick_by_group(fresh, part["count"], rng)
         if len(chosen) < part["count"]:
-            leftover = [pk for pk in pool if pk not in chosen]
-            chosen += rng.sample(leftover, min(part["count"] - len(chosen), len(leftover)))
+            # ของใหม่ไม่พอ ค่อยยอมใช้ของเก่า — ขนาดชุดต้องคงที่เสมอ
+            leftover = [r for r in rows if r[0] not in chosen]
+            chosen += _pick_by_group(leftover, part["count"] - len(chosen), rng)
         picked.extend(chosen)
 
     return picked
 
 
-def start(learner, *, seed: int | None = None) -> MockExam:
+def start(learner, *, seed: int | None = None) -> MockExam | None:
     """เริ่มสอบจำลองพาร์ทอ่าน — ถ้ามีชุดที่ยังทำค้างอยู่ให้ทำต่อ ไม่สร้างใหม่"""
     running = MockExam.objects.filter(
         learner=learner, started_at__isnull=False, finished_at__isnull=True,
@@ -79,6 +116,10 @@ def start(learner, *, seed: int | None = None) -> MockExam:
         return running
 
     queue = build_reading_set(learner, seed=seed)
+    if not queue:
+        # คลังข้อสอบไม่พอ — สร้างชุดเปล่าแล้วหน้าทำข้อสอบจะพังตอนหยิบข้อแรก
+        # คืน None ให้ view บอกผู้ใช้ตรงๆ ดีกว่าปล่อยให้เจอหน้า error
+        return None
     return MockExam.objects.create(
         learner=learner, taken_on=timezone.localdate(), section=Section.READING,
         queue=queue, answers={}, flagged=[], started_at=timezone.now(),

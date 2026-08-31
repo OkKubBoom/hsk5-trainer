@@ -43,6 +43,10 @@ urlpatterns = [
     path("stats/", views.stats, name="stats"),
     path("docs/", views.docs, name="docs"),
     path("profile/", views.profile, name="profile"),
+    path("profile/password/", auth_views.PasswordChangeView.as_view(
+        template_name="core/password_change.html",
+        success_url="/profile/?changed=1",
+    ), name="password_change"),
     path("progress/", views.group_progress, name="group_progress"),
     path("users/", views.user_admin, name="user_admin"),
     path("explanation/<int:question_id>/note/", views.explanation_note, name="explanation_note"),

@@ -161,12 +161,16 @@
     <dd>{{ user.date_joined|date:"j F Y" }}</dd>
   </dl>
   <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+    <a class="btn ghost" href="{% url 'password_change' %}" style="width:auto">เปลี่ยนรหัสผ่าน</a>
     <form method="post" action="{% url 'logout' %}">
       {% csrf_token %}
       <button type="submit" class="btn ghost" style="width:auto">ออกจากระบบ</button>
     </form>
   </div>
-  <p class="muted">ตอนนี้หน้านี้ดูได้อย่างเดียว — การแก้วันสอบหรือค่าตั้งต้นยังต้องให้เจ้าของระบบทำให้</p>
+  {% if request.GET.changed %}
+    <div class="note" style="border-left-color:var(--ready)"><b>เปลี่ยนรหัสผ่านแล้ว</b></div>
+  {% endif %}
+  <p class="muted">การแก้วันสอบหรือค่าตั้งต้นยังต้องให้เจ้าของระบบทำให้ — เปลี่ยนได้เองอย่างเดียวคือรหัสผ่าน</p>
 </div>
 
 {% endblock %}
