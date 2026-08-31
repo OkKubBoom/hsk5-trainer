@@ -179,13 +179,14 @@ def submit(session: DrillSession, entry: dict, given: str, correct_answer: str,
         srs.review(card, _rating_for(is_correct, elapsed_ms), elapsed_ms=elapsed_ms)
 
     wrong_reason = ""
+    error_log = None
     if not is_correct:
         label = card.vocab.hanzi if card else (question.prompt_zh[:60] if question else given[:60])
         # เดาสาเหตุจากชนิดโจทย์และเวลาที่ใช้ แทนป้ายตายตัว — ดู core/diagnose.py
         code = error_code or diagnose.code_for(
             card=card, question=question, elapsed_ms=elapsed_ms,
         )
-        ErrorLog.record(
+        error_log = ErrorLog.record(
             session.learner, code, label,
             section=(Section.VOCAB if card else (question.section if question else Section.READING)),
             vocab=card.vocab if card else (question.vocab if question else None),
@@ -213,6 +214,8 @@ def submit(session: DrillSession, entry: dict, given: str, correct_answer: str,
         "vocab": card.vocab if card else None,
         "question": question,
         "distractors": distractors,
+        # ส่งบันทึกข้อผิดกลับไปด้วย เพื่อให้ผู้เรียนกดแก้สาเหตุเองได้จากการ์ดเฉลย
+        "error_log": error_log,
         # คำสำคัญท้ายเฉลย เติมพินอินให้แล้ว — ดู reading.key_vocab
         "key_vocab": reading.key_vocab(question) if question else [],
     }

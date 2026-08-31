@@ -28,6 +28,7 @@ urlpatterns = [
     path("review/<int:session_id>/answer/", views.review_answer, name="review_answer"),
     path("review/<int:session_id>/done/", views.review_done, name="review_done"),
 
+    path("error/<int:log_id>/reason/", views.error_reason, name="error_reason"),
     path("history/", views.history, name="history"),
     path("vocab/", views.vocab_list, name="vocab_list"),
     path("predict/", views.predict, name="predict"),

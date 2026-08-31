@@ -5,6 +5,13 @@
 
 คำที่ยังไม่ผ่านการตรวจของครูจะได้แท็ก "needs_review" เพื่อให้ UI เตือนได้
 และไม่ถูกเลือกเป็นคำใหม่ก่อนคำที่ตรวจแล้ว
+
+ธงมีสองแหล่งที่ต้องอ่านทั้งคู่:
+  hsk5_merged.json → needs_human_review  ธงที่ผู้สร้างข้อมูลตั้งเอง (149 คำ)
+  needs_review.json → severity           ธงจากด่านตรวจอัตโนมัติ (error 100 · warn 934)
+
+เดิมอ่านแค่แหล่งแรก คำระดับ error 62 คำและ warn 817 คำจึงหลุดเข้าระบบ
+โดยไม่มีป้ายอะไรเลย และผู้เรียนไม่มีทางรู้ว่าคำไหนน่าสงสัย
 """
 import json
 from pathlib import Path
@@ -16,6 +23,10 @@ from django.db import transaction
 from core.models import SourceType, Standard, VocabItem
 
 DATA = Path(settings.BASE_DIR) / "data" / "vocab" / "hsk5_merged.json"
+REVIEW = Path(settings.BASE_DIR) / "data" / "vocab" / "needs_review.json"
+
+# ป้ายบอกระดับความน่าสงสัยจากด่านตรวจอัตโนมัติ — ติดไว้ให้ UI เตือน ไม่ได้กันคำออก
+SEVERITY_TAG = {"error": "review:error", "warn": "review:warn", "self_flagged": "review:self"}
 
 
 class Command(BaseCommand):
@@ -25,6 +36,23 @@ class Command(BaseCommand):
         parser.add_argument("--include-flagged", action="store_true",
                             help="นำเข้าคำที่ยังต้องให้ครูตรวจด้วย (ติดแท็ก needs_review)")
         parser.add_argument("--limit", type=int, help="นำเข้าจำกัดจำนวน (ใช้ตอนทดสอบ)")
+
+
+    def _severity_map(self) -> dict:
+        """อ่านธงจากด่านตรวจอัตโนมัติ — คำเดียวอาจมีหลายธง เก็บระดับที่รุนแรงสุด"""
+        if not REVIEW.exists():
+            return {}
+        doc = json.loads(REVIEW.read_text(encoding="utf-8"))
+        rows = doc["words"] if isinstance(doc, dict) and "words" in doc else doc
+        order = ["self_flagged", "warn", "error"]
+        worst: dict[str, str] = {}
+        for r in rows:
+            hanzi, sev = r.get("hanzi"), r.get("severity")
+            if not hanzi or sev not in SEVERITY_TAG:
+                continue
+            if hanzi not in worst or order.index(sev) > order.index(worst[hanzi]):
+                worst[hanzi] = sev
+        return worst
 
     @transaction.atomic
     def handle(self, *args, **opts):
@@ -36,16 +64,32 @@ class Command(BaseCommand):
         if opts.get("limit"):
             words = words[: opts["limit"]]
 
+        severity_of = self._severity_map()
+
         created = updated = skipped = flagged = 0
         for w in words:
+            hanzi = w.get("hanzi", "")
+            severity = severity_of.get(hanzi)
             needs_review = bool(w.get("needs_human_review"))
+
+            # ธงจากด่านอัตโนมัติ *ไม่* กันคำออก แค่ติดป้ายไว้
+            #
+            # ดูตัวอย่างจริงแล้ว severity=error หมายถึง "ด่านตรวจไม่ผ่าน"
+            # ไม่ได้แปลว่าคำแปลผิดแน่นอน เช่น 称赞 ติดธงเพราะประโยคตัวอย่างซ้ำกับคำอื่น
+            # ซึ่งไม่กระทบความถูกต้องของคำแปลเลย
+            #
+            # ถ้ากันทั้งหมดออก คลังจะเหลือ 1,313 จาก 2,206 คำ (หายไป 40%)
+            # ซึ่งตัดคำที่ส่วนใหญ่ถูกต้องทิ้งไปด้วย — เสียมากกว่าได้
+            # ป้ายเตือน + ปุ่มแย้ง เป็นกลไกที่ระบบใช้กับคำอธิบาย AI อยู่แล้ว
             if needs_review and not opts["include_flagged"]:
                 skipped += 1
                 continue
 
             tags = list(w.get("tags") or [])
-            if needs_review and "needs_review" not in tags:
+            if (needs_review or severity) and "needs_review" not in tags:
                 tags.append("needs_review")
+            if severity and SEVERITY_TAG[severity] not in tags:
+                tags.append(SEVERITY_TAG[severity])
                 flagged += 1
 
             ev = w.get("exam_evidence") or {}

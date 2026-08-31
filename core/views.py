@@ -14,6 +14,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
+from . import diagnose
 from . import drill as drill_engine
 from . import grammar as grammar_engine
 from . import progress as progress_engine
@@ -199,7 +200,28 @@ def drill_answer(request):
         "outcome": outcome,
         "given": request.POST.get("given", ""),
         "is_last": session.position >= len(session.queue or []),
-        "error_codes": ErrorCode.choices,
+        # ตัวเลือกที่ผู้เรียนกดบอกเองได้ — สั้นกว่ารายการเต็มเพราะต้องตัดสินใจใน 1 วินาที
+        "reason_choices": list(diagnose.SELF_REPORT.items()),
+    })
+
+
+@login_required
+@require_POST
+def error_reason(request, log_id):
+    """ผู้เรียนกดบอกเองว่าผิดเพราะอะไร — ทับค่าที่ระบบเดาไว้
+
+    ระบบเดาได้แค่จากชนิดโจทย์กับเวลาที่ใช้ แต่แยกไม่ออกระหว่าง
+    "ไม่รู้คำนี้" กับ "รู้คำแต่เลือกผิด" ซึ่งมีทางแก้ตรงข้ามกัน
+    (ท่องเพิ่ม vs ห้ามท่องเพิ่ม ให้ไปฝึกอ่านโจทย์)
+    """
+    learner = _learner(request)
+    log = get_object_or_404(ErrorLog, pk=log_id, learner=learner)
+    code = request.POST.get("code", "")
+    if code in dict(ErrorCode.choices):
+        log.code = code
+        log.save(update_fields=["code", "updated_at"])
+    return render(request, "core/partials/reason_thanks.html", {
+        "advice": ErrorCode.advice(log.code),
     })
 
 

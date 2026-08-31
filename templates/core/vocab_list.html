@@ -79,6 +79,14 @@
           <td data-label="คำแปล">
             {% if "human_verified" in w.tags %}
               <span class="pill ok" title="มีคนตรวจยืนยันคำแปลนี้แล้ว">ตรวจแล้ว</span>
+            {% elif "review:error" in w.tags %}
+              {# ด่านตรวจอัตโนมัติไม่ผ่าน — ยังกดแย้งได้เหมือนเดิม แค่เตือนก่อน #}
+              <button type="button" class="flagbtn warn"
+                      @click="report = {id: {{ w.pk }}, hanzi: '{{ w.hanzi|escapejs }}', pinyin: '{{ w.pinyin|escapejs }}', meaning: '{{ w.meaning_th|escapejs }}'}"
+                      title="ด่านตรวจคุณภาพไม่ผ่าน ควรถามครูก่อนใช้">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+                ต้องตรวจ
+              </button>
             {% else %}
               <button type="button" class="flagbtn {% if 'disputed' in w.tags %}on{% endif %}"
                       @click="report = {id: {{ w.pk }}, hanzi: '{{ w.hanzi|escapejs }}', pinyin: '{{ w.pinyin|escapejs }}', meaning: '{{ w.meaning_th|escapejs }}'}"
@@ -120,6 +128,7 @@
   <div class="note" style="border-left-color:var(--missing)">
     <span class="ai-star">✱✱✱</span>
     <b>คำแปลไทยทั้งหมดเขียนโดย AI ยังไม่มีครูตรวจ</b> —
+    คำที่ขึ้นป้าย <b>ต้องตรวจ</b> คือคำที่ด่านตรวจอัตโนมัติไม่ผ่าน ควรถามครูก่อนใช้ —
     เจอคำไหนที่แปลแปลกๆ กดปุ่ม "แย้ง" ท้ายแถวได้เลย ถ้าถามครูมาแล้วก็พิมพ์คำแปลที่ถูกส่งมาด้วย
     ระบบจะเอาไปแทนที่ของ AI เมื่อเจ้าของระบบกดรับ
   </div>

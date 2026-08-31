@@ -41,6 +41,13 @@
         <span class="mono muted py">{{ outcome.vocab.pinyin }}</span>
         <span class="pill accent" style="margin-left:auto">HSK{{ outcome.vocab.hsk_level }}</span>
       </div>
+      {% if "review:error" in outcome.vocab.tags %}
+        {# คำที่ด่านตรวจคุณภาพไม่ผ่าน ต้องเตือนตรงจุดที่ผู้เรียนกำลังจะจำ #}
+        <div class="note" style="border-left-color:var(--partial);font-size:var(--t-sm)">
+          <span class="ai-star">✱✱✱</span>
+          คำนี้ด่านตรวจคุณภาพไม่ผ่าน — ถามครูยืนยันก่อนจำ
+        </div>
+      {% endif %}
       <span>{{ outcome.vocab.meaning_th }}</span>
       {% if outcome.vocab.example_zh %}
         <p class="zh" style="font-size:var(--t-lead)">{{ outcome.vocab.example_zh }}</p>

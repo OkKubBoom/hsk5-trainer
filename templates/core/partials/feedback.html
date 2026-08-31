@@ -38,6 +38,13 @@
         <span class="mono muted py">{{ outcome.vocab.pinyin }}</span>
         <span class="pill accent" style="margin-left:auto">HSK{{ outcome.vocab.hsk_level }}</span>
       </div>
+      {% if "review:error" in outcome.vocab.tags %}
+        {# คำที่ด่านตรวจคุณภาพไม่ผ่าน ต้องเตือนตรงจุดที่ผู้เรียนกำลังจะจำ #}
+        <div class="note" style="border-left-color:var(--partial);font-size:var(--t-sm)">
+          <span class="ai-star">✱✱✱</span>
+          คำนี้ด่านตรวจคุณภาพไม่ผ่าน — ถามครูยืนยันก่อนจำ
+        </div>
+      {% endif %}
       {% if outcome.vocab.example_zh %}
         <p class="zh" style="font-size:var(--t-lead)">{{ outcome.vocab.example_zh }}</p>
         <p class="muted">{{ outcome.vocab.example_th }}</p>
@@ -113,6 +120,27 @@
     {% endwith %}
 
     {% if outcome.advice %}<div class="note warn"><b>ทำไงต่อ</b> — {{ outcome.advice }}</div>{% endif %}
+
+    {% if outcome.error_log %}
+      {% comment %}
+      ระบบเดาสาเหตุได้แค่จากชนิดโจทย์กับเวลาที่ใช้ แต่แยกไม่ออกระหว่าง
+      "ไม่รู้คำนี้" กับ "รู้คำแต่เลือกผิด" ซึ่งมีทางแก้ตรงข้ามกัน
+      คำตอบจากผู้เรียนหนึ่งคลิกเชื่อถือได้กว่าที่ระบบเดาทั้งหมด — นี่คือ D8 ตัวจริง
+      {% endcomment %}
+      <div class="reasonbox" id="reason-{{ outcome.error_log.pk }}">
+        <span class="wlab">ผิดเพราะอะไร <span class="muted">(กดบอกได้ ช่วยให้ระบบเลือกข้อพรุ่งนี้ได้ตรงขึ้น)</span></span>
+        <div class="row" style="gap:6px;flex-wrap:wrap">
+          {% for code, label in reason_choices %}
+          <form hx-post="{% url 'error_reason' outcome.error_log.pk %}"
+                hx-target="#reason-{{ outcome.error_log.pk }}" hx-swap="outerHTML">
+            {% csrf_token %}
+            <input type="hidden" name="code" value="{{ code }}">
+            <button class="btn ghost sm" type="submit" style="width:auto">{{ label }}</button>
+          </form>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
 
     {% comment %}
     ข้อที่ไม่มีคำอธิบาย 4 ชั้นก็ต้องแย้งได้ — เดิมฟอร์มแย้งอยู่ในบล็อกของคำอธิบาย

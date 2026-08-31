@@ -657,3 +657,10 @@ textarea{
 /* วันที่เข้าระบบแต่ไม่ได้ทำอะไร — ต่างจากวันที่หายไปเลย */
 .daygrid .day.lv-seen{background:var(--sunken); box-shadow:inset 0 0 0 1px var(--line-strong)}
 .sw.lv-seen{background:var(--sunken); box-shadow:inset 0 0 0 1px var(--line-strong)}
+/* ปุ่มแย้งของคำที่ด่านตรวจคุณภาพไม่ผ่าน — เตือนก่อนแต่ยังกดแย้งได้เหมือนเดิม */
+.flagbtn.warn{border-color:var(--partial); color:var(--partial); background:var(--partial-bg)}
+/* กล่องให้ผู้เรียนกดบอกสาเหตุที่ตอบผิด */
+.reasonbox{
+  display:flex; flex-direction:column; gap:var(--s1);
+  padding-top:var(--s2); border-top:1px dashed var(--line-strong);
+}
