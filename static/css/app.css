@@ -664,3 +664,5 @@ textarea{
   display:flex; flex-direction:column; gap:var(--s1);
   padding-top:var(--s2); border-top:1px dashed var(--line-strong);
 }
+/* กฎการตั้งรหัสผ่าน — เขียนเองเพราะ Django ยังไม่มีคำแปลไทยของข้อความพวกนี้ */
+.pwrules{margin:0; padding-left:1.15rem; font-size:.78rem; color:var(--ink-3); line-height:1.7}
