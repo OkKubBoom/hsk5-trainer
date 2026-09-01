@@ -59,6 +59,14 @@ class ReadingView:
     # จริงหรือไม่ว่าข้อนี้ "ไม่มีคำถาม" ตามรูปแบบข้อสอบ — ใช้กับ 阅读第二部分 เท่านั้น
     # ข้อเติมคำก็ไม่มีคำถามเป็นประโยค แต่มีช่องที่ระบุชัดอยู่แล้ว จึงไม่ต้องบอกซ้ำ
     answers_whole_passage: bool = False
+    # ข้อฟัง — บทที่จะให้เครื่องอ่านออกเสียง ห้ามแสดงเป็นตัวอักษรก่อนตอบ
+    # ถ้าแสดง ข้อฟังจะกลายเป็นข้ออ่าน ซึ่งวัดคนละทักษะและให้คะแนนหลอก
+    audio_script: str = ""
+    question_id: int | None = None
+
+    @property
+    def is_listening(self):
+        return bool(self.audio_script)
 
     @property
     def has_passage(self):
@@ -105,6 +113,16 @@ def build(question) -> ReadingView:
     prompt = question.prompt_zh or ""
     blanks = group_blanks(question)
     current = blank_number(question)
+
+    # ต้องดักก่อนทุกกรณี — ข้อฟังมี group ที่เก็บบทพูดไว้เหมือนข้ออ่าน
+    # ถ้าตกไปเข้าเงื่อนไข "มีบทอ่าน" ข้างล่าง บทพูดจะถูกพิมพ์ขึ้นจอ
+    # ผู้เรียนอ่านเอาได้โดยไม่ต้องฟัง แล้วคะแนนพาร์ทฟังจะสูงหลอกทั้งหมด
+    if question.audio_script:
+        return ReadingView(
+            instruction=question.prompt_th or "ฟังแล้วเลือกคำตอบที่ถูกต้อง",
+            passage_html="", prompt=prompt, blank_no=None, total_blanks=0,
+            audio_script=question.audio_script, question_id=question.pk,
+        )
 
     if qtype == "synonym_cloze":
         # ข้อชนิดนี้เก็บบทอ่านซ้ำไว้ใน prompt_zh ของทุกข้อในกลุ่ม

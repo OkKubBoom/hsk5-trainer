@@ -683,3 +683,9 @@ textarea{
 .wordchip.on{border-color:var(--ready); background:var(--ready-bg); color:var(--ready); font-weight:500}
 .issuecard{border-left:3px solid var(--missing); padding-left:var(--s2)}
 .issuecard.unsure{border-left-color:var(--partial)}
+
+/* ── เครื่องเล่นข้อฟัง ───────────────────────────────────── */
+.listenbox{background:var(--surface-2); border:1px solid var(--line); border-radius:var(--radius-sm);
+  padding:var(--s2); margin-bottom:var(--s2)}
+.playbtn{width:auto; min-width:132px; gap:9px}
+.listenbox .passage{margin-top:var(--s1)}

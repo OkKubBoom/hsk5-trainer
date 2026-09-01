@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}ฝึกฟัง · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ฝึกฟัง{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:var(--s-half)">
+  <div class="row">
+    <span class="eyebrow grow">听力 · 100 คะแนนจาก 300</span>
+    <span class="mono muted">ทำไปแล้ว {{ done_count }} / {{ stats.pool }}</span>
+  </div>
+  <h1>ฝึกฟังทีละข้อ</h1>
+</div>
+
+{% if stats.total %}
+{% comment %}
+แสดงสองตัวเลขคู่กันเสมอ — ความแม่นรวมมองโลกในแง่ดีเกินไปเพราะนับข้อที่ฟังซ้ำหลายรอบด้วย
+ข้อสอบจริงเปิดเสียงครั้งเดียว ตัวเลข "ถูกตั้งแต่รอบเดียว" คือตัวที่ตรงกับห้องสอบ
+{% endcomment %}
+<div class="stats">
+  <div class="stat"><b>{{ stats.total }}</b><span>ฝึกไปแล้ว</span></div>
+  <div class="stat"><b>{{ stats.accuracy }}%</b><span>ความแม่นรวม</span></div>
+  <div class="stat"><b>{{ stats.exam_accuracy }}%</b><span>ถูกตั้งแต่ฟังรอบเดียว</span></div>
+</div>
+<p class="muted" style="font-size:.82rem;margin-top:calc(var(--s1) * -1)">
+  ตัวเลขที่ใช้เดาคะแนนสอบได้คือ <b>ถูกตั้งแต่ฟังรอบเดียว</b> — ในห้องสอบไม่มีปุ่มฟังซ้ำ
+</p>
+{% endif %}
+
+{% if not question %}
+  <div class="card empty">
+    <span class="empty-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 0 1 18 0"/><path d="M21 12v4a3 3 0 0 1-3 3h-1v-6h4"/><path d="M3 12v4a3 3 0 0 0 3 3h1v-6H3"/></svg>
+    </span>
+    <h3>ยังไม่มีข้อฟังที่พร้อมใช้</h3>
+    <p class="muted">
+      ข้อสอบฟังต้องมีบทถอดเสียงก่อนถึงจะฝึกได้ —
+      รัน <span class="mono">python manage.py import_listening --apply</span>
+    </p>
+  </div>
+
+{% elif result %}
+  {# ─── ผลลัพธ์ ─── #}
+  <div class="card stack" style="gap:var(--s2);border-width:2px;border-color:{% if result.is_correct %}var(--ready){% else %}var(--missing){% endif %}">
+    {% if result.is_correct %}
+      <span class="pill ok" style="align-self:flex-start">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+        ถูกต้อง
+      </span>
+    {% else %}
+      <span class="pill bad" style="align-self:flex-start">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        ยังไม่ใช่
+      </span>
+    {% endif %}
+
+    {% if not result.is_correct %}
+    <div class="stack" style="gap:2px">
+      <span class="eyebrow">คุณเลือก</span>
+      <span class="zh" style="text-decoration:line-through;color:var(--ink-3)">{{ result.given }}</span>
+    </div>
+    {% endif %}
+    <div class="stack" style="gap:2px">
+      <span class="eyebrow">คำตอบที่ถูก</span>
+      <span class="zh" style="color:var(--ready);font-weight:500">{{ result.correct_answer }}</span>
+    </div>
+
+    <div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">
+      <span class="wlab">คำถาม</span>
+      <p class="zh" style="font-size:var(--t-lead)">{{ question.prompt_zh }}</p>
+    </div>
+
+    {% comment %}
+    บทที่ได้ยิน — นี่คือจุดที่การฝึกฟังสอนได้จริง
+    ได้เห็นว่าคำที่ฟังไม่ออกคือคำไหน ไม่ใช่แค่รู้ว่าตอบผิด (D8)
+    {% endcomment %}
+    <div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">
+      <span class="wlab">บทที่ได้ยิน</span>
+      <p class="zh" style="font-size:var(--t-lead);line-height:2">{{ question.audio_script }}</p>
+      <p class="muted" style="font-size:.8rem">
+        คำไหนอ่านแล้วเข้าใจแต่ฟังไม่ออก = รู้ความหมายแล้วแต่ยังจำเสียงไม่ได้ — ทวนเสียงคำนั้นเป็นพิเศษ
+      </p>
+    </div>
+
+    {% if key_vocab %}
+    <div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">
+      <span class="wlab">คำสำคัญในบทนี้</span>
+      <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+        {% for w in key_vocab %}
+          <span class="wordchip">
+            <span class="zh">{{ w.hanzi }}</span>
+            {% if w.pinyin %}<span class="mono muted py">{{ w.pinyin }}</span>{% endif %}
+            {% if w.meaning_th %}<span class="muted">{{ w.meaning_th }}</span>{% endif %}
+          </span>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="actionbar">
+    <a class="btn block lg" href="{% url 'listen_practice' %}">ข้อต่อไป</a>
+  </div>
+
+{% else %}
+  {# ─── ฟังแล้วตอบ ─── #}
+  {% comment %}
+  ครอบทั้งเครื่องเล่นและฟอร์มด้วย x-data เดียวกัน เพราะฟอร์มต้องส่งจำนวนครั้งที่กดฟังไปด้วย
+  ถ้าแยกกล่องกัน ฟอร์มจะอ่านค่า plays ไม่ได้ แล้วเราจะไม่มีทางรู้ว่าตอบถูกเพราะฟังออก
+  หรือเพราะฟังซ้ำห้ารอบ ซึ่งเป็นความต่างที่สำคัญที่สุดของพาร์ทนี้
+  {% endcomment %}
+  <div class="card stack" style="gap:var(--s2)"
+       x-data="listenPlayer({{ question.pk }})" x-init="init()">
+
+    <p class="qinstruction">ฟังแล้วเลือกคำตอบที่ถูกต้อง</p>
+
+    <div class="listenbox">
+      {% include "core/partials/listen_player.html" %}
+    </div>
+
+    {% comment %}
+    คำถามขึ้นพร้อมตัวเลือกได้ ไม่ถือว่าโกง — ข้อสอบจริงพิมพ์ตัวเลือกไว้ในกระดาษอยู่แล้ว
+    ส่วนที่ห้ามให้เห็นคือบทพูด ซึ่งอยู่หลังปุ่มฟังและไม่ได้ถูกส่งมากับหน้านี้
+    {% endcomment %}
+    <p class="qprompt zh">{{ question.prompt_zh }}</p>
+
+    <div class="choices">
+      {% for opt in question.options.all %}
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="question_id" value="{{ question.pk }}">
+        <input type="hidden" name="given" value="{{ opt.text }}">
+        <input type="hidden" name="plays" :value="plays">
+        <button class="choice" type="submit" :disabled="plays === 0"
+                :title="plays === 0 ? 'กดฟังก่อนแล้วค่อยตอบ' : ''">
+          <span class="key">{{ forloop.counter0|add:65|stringformat:"c" }}</span>
+          <span class="zh grow">{{ opt.text }}</span>
+        </button>
+      </form>
+      {% endfor %}
+    </div>
+
+    <p class="muted" x-show="plays === 0" style="font-size:.82rem">
+      กดปุ่มฟังก่อน แล้วตัวเลือกถึงจะกดได้ — เดาโดยไม่ฟังทำให้ตัวเลขความแม่นเชื่อไม่ได้
+    </p>
+  </div>
+{% endif %}
+
+{% endblock %}

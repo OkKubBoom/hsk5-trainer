@@ -6,7 +6,7 @@
 คำสั่งต้องมาก่อนและต้องอ่านออกในแวบเดียว เพราะข้อสอบบางชนิดไม่มีคำถาม
 ถ้าคำสั่งเป็นตัวเทาเล็กๆ ผู้เรียนจะมองหาคำถามที่ไม่มีอยู่จริง
 
-ต้องการ: q.instruction · q.passage_html · q.prompt · q.blank_no · q.total_blanks
+ต้องการ: q.instruction · q.passage_html · q.prompt · q.blank_no · q.total_blanks · q.is_listening
 {% endcomment %}
 
 <div class="qhead">
@@ -17,6 +17,12 @@
     </span>
   {% endif %}
 </div>
+
+{% if q.is_listening %}
+  <div class="listenbox" x-data="listenPlayer({{ q.question_id }})" x-init="init()">
+    {% include "core/partials/listen_player.html" %}
+  </div>
+{% endif %}
 
 {% if q.passage_html %}
   <div class="passage zh">{{ q.passage_html }}</div>

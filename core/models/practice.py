@@ -445,6 +445,36 @@ class ReviewSession(TimeStamped):
         return round(self.correct / self.answered * 100) if self.answered else 0
 
 
+class ListeningAttempt(TimeStamped):
+    """หนึ่งครั้งที่ผู้เรียนฝึกข้อฟัง
+
+    เก็บจำนวนครั้งที่กดฟังซ้ำด้วย เพราะเป็นตัวเลขที่บอกอะไรมากกว่าถูก/ผิด —
+    ข้อสอบจริงเปิดเสียงครั้งเดียว คนที่ตอบถูกหลังฟังห้ารอบยังไม่พร้อมสอบ
+    ถ้าเก็บแค่ถูก/ผิด ตัวเลขความแม่นจะสวยเกินจริงและตัดสินใจผิดว่าสมัครสอบรอบไหน
+    """
+    learner = models.ForeignKey(
+        LearnerProfile, on_delete=models.CASCADE, related_name="listening_attempts",
+        verbose_name="ผู้เรียน",
+    )
+    question = models.ForeignKey(
+        Question, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="listening_attempts", verbose_name="ข้อที่ทำ",
+    )
+    is_correct = models.BooleanField(default=False, verbose_name="ตอบถูก")
+    plays = models.PositiveSmallIntegerField(
+        default=1, verbose_name="กดฟังกี่ครั้ง",
+        help_text="ข้อสอบจริงได้ฟังครั้งเดียว — เกิน 1 แปลว่ายังไม่ทันความเร็วจริง",
+    )
+
+    class Meta:
+        verbose_name = "ครั้งที่ฝึกฟัง"
+        verbose_name_plural = "ครั้งที่ฝึกฟัง"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.learner.user} · {'ถูก' if self.is_correct else 'ผิด'} · ฟัง {self.plays} ครั้ง"
+
+
 class WordOrderAttempt(TimeStamped):
     """หนึ่งครั้งที่ผู้เรียนลองเรียงประโยค
 

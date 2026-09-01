@@ -22,6 +22,7 @@ from . import drill as drill_engine
 from . import grammar as grammar_engine
 from . import progress as progress_engine
 from . import writing as writing_engine
+from . import listen_drill as listen_engine
 from . import mock as mock_engine
 from . import reading as reading_engine
 from . import review as review_engine
@@ -686,6 +687,65 @@ def essay_dispute(request, pk):
     )
     messages.info(request, "ส่งคำแย้งแล้ว — เจ้าของระบบจะตรวจให้")
     return redirect("essay_result", pk=submission.pk)
+
+
+# ── ฝึกพาร์ทฟัง ────────────────────────────────────────────
+
+LISTEN_SEEN_KEY = "listen_seen"
+
+
+@login_required
+@learner_required
+def listen_practice(request):
+    """ฝึกฟังทีละข้อ — แยกจากชุดรายวันเพราะโควตาข้อสอบจริงมีแค่ 10 ข้อ
+
+    เหตุผลเต็มอยู่ในหัวไฟล์ core/listen_drill.py
+    """
+    learner = _learner(request)
+    seen = request.session.get(LISTEN_SEEN_KEY, [])
+    result = question = None
+
+    if request.method == "POST":
+        question = get_object_or_404(Question, pk=request.POST.get("question_id"))
+        result = listen_engine.check(question, request.POST.get("given", ""))
+        try:
+            plays = int(request.POST.get("plays") or 1)
+        except ValueError:
+            plays = 1
+        listen_engine.record_result(learner, question, result, plays=plays)
+        if question.pk not in seen:
+            seen.append(question.pk)
+            request.session[LISTEN_SEEN_KEY] = seen[-80:]
+    else:
+        question = listen_engine.pick_question(exclude_ids=seen)
+
+    return render(request, "core/listen_practice.html", {
+        "nav": "listen", "learner": learner,
+        "question": question, "result": result,
+        "q": reading_engine.build(question) if question else None,
+        "key_vocab": reading_engine.key_vocab(question) if question else [],
+        "stats": listen_engine.stats(learner),
+        "done_count": len(seen),
+    })
+
+
+# ── บทพูดของข้อฟัง ─────────────────────────────────────────
+
+@login_required
+@learner_required
+def listen_script(request, question_id):
+    """ส่งบทพูดให้เครื่องเล่นตอนกดฟัง
+
+    แยกออกมาเป็นคำขอต่างหากโดยตั้งใจ — ถ้าฝังบทไว้ในหน้าเลย
+    ผู้เรียนกด "ดูซอร์ส" ครั้งเดียวก็อ่านคำตอบได้ แล้วพาร์ทฟังจะกลายเป็นพาร์ทอ่าน
+    ทั้งที่คะแนนยังขึ้นว่าฟังได้ ซึ่งหลอกทั้งผู้เรียนและตัวเลขที่ใช้ตัดสินใจสมัครสอบ
+    """
+    from django.http import JsonResponse
+    question = get_object_or_404(Question, pk=question_id)
+    if not question.audio_script:
+        return JsonResponse({"script": "", "error": "ข้อนี้ยังไม่มีบทเสียง"}, status=404)
+    return JsonResponse({"script": question.audio_script},
+                        json_dumps_params={"ensure_ascii": False})
 
 
 # ── ประวัติรายวัน ──────────────────────────────────────────

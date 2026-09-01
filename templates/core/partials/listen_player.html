@@ -1,0 +1,66 @@
+{% comment %}
+เครื่องเล่นข้อฟัง — ต้องการ q.question_id
+
+ผู้เรียกต้องครอบด้วย x-data="listenPlayer(<id>)" x-init="init()" ให้ก่อน
+เพราะบางหน้า (ฝึกฟังทีละข้อ) ต้องอ่านค่า plays จากฟอร์มคำตอบที่อยู่นอกกล่องนี้
+
+**บทไม่ได้อยู่ในหน้านี้** ตัวสคริปต์ไปดึงจาก /listen/<id>/script/ ตอนกดเล่น
+ถ้าใส่บทลงในหน้าเลย ผู้เรียนกด "ดูซอร์ส" ครั้งเดียวก็อ่านคำตอบได้
+แล้วพาร์ทฟังจะกลายเป็นพาร์ทอ่านโดยที่คะแนนยังขึ้นว่าฟังได้
+{% endcomment %}
+
+  <template x-if="supported && voice">
+    <div class="stack" style="gap:var(--s2)">
+      <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+        <button type="button" class="btn playbtn" @click="playing ? stop() : play()" :disabled="loading">
+          <template x-if="!playing">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </template>
+          <template x-if="playing">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+          </template>
+          <span x-text="loading ? 'กำลังโหลด…' : (playing ? 'หยุด' : (plays ? 'ฟังอีกครั้ง' : 'ฟัง'))">ฟัง</span>
+        </button>
+
+        <div class="row" style="gap:6px" role="group" aria-label="ความเร็วเสียง">
+          <template x-for="r in [0.7, 0.85, 1]" :key="r">
+            <button type="button" class="chip" :class="rate === r && 'on'" @click="rate = r"
+                    style="min-width:auto;padding:0 12px"
+                    x-text="r === 1 ? 'เท่าข้อสอบ' : (r === 0.85 ? 'ช้าลงนิด' : 'ช้า')"></button>
+          </template>
+        </div>
+
+        <span class="muted" style="margin-left:auto" x-show="plays > 1" x-cloak>
+          ฟังไปแล้ว <b x-text="plays"></b> ครั้ง · ในห้องสอบได้ฟังครั้งเดียว
+        </span>
+      </div>
+
+      <p class="muted" style="font-size:.8rem;margin:0">
+        เสียงนี้สร้างจากตัวอ่านของเครื่องคุณ ไม่ใช่เสียงจริงในห้องสอบ —
+        ใช้ฝึกจับใจความและความเร็วได้ แต่ไม่ใช่การซ้อมเสียงจริง
+      </p>
+    </div>
+  </template>
+
+  {% comment %}
+  ทางออกเมื่อเครื่องไม่มีเสียงจีน — ปล่อยให้ตันคือทำให้ทั้งพาร์ทใช้ไม่ได้
+  แต่ต้องบอกให้ชัดว่ากดแล้วมันไม่ใช่การฝึกฟังอีกต่อไป
+  {% endcomment %}
+  <template x-if="!supported || !voice">
+    <div class="stack" style="gap:var(--s1)">
+      <div class="note warn">
+        <b>เครื่องนี้อ่านภาษาจีนไม่ได้</b> —
+        <span x-show="!supported">เบราว์เซอร์นี้ไม่รองรับการอ่านออกเสียง</span>
+        <span x-show="supported" x-cloak>ยังไม่มีเสียงภาษาจีนติดตั้งอยู่</span>
+        <br>ลองเปิดด้วย Chrome หรือ Safari บนมือถือ ซึ่งมีเสียงจีนมาให้อยู่แล้ว
+      </div>
+      <div>
+        <button type="button" class="btn ghost sm" style="width:auto" @click="reveal()" x-show="!revealed">
+          แสดงบทแทน (ข้อนี้จะกลายเป็นการอ่าน ไม่ใช่การฟัง)
+        </button>
+      </div>
+      <div class="passage zh" x-show="revealed" x-cloak x-text="script"></div>
+    </div>
+  </template>
+
+  <p class="note warn" x-show="error" x-cloak x-text="error" style="margin-top:var(--s1)"></p>
