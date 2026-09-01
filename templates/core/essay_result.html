@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}ผลตรวจเรียงความ · HSK5 Trainer{% endblock %}
 {% block mobile_title %}ผลตรวจเรียงความ{% endblock %}
 {% block content %}
@@ -88,6 +89,13 @@
       <div class="note"><b>สิ่งเดียวที่ควรฝึกต่อ</b> — {{ ob.next_step_th }}</div>
     {% endif %}
     {% endwith %}
+  {% endif %}
+
+  {% if scene %}
+  <div class="card flat stack" style="gap:6px">
+    <span class="wlab">ภาพโจทย์</span>
+    <img class="scene" src="{% static scene.file %}" alt="ภาพโจทย์ของงานเขียนชิ้นนี้">
+  </div>
   {% endif %}
 
   <div class="card flat stack" style="gap:6px">

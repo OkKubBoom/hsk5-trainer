@@ -425,3 +425,104 @@ class ConsentTests(TestCase):
 
         self.learner.refresh_from_db()
         self.assertIsNone(self.learner.essay_consent_at)
+
+
+class SceneTests(TestCase):
+    """ข้อ 100 看图写作 — ภาพที่เราวาดเอง ไม่ใช่ภาพจากข้อสอบจริง"""
+
+    def test_มีภาพโจทย์ในระบบและไฟล์มีอยู่จริง(self):
+        from pathlib import Path
+
+        from django.conf import settings
+
+        pool = essay.scenes()
+        self.assertGreaterEqual(len(pool), 5)
+        for s in pool:
+            with self.subTest(scene=s["id"]):
+                path = Path(settings.BASE_DIR) / "static" / s["file"]
+                self.assertTrue(path.exists(), f'ไม่มีไฟล์ {s["file"]} — รัน make_scenes')
+
+    def test_ทุกภาพมีคำบรรยายให้ผู้ตรวจ(self):
+        """ผลตรวจส่งกลับมาเป็นข้อความ ผู้ตรวจไม่เห็นภาพ
+        ถ้าไม่มีคำบรรยาย จะตัดสิน 内容与图片相关 ไม่ได้เลย
+        """
+        for s in essay.scenes():
+            with self.subTest(scene=s["id"]):
+                self.assertGreater(len(s["describe_th"]), 20)
+
+    def test_ในภาพต้องไม่มีตัวอักษร(self):
+        """ใส่ตัวจีนลงไปคือให้คำศัพท์ฟรี ใส่ตัวไทยคือบอกคำตอบ"""
+        import re
+        from pathlib import Path
+
+        from django.conf import settings
+
+        han_or_thai = re.compile(r"[一-鿿฀-๿]")
+        for s in essay.scenes():
+            svg = (Path(settings.BASE_DIR) / "static" / s["file"]).read_text(encoding="utf-8")
+            body = re.sub(r'aria-label="[^"]*"', "", svg)
+            with self.subTest(scene=s["id"]):
+                self.assertNotIn("<text", body)
+                self.assertIsNone(han_or_thai.search(body))
+
+    def test_สุ่มภาพเลี่ยงภาพที่เพิ่งเขียนไป(self):
+        first = essay.pick_scene(seed=3)
+        again = essay.pick_scene(exclude=[first["id"]], seed=3)
+        self.assertNotEqual(first["id"], again["id"])
+
+    def test_พรอมต์ข้อ100_บอกผู้ตรวจว่าภาพเป็นอะไร(self):
+        scene = essay.scenes()[0]
+        prompt = essay_grader.build_prompt(
+            text_zh="我很好", task_no=100, required_words=[],
+            char_count=3, missing=[], scene=scene)
+        self.assertIn(scene["describe_th"][:20], prompt)
+        self.assertIn("image_relevant", prompt)
+
+    def test_พรอมต์ข้อ99_ไม่มีเรื่องภาพปนเข้ามา(self):
+        prompt = essay_grader.build_prompt(
+            text_zh="我很好", task_no=99, required_words=["放松"],
+            char_count=3, missing=[])
+        self.assertNotIn("ภาพแสดง", prompt)
+
+
+class Task100FlowTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        for i in range(10):
+            VocabItem.objects.create(hanzi=f"詞{i}", pinyin=f"ci{i}",
+                                     meaning_th=f"ความหมาย {i}", hsk_level=5)
+        cls.learner, _ = create_learner(
+            username="p", password="passpass1",
+            exam_date=timezone.localdate() + timedelta(days=60))
+
+    def setUp(self):
+        self.client.login(username="p", password="passpass1")
+
+    def test_เขียนจากภาพแล้วเก็บว่าเป็นภาพไหน(self):
+        """ต้องย้อนดูได้ว่าเขียนจากภาพไหน ไม่งั้นหน้าผลตรวจแสดงภาพผิด
+        และผู้ตรวจจะได้คำบรรยายของภาพอื่น
+        """
+        self.client.get(reverse("essay_write"), {"task": "100"})
+        scene_id = self.client.session["essay_scene"]
+        self.client.post(reverse("essay_submit"),
+                         {"text_zh": "今天下雨了。", "task_no": "100"})
+
+        sub = WritingSubmission.objects.get(learner=self.learner)
+        self.assertEqual(sub.task_no, 100)
+        self.assertEqual(sub.prompt_zh, scene_id)
+        self.assertEqual(sub.required_words, [])
+
+    def test_ข้อ100_ไม่ถูกตัดสินด้วยเกณฑ์คำที่ต้องใช้ครบ(self):
+        """เกณฑ์ 未全部使用 เป็นของข้อ 99 เท่านั้น
+        ถ้าเอามาใช้กับข้อ 100 ทุกชิ้นจะตกเป็นระดับต้นทันทีเพราะไม่มีคำที่กำหนด
+        """
+        result = essay.decide_band(
+            char_count=96, missing=[], task_no=100,
+            observation=observation(image_relevant=True))
+        self.assertEqual(result["band"], "high")
+
+    def test_ข้อ100_เขียนไม่ตรงภาพตกระดับต้น(self):
+        result = essay.decide_band(
+            char_count=96, missing=[], task_no=100,
+            observation=observation(image_relevant=False))
+        self.assertEqual(result["band"], "low")

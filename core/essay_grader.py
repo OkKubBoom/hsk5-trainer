@@ -97,7 +97,7 @@ def is_configured() -> bool:
 
 
 def build_prompt(*, text_zh: str, task_no: int, required_words: list[str],
-                 char_count: int, missing: list[str]) -> str:
+                 char_count: int, missing: list[str], scene: dict | None = None) -> str:
     """ประกอบโจทย์ — บอกผลการนับของเราไปด้วย โมเดลจะได้ไม่ต้องนับเอง"""
     lines = [
         f"ข้อ {task_no} ของ 书写第二部分",
@@ -109,12 +109,23 @@ def build_prompt(*, text_zh: str, task_no: int, required_words: list[str],
             "ระบบตรวจแล้ว: " +
             ("ใช้ครบทุกคำ" if not missing else "ยังไม่ได้ใช้ " + " ".join(missing))
         )
+    else:
+        # ผู้ตรวจไม่เห็นภาพ เพราะผลส่งกลับมาเป็นข้อความ
+        # ถ้าไม่บอกว่าภาพเป็นอะไร จะตัดสิน 内容与图片相关 ไม่ได้เลย
+        lines.append("โจทย์เป็นภาพ ผู้ตรวจไม่เห็นภาพ จึงบรรยายให้แทน —")
+        lines.append("ภาพแสดง: " + (scene or {}).get("describe_th", "(ไม่มีคำบรรยายภาพ)"))
+        lines.append(
+            "ให้ตัดสิน image_relevant ว่า *จริงหรือไม่* ที่งานเขียนพูดถึงฉากนี้ "
+            "โดยยึดว่าเขียนถึงสิ่งที่อยู่ในภาพก็พอ ไม่ต้องครบทุกอย่าง "
+            "และแต่งรายละเอียดเพิ่มได้"
+        )
     lines += ["", "งานเขียนของผู้เรียน:", text_zh]
     return "\n".join(lines)
 
 
 def observe(*, text_zh: str, task_no: int, required_words: list[str],
-            char_count: int, missing: list[str]) -> tuple[dict, dict]:
+            char_count: int, missing: list[str],
+            scene: dict | None = None) -> tuple[dict, dict]:
     """เรียก Claude ให้สังเกตงานเขียน คืน (ผลสังเกต, จำนวนโทเคนที่ใช้)
 
     ทุกความล้มเหลวถูกแปลงเป็น GraderUnavailable พร้อมข้อความไทยที่บอกทางออก
@@ -133,7 +144,7 @@ def observe(*, text_zh: str, task_no: int, required_words: list[str],
     # สร้าง client ในฟังก์ชันเสมอ ไม่ใช่ที่ระดับโมดูล — ดูเหตุผลที่หัวไฟล์
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], timeout=120.0)
     prompt = build_prompt(text_zh=text_zh, task_no=task_no, required_words=required_words,
-                          char_count=char_count, missing=missing)
+                          char_count=char_count, missing=missing, scene=scene)
 
     try:
         resp = client.messages.create(
@@ -196,7 +207,7 @@ def _friendly(exc: Exception) -> str:
 # ── ทางหลัก: ให้เจ้าของระบบเอาไปถาม Claude เองแล้ววางผลกลับมา ──
 
 def full_prompt(*, text_zh: str, task_no: int, required_words: list[str],
-                char_count: int, missing: list[str]) -> str:
+                char_count: int, missing: list[str], scene: dict | None = None) -> str:
     """พรอมต์เต็มที่ก๊อปไปวางใน Claude ได้เลย
 
     รวมคำสั่งระบบ โจทย์ และโครง JSON ไว้ในก้อนเดียว เพราะเจ้าของระบบจะก๊อปทีเดียว
@@ -208,7 +219,7 @@ def full_prompt(*, text_zh: str, task_no: int, required_words: list[str],
         "",
         "── โจทย์และงานเขียน ──",
         build_prompt(text_zh=text_zh, task_no=task_no, required_words=required_words,
-                     char_count=char_count, missing=missing),
+                     char_count=char_count, missing=missing, scene=scene),
         "",
         "── รูปแบบคำตอบ ──",
         "ตอบกลับเป็น JSON ก้อนเดียวตาม schema นี้ ห้ามมีข้อความอื่นนอกก้อน JSON",

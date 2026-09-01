@@ -497,16 +497,31 @@ def essay_consent(request):
 @login_required
 @learner_required
 def essay_write(request):
-    """หน้าเขียน — โจทย์ข้อ 99 สุ่มคำจากคลังของเราเอง ไม่ใช้โจทย์ลิขสิทธิ์"""
+    """หน้าเขียน — ข้อ 99 สุ่มคำ · ข้อ 100 สุ่มภาพ ทั้งคู่เป็นของเราเอง ไม่ใช้โจทย์ลิขสิทธิ์"""
     learner = _learner(request)
-    words = request.session.get("essay_words")
-    if not words:
-        pool = VocabItem.objects.filter(hsk_level=5).exclude(hanzi="")[:400]
-        words = essay_engine.pick_words(pool)
-        request.session["essay_words"] = words
+    task_no = 100 if request.GET.get("task") == "100" else 99
+
+    words, scene = [], None
+    if task_no == 99:
+        words = request.session.get("essay_words")
+        if not words:
+            pool = VocabItem.objects.filter(hsk_level=5).exclude(hanzi="")[:400]
+            words = essay_engine.pick_words(pool)
+            request.session["essay_words"] = words
+    else:
+        scene = essay_engine.scene_by_id(request.session.get("essay_scene") or "")
+        if not scene:
+            # เลี่ยงภาพที่เพิ่งเขียนไป ไม่งั้นจะวนอยู่ไม่กี่ภาพและกลายเป็นท่องคำตอบ
+            recent = list(
+                WritingSubmission.objects.filter(learner=learner, task_no=100)
+                .values_list("prompt_zh", flat=True)[:4]
+            )
+            scene = essay_engine.pick_scene(exclude=recent)
+            request.session["essay_scene"] = scene["id"] if scene else ""
 
     return render(request, "core/essay_write.html", {
         "nav": "essay", "learner": learner, "words": words,
+        "task_no": task_no, "scene": scene,
         "target_chars": essay_engine.TARGET_CHARS,
         "consented": _essay_consented(learner),
         "grader_ready": essay_grader.is_configured(),
@@ -517,6 +532,9 @@ def essay_write(request):
 @learner_required
 @require_POST
 def essay_new_words(request):
+    if request.POST.get("task") == "100":
+        request.session.pop("essay_scene", None)
+        return redirect(f"{reverse('essay_write')}?task=100")
     request.session.pop("essay_words", None)
     return redirect("essay_write")
 
@@ -531,19 +549,22 @@ def essay_submit(request):
     """
     learner = _learner(request)
     text = (request.POST.get("text_zh") or "").strip()
-    words = request.session.get("essay_words") or []
+    task_no = 100 if request.POST.get("task_no") == "100" else 99
+    words = (request.session.get("essay_words") or []) if task_no == 99 else []
+    scene_id = request.session.get("essay_scene") or "" if task_no == 100 else ""
 
     if not text:
         messages.info(request, "ยังไม่ได้เขียนอะไรเลย")
-        return redirect("essay_write")
+        return redirect(f"{reverse('essay_write')}?task={task_no}")
 
-    char_count = essay_engine.count_chars(text)
     submission = WritingSubmission.objects.create(
-        learner=learner, task_no=99, required_words=words,
-        prompt_zh=" ".join(words), text_zh=text, char_count=char_count,
+        learner=learner, task_no=task_no, required_words=words,
+        # ข้อ 100 เก็บ id ของภาพไว้ใน prompt_zh เพื่อให้ย้อนดูได้ว่าเขียนจากภาพไหน
+        prompt_zh=" ".join(words) if task_no == 99 else scene_id,
+        text_zh=text, char_count=essay_engine.count_chars(text),
         minutes_spent=int(request.POST.get("minutes") or 0),
     )
-    request.session.pop("essay_words", None)
+    request.session.pop("essay_words" if task_no == 99 else "essay_scene", None)
     return redirect("essay_result", pk=submission.pk)
 
 
@@ -556,6 +577,7 @@ def essay_result(request, pk):
     return render(request, "core/essay_result.html", {
         "nav": "essay", "learner": learner, "submission": submission,
         "feedback": feedback,
+        "scene": essay_engine.scene_by_id(submission.prompt_zh),
         "consented": _essay_consented(learner),
         "grader_ready": essay_grader.is_configured(),
     })
@@ -637,6 +659,7 @@ def essay_grade(request, pk):
             text_zh=submission.text_zh, task_no=submission.task_no,
             required_words=submission.required_words,
             char_count=submission.char_count, missing=missing,
+            scene=essay_engine.scene_by_id(submission.prompt_zh),
         )
     except essay_grader.GraderUnavailable as exc:
         messages.info(request, str(exc))
@@ -655,6 +678,7 @@ def _essay_prompt(submission) -> str:
         text_zh=submission.text_zh, task_no=submission.task_no,
         required_words=submission.required_words,
         char_count=submission.char_count, missing=missing,
+        scene=essay_engine.scene_by_id(submission.prompt_zh),
     )
 
 

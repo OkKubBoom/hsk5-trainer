@@ -124,6 +124,8 @@ hsk5-trainer/
 │   ├── srs.py        ตัวจัดตารางทบทวน (SM-2 ปรับให้รู้จักวันสอบ)
 │   ├── listening.py  แยกบทถอดเสียง 听力 จากข้อสอบจริงเป็นรายข้อ
 │   ├── listen_drill.py   ฝึกฟังทีละข้อ · listen_explain.py ชี้ประโยคที่มีคำตอบ
+│   ├── listen_mock.py    วัดผลพาร์ทฟัง จับเวลา ฟังครั้งเดียว
+│   ├── vocab_review.py   คิวคำศัพท์ให้ครูตรวจ เรียงตามความเสี่ยง
 │   ├── dictation.py  听写 — เทียบทีละตัวอักษร แยกเสียงพ้องออกจากตัวผิด
 │   ├── weekly.py     สรุปรายสัปดาห์ เทียบกับสัปดาห์ก่อนเสมอ
 │   ├── selection.py  Daily Drill Engine
@@ -148,6 +150,7 @@ python manage.py seed_hsk5          # ใส่คำศัพท์ + 近义词
 python manage.py import_vocab       # นำเข้าคำศัพท์ 2,496 คำจาก data/vocab/hsk5_merged.json
 python manage.py import_listening --apply   # เติมบทถอดเสียงให้ข้อฟัง แล้วเปิดใช้ข้อที่พร้อม
 python manage.py make_icons         # สร้างไอคอน PWA (ทำครั้งเดียว ไฟล์อยู่ใน static/icons/)
+python manage.py make_scenes        # สร้างภาพโจทย์เรียงความข้อ 100 (static/scenes/ + data/essay_scenes.json)
 python manage.py make_learner mint --name มิ้นท์ --exam-date 2026-11-07 --password '<ตั้งเอง>'
 python manage.py createsuperuser
 python manage.py runserver
@@ -170,6 +173,7 @@ python manage.py test               # ทดสอบ SRS + drill engine
 - [x] **Sprint 2.5** — หน้าเขียนเรียงความ 书写第二部分 + ระบบถ่ายทอดผลตรวจ (D11)
   ตรรกะสามชั้นอยู่ใน `core/essay.py` (นับ+ตัดสิน) · `core/essay_grader.py` (พรอมต์+แกะผลที่วางกลับ)
   คิวของเจ้าของระบบอยู่ที่ `/essay/queue/list/` · ความยินยอมเก็บที่ `LearnerProfile.essay_consent_at`
+  ข้อ 100 看图写作 ใช้ภาพ SVG ที่วาดเอง 10 ฉาก (`static/scenes/`) — `commercial_safe` ไม่มีปัญหา
 - [ ] Sprint 2 (ที่เหลือ) — ระบบทดสอบแยกพาร์ท + คำอธิบายเฉลย 882 ข้อ + หน้าคำเชื่อม
 - [x] **Sprint 3** — พาร์ทฟังใช้งานได้แล้ว: ข้อสอบฟัง 225 ข้อ · 听写 724 ประโยค
   `core/listening.py` แยกบทถอดเสียงรายข้อ · `core/listen_drill.py` หน้าฝึกฟัง ·

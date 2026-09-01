@@ -14,8 +14,13 @@
 """
 from __future__ import annotations
 
+import json
 import random
 import re
+from functools import lru_cache
+from pathlib import Path
+
+from django.conf import settings
 
 HAN = re.compile(r"[一-鿿]")
 
@@ -116,3 +121,33 @@ def decide_band(*, char_count: int, missing: list[str], task_no: int,
         "task_no": task_no,
         "standard": "2.0",
     }
+
+
+# ── ข้อ 100 看图写作 — เขียนจากภาพ ──────────────────────────
+
+@lru_cache(maxsize=1)
+def scenes() -> list[dict]:
+    """ภาพโจทย์ทั้งหมด สร้างด้วย `python manage.py make_scenes`
+
+    ภาพเป็น SVG ที่เราวาดเอง ไม่ใช่ภาพจากข้อสอบจริง — ภาพข้อสอบติดลิขสิทธิ์
+    และห้ามเข้าเวอร์ชันขาย (D6) ส่วนภาพจากเว็บนอกต้องต่อเน็ตและสัญญาเปลี่ยนได้
+    """
+    path = Path(settings.BASE_DIR) / "data" / "essay_scenes.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+
+
+def scene_by_id(scene_id: str) -> dict | None:
+    return next((s for s in scenes() if s["id"] == scene_id), None)
+
+
+def pick_scene(*, exclude: list[str] | None = None, seed: int | None = None) -> dict | None:
+    """สุ่มภาพหนึ่งภาพ เลี่ยงภาพที่เพิ่งเขียนไป"""
+    pool = scenes()
+    if not pool:
+        return None
+    exclude = set(exclude or [])
+    fresh = [s for s in pool if s["id"] not in exclude] or pool
+    return random.Random(seed).choice(fresh)

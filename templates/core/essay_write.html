@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}เขียนเรียงความ · HSK5 Trainer{% endblock %}
 {% block mobile_title %}เขียนเรียงความ{% endblock %}
 {% block content %}
@@ -31,23 +32,55 @@
   </div>
   {% endif %}
 
+  {% comment %}
+  ข้อสอบจริงมีสองข้อ ทั้งคู่เต็ม 15 คะแนนเท่ากัน — ต้องฝึกทั้งคู่
+  ข้อ 100 ยากกว่าสำหรับคนไทย เพราะไม่มีคำใบ้ให้เกาะเลย ต้องหาคำเอาเองทั้งหมด
+  {% endcomment %}
+  <div class="row" style="gap:6px;flex-wrap:wrap">
+    <a class="chip {% if task_no == 99 %}on{% endif %}" style="min-width:auto;padding:0 14px"
+       href="{% url 'essay_write' %}">ข้อ 99 · ใช้คำที่กำหนด</a>
+    <a class="chip {% if task_no == 100 %}on{% endif %}" style="min-width:auto;padding:0 14px"
+       href="?task=100">ข้อ 100 · เขียนจากภาพ</a>
+  </div>
+
   <div class="card stack" style="gap:var(--s2)">
     <div class="row" style="flex-wrap:wrap;gap:var(--s1)">
-      <span class="eyebrow grow">ข้อ 99 · ใช้คำทั้ง 5 คำนี้ให้ครบ</span>
+      <span class="eyebrow grow">
+        {% if task_no == 99 %}ข้อ 99 · ใช้คำทั้ง 5 คำนี้ให้ครบ
+        {% else %}ข้อ 100 · เขียนเล่าเรื่องจากภาพนี้{% endif %}
+      </span>
       <form method="post" action="{% url 'essay_new_words' %}">
         {% csrf_token %}
-        <button class="btn ghost sm" type="submit" style="width:auto">สุ่มคำใหม่</button>
+        <input type="hidden" name="task" value="{{ task_no }}">
+        <button class="btn ghost sm" type="submit" style="width:auto">
+          {% if task_no == 99 %}สุ่มคำใหม่{% else %}สุ่มภาพใหม่{% endif %}
+        </button>
       </form>
     </div>
 
+    {% if task_no == 99 %}
     <div class="row" style="gap:var(--s1);flex-wrap:wrap">
       {% for w in words %}
         <span class="wordchip zh" :class="used('{{ w|escapejs }}') && 'on'">{{ w }}</span>
       {% endfor %}
     </div>
+    {% elif scene %}
+    {% comment %}
+    ไม่แสดงคำบรรยายภาพให้ผู้เรียนเห็น — คำบรรยายมีไว้ส่งให้ผู้ตรวจเท่านั้น
+    ถ้าแสดง ผู้เรียนจะแปลคำบรรยายเป็นจีนแทนที่จะคิดเอง ซึ่งไม่ใช่สิ่งที่ข้อสอบวัด
+    {% endcomment %}
+    <img class="scene" src="{% static scene.file %}" alt="ภาพโจทย์สำหรับเขียนเรียงความ">
+    <p class="muted" style="font-size:.82rem">
+      เล่าว่าในภาพเกิดอะไรขึ้น ใครทำอะไร ที่ไหน แล้วขยายความต่อได้ตามใจ —
+      ไม่ต้องบรรยายครบทุกอย่างในภาพ และแต่งรายละเอียดเพิ่มเองได้
+    </p>
+    {% else %}
+    <div class="note warn">ยังไม่มีภาพโจทย์ในระบบ — รัน <span class="mono">python manage.py make_scenes</span></div>
+    {% endif %}
 
     <form method="post" action="{% url 'essay_submit' %}" class="stack" style="gap:var(--s1)">
       {% csrf_token %}
+      <input type="hidden" name="task_no" value="{{ task_no }}">
       <textarea name="text_zh" x-model="text" rows="9" class="zh essaybox"
                 placeholder="พิมพ์ภาษาจีนด้วยแป้นพิมพ์จีนของเครื่องคุณเอง"></textarea>
       <input type="hidden" name="minutes" :value="Math.round((Date.now() - started) / 60000)">

@@ -730,3 +730,7 @@ textarea{
   cursor:pointer; font-family:inherit; font-size:1rem; color:inherit}
 .sizecard:disabled{opacity:.45; cursor:not-allowed}
 .sizecard.measure{border-color:var(--accent)}
+
+/* ภาพโจทย์เรียงความข้อ 100 — กรอบบางๆ ให้เห็นขอบภาพบนพื้นขาว */
+.scene{width:100%; max-width:480px; height:auto; display:block; border:1px solid var(--line);
+  border-radius:var(--radius-sm); background:#fff}
