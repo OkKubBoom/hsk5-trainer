@@ -16,6 +16,7 @@ from django.utils import timezone
 
 from .models import (
     DrillSession, LearnerProfile, LoginDay, MockExam, PlacementTest, ReviewSession,
+    DictationAttempt,
     ListeningAttempt,
     WordOrderAttempt,
 )
@@ -30,6 +31,7 @@ ACTIVITY_LABEL = {
     "placement": "แบบวัดระดับ",
     "word_order": "ฝึกเรียงคำ",
     "listening": "ฝึกฟัง",
+    "dictation": "听写 ฟังแล้วพิมพ์",
 }
 
 
@@ -70,7 +72,7 @@ def _activity_by_date(learner, window: list) -> dict:
     """
     first = window[0]
     by_date = {d: {"drill": 0, "review": 0, "mock": 0, "word_order": 0, "listening": 0,
-                   "answered": 0}
+                   "dictation": 0, "answered": 0}
                for d in window}
 
     for s in DrillSession.objects.filter(learner=learner, started_at__date__gte=first):
@@ -102,6 +104,12 @@ def _activity_by_date(learner, window: list) -> dict:
             day["listening"] += 1
             day["answered"] += 1
 
+    for a in DictationAttempt.objects.filter(learner=learner, created_at__date__gte=first):
+        day = by_date.get(a.created_at.date())
+        if day is not None:
+            day["dictation"] += 1
+            day["answered"] += 1
+
     return by_date
 
 
@@ -121,6 +129,8 @@ def _day_label(date, act: dict) -> str:
         parts.append(f"ฝึกเรียงคำ {act['word_order']} ข้อ")
     if act.get("listening"):
         parts.append(f"ฝึกฟัง {act['listening']} ข้อ")
+    if act.get("dictation"):
+        parts.append(f"听写 {act['dictation']} ประโยค")
     if not parts:
         return "เข้าระบบแต่ไม่ได้ทำอะไร" if act.get("login") else "ไม่ได้ทำอะไร"
     if act["answered"]:
@@ -136,6 +146,7 @@ def _activity_summary(learner) -> list[dict]:
     placements = PlacementTest.objects.filter(learner=learner, finished_at__isnull=False)
     word_orders = WordOrderAttempt.objects.filter(learner=learner)
     listens = ListeningAttempt.objects.filter(learner=learner)
+    dictations = DictationAttempt.objects.filter(learner=learner)
 
     return [
         {"key": "drill", "label": ACTIVITY_LABEL["drill"], "count": drills.count(),
@@ -148,6 +159,8 @@ def _activity_summary(learner) -> list[dict]:
          "unit": "ข้อ", "answered": 0},
         {"key": "listening", "label": ACTIVITY_LABEL["listening"], "count": listens.count(),
          "unit": "ข้อ", "answered": 0},
+        {"key": "dictation", "label": ACTIVITY_LABEL["dictation"], "count": dictations.count(),
+         "unit": "ประโยค", "answered": 0},
         {"key": "placement", "label": ACTIVITY_LABEL["placement"], "count": placements.count(),
          "unit": "ครั้ง", "answered": 0},
     ]
@@ -182,7 +195,7 @@ def group_progress(today=None) -> list[dict]:
             # แยกระดับกลางออกมาเพราะวันที่ทวนคำศัพท์อย่างเดียวไม่ใช่วันที่หายไป
             if act["drill"]:
                 level = "full"
-            elif act["review"] or act["mock"] or act["word_order"] or act.get("listening"):
+            elif act["review"] or act["mock"] or act["word_order"] or act.get("listening") or act.get("dictation"):
                 level = "some"
             elif act["login"]:
                 # เข้ามาแล้วแต่ไม่ได้ทำอะไร ต่างจากไม่ได้เข้าเลย

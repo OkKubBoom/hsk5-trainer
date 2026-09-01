@@ -52,10 +52,12 @@ window.listenPlayer = function (questionId, opts) {
     async load() {
       if (this.script) return true;
       this.loading = true;
+      // 听写 ขอทีละประโยค ส่วนข้อฟังปกติขอทั้งบท
+      const url = opts.sentence == null
+        ? `/listen/${questionId}/script/`
+        : `/listen/${questionId}/script/?s=${opts.sentence}`;
       try {
-        const res = await fetch(`/listen/${questionId}/script/`, {
-          headers: { 'X-Requested-With': 'fetch' },
-        });
+        const res = await fetch(url, { headers: { 'X-Requested-With': 'fetch' } });
         if (!res.ok) throw new Error(res.status);
         this.script = (await res.json()).script || '';
       } catch (e) {

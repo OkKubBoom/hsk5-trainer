@@ -706,3 +706,21 @@ textarea{
 .grid2{display:grid; grid-template-columns:1fr; gap:var(--s2)}
 @media (min-width:860px){ .grid2{grid-template-columns:1fr 1fr} }
 .bad-text{color:var(--missing)}
+
+/* ── 听写 เทียบทีละตัวอักษร ──────────────────────────────── */
+.chardiff{display:flex; flex-wrap:wrap; gap:5px; font-size:1.6rem; line-height:1.6}
+.ch{display:inline-flex; align-items:center; justify-content:center; min-width:1.5em;
+  padding:2px 4px; border-radius:6px; border-bottom:3px solid transparent}
+.ch.ok{border-bottom-color:var(--ready)}
+.ch.homo{background:rgba(214,158,46,.16); border-bottom-color:var(--partial)}
+.ch.bad{background:rgba(190,60,60,.14); border-bottom-color:var(--missing)}
+.ch.missing{background:rgba(190,60,60,.14); border-bottom-color:var(--missing); opacity:.6;
+  text-decoration:line-through}
+.ch.extra{background:var(--surface-2); border-bottom-color:var(--ink-3); opacity:.6}
+.swatch{display:inline-block; width:11px; height:11px; border-radius:3px; vertical-align:-1px;
+  margin-right:4px; border-bottom:3px solid transparent}
+.swatch.ok{border-bottom-color:var(--ready); background:var(--surface-2)}
+.swatch.homo{background:rgba(214,158,46,.3)}
+.swatch.bad{background:rgba(190,60,60,.28)}
+.swatch.missing{background:rgba(190,60,60,.28); opacity:.6}
+.swatch.extra{background:var(--surface-2); border-bottom-color:var(--ink-3)}

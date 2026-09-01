@@ -122,6 +122,10 @@ hsk5-trainer/
 ├── core/
 │   ├── models/       users · lexicon · srs · content · practice · diagnostics
 │   ├── srs.py        ตัวจัดตารางทบทวน (SM-2 ปรับให้รู้จักวันสอบ)
+│   ├── listening.py  แยกบทถอดเสียง 听力 จากข้อสอบจริงเป็นรายข้อ
+│   ├── listen_drill.py   ฝึกฟังทีละข้อ · listen_explain.py ชี้ประโยคที่มีคำตอบ
+│   ├── dictation.py  听写 — เทียบทีละตัวอักษร แยกเสียงพ้องออกจากตัวผิด
+│   ├── weekly.py     สรุปรายสัปดาห์ เทียบกับสัปดาห์ก่อนเสมอ
 │   ├── selection.py  Daily Drill Engine
 │   ├── placement.py  แบบวัดระดับ (สุ่มคำ · ตรวจ · แปลผลเป็นค่าตั้งต้น)
 │   ├── drill.py      ตัวประสานชุดข้อสอบกับหน้าเว็บ
@@ -142,6 +146,8 @@ source .venv/bin/activate
 python manage.py migrate
 python manage.py seed_hsk5          # ใส่คำศัพท์ + 近义词 + 完成句子 ตั้งต้น
 python manage.py import_vocab       # นำเข้าคำศัพท์ 2,496 คำจาก data/vocab/hsk5_merged.json
+python manage.py import_listening --apply   # เติมบทถอดเสียงให้ข้อฟัง แล้วเปิดใช้ข้อที่พร้อม
+python manage.py make_icons         # สร้างไอคอน PWA (ทำครั้งเดียว ไฟล์อยู่ใน static/icons/)
 python manage.py make_learner mint --name มิ้นท์ --exam-date 2026-11-07 --password '<ตั้งเอง>'
 python manage.py createsuperuser
 python manage.py runserver
@@ -165,14 +171,15 @@ python manage.py test               # ทดสอบ SRS + drill engine
   ตรรกะสามชั้นอยู่ใน `core/essay.py` (นับ+ตัดสิน) · `core/essay_grader.py` (พรอมต์+แกะผลที่วางกลับ)
   คิวของเจ้าของระบบอยู่ที่ `/essay/queue/list/` · ความยินยอมเก็บที่ `LearnerProfile.essay_consent_at`
 - [ ] Sprint 2 (ที่เหลือ) — ระบบทดสอบแยกพาร์ท + คำอธิบายเฉลย 882 ข้อ + หน้าคำเชื่อม
-- [ ] Sprint 3 — พาร์ทฟัง: TTS batch, เครื่องเล่นปรับความเร็ว, 听写 + เทียบตัวอักษร
-  ⚠️ **นี่คือช่องว่างใหญ่ที่สุด — 100 คะแนนจาก 300 ที่ระบบยังแตะไม่ได้เลย**
-  405 ข้อเป็น `draft` · `AudioClip` 0 แถว · `ItemGroup` พาร์ทฟัง 0 ชุด
-  บทถอดเสียงมีอยู่ใน `data/exam_corpus/` แต่มีแค่ 5 ชุดจาก 9 (H51001-005) และเป็นสตริงก้อนเดียว ต้องแยกรายข้อก่อน
-- [~] Sprint 4 — หน้าความคืบหน้ากลุ่ม (`/progress/`) ทำแล้ว · **สรุปรายสัปดาห์ยังไม่ได้ทำ**
+- [x] **Sprint 3** — พาร์ทฟังใช้งานได้แล้ว: ข้อสอบฟัง 225 ข้อ · 听写 724 ประโยค
+  `core/listening.py` แยกบทถอดเสียงรายข้อ · `core/listen_drill.py` หน้าฝึกฟัง ·
+  `core/listen_explain.py` ชี้ประโยคที่มีคำตอบ · `core/dictation.py` เทียบตัวอักษร
+  เสียงมาจากตัวอ่านของเบราว์เซอร์ (`static/js/listen.js`) ไม่มีไฟล์เสียงในระบบ
+  ⚠️ เหลืออีก 180 ข้อจาก 4 ชุด (H51327/328/330/332) ที่ **ไม่มีบทถอดเสียงในไฟล์** ยังเป็น draft
+- [x] **Sprint 4** — หน้าความคืบหน้ากลุ่ม (`/progress/`) + สรุปรายสัปดาห์ (`/weekly/`)
 - [~] Sprint 5 — **deploy ขึ้น Railway แล้ว** (ไม่ใช่ VPS ตาม D5 เดิม — Railway ถูกและง่ายกว่า)
+  PWA ทำแล้ว (`/manifest.webmanifest` · `/sw.js` · `make_icons`)
   คำสั่ง `backup` เขียนแล้วและทดสอบ restore ผ่าน แต่ **ยังไม่ได้ตั้ง cron ให้รันเอง**
-  ยังไม่ได้ทำ: PWA (ไม่มี manifest / service worker)
 
 ---
 

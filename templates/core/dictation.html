@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}听写 ฟังแล้วพิมพ์ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}听写{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:var(--s-half)">
+  <div class="row">
+    <span class="eyebrow grow">听写 · ฝึกแยกเสียงออกเป็นคำ</span>
+    <span class="mono muted">ฝึกแล้ว {{ done_count }} / {{ total }} ประโยค</span>
+  </div>
+  <h1>ฟังแล้วพิมพ์ตาม</h1>
+  <p class="muted">
+    ไม่ได้ฝึกการเขียน แต่ฝึกการ<b>แยกเสียงออกเป็นคำ</b> —
+    คนที่ได้ยินเป็นเสียงยาวก้อนเดียวจะตอบข้อฟังไม่ได้ ต่อให้รู้ศัพท์ครบทุกคำ
+  </p>
+</div>
+
+{% if average is not None %}
+<div class="stats">
+  <div class="stat"><b>{{ history_count }}</b><span>ประโยคที่ฝึก</span></div>
+  <div class="stat"><b>{{ average }}%</b><span>ความแม่นเฉลี่ย</span></div>
+</div>
+{% endif %}
+
+{% if not item %}
+  <div class="card empty">
+    <h3>ยังไม่มีประโยคให้ฝึก</h3>
+    <p class="muted">ต้องเติมบทถอดเสียงให้ข้อฟังก่อน — <span class="mono">python manage.py import_listening --apply</span></p>
+  </div>
+
+{% elif result %}
+  {# ─── ผลเทียบทีละตัวอักษร ─── #}
+  <div class="card stack" style="gap:var(--s2);border-width:2px;border-color:{% if result.perfect %}var(--ready){% else %}var(--partial){% endif %}">
+    <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+      {% if result.perfect %}
+        <span class="pill ok">ถูกทุกตัว</span>
+      {% else %}
+        <span class="pill warn">ถูก {{ result.correct }} จาก {{ result.expected|length }} ตัว</span>
+      {% endif %}
+      <span class="mono muted" style="margin-left:auto">{{ result.accuracy }}%</span>
+    </div>
+
+    {% comment %}
+    เทียบทีละตัวโดยแสดงตัวที่ควรได้เสมอ ไม่ใช่แสดงเฉพาะตัวที่ผิด
+    ผู้เรียนต้องเห็นประโยคเต็มเพื่อรู้ว่าที่พลาดอยู่ตรงช่วงไหนของประโยค
+    {% endcomment %}
+    <div class="stack" style="gap:6px">
+      <span class="wlab">เทียบทีละตัวอักษร</span>
+      <div class="chardiff zh">
+        {% for op in result.ops %}
+          {% if op.type == 'ok' %}<span class="ch ok">{{ op.expected }}</span>
+          {% elif op.type == 'homophone' %}<span class="ch homo" title="เสียงเหมือนกัน แต่คนละตัว — คุณพิมพ์ {{ op.got }}">{{ op.expected }}</span>
+          {% elif op.type == 'missing' %}<span class="ch missing" title="ตัวนี้หายไป">{{ op.expected }}</span>
+          {% elif op.type == 'extra' %}<span class="ch extra" title="ตัวนี้เกินมา">{{ op.got }}</span>
+          {% else %}<span class="ch bad" title="คุณพิมพ์ {{ op.got|default:'—' }}">{{ op.expected }}</span>{% endif %}
+        {% endfor %}
+      </div>
+      <div class="row" style="gap:var(--s2);flex-wrap:wrap;font-size:.8rem">
+        <span class="muted"><span class="swatch ok"></span> ถูก</span>
+        <span class="muted"><span class="swatch homo"></span> เสียงพ้อง</span>
+        <span class="muted"><span class="swatch bad"></span> ตัวผิด</span>
+        <span class="muted"><span class="swatch missing"></span> ตกไป</span>
+        <span class="muted"><span class="swatch extra"></span> เกินมา</span>
+      </div>
+    </div>
+
+    {% if result.homophones %}
+    {% comment %}
+    เสียงพ้องเป็นข้อผิดคนละชนิดกับ "ฟังไม่ออก" — ฟังออกแล้วแต่เลือกตัวผิด
+    แปลว่าปัญหาอยู่ที่การจำตัวอักษร ไม่ใช่ที่หู ซึ่งแก้คนละวิธี (D8)
+    {% endcomment %}
+    <div class="note">
+      <b>ฟังออกแล้ว แต่เลือกตัวอักษรผิด</b> —
+      {% for h in result.homophones %}<span class="zh">{{ h.got }} → {{ h.expected }}</span>{% if not forloop.last %} · {% endif %}{% endfor %}
+      <br><span class="muted">เสียงเหมือนกัน ปัญหาอยู่ที่การจำตัวอักษร ไม่ใช่ที่หู — คนละเรื่องกับฟังไม่ออก</span>
+    </div>
+    {% endif %}
+
+    <div class="stack" style="gap:2px;padding-top:var(--s2);border-top:1px solid var(--line)">
+      <span class="eyebrow">ประโยคเต็ม</span>
+      <p class="zh" style="font-size:var(--t-lead)">{{ item.sentence }}</p>
+    </div>
+    <div class="stack" style="gap:2px">
+      <span class="eyebrow">ที่คุณพิมพ์</span>
+      <p class="zh" style="color:var(--ink-3)">{{ result.typed|default:"— ไม่ได้พิมพ์อะไร —" }}</p>
+    </div>
+  </div>
+
+  <div class="actionbar">
+    <a class="btn block lg" href="{% url 'dictation' %}">ประโยคต่อไป</a>
+  </div>
+
+{% else %}
+  {# ─── ฟังแล้วพิมพ์ ─── #}
+  <div class="card stack" style="gap:var(--s2)"
+       x-data="listenPlayer({{ item.question.pk }}, { sentence: {{ item.index }} })" x-init="init()">
+
+    <div class="listenbox">
+      {% include "core/partials/listen_player.html" %}
+    </div>
+
+    <form method="post" class="stack" style="gap:var(--s2)">
+      {% csrf_token %}
+      <input type="hidden" name="question_id" value="{{ item.question.pk }}">
+      <input type="hidden" name="key" value="{{ item.key }}">
+      <input type="hidden" name="expected" value="{{ item.sentence }}">
+      <input type="hidden" name="plays" :value="plays">
+      <input type="hidden" name="rate" :value="rate">
+
+      <label for="typed">พิมพ์สิ่งที่ได้ยิน</label>
+      {% comment %}
+      ไม่ต้องใส่เครื่องหมายวรรคตอน ระบบเทียบเฉพาะตัวอักษรจีน
+      ต้องบอกไว้ ไม่งั้นผู้เรียนจะเสียเวลาหาวิธีพิมพ์จุลภาคจีนบนคีย์บอร์ดมือถือ
+      {% endcomment %}
+      <textarea id="typed" name="typed" rows="3" class="zh" autocomplete="off"
+                style="font-size:var(--t-lead)"
+                placeholder="พิมพ์ตัวอักษรจีนที่ได้ยิน ไม่ต้องใส่เครื่องหมายวรรคตอน"></textarea>
+      <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+        <button class="btn" type="submit" :disabled="plays === 0"
+                :title="plays === 0 ? 'กดฟังก่อน' : ''">ตรวจ</button>
+        <span class="muted" x-show="plays === 0">กดฟังก่อนแล้วค่อยพิมพ์</span>
+        <span class="muted" x-show="plays > 0" x-cloak>
+          ฟังไปแล้ว <b x-text="plays"></b> ครั้ง · ฟังซ้ำได้ตามต้องการ ที่นี่ไม่ใช่ห้องสอบ
+        </span>
+      </div>
+    </form>
+  </div>
+{% endif %}
+
+{% endblock %}

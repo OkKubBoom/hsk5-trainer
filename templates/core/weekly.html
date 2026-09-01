@@ -98,6 +98,8 @@
       <div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">
         <div class="row"><span class="grow">ฝึกฟัง</span>
           <span class="mono muted">{{ s.counts.listening }} ข้อ · ถูกตั้งแต่รอบเดียว {{ s.counts.listening_one_play }}</span></div>
+        <div class="row"><span class="grow">听写 ฟังแล้วพิมพ์</span>
+          <span class="mono muted">{{ s.counts.dictation }} ประโยค{% if s.counts.dictation_accuracy is not None %} · แม่น {{ s.counts.dictation_accuracy }}%{% endif %}</span></div>
         <div class="row"><span class="grow">ฝึกเรียงคำ</span>
           <span class="mono muted">{{ s.counts.word_order }} ข้อ</span></div>
         <div class="row"><span class="grow">ฝึกจำคำศัพท์</span>

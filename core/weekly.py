@@ -16,7 +16,8 @@ from django.db.models import Count
 from django.utils import timezone
 
 from .models import (
-    AnswerRecord, Card, DrillSession, ErrorCode, ErrorLog, ListeningAttempt,
+    AnswerRecord, Card, DictationAttempt, DrillSession, ErrorCode, ErrorLog,
+    ListeningAttempt,
     LoginDay, MockExam, ReviewSession, Section, WordOrderAttempt,
 )
 
@@ -51,6 +52,8 @@ def _counts(learner, start, end) -> dict:
         learner=learner, created_at__date__gte=start, created_at__date__lte=end)
     orders = WordOrderAttempt.objects.filter(
         learner=learner, created_at__date__gte=start, created_at__date__lte=end)
+    dictations = DictationAttempt.objects.filter(
+        learner=learner, created_at__date__gte=start, created_at__date__lte=end)
 
     # ความแม่นต้องนับจากทุกอย่างที่นับเป็น "ข้อที่ตอบ" ไม่ใช่เฉพาะชุดฝึกรายวัน
     # ถ้านับคนละฐาน หน้าจอจะขึ้นว่า "ตอบ 2 ข้อ · แม่น 0%" ทั้งที่ตอบถูกทั้งสองข้อ
@@ -62,6 +65,7 @@ def _counts(learner, start, end) -> dict:
     active_days |= set(reviews.values_list("started_at__date", flat=True))
     active_days |= set(listens.values_list("created_at__date", flat=True))
     active_days |= set(orders.values_list("created_at__date", flat=True))
+    active_days |= set(dictations.values_list("created_at__date", flat=True))
 
     return {
         "days": len(active_days),
@@ -72,6 +76,11 @@ def _counts(learner, start, end) -> dict:
         "listening": listens.count(),
         "listening_one_play": listens.filter(is_correct=True, plays__lte=1).count(),
         "word_order": orders.count(),
+        "dictation": dictations.count(),
+        "dictation_accuracy": (
+            round(sum(a.accuracy_pct for a in dictations) / dictations.count())
+            if dictations.exists() else None
+        ),
         "reviews": reviews.count(),
         "mocks": MockExam.objects.filter(
             learner=learner, started_at__date__gte=start,

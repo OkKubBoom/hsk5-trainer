@@ -33,6 +33,7 @@ urlpatterns = [
 
     path("error/<int:log_id>/reason/", views.error_reason, name="error_reason"),
     path("listen/", views.listen_practice, name="listen_practice"),
+    path("dictation/", views.dictation, name="dictation"),
     path("listen/<int:question_id>/script/", views.listen_script, name="listen_script"),
     path("history/", views.history, name="history"),
     path("vocab/", views.vocab_list, name="vocab_list"),

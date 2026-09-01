@@ -250,9 +250,17 @@ class DictationAttempt(TimeStamped):
     learner = models.ForeignKey(
         LearnerProfile, on_delete=models.CASCADE, related_name="dictations", verbose_name="ผู้เรียน",
     )
+    # เสียงมาจากตัวอ่านของเบราว์เซอร์ ไม่ใช่ไฟล์ (ดู core/listening.py)
+    # เก็บช่อง clip ไว้เผื่อวันที่มีไฟล์เสียงจริง แต่ตอนนี้เว้นว่างเสมอ
     clip = models.ForeignKey(
-        AudioClip, on_delete=models.CASCADE, related_name="dictations", verbose_name="ไฟล์เสียง",
+        AudioClip, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="dictations", verbose_name="ไฟล์เสียง",
     )
+    question = models.ForeignKey(
+        Question, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="dictations", verbose_name="ข้อที่บทมาจาก",
+    )
+    expected_text = models.TextField(blank=True, verbose_name="ประโยคที่ควรได้")
     typed_text = models.TextField(blank=True, verbose_name="ที่พิมพ์")
     char_diff = models.JSONField(
         default=list, blank=True, verbose_name="ผลเทียบตัวอักษร",

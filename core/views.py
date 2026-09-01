@@ -23,6 +23,7 @@ from . import grammar as grammar_engine
 from . import progress as progress_engine
 from . import writing as writing_engine
 from . import listen_drill as listen_engine
+from . import dictation as dictation_engine
 from . import listen_explain
 from . import weekly as weekly_engine
 from . import mock as mock_engine
@@ -36,7 +37,7 @@ from .models import (
     Card, DrillSession, ErrorCode, ErrorLog, LearnerProfile,
     ExplanationNote, MockExam, NoteStatus, NoteVerdict, PlacementTest, Question,
     ReviewMode, ReviewPhase, ReviewSession, Role, SynonymGroup, User, VocabItem,
-    WritingFeedback, WritingSubmission,
+    WritingFeedback, WritingSubmission, DictationAttempt,
 )
 
 DRILL_SESSION_KEY = "drill_session_id"
@@ -725,6 +726,61 @@ def essay_dispute(request, pk):
     return redirect("essay_result", pk=submission.pk)
 
 
+# ── 听写 ฟังแล้วพิมพ์ตาม ────────────────────────────────────
+
+DICTATION_SEEN_KEY = "dictation_seen"
+
+
+@login_required
+@learner_required
+def dictation(request):
+    """ฟังแล้วพิมพ์ตาม แล้วเทียบทีละตัวอักษร
+
+    เหตุผลที่ต้องมีทั้งที่สอบ iBT ไม่ต้องเขียนมือ อยู่ในหัวไฟล์ core/dictation.py
+    """
+    learner = _learner(request)
+    seen = request.session.get(DICTATION_SEEN_KEY, [])
+    result = item = None
+
+    if request.method == "POST":
+        question = get_object_or_404(Question, pk=request.POST.get("question_id"))
+        expected = request.POST.get("expected", "")
+        typed = request.POST.get("typed", "")
+        result = dictation_engine.compare(expected, typed)
+
+        try:
+            plays = int(request.POST.get("plays") or 1)
+            rate = float(request.POST.get("rate") or 1)
+        except ValueError:
+            plays, rate = 1, 1.0
+
+        DictationAttempt.objects.create(
+            learner=learner, question=question, expected_text=expected,
+            typed_text=typed, char_diff=result["ops"],
+            accuracy_pct=result["accuracy"], replay_count=plays,
+            playback_rate=rate,
+        )
+        key = request.POST.get("key", "")
+        if key and key not in seen:
+            seen.append(key)
+            request.session[DICTATION_SEEN_KEY] = seen[-120:]
+        item = {"question": question, "sentence": expected, "key": key,
+                "index": key.split(":")[-1] if ":" in key else 0}
+    else:
+        item = dictation_engine.pick(exclude=seen)
+
+    history = DictationAttempt.objects.filter(learner=learner)
+    return render(request, "core/dictation.html", {
+        "nav": "dictation", "learner": learner,
+        "item": item, "result": result,
+        "done_count": len(seen),
+        "total": dictation_engine.total_sentences(),
+        "history_count": history.count(),
+        "average": round(sum(a.accuracy_pct for a in history) / history.count(), 1)
+                   if history.exists() else None,
+    })
+
+
 # ── สรุปรายสัปดาห์ ─────────────────────────────────────────
 
 WEEKLY_CARDS = [
@@ -832,6 +888,17 @@ def listen_script(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     if not question.audio_script:
         return JsonResponse({"script": "", "error": "ข้อนี้ยังไม่มีบทเสียง"}, status=404)
+
+    # 听写 ขอทีละประโยค ไม่ใช่ทั้งบท — ประโยคเดียวยาวพอที่จะจำแล้วพิมพ์ตามได้
+    index = request.GET.get("s")
+    if index is not None:
+        parts = dictation_engine.sentences_of(question)
+        try:
+            return JsonResponse({"script": parts[int(index)]},
+                                json_dumps_params={"ensure_ascii": False})
+        except (ValueError, IndexError):
+            return JsonResponse({"script": "", "error": "ไม่มีประโยคนี้"}, status=404)
+
     return JsonResponse({"script": question.audio_script},
                         json_dumps_params={"ensure_ascii": False})
 
