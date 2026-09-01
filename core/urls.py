@@ -33,6 +33,11 @@ urlpatterns = [
 
     path("error/<int:log_id>/reason/", views.error_reason, name="error_reason"),
     path("listen/", views.listen_practice, name="listen_practice"),
+    path("listen/test/", views.listen_test_home, name="listen_test_home"),
+    path("listen/test/start/", views.listen_test_start, name="listen_test_start"),
+    path("listen/test/<int:exam_id>/", views.listen_test_run, name="listen_test_run"),
+    path("listen/test/<int:exam_id>/answer/", views.listen_test_answer, name="listen_test_answer"),
+    path("listen/test/<int:exam_id>/result/", views.listen_test_result, name="listen_test_result"),
     path("dictation/", views.dictation, name="dictation"),
     path("listen/<int:question_id>/script/", views.listen_script, name="listen_script"),
     path("history/", views.history, name="history"),

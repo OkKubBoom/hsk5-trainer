@@ -96,6 +96,10 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 0 1 18 0"/><path d="M21 12v4a3 3 0 0 1-3 3h-1v-6h4"/><path d="M3 12v4a3 3 0 0 0 3 3h1v-6H3"/></svg>
         ฝึกฟัง
       </a>
+      <a class="navlink {% if nav == 'listentest' %}on{% endif %}" href="{% url 'listen_test_home' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M9 2h6"/></svg>
+        วัดผลพาร์ทฟัง
+      </a>
       <a class="navlink {% if nav == 'dictation' %}on{% endif %}" href="{% url 'dictation' %}">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v10"/><path d="M9 6l3-3 3 3"/><rect x="4" y="13" width="16" height="8" rx="2"/><path d="M8 17h8"/></svg>
         听写 ฟังแล้วพิมพ์
@@ -294,6 +298,7 @@
       <a class="navlink" href="{% url 'group_progress' %}">ความคืบหน้ากลุ่ม</a>
       <a class="navlink" href="{% url 'grammar' %}">คำเชื่อม &amp; จับคู่คำ</a>
       <a class="navlink" href="{% url 'listen_practice' %}">ฝึกฟัง</a>
+      <a class="navlink" href="{% url 'listen_test_home' %}">วัดผลพาร์ทฟัง</a>
       <a class="navlink" href="{% url 'dictation' %}">听写 ฟังแล้วพิมพ์</a>
       <a class="navlink" href="{% url 'word_order' %}">ฝึกเรียงคำ</a>
       <a class="navlink" href="{% url 'mock_home' %}">จำลองสอบ</a>

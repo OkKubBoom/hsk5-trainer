@@ -23,6 +23,7 @@ from . import grammar as grammar_engine
 from . import progress as progress_engine
 from . import writing as writing_engine
 from . import listen_drill as listen_engine
+from . import listen_mock
 from . import dictation as dictation_engine
 from . import listen_explain
 from . import weekly as weekly_engine
@@ -36,7 +37,7 @@ from . import selection, srs
 from .models import (
     Card, DrillSession, ErrorCode, ErrorLog, LearnerProfile,
     ExplanationNote, MockExam, NoteStatus, NoteVerdict, PlacementTest, Question,
-    ReviewMode, ReviewPhase, ReviewSession, Role, SynonymGroup, User, VocabItem,
+    ReviewMode, ReviewPhase, ReviewSession, Role, Section, SynonymGroup, User, VocabItem,
     WritingFeedback, WritingSubmission, DictationAttempt,
 )
 
@@ -724,6 +725,113 @@ def essay_dispute(request, pk):
     )
     messages.info(request, "ส่งคำแย้งแล้ว — เจ้าของระบบจะตรวจให้")
     return redirect("essay_result", pk=submission.pk)
+
+
+# ── วัดผลพาร์ทฟัง ──────────────────────────────────────────
+
+@login_required
+@learner_required
+def listen_test_home(request):
+    """เลือกขนาดชุดวัดผล — บอกตรงๆ ว่าชุดไหนเชื่อเป็นคะแนนได้"""
+    learner = _learner(request)
+    running = MockExam.objects.filter(
+        learner=learner, section=Section.LISTENING,
+        started_at__isnull=False, finished_at__isnull=True,
+    ).order_by("-started_at").first()
+
+    return render(request, "core/listen_test_home.html", {
+        "nav": "listentest", "learner": learner,
+        "sizes": listen_mock.size_options(),
+        "running": running,
+        "history": listen_mock.history(learner),
+    })
+
+
+@login_required
+@learner_required
+@require_POST
+def listen_test_start(request):
+    learner = _learner(request)
+    try:
+        count = int(request.POST.get("count") or 5)
+    except ValueError:
+        count = 5
+    if count not in {s["count"] for s in listen_mock.SIZES}:
+        count = 5
+
+    exam = listen_mock.start(learner, count)
+    if not exam:
+        messages.info(request, "ข้อฟังในคลังยังไม่พอสำหรับชุดขนาดนี้")
+        return redirect("listen_test_home")
+    return redirect("listen_test_run", exam_id=exam.pk)
+
+
+@login_required
+@learner_required
+def listen_test_run(request, exam_id):
+    """ทำทีละข้อ ย้อนกลับไม่ได้ เหมือนห้องสอบจริง"""
+    learner = _learner(request)
+    exam = get_object_or_404(MockExam, pk=exam_id, learner=learner,
+                             section=Section.LISTENING)
+    if exam.finished_at:
+        return redirect("listen_test_result", exam_id=exam.pk)
+    if listen_mock.is_expired(exam):
+        listen_mock.submit(exam, auto=True)
+        messages.info(request, "หมดเวลาแล้ว ระบบส่งชุดนี้ให้อัตโนมัติ")
+        return redirect("listen_test_result", exam_id=exam.pk)
+
+    question = listen_mock.current(exam)
+    if question is None:
+        listen_mock.submit(exam)
+        return redirect("listen_test_result", exam_id=exam.pk)
+
+    return render(request, "core/listen_test_run.html", {
+        "nav": "listentest", "learner": learner, "exam": exam,
+        "question": question,
+        "number": listen_mock.position(exam) + 1,
+        "total": len(exam.queue or []),
+        "seconds_left": max(0, int(
+            exam.time_limit_minutes * 60
+            - (timezone.now() - exam.started_at).total_seconds())),
+    })
+
+
+@login_required
+@learner_required
+@require_POST
+def listen_test_answer(request, exam_id):
+    learner = _learner(request)
+    exam = get_object_or_404(MockExam, pk=exam_id, learner=learner,
+                             section=Section.LISTENING)
+    if exam.finished_at:
+        return redirect("listen_test_result", exam_id=exam.pk)
+
+    listen_mock.save_answer(exam, int(request.POST.get("question_id")),
+                            request.POST.get("given", ""))
+    if listen_mock.current(exam) is None:
+        listen_mock.submit(exam)
+        return redirect("listen_test_result", exam_id=exam.pk)
+    return redirect("listen_test_run", exam_id=exam.pk)
+
+
+@login_required
+@learner_required
+def listen_test_result(request, exam_id):
+    learner = _learner(request)
+    exam = get_object_or_404(MockExam, pk=exam_id, learner=learner,
+                             section=Section.LISTENING)
+    if not exam.finished_at:
+        listen_mock.submit(exam, auto=listen_mock.is_expired(exam))
+        exam.refresh_from_db()
+
+    total = len(exam.queue or [])
+    return render(request, "core/listen_test_result.html", {
+        "nav": "listentest", "learner": learner, "exam": exam,
+        "rows": listen_mock.review(exam),
+        "total": total,
+        # ชุดเล็กเกินไปที่จะเรียกว่าคะแนน — ต้องบอกบนหน้าจอ ไม่ใช่ให้เดาเอง
+        "is_measure": total >= 45,
+    })
 
 
 # ── 听写 ฟังแล้วพิมพ์ตาม ────────────────────────────────────

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}วัดผลพาร์ทฟัง · HSK5 Trainer{% endblock %}
+{% block mobile_title %}วัดผลพาร์ทฟัง{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:6px">
+  <span class="eyebrow">听力 · จับเวลา · ฟังครั้งเดียว</span>
+  <h1>วัดผลพาร์ทฟัง</h1>
+  <p class="muted">
+    ต่างจากหน้าฝึกฟังตรงที่ <b>ฟังได้ครั้งเดียว</b> และไม่เฉลยจนกว่าจะจบชุด —
+    เพราะตัวเลขที่เอาไปตัดสินใจว่าสมัครสอบรอบไหน ต้องมาจากเงื่อนไขเดียวกับห้องสอบ
+  </p>
+</div>
+
+{% if running %}
+<div class="note warn">
+  <b>มีชุดที่ทำค้างอยู่</b> — {{ running.queue|length }} ข้อ เริ่มเมื่อ {{ running.started_at|date:"j M · H:i" }}
+  <br><a class="btn sm" href="{% url 'listen_test_run' running.pk %}" style="width:auto;margin-top:8px">ทำต่อ</a>
+</div>
+{% endif %}
+
+{% if history.full_times %}
+<div class="stats">
+  <div class="stat"><b>{{ history.latest }}</b><span>คะแนนล่าสุด (เต็ม 100)</span></div>
+  <div class="stat"><b>{{ history.best }}</b><span>ดีที่สุด</span></div>
+  <div class="stat">
+    <b>{% if history.trend > 0 %}+{{ history.trend }}{% elif history.trend %}{{ history.trend }}{% else %}—{% endif %}</b>
+    <span>เทียบครั้งก่อน</span>
+  </div>
+</div>
+<p class="muted" style="font-size:.82rem;margin-top:calc(var(--s1) * -1)">
+  นับเฉพาะชุดเต็มพาร์ท 45 ข้อ ({{ history.full_times }} ครั้ง) — ชุดสั้นไม่ถูกนับเป็นคะแนน
+</p>
+{% endif %}
+
+<div class="stack" style="gap:var(--s2)">
+  <span class="wlab">เลือกขนาดชุด</span>
+  {% comment %}
+  บอกตรงๆ ว่าชุดไหนเชื่อเป็นคะแนนได้ ไม่ใช่ให้เดาเอง
+  ชุด 5 ข้อ หนึ่งข้อ = 20% ของคะแนน เดาถูกข้อเดียวเลขเด้ง 20 จุด
+  ถ้าไม่บอกไว้ ผู้เรียนจะเอาเลข 80% จากชุด 5 ข้อไปเชื่อว่าพร้อมสอบแล้ว
+  {% endcomment %}
+  {% for s in sizes %}
+  <form method="post" action="{% url 'listen_test_start' %}">
+    {% csrf_token %}
+    <input type="hidden" name="count" value="{{ s.count }}">
+    <button class="card sizecard {% if s.kind == 'measure' %}measure{% endif %}"
+            type="submit" {% if not s.enough %}disabled{% endif %}>
+      <span class="stack grow" style="gap:4px;text-align:left">
+        <span class="row" style="gap:var(--s1)">
+          <b>{{ s.count }} ข้อ · {{ s.label }}</b>
+          {% if s.kind == 'measure' %}
+            <span class="pill ok">วัดผลได้</span>
+          {% else %}
+            <span class="pill">ซ้อม</span>
+          {% endif %}
+        </span>
+        <span class="muted">{{ s.note }}</span>
+      </span>
+      <span class="mono muted" style="white-space:nowrap">~{{ s.minutes }} นาที</span>
+    </button>
+  </form>
+  {% endfor %}
+</div>
+
+<div class="note">
+  <b>ทำเต็มพาร์ทสัปดาห์ละครั้งพอ</b> — ทำถี่กว่านั้นคือการวัดความล้า ไม่ใช่วัดความรู้
+  ส่วนชุดสั้นทำทุกวันได้ ใช้รักษาความคุ้นหู
+</div>
+
+{% if history.all %}
+<div class="stack" style="gap:var(--s1)">
+  <span class="wlab">ที่ทำไปแล้ว</span>
+  {% for e in history.all %}
+    <a class="card flat row" href="{% url 'listen_test_result' e.pk %}"
+       style="text-decoration:none;color:inherit;gap:var(--s2)">
+      <span class="stack grow" style="gap:2px">
+        <b>{{ e.queue|length }} ข้อ · ถูก {{ e.correct_count }}</b>
+        <span class="muted">{{ e.finished_at|date:"j M · H:i" }}{% if e.auto_submitted %} · หมดเวลา{% endif %}</span>
+      </span>
+      {% if e.queue|length >= 45 %}
+        <span class="pill ok">{{ e.listening }}/100</span>
+      {% else %}
+        <span class="pill">{{ e.correct_count }}/{{ e.queue|length }}</span>
+      {% endif %}
+    </a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

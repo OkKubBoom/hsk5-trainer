@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}ข้อ {{ number }}/{{ total }} · วัดผลพาร์ทฟัง{% endblock %}
+{% block mobile_title %}วัดผลพาร์ทฟัง{% endblock %}
+{% block content %}
+
+{% comment %}
+ครอบทั้งหน้าด้วย x-data เดียว เพราะนาฬิกากับเครื่องเล่นต้องคุยกัน —
+หมดเวลาแล้วเสียงต้องหยุดและต้องส่งชุดทันที ไม่ใช่ปล่อยให้พูดต่อ
+{% endcomment %}
+<div x-data="{
+       left: {{ seconds_left }},
+       tick: null,
+       get mmss() {
+         const m = Math.floor(this.left / 60), s = this.left % 60;
+         return m + ':' + String(s).padStart(2, '0');
+       },
+       start() {
+         this.tick = setInterval(() => {
+           if (--this.left > 0) return;
+           clearInterval(this.tick);
+           /* หมดเวลาแล้วพาไปหน้าผลเลย ไม่ใช่กดส่งคำตอบให้เอง —
+              การส่งตัวเลือกแทนผู้เรียนคือการบันทึกคำตอบที่เขาไม่ได้เลือก
+              เซิร์ฟเวอร์จะเช็คเวลาเองแล้วปิดชุดให้ (listen_mock.is_expired) */
+           window.location = '{% url "listen_test_result" exam.pk %}';
+         }, 1000);
+       }
+     }" x-init="start()" class="stack">
+
+  <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+    <span class="eyebrow grow">听力 · ข้อ {{ number }} จาก {{ total }}</span>
+    <span class="mono" :class="left < 60 && 'bad-text'" x-text="mmss">--:--</span>
+  </div>
+  <div class="bar"><span style="width:{% widthratio number total 100 %}%"></span></div>
+
+  <div class="card stack" style="gap:var(--s2)"
+       x-data="listenPlayer({{ question.pk }})" x-init="init()">
+
+    <p class="qinstruction">ฟังแล้วเลือกคำตอบที่ถูกต้อง</p>
+
+    {% comment %}
+    ฟังได้ครั้งเดียวเหมือนห้องสอบ — ปุ่มหายไปหลังกดแล้ว
+    ถ้าเสียงพังจริง (u.onerror) listen.js จะไม่นับครั้งนั้น จึงกดใหม่ได้
+    เพราะเครื่องพังไม่ใช่การฟังซ้ำ
+    {% endcomment %}
+    <div class="listenbox">
+      <template x-if="supported && voice">
+        <div class="stack" style="gap:var(--s2)">
+          <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+            <button type="button" class="btn playbtn" @click="play()"
+                    x-show="plays === 0" :disabled="loading">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <span x-text="loading ? 'กำลังโหลด…' : 'ฟัง (ได้ครั้งเดียว)'">ฟัง</span>
+            </button>
+            <span class="pill warn" x-show="plays > 0 && playing" x-cloak>กำลังเล่น…</span>
+            <span class="pill" x-show="plays > 0 && !playing" x-cloak>ฟังไปแล้ว — เลือกคำตอบได้เลย</span>
+          </div>
+          <p class="muted" style="font-size:.8rem;margin:0">
+            ชุดนี้ฟังได้ครั้งเดียวเหมือนห้องสอบจริง — อยากฟังซ้ำได้ไม่จำกัด ไปที่หน้า
+            <a href="{% url 'listen_practice' %}">ฝึกฟัง</a>
+          </p>
+        </div>
+      </template>
+      <template x-if="!supported || !voice">
+        <div class="note warn">
+          <b>เครื่องนี้อ่านภาษาจีนไม่ได้</b> — ชุดวัดผลทำไม่ได้บนเครื่องนี้
+          ลองเปิดด้วย Chrome หรือ Safari บนมือถือ
+        </div>
+      </template>
+      <p class="note warn" x-show="error" x-cloak x-text="error" style="margin-top:var(--s1)"></p>
+    </div>
+
+    <p class="qprompt zh">{{ question.prompt_zh }}</p>
+
+    <div class="choices">
+      {% for opt in question.options.all %}
+      <form method="post" action="{% url 'listen_test_answer' exam.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="question_id" value="{{ question.pk }}">
+        <input type="hidden" name="given" value="{{ opt.text }}">
+        <button class="choice" type="submit" @click="stop()" :disabled="plays === 0">
+          <span class="key">{{ forloop.counter0|add:65|stringformat:"c" }}</span>
+          <span class="zh grow">{{ opt.text }}</span>
+        </button>
+      </form>
+      {% endfor %}
+    </div>
+
+    <p class="muted" x-show="plays === 0" style="font-size:.82rem">
+      กดฟังก่อน แล้วตัวเลือกถึงจะกดได้ — ตอบแล้วย้อนกลับไม่ได้ เหมือนห้องสอบจริง
+    </p>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}ผลวัดพาร์ทฟัง · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ผลวัดพาร์ทฟัง{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:6px">
+  <span class="eyebrow">听力 · {{ total }} ข้อ · {{ exam.finished_at|date:"j M · H:i" }}</span>
+  <h1>ถูก {{ exam.correct_count }} จาก {{ total }} ข้อ</h1>
+  {% if exam.auto_submitted %}
+    <p class="muted">หมดเวลาก่อนทำครบ — ข้อที่ยังไม่ได้ตอบนับเป็นไม่ได้ตอบ ไม่ใช่ตอบผิด</p>
+  {% endif %}
+</div>
+
+{% comment %}
+ชุดต่ำกว่า 45 ข้อไม่แปลงเป็นคะแนนเต็ม 100 โดยตั้งใจ
+ชุด 5 ข้อ หนึ่งข้อ = 20 คะแนน เดาถูกข้อเดียวเลขเด้ง 20 จุด
+ถ้าแปลงให้ ผู้เรียนจะเอาเลข 80 ไปเชื่อว่าพร้อมสอบ ทั้งที่เป็นความบังเอิญของชุดเล็ก
+{% endcomment %}
+{% if is_measure %}
+  <div class="stats">
+    <div class="stat"><b>{{ exam.listening }}</b><span>คะแนนพาร์ทฟัง (เต็ม 100)</span></div>
+    <div class="stat"><b>{{ exam.correct_count }}/{{ total }}</b><span>ข้อที่ถูก</span></div>
+    <div class="stat"><b>{{ exam.minutes_used|default:"—" }}</b><span>นาทีที่ใช้</span></div>
+  </div>
+  <div class="note">
+    ชุดนี้เท่าข้อสอบจริง — เลขนี้เอาไปเทียบกับเป้า 180/300 ได้
+    (พาร์ทฟัง 100 · อ่าน 100 · เขียน 100)
+  </div>
+{% else %}
+  <div class="note warn">
+    <b>ชุดนี้เป็นการซ้อม ไม่ใช่การวัด</b> — {{ total }} ข้อ หนึ่งข้อคิดเป็น
+    {% widthratio 100 total 1 %}% ของผล เดาถูกข้อเดียวตัวเลขก็เด้งไปมาก
+    <br>อยากได้ตัวเลขที่เชื่อได้ ต้องทำชุด <b>45 ข้อเต็มพาร์ท</b> สัปดาห์ละครั้ง
+  </div>
+{% endif %}
+
+<div class="stack" style="gap:var(--s2)">
+  <span class="wlab">ดูทีละข้อ</span>
+  {% for r in rows %}
+  <details class="card flat stack" style="gap:var(--s1)" {% if not r.is_correct %}open{% endif %}>
+    <summary style="cursor:pointer">
+      <span class="row" style="gap:var(--s1);flex-wrap:wrap;display:inline-flex">
+        <span class="mono muted">ข้อ {{ r.n }}</span>
+        {% if r.is_correct %}<span class="pill ok">ถูก</span>
+        {% elif r.skipped %}<span class="pill">ไม่ได้ตอบ</span>
+        {% else %}<span class="pill bad">ผิด</span>{% endif %}
+        <span class="zh">{{ r.question.prompt_zh|truncatechars:30 }}</span>
+      </span>
+    </summary>
+
+    <div class="stack" style="gap:var(--s1);margin-top:var(--s1)">
+      <p class="zh" style="font-size:var(--t-lead)">{{ r.question.prompt_zh }}</p>
+      {% if not r.is_correct %}
+        {% if r.given %}
+        <div class="stack" style="gap:2px">
+          <span class="eyebrow">คุณเลือก</span>
+          <span class="zh" style="text-decoration:line-through;color:var(--ink-3)">{{ r.given }}</span>
+        </div>
+        {% endif %}
+      {% endif %}
+      <div class="stack" style="gap:2px">
+        <span class="eyebrow">คำตอบที่ถูก</span>
+        <span class="zh" style="color:var(--ready);font-weight:500">{{ r.answer }}</span>
+      </div>
+      {% with question=r.question lx=r.lx %}
+        {% include "core/partials/listen_transcript.html" %}
+      {% endwith %}
+    </div>
+  </details>
+  {% endfor %}
+</div>
+
+<div class="actionbar">
+  <a class="btn block" href="{% url 'listen_test_home' %}">ทำชุดใหม่</a>
+  <a class="btn ghost" href="{% url 'listen_practice' %}" style="width:auto;white-space:nowrap">ไปฝึกฟังแบบฟังซ้ำได้</a>
+</div>
+
+{% endblock %}

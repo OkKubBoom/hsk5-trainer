@@ -724,3 +724,9 @@ textarea{
 .swatch.bad{background:rgba(190,60,60,.28)}
 .swatch.missing{background:rgba(190,60,60,.28); opacity:.6}
 .swatch.extra{background:var(--surface-2); border-bottom-color:var(--ink-3)}
+
+/* ── เลือกขนาดชุดวัดผลพาร์ทฟัง ───────────────────────────── */
+.sizecard{display:flex; align-items:center; gap:var(--s2); width:100%; text-align:left;
+  cursor:pointer; font-family:inherit; font-size:1rem; color:inherit}
+.sizecard:disabled{opacity:.45; cursor:not-allowed}
+.sizecard.measure{border-color:var(--accent)}
