@@ -64,18 +64,7 @@
     {% endif %}
 
     {% if outcome.question.audio_script %}
-    {% comment %}
-    บทพูดของข้อฟัง — แสดง *หลังตอบแล้วเท่านั้น*
-    นี่คือจุดที่พาร์ทฟังสอนได้จริง: ได้เห็นว่าสิ่งที่ฟังไม่ออกคือคำไหน
-    ไม่ใช่แค่รู้ว่าตอบผิด ตรงกับ D8 — บอกว่าผิดเพราะอะไร
-    {% endcomment %}
-    <details class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)" {% if not outcome.is_correct %}open{% endif %}>
-      <summary style="cursor:pointer"><span class="wlab">บทที่ได้ยิน</span></summary>
-      <p class="zh" style="font-size:var(--t-lead);line-height:2;margin-top:var(--s1)">{{ outcome.question.audio_script }}</p>
-      <p class="muted" style="font-size:.8rem">
-        คำไหนอ่านแล้วเข้าใจแต่ฟังไม่ออก = คำที่รู้ความหมายแต่ยังจำเสียงไม่ได้ ให้ทวนเสียงคำนั้นเป็นพิเศษ
-      </p>
-    </details>
+      {% with question=outcome.question %}{% include "core/partials/listen_transcript.html" %}{% endwith %}
     {% endif %}
 
     {% with ex=outcome.question.explanation %}

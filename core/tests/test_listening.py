@@ -10,7 +10,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from core import listening, reading
+from core import listen_explain, listening, reading
 from core.accounts import create_learner
 from core.models import (
     ItemGroup, Question, QuestionOption, QuestionStatus, QuestionType,
@@ -186,3 +186,55 @@ class ImportTests(TestCase):
             audio_script="มีบทแล้ว",
             source_type=SourceType.OFFICIAL_PAST_PAPER, source_ref="X ข้อ 1")
         self.assertEqual(q.status, QuestionStatus.DRAFT)
+
+
+class ExplainTests(TestCase):
+    """ชี้ประโยคที่มีคำตอบ — ชี้ผิดแย่กว่าไม่ชี้"""
+
+    SCRIPT = "下雨了，出门时别忘了带伞。放心吧，忘不了。"
+
+    def test_ชี้ประโยคเมื่อคำตอบอยู่ในบทตรงๆ(self):
+        found = listen_explain.answer_sentence(self.SCRIPT, "他会带伞的")
+        self.assertIsNotNone(found)
+        self.assertIn("带伞", found["sentence"])
+        self.assertEqual(found["index"], 0)
+
+    def test_ไม่ชี้เมื่อคำตอบเป็นการตีความ(self):
+        """คำตอบที่ต้องสรุปเอาเองไม่มีอยู่ในบท ชี้มั่วจะทำให้ผู้เรียนจำผิด"""
+        self.assertIsNone(listen_explain.answer_sentence(self.SCRIPT, "他很生气"))
+
+    def test_คำตอบว่างต้องไม่ระเบิด(self):
+        self.assertIsNone(listen_explain.answer_sentence(self.SCRIPT, ""))
+        self.assertIsNone(listen_explain.answer_sentence("", "อะไรก็ได้"))
+
+    def test_ประโยคยาวไม่ชนะเพราะมีคำทั่วไปเยอะกว่า(self):
+        """ถ้าไม่ตัดคำอย่าง 的 了 是 ออก ประโยคที่ยาวที่สุดจะถูกชี้เสมอ"""
+        script = "我今天很累了。他会带伞的。"
+        found = listen_explain.answer_sentence(script, "他会带伞的")
+        self.assertEqual(found["index"], 1)
+
+    def test_ตัดคำถามท้ายบทออกก่อนหาคำยาก(self):
+        """คำในตัวคำถามอยู่บนจอให้อ่านอยู่แล้ว ไม่ใช่คำที่ต้องฟังให้ออก"""
+        q = make_listening_question(script="他出差了。谁出差了？")
+        q.prompt_zh = "谁出差了？"
+        q.save()
+        self.assertEqual(listen_explain.body_only(q), "他出差了。")
+
+    def test_การ์ดเฉลยไฮไลต์ประโยคที่มีคำตอบ(self):
+        from django.template.loader import render_to_string
+
+        q = make_listening_question(script=self.SCRIPT, answer="他会带伞的")
+        html = render_to_string("core/partials/listen_transcript.html",
+                                {"question": q, "lx": listen_explain.explain(q)})
+        self.assertIn("hitline", html)
+        self.assertIn("ประโยคที่มีคำตอบอยู่", html)
+
+    def test_การ์ดเฉลยบอกตรงๆ_เมื่อชี้ไม่ได้(self):
+        """เงียบไปเฉยๆ ทำให้ผู้เรียนคิดว่าระบบพัง — ต้องบอกว่าข้อนี้ต้องสรุปเอง"""
+        from django.template.loader import render_to_string
+
+        q = make_listening_question(script=self.SCRIPT, answer="他很生气")
+        html = render_to_string("core/partials/listen_transcript.html",
+                                {"question": q, "lx": listen_explain.explain(q)})
+        self.assertNotIn("hitline", html)
+        self.assertIn("ต้องฟังแล้วสรุปเอง", html)

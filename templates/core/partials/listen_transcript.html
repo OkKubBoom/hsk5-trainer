@@ -1,0 +1,45 @@
+{% comment %}
+บทที่ได้ยิน + ชี้ประโยคที่มีคำตอบ — แสดงหลังตอบแล้วเท่านั้น
+ต้องการ: question · lx (ผลจาก core.listen_explain.explain)
+
+นี่คือจุดที่การฝึกฟังสอนได้จริง ผู้เรียนได้เห็นว่าคำที่ฟังไม่ออกคือคำไหน
+ไม่ใช่แค่รู้ว่าตอบผิด (D8)
+
+ประโยคที่ชี้มาจากการนับตัวอักษรที่ซ้ำกับคำตอบ ไม่ใช่ของที่ AI แต่งขึ้น
+ข้อที่คำตอบเป็นการตีความ ไม่ได้พูดตรงๆ ในบท ระบบจะไม่ชี้เลย ซึ่งถูกแล้ว
+{% endcomment %}
+<div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">
+  <span class="wlab">บทที่ได้ยิน</span>
+
+  <p class="zh" style="font-size:var(--t-lead);line-height:2.1">
+    {% for s in lx.sentences %}<span class="{% if lx.answer_sentence and forloop.counter0 == lx.answer_sentence.index %}hitline{% endif %}">{{ s }}</span>{% endfor %}
+  </p>
+
+  {% if lx.answer_sentence %}
+    <p class="muted" style="font-size:.82rem">
+      <span class="hitdot"></span> ประโยคที่มีคำตอบอยู่ — ถ้าฟังตรงนี้ไม่ทัน ให้กดฟังซ้ำเฉพาะช่วงนี้
+    </p>
+  {% else %}
+    <p class="muted" style="font-size:.82rem">
+      ข้อนี้คำตอบไม่ได้ถูกพูดออกมาตรงๆ ต้องฟังแล้วสรุปเอง — เป็นชนิดที่ยากที่สุดของพาร์ทนี้
+    </p>
+  {% endif %}
+
+  {% if lx.hard_words %}
+  <div class="stack" style="gap:6px;margin-top:var(--s1)">
+    <span class="wlab">คำระดับ HSK4 ขึ้นไปที่อยู่ในบท</span>
+    <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+      {% for w in lx.hard_words %}
+        <span class="wordchip">
+          <span class="zh">{{ w.hanzi }}</span>
+          <span class="mono muted py">{{ w.pinyin_sandhi|default:w.pinyin }}</span>
+          <span class="muted">{{ w.meaning_th|truncatechars:28 }}</span>
+        </span>
+      {% endfor %}
+    </div>
+    <p class="muted" style="font-size:.8rem">
+      คำไหนอ่านแล้วเข้าใจแต่ฟังไม่ออก = รู้ความหมายแล้วแต่ยังจำเสียงไม่ได้ — ทวนเสียงคำนั้นเป็นพิเศษ
+    </p>
+  </div>
+  {% endif %}
+</div>

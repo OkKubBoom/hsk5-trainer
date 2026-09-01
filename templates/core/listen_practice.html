@@ -69,17 +69,7 @@
       <p class="zh" style="font-size:var(--t-lead)">{{ question.prompt_zh }}</p>
     </div>
 
-    {% comment %}
-    บทที่ได้ยิน — นี่คือจุดที่การฝึกฟังสอนได้จริง
-    ได้เห็นว่าคำที่ฟังไม่ออกคือคำไหน ไม่ใช่แค่รู้ว่าตอบผิด (D8)
-    {% endcomment %}
-    <div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">
-      <span class="wlab">บทที่ได้ยิน</span>
-      <p class="zh" style="font-size:var(--t-lead);line-height:2">{{ question.audio_script }}</p>
-      <p class="muted" style="font-size:.8rem">
-        คำไหนอ่านแล้วเข้าใจแต่ฟังไม่ออก = รู้ความหมายแล้วแต่ยังจำเสียงไม่ได้ — ทวนเสียงคำนั้นเป็นพิเศษ
-      </p>
-    </div>
+    {% include "core/partials/listen_transcript.html" %}
 
     {% if key_vocab %}
     <div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">

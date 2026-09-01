@@ -23,6 +23,7 @@ from . import grammar as grammar_engine
 from . import progress as progress_engine
 from . import writing as writing_engine
 from . import listen_drill as listen_engine
+from . import listen_explain
 from . import mock as mock_engine
 from . import reading as reading_engine
 from . import review as review_engine
@@ -225,6 +226,9 @@ def drill_answer(request):
     drill_engine.advance(session)
     return render(request, "core/partials/feedback.html", {
         "outcome": outcome,
+        # ชี้ประโยคที่มีคำตอบให้ข้อฟัง — คำนวณจากบทที่มีอยู่ ไม่ได้แต่งขึ้น
+        "lx": (listen_explain.explain(outcome.question)
+               if getattr(outcome, "question", None) and outcome.question.audio_script else None),
         "given": request.POST.get("given", ""),
         "is_last": session.position >= len(session.queue or []),
         # ตัวเลือกที่ผู้เรียนกดบอกเองได้ — สั้นกว่ารายการเต็มเพราะต้องตัดสินใจใน 1 วินาที
@@ -722,6 +726,7 @@ def listen_practice(request):
     return render(request, "core/listen_practice.html", {
         "nav": "listen", "learner": learner,
         "question": question, "result": result,
+        "lx": listen_explain.explain(question) if result else None,
         "q": reading_engine.build(question) if question else None,
         "key_vocab": reading_engine.key_vocab(question) if question else [],
         "stats": listen_engine.stats(learner),
