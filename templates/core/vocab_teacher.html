@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}คำศัพท์ที่ครูต้องตรวจ · HSK5 Trainer{% endblock %}
+{% block mobile_title %}ให้ครูตรวจ{% endblock %}
+{% block content %}
+
+<div class="stack" style="gap:6px">
+  <span class="eyebrow">ผู้ดูแลระบบ · คลังคำศัพท์</span>
+  <h1>คำศัพท์ที่ต้องให้ครูตรวจ</h1>
+  <p class="muted">
+    คำแปลไทยทั้งหมดมาจาก AI และยังไม่มีใครยืนยัน —
+    เปิดหน้านี้ให้ครูดูแล้วกดตามที่ครูบอก ครูไม่ต้องมีบัญชี
+  </p>
+</div>
+
+{% comment %}
+แสดงความคืบหน้าเป็นจำนวนคำที่ยืนยันแล้ว ไม่ใช่จำนวนที่เหลือ
+เพราะเลข "เหลืออีก 879" ทำให้คนเลิกก่อนเริ่ม ส่วน "ตรวจไปแล้ว 12" ทำให้อยากทำต่อ
+{% endcomment %}
+<div class="stats">
+  <div class="stat"><b>{{ counts.verified }}</b><span>ยืนยันแล้ว</span></div>
+  <div class="stat"><b>{{ counts.pending }}</b><span>รอตรวจ</span></div>
+  <div class="stat"><b>{{ counts.percent }}%</b><span>ของคลังทั้งหมด</span></div>
+</div>
+
+<div class="row" style="gap:6px;flex-wrap:wrap">
+  <a class="chip {% if not bucket %}on{% endif %}" style="min-width:auto;padding:0 12px"
+     href="{% url 'vocab_teacher' %}">ทั้งหมด</a>
+  {% for b in buckets %}
+    <a class="chip {% if bucket == b.key %}on{% endif %}" style="min-width:auto;padding:0 12px"
+       href="?bucket={{ b.key }}" title="{{ b.why }}">{{ b.label }}</a>
+  {% endfor %}
+</div>
+
+<div class="note">
+  <b>เรียงตามความเสี่ยง ไม่ใช่ตามความถี่</b> —
+  คำอย่าง 很 是 不 ออกในข้อสอบทุกชุดก็จริง แต่คำแปลไม่มีทางผิด
+  คำที่เสี่ยงคือคำนามธรรมระดับ 5-6 ที่มีหลายความหมาย จึงถูกดันขึ้นมาก่อน
+  <br>ตรวจครบ {{ items|length }} คำในหน้านี้แล้วโหลดใหม่ จะได้ชุดถัดไป
+</div>
+
+{% if not items %}
+  <div class="card empty">
+    <h3>ตรวจครบทุกคำในกลุ่มนี้แล้ว</h3>
+    <p class="muted">เลือกกลุ่มอื่นจากปุ่มด้านบน</p>
+  </div>
+{% endif %}
+
+<div class="stack" style="gap:var(--s2)">
+  {% for it in items %}
+  <div class="card stack" style="gap:var(--s2)" x-data="{ fixing: false }">
+
+    <div class="row" style="gap:var(--s2);flex-wrap:wrap;align-items:baseline">
+      <span class="zh" style="font-size:var(--t-h2)">{{ it.vocab.hanzi }}</span>
+      <span class="mono muted">{{ it.vocab.pinyin }}</span>
+      {% if it.vocab.pinyin_sandhi %}
+        <span class="mono" title="รูปที่ออกเสียงจริง">→ {{ it.vocab.pinyin_sandhi }}</span>
+      {% endif %}
+      <span class="pill accent" style="margin-left:auto">HSK{{ it.vocab.hsk_level }}</span>
+    </div>
+
+    <div class="stack" style="gap:2px">
+      <span class="eyebrow">คำแปลที่ระบบใช้อยู่ตอนนี้ <span class="ai-star">✱✱✱</span></span>
+      <span style="font-size:var(--t-lead)">{{ it.vocab.meaning_th }}</span>
+      {% if it.vocab.pos %}<span class="muted">ชนิดคำ: {{ it.vocab.pos }}</span>{% endif %}
+    </div>
+
+    {% if it.vocab.example_zh %}
+    <div class="stack" style="gap:2px">
+      <span class="eyebrow">ตัวอย่างประโยคที่ระบบใช้</span>
+      <span class="zh">{{ it.vocab.example_zh }}</span>
+      {% if it.vocab.example_th %}<span class="muted">{{ it.vocab.example_th }}</span>{% endif %}
+    </div>
+    {% endif %}
+
+    {% comment %}
+    บอกครูว่าทำไมคำนี้ถูกหยิบมา และผิดแล้วกระทบใครบ้าง
+    ครูจะได้ตัดสินใจได้ว่าควรใช้เวลากับคำนี้แค่ไหน
+    {% endcomment %}
+    <div class="row" style="gap:6px;flex-wrap:wrap;font-size:.82rem">
+      {% for f in it.flags %}<span class="pill warn">{{ f }}</span>{% endfor %}
+      {% if it.vocab.exam_as_answer %}
+        <span class="pill">เคยเป็นเฉลย {{ it.vocab.exam_as_answer }} ครั้ง</span>
+      {% endif %}
+      {% if it.vocab.exam_papers_count %}
+        <span class="pill">พบใน {{ it.vocab.exam_papers_count }} ชุดข้อสอบ</span>
+      {% endif %}
+      {% if it.learners %}
+        <span class="pill bad">มี {{ it.learners }} คนกำลังท่องคำนี้อยู่</span>
+      {% endif %}
+    </div>
+
+    <div class="row" style="gap:var(--s1);flex-wrap:wrap;padding-top:var(--s2);border-top:1px solid var(--line)">
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="vocab_id" value="{{ it.vocab.pk }}">
+        <input type="hidden" name="bucket" value="{{ bucket }}">
+        <input type="hidden" name="action" value="ok">
+        <button class="btn sm" type="submit" style="width:auto">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+          คำแปลนี้ถูกแล้ว
+        </button>
+      </form>
+      <button class="btn ghost sm" type="button" style="width:auto" @click="fixing = !fixing">
+        แปลผิด — แก้เป็น…
+      </button>
+    </div>
+
+    <form method="post" class="stack" style="gap:var(--s1)" x-show="fixing" x-cloak>
+      {% csrf_token %}
+      <input type="hidden" name="vocab_id" value="{{ it.vocab.pk }}">
+      <input type="hidden" name="bucket" value="{{ bucket }}">
+      <input type="hidden" name="action" value="fix">
+      <label for="m{{ it.vocab.pk }}">คำแปลที่ถูกต้อง (ตามที่ครูบอก)</label>
+      <input id="m{{ it.vocab.pk }}" type="text" name="meaning_th" maxlength="255"
+             value="{{ it.vocab.meaning_th }}">
+      <label for="s{{ it.vocab.pk }}">ใครเป็นคนบอก</label>
+      <input id="s{{ it.vocab.pk }}" type="text" name="source" value="ครูผู้สอน" maxlength="300">
+      <div><button class="btn sm" type="submit" style="width:auto">บันทึกคำแปลใหม่</button></div>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

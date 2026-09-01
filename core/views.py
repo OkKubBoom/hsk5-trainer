@@ -24,6 +24,7 @@ from . import progress as progress_engine
 from . import writing as writing_engine
 from . import listen_drill as listen_engine
 from . import listen_mock
+from . import vocab_review as vocab_review_engine
 from . import dictation as dictation_engine
 from . import listen_explain
 from . import weekly as weekly_engine
@@ -727,6 +728,65 @@ def essay_dispute(request, pk):
     return redirect("essay_result", pk=submission.pk)
 
 
+# ── รายการคำศัพท์ให้ครูตรวจ ────────────────────────────────
+
+@login_required
+def vocab_teacher(request):
+    """หน้าที่เปิดให้ครูดูแล้วกดตรวจได้ทีละคำ
+
+    เจ้าของระบบเปิดหน้านี้ให้ครูดู แล้วกดตามที่ครูบอก — ครูไม่ต้องมีบัญชี
+    ถ้าต้องสมัครบัญชีก่อนถึงจะช่วยได้ ครูจะไม่ช่วย
+    """
+    if not _is_admin(request.user):
+        return render(request, "core/forbidden.html", {"nav": ""}, status=403)
+
+    if request.method == "POST":
+        vocab = get_object_or_404(VocabItem, pk=request.POST.get("vocab_id"))
+        action = request.POST.get("action")
+        corrected = (request.POST.get("meaning_th") or "").strip()
+
+        tags = [t for t in (vocab.tags or [])
+                if t not in ("review:error", "review:warn", "needs_review", "disputed")]
+        if "human_verified" not in tags:
+            tags.append("human_verified")
+
+        if action == "fix" and corrected:
+            vocab.meaning_th = corrected[:255]
+            vocab.tags = tags
+            vocab.save(update_fields=["meaning_th", "tags", "updated_at"])
+            verdict, note_body = NoteVerdict.CORRECTED, corrected
+            messages.info(request, f"แก้คำแปลของ {vocab.hanzi} แล้ว")
+        elif action == "ok":
+            vocab.tags = tags
+            vocab.save(update_fields=["tags", "updated_at"])
+            verdict, note_body = NoteVerdict.CONFIRMED, ""
+            messages.info(request, f"ยืนยันคำแปลของ {vocab.hanzi} แล้ว")
+        else:
+            messages.info(request, "กด “แก้เป็น” ต้องพิมพ์คำแปลใหม่มาด้วย")
+            return redirect(f"{reverse('vocab_teacher')}?bucket={request.POST.get('bucket', '')}")
+
+        # เก็บร่องรอยว่าใครยืนยันเมื่อไหร่ — ไม่งั้นอีกหกเดือนจะไม่รู้ว่าคำไหนครูดูจริง
+        ExplanationNote.objects.create(
+            vocab=vocab, author=request.user, verdict=verdict,
+            body=note_body[:4000], status=NoteStatus.ACCEPTED,
+            source=(request.POST.get("source") or "ครูผู้สอน")[:300],
+        )
+        return redirect(f"{reverse('vocab_teacher')}?bucket={request.POST.get('bucket', '')}")
+
+    bucket = request.GET.get("bucket", "")
+    rows = vocab_review_engine.queue(bucket)
+    items = [
+        {"vocab": v, "flags": vocab_review_engine.flags_of(v),
+         "learners": vocab_review_engine.learners_studying(v)}
+        for v in rows
+    ]
+    return render(request, "core/vocab_teacher.html", {
+        "nav": "teacher", "items": items, "bucket": bucket,
+        "buckets": vocab_review_engine.BUCKETS,
+        "counts": vocab_review_engine.counts(),
+    })
+
+
 # ── วัดผลพาร์ทฟัง ──────────────────────────────────────────
 
 @login_required
@@ -1376,6 +1436,26 @@ def user_admin(request):
         return render(request, "core/forbidden.html", {"nav": ""}, status=403)
 
     error = None
+    if request.method == "POST" and request.POST.get("form") == "exam_date":
+        # แก้วันสอบได้ แต่ลบผู้ใช้ไม่ได้ — แก้วันสอบย้อนกลับได้ ลบผู้ใช้ย้อนกลับไม่ได้
+        # และวันสอบที่ผิดทำให้ตัวจัดตารางทบทวนทั้งระบบคำนวณผิดตามไปด้วย
+        profile = get_object_or_404(LearnerProfile, pk=request.POST.get("profile_id"))
+        try:
+            profile.target_exam_date = date.fromisoformat(request.POST["target"])
+            backup = (request.POST.get("backup") or "").strip()
+            profile.backup_exam_date = date.fromisoformat(backup) if backup else None
+            profile.save(update_fields=["target_exam_date", "backup_exam_date", "updated_at"])
+            left = (profile.target_exam_date - timezone.localdate()).days
+            messages.info(
+                request,
+                f"ตั้งวันสอบของ {profile.user.username} เป็น "
+                f"{profile.target_exam_date:%-d/%-m/%Y} แล้ว (เหลือ {left} วัน) — "
+                "ตัวจัดตารางทบทวนจะคำนวณใหม่ให้เองในชุดถัดไป",
+            )
+        except (KeyError, ValueError):
+            messages.info(request, "วันที่ไม่ถูกต้อง ใช้รูปแบบ ปี-เดือน-วัน")
+        return redirect("user_admin")
+
     if request.method == "POST":
         username = (request.POST.get("username") or "").strip()
         display_name = (request.POST.get("display_name") or "").strip()
@@ -1409,6 +1489,7 @@ def user_admin(request):
     return render(request, "core/user_admin.html", {
         "nav": "users", "error": error,
         "users": User.objects.select_related("learner_profile").order_by("-date_joined"),
+        "today": timezone.localdate(),
         "form": request.POST if request.method == "POST" else {},
     })
 

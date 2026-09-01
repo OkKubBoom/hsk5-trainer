@@ -150,6 +150,10 @@
         <span class="grow">งานเขียนรอตรวจ</span>
         {% if pending_essays %}<span class="pill bad" style="padding:1px 8px">{{ pending_essays }}</span>{% endif %}
       </a>
+      <a class="navlink {% if nav == 'teacher' %}on{% endif %}" href="{% url 'vocab_teacher' %}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/></svg>
+        คำศัพท์ให้ครูตรวจ
+      </a>
       <a class="navlink {% if nav == 'review' %}on{% endif %}" href="{% url 'explanation_review' %}">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
         ตรวจคำอธิบาย

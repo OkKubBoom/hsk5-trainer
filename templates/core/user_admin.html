@@ -64,7 +64,7 @@
   <h3>ผู้ใช้ในระบบ ({{ users|length }})</h3>
   <div class="table-scroll">
     <table>
-      <thead><tr><th>ชื่อผู้ใช้</th><th>ชื่อที่แสดง</th><th>บทบาท</th><th>วันสอบ</th><th>เข้าใช้ล่าสุด</th></tr></thead>
+      <thead><tr><th>ชื่อผู้ใช้</th><th>ชื่อที่แสดง</th><th>บทบาท</th><th>วันสอบ · รอบสำรอง</th><th>เข้าใช้ล่าสุด</th></tr></thead>
       <tbody>
         {% for u in users %}
         <tr>
@@ -73,8 +73,26 @@
           <td data-label="บทบาท">
             <span class="pill {% if u.role == 'admin' %}accent{% endif %}">{{ u.get_role_display }}</span>
           </td>
-          <td class="num" data-label="วันสอบ">
-            {% if u.learner_profile %}{{ u.learner_profile.target_exam_date|date:"j M Y" }}{% else %}<span class="muted">—</span>{% endif %}
+          <td data-label="วันสอบ">
+            {% if u.learner_profile %}
+              {% comment %}
+              แก้ได้ตรงนี้เลย ไม่ต้องเข้าหน้าจัดการข้อมูล — วันสอบผิดทำให้
+              ตัวจัดตารางทบทวนคำนวณผิดทั้งระบบ (ช่วง freeze 14 วันสุดท้ายจะเริ่มผิดวัน)
+              จึงต้องแก้ได้ง่ายพอที่จะแก้จริง
+              {% endcomment %}
+              <form method="post" class="row" style="gap:6px;flex-wrap:wrap;align-items:center">
+                {% csrf_token %}
+                <input type="hidden" name="form" value="exam_date">
+                <input type="hidden" name="profile_id" value="{{ u.learner_profile.pk }}">
+                <input type="date" name="target" required
+                       value="{{ u.learner_profile.target_exam_date|date:'Y-m-d' }}"
+                       style="padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-family:inherit">
+                <input type="date" name="backup" title="รอบสำรอง (เว้นว่างได้)"
+                       value="{{ u.learner_profile.backup_exam_date|date:'Y-m-d' }}"
+                       style="padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-family:inherit">
+                <button class="btn ghost sm" type="submit" style="width:auto">บันทึก</button>
+              </form>
+            {% else %}<span class="muted">—</span>{% endif %}
           </td>
           <td class="num muted" data-label="เข้าใช้ล่าสุด">
             {% if u.last_login %}{{ u.last_login|date:"j M · H:i" }}{% else %}ยังไม่เคยเข้า{% endif %}
