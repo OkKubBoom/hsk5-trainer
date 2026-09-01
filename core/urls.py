@@ -6,6 +6,9 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("version/", views.version, name="version"),
+    path("manifest.webmanifest", views.manifest, name="manifest"),
+    path("sw.js", views.service_worker, name="service_worker"),
+    path("offline/", views.offline, name="offline"),
     path("login/", auth_views.LoginView.as_view(template_name="core/login.html",
                                                 redirect_authenticated_user=True), name="login"),
     path("logout/", auth_views.LogoutView.as_view(next_page="login"), name="logout"),

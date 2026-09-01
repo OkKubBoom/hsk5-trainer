@@ -61,7 +61,15 @@ class SmokeTests(TestCase):
                 self.assertLess(res.status_code, 500, f"{name} ({url}) → {res.status_code}")
 
     def test_คนที่ยังไม่ล็อกอินถูกพาไปหน้าล็อกอิน_ไม่ใช่เห็นข้อมูล(self):
-        open_pages = {"login", "version"}
+        # หน้าที่เปิดได้โดยไม่ล็อกอิน — ทุกตัวมีเหตุผลเฉพาะ ห้ามเติมโดยไม่เขียนเหตุผล
+        open_pages = {
+            "login",
+            "version",          # ใช้เช็คตอน deploy ว่าโค้ดขึ้นหรือยัง ต้องเปิดจากมือถือได้เร็ว
+            "manifest",         # เบราว์เซอร์อ่านก่อนผู้ใช้ล็อกอิน ถ้าปิดจะติดตั้งลงจอโฮมไม่ได้
+            "service_worker",   # ต้องโหลดได้ตั้งแต่ก่อนล็อกอิน ไม่งั้นไม่ทำงานเลย
+            "offline",          # ถ้าปิด service worker จะแคชหน้า login ไว้แทน
+                                # แล้วผู้เรียนที่เน็ตหลุดจะเห็นหน้าล็อกอินที่กดยังไงก็ไม่เข้า
+        }
         for name, url in all_get_urls():
             if name in open_pages:
                 continue

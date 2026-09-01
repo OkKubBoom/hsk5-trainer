@@ -1,0 +1,22 @@
+{% load static %}{
+  "name": "HSK5 Trainer",
+  "short_name": "HSK5",
+  "description": "ฝึกสอบ HSK ระดับ 5 — ชุดฝึกรายวัน คำศัพท์ พาร์ทฟัง และงานเขียน",
+  "lang": "th",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBFAF8",
+  "theme_color": "#1E6B5D",
+  "icons": [
+    {"src": "{% static 'icons/icon-192.png' %}", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "{% static 'icons/icon-512.png' %}", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "{% static 'icons/icon-512.png' %}", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "shortcuts": [
+    {"name": "ชุดฝึกวันนี้", "url": "/drill/"},
+    {"name": "ฝึกฟัง", "url": "/listen/"},
+    {"name": "ฝึกจำคำศัพท์", "url": "/review/"}
+  ]
+}

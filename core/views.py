@@ -52,6 +52,37 @@ def version(request):
     return JsonResponse(version_info.as_dict(), json_dumps_params={"ensure_ascii": False})
 
 
+# ── ติดตั้งลงจอโฮมได้ (PWA) ─────────────────────────────────
+
+def manifest(request):
+    """ข้อมูลแอปสำหรับปุ่ม "เพิ่มลงจอโฮม"
+
+    เสิร์ฟผ่าน Django ไม่ใช่ไฟล์ static เพราะตอน deploy ชื่อไฟล์ไอคอนถูกเติมแฮช
+    ถ้าเขียนพาธตายตัวไว้ ไอคอนจะหายทุกครั้งที่ deploy ใหม่
+    """
+    return render(request, "pwa/manifest.webmanifest",
+                  content_type="application/manifest+json")
+
+
+def service_worker(request):
+    """ต้องอยู่ที่ /sw.js ไม่ใช่ /static/js/sw.js
+
+    ขอบเขตของ service worker คือโฟลเดอร์ที่มันถูกเสิร์ฟออกมา
+    ถ้าอยู่ใน /static/ มันจะคุมได้แค่ /static/ ซึ่งไม่มีประโยชน์
+    """
+    return render(request, "pwa/sw.js", {"version": version_info.as_dict().get("version", "0")},
+                  content_type="application/javascript")
+
+
+def offline(request):
+    """หน้าที่ขึ้นเมื่อเน็ตหลุด — ต้องเปิดได้โดยไม่ต้องล็อกอิน
+
+    ถ้าบังคับล็อกอิน service worker จะแคชหน้า login ไว้แทน
+    แล้วผู้เรียนที่เน็ตหลุดจะเห็นหน้าล็อกอินที่กดยังไงก็ไม่เข้า
+    """
+    return render(request, "core/offline.html", {"nav": ""})
+
+
 def _learner(request) -> LearnerProfile | None:
     return LearnerProfile.objects.filter(user=request.user).first()
 
