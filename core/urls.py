@@ -58,6 +58,7 @@ urlpatterns = [
         template_name="core/password_change.html",
         success_url="/profile/?changed=1",
     ), name="password_change"),
+    path("weekly/", views.weekly, name="weekly"),
     path("progress/", views.group_progress, name="group_progress"),
     path("users/", views.user_admin, name="user_admin"),
     path("explanation/<int:question_id>/note/", views.explanation_note, name="explanation_note"),

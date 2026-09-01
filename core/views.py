@@ -24,6 +24,7 @@ from . import progress as progress_engine
 from . import writing as writing_engine
 from . import listen_drill as listen_engine
 from . import listen_explain
+from . import weekly as weekly_engine
 from . import mock as mock_engine
 from . import reading as reading_engine
 from . import review as review_engine
@@ -691,6 +692,57 @@ def essay_dispute(request, pk):
     )
     messages.info(request, "ส่งคำแย้งแล้ว — เจ้าของระบบจะตรวจให้")
     return redirect("essay_result", pk=submission.pk)
+
+
+# ── สรุปรายสัปดาห์ ─────────────────────────────────────────
+
+WEEKLY_CARDS = [
+    ("days", "วันที่ได้ทำ", " วัน"),
+    ("answered", "ข้อที่ตอบ", " ข้อ"),
+    ("accuracy", "ความแม่น", "%"),
+    ("listening", "ข้อฟังที่ฝึก", " ข้อ"),
+]
+
+
+@login_required
+def weekly(request):
+    """สรุปเจ็ดวันล่าสุด — ของตัวเอง หรือของทุกคนถ้าเป็นเจ้าของระบบ
+
+    เจ้าของระบบต้องดูของทุกคนจากที่เดียว ไม่ใช่สลับบัญชีเข้าออก
+    เพราะจุดประสงค์ของหน้านี้คือตัดสินใจว่าจะเข้าไปคุยกับใคร
+    """
+    is_admin = _is_admin(request.user)
+    mine = _learner(request)
+
+    pickable = []
+    if is_admin:
+        pickable = list(
+            LearnerProfile.objects.select_related("user")
+            .order_by("user__first_name", "user__username")
+        )
+
+    target = mine
+    picked = request.GET.get("learner")
+    if is_admin and picked:
+        target = LearnerProfile.objects.filter(pk=picked).first() or target
+    elif is_admin and not target and pickable:
+        target = pickable[0]
+
+    if not target:
+        return render(request, "core/no_profile.html", {"nav": "weekly"})
+
+    summary = weekly_engine.summary(target)
+    cards = []
+    for key, label, unit in WEEKLY_CARDS:
+        card = {**summary["compare"][key], "label": label, "unit": unit}
+        # ยังไม่ได้ตอบอะไรเลย แล้วขึ้น "0%" อ่านผิดความหมายว่าตอบผิดหมด
+        if key == "accuracy" and summary["counts"]["accuracy"] is None:
+            card["now"], card["unit"] = "—", ""
+        cards.append(card)
+    return render(request, "core/weekly.html", {
+        "nav": "weekly", "s": summary, "cards": cards,
+        "pickable": pickable, "is_self": target == mine, "learner": mine,
+    })
 
 
 # ── ฝึกพาร์ทฟัง ────────────────────────────────────────────
