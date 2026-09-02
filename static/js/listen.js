@@ -14,6 +14,8 @@ window.listenPlayer = function (questionId, opts) {
   return {
     script: '',
     turns: [],
+    audioUrl: '',
+    el: null,                 // <audio> ของไฟล์ที่อัดไว้ ถ้ามี
     runId: 0,
     plays: 0,
     playing: false,
@@ -21,6 +23,8 @@ window.listenPlayer = function (questionId, opts) {
     rate: 1,
     voiceName: localStorage.getItem('listenVoice') || '',
     supported: typeof window.speechSynthesis !== 'undefined',
+    get usingFile() { return !!this.audioUrl; },
+    get ready() { return this.usingFile || (this.supported && !!this.voice); },
     voice: null,
     voices: [],
     remoteVoice: false,
@@ -30,7 +34,10 @@ window.listenPlayer = function (questionId, opts) {
     init() {
       const saved = parseFloat(localStorage.getItem('listenRate'));
       if (saved >= 0.5 && saved <= 1.5) this.rate = saved;
-      this.$watch('rate', (v) => localStorage.setItem('listenRate', v));
+      this.$watch('rate', (v) => {
+        localStorage.setItem('listenRate', v);
+        if (this.el) this.el.playbackRate = v;   // ไฟล์เสียงเปลี่ยนความเร็วได้ทันทีระหว่างเล่น
+      });
       // จำเสียงที่เลือกไว้ — คนละเครื่องมีเสียงคนละชุด จึงเก็บเป็นชื่อ ไม่ใช่ลำดับ
       this.$watch('voiceName', (v) => { localStorage.setItem('listenVoice', v); this.pickVoice(); });
       if (this.supported) this.pickVoice();
@@ -100,6 +107,8 @@ window.listenPlayer = function (questionId, opts) {
         const body = await res.json();
         this.script = body.script || '';
         this.turns = body.turns || [];
+        // 听写 ขอทีละประโยค ใช้ไฟล์ทั้งข้อไม่ได้ ต้องให้เบราว์เซอร์อ่านเอง
+        this.audioUrl = opts.sentence == null ? (body.audio || '') : '';
       } catch (e) {
         this.error = 'โหลดบทไม่สำเร็จ ลองกดใหม่อีกครั้ง';
       }
@@ -108,9 +117,10 @@ window.listenPlayer = function (questionId, opts) {
     },
 
     async play() {
-      if (!this.supported) return;
       this.error = '';
       if (!(await this.load())) return;
+      if (this.audioUrl) return this.playFile();
+      if (!this.supported) return;
 
       speechSynthesis.cancel();
       this.plays += 1;
@@ -120,6 +130,38 @@ window.listenPlayer = function (questionId, opts) {
       u.onstart = () => { this.playing = true; };
       u.onend = () => { this.playing = false; };
       speechSynthesis.speak(u);
+    },
+
+    /* เล่นไฟล์ที่อัดไว้ล่วงหน้า
+     *
+     * เสียงในไฟล์ดีกว่าตัวอ่านของเบราว์เซอร์มาก และ *ทุกคนได้ยินเหมือนกัน*
+     * ไม่ว่าจะเปิดจากเครื่องอะไร ซึ่งตัวอ่านของเบราว์เซอร์ทำไม่ได้เลย
+     * จังหวะเว้นระหว่างคนพูดถูกอัดมาในไฟล์แล้ว
+     *
+     * ปรับความเร็วด้วย playbackRate ซึ่งเบราว์เซอร์สมัยใหม่รักษาระดับเสียงไว้ให้
+     * ไม่กลายเป็นเสียงการ์ตูนเหมือนการเร่งเทป
+     *
+     * โหลดไฟล์ไม่ได้ (เน็ตหลุด / ยังไม่ได้สร้างไฟล์ข้อนั้น) ให้ถอยไปใช้ตัวอ่านของเบราว์เซอร์
+     * ดีกว่าขึ้น error แล้วผู้เรียนทำข้อนั้นไม่ได้เลย
+     */
+    playFile() {
+      if (!this.el) {
+        this.el = new Audio(this.audioUrl);
+        this.el.preload = 'auto';
+        this.el.addEventListener('ended', () => { this.playing = false; });
+        this.el.addEventListener('error', () => {
+          this.audioUrl = '';
+          this.el = null;
+          this.playing = false;
+          if (this.supported) this.play();     // ถอยไปใช้ตัวอ่านของเบราว์เซอร์
+          else this.error = 'โหลดไฟล์เสียงไม่สำเร็จ';
+        });
+      }
+      this.el.playbackRate = this.rate;
+      this.el.currentTime = 0;
+      this.plays += 1;
+      this.playing = true;
+      this.el.play().catch(() => { this.playing = false; });
     },
 
     /* สร้างคำสั่งอ่านหนึ่งช่วง — แยกเสียงผู้พูดด้วยระดับเสียง
@@ -178,6 +220,7 @@ window.listenPlayer = function (questionId, opts) {
 
     stop() {
       this.runId += 1;                 // ตัดคิวก่อน ไม่งั้น onend จะสั่งเล่นช่วงถัดไปต่อ
+      if (this.el) { this.el.pause(); this.el.currentTime = 0; }
       if (this.supported) speechSynthesis.cancel();
       this.playing = false;
     },

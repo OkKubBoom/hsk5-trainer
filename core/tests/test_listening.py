@@ -314,3 +314,58 @@ class FixtureFallbackTests(TestCase):
         self.assertTrue(item.script)
         self.assertTrue(item.question_zh)
         self.assertTrue(listening.speech_text(item))
+
+
+class AudioFileTests(TestCase):
+    """ไฟล์เสียงที่อัดไว้ล่วงหน้า
+
+    จุดที่ผิดแล้วเจ็บที่สุด: ชื่อไฟล์ผูกกับเลข id
+    เลข id เปลี่ยนทุกครั้งที่โหลดข้อมูลใหม่ ไฟล์เสียงจะไปจับคู่กับข้อผิด
+    ผู้เรียนจะได้ยินบทของอีกข้อแล้วตอบผิดโดยไม่รู้ว่าทำไม
+    """
+
+    def test_ชื่อไฟล์มาจากเลขข้อจริง_ไม่ใช่เลข_id(self):
+        self.assertEqual(listening.audio_slug("H51001 ข้อ 21"), "H51001-21")
+        self.assertEqual(listening.audio_slug("H51005 ข้อ 45"), "H51005-45")
+
+    def test_source_ref_พังต้องคืนค่าว่าง_ไม่ใช่ระเบิด(self):
+        for bad in ("", "อะไรก็ไม่รู้", None):
+            with self.subTest(ref=bad):
+                self.assertEqual(listening.audio_slug(bad), "")
+                self.assertEqual(listening.audio_url(bad), "")
+
+    def test_ที่อยู่ไฟล์ผ่านระบบ_static_เสมอ(self):
+        """ตอน deploy ชื่อไฟล์ถูกเติมแฮช พาธตายตัวจะพังทุกครั้งที่ deploy"""
+        url = listening.audio_url("H51001 ข้อ 21")
+        self.assertTrue(url.startswith("/static/"), url)
+        self.assertIn("H51001-21", url)
+
+    def test_เอนด์พอยต์ส่งที่อยู่ไฟล์ไปด้วย(self):
+        from datetime import timedelta
+
+        from django.utils import timezone
+
+        from core.accounts import create_learner
+        from core.models import VocabItem
+
+        VocabItem.objects.create(hanzi="詞", pinyin="ci", meaning_th="ความหมาย", hsk_level=5)
+        create_learner(username="af", password="passpass1",
+                       exam_date=timezone.localdate() + timedelta(days=60))
+        q = make_listening_question()
+        q.source_ref = "H51001 ข้อ 21"
+        q.save()
+
+        self.client.login(username="af", password="passpass1")
+        body = self.client.get(reverse("listen_script", args=[q.pk])).json()
+        self.assertIn("audio", body)
+        self.assertIn("H51001-21", body["audio"])
+
+    def test_ข้อที่ไม่มีไฟล์ยังใช้งานได้(self):
+        """ยังไม่ได้สร้างไฟล์ข้อนั้น ต้องถอยไปใช้ตัวอ่านของเบราว์เซอร์
+        ไม่ใช่ทำให้ข้อนั้นทำไม่ได้เลย
+        """
+        q = make_listening_question()
+        q.source_ref = "ไม่มีรูปแบบ"
+        q.save()
+        self.assertEqual(listening.audio_url(q.source_ref), "")
+        self.assertTrue(q.audio_script)      # ยังมีบทให้เบราว์เซอร์อ่าน

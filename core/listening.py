@@ -237,3 +237,36 @@ def speech_turns(item: ListeningItem) -> list[dict]:
     if item.question_zh:
         turns.append({"who": "q", "text": _end_stop(item.question_zh)})
     return turns
+
+
+# ── ไฟล์เสียงที่อัดไว้ล่วงหน้า ──────────────────────────────
+
+def audio_slug(source_ref: str) -> str:
+    """ชื่อไฟล์เสียงของข้อนี้ — "H51001 ข้อ 21" → "H51001-21"
+
+    ผูกกับ source_ref ไม่ใช่กับเลข id เพราะ id เปลี่ยนได้ทุกครั้งที่โหลดข้อมูลใหม่
+    แต่ source_ref เป็นเลขข้อจริงของข้อสอบ ซึ่งไม่มีวันเปลี่ยน
+    """
+    parts = (source_ref or "").replace("ข้อ", " ").split()
+    if len(parts) < 2:
+        return ""
+    return f"{parts[0]}-{parts[-1]}"
+
+
+def audio_url(source_ref: str) -> str:
+    """ที่อยู่ไฟล์เสียง — ว่างถ้าข้อนี้ยังไม่มีไฟล์
+
+    ผ่าน static() เสมอ เพราะตอน deploy ชื่อไฟล์ถูกเติมแฮช
+    เขียนพาธตายตัวจะพังทุกครั้งที่ deploy ใหม่
+    """
+    from django.templatetags.static import static
+
+    slug = audio_slug(source_ref)
+    if not slug:
+        return ""
+    try:
+        return static(f"listening/{slug}.m4a")
+    except Exception:
+        # prod ใช้ ManifestStaticFilesStorage ซึ่งโยน error เมื่อไม่มีไฟล์นั้น
+        # ปล่อยว่างแล้วให้เครื่องเล่นถอยไปใช้ตัวอ่านของเบราว์เซอร์แทน
+        return ""

@@ -43,7 +43,7 @@
     เพราะเครื่องพังไม่ใช่การฟังซ้ำ
     {% endcomment %}
     <div class="listenbox">
-      <template x-if="supported && voice">
+      <template x-if="ready">
         <div class="stack" style="gap:var(--s2)">
           <div class="row" style="gap:var(--s2);flex-wrap:wrap">
             <button type="button" class="btn playbtn" @click="play()"
@@ -60,7 +60,7 @@
           </p>
         </div>
       </template>
-      <template x-if="!supported || !voice">
+      <template x-if="!ready">
         <div class="note warn">
           <b>เครื่องนี้อ่านภาษาจีนไม่ได้</b> — ชุดวัดผลทำไม่ได้บนเครื่องนี้
           ลองเปิดด้วย Chrome หรือ Safari บนมือถือ

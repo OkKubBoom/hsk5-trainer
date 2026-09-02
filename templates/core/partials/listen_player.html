@@ -9,7 +9,7 @@
 แล้วพาร์ทฟังจะกลายเป็นพาร์ทอ่านโดยที่คะแนนยังขึ้นว่าฟังได้
 {% endcomment %}
 
-  <template x-if="supported && voice">
+  <template x-if="ready">
     <div class="stack" style="gap:var(--s2)">
       <div class="row" style="gap:var(--s2);flex-wrap:wrap">
         <button type="button" class="btn playbtn" @click="playing ? stop() : play()" :disabled="loading">
@@ -41,7 +41,7 @@
       ระบบเรียงตัวที่ฟังชัดที่สุดขึ้นก่อนให้แล้ว แต่ต้องให้เปลี่ยนเองได้อยู่ดี
       เพราะคำว่า "ฟังชัด" ของแต่ละคนไม่เหมือนกัน
       {% endcomment %}
-      <details x-show="voices.length > 1" x-cloak>
+      <details x-show="!usingFile && voices.length > 1" x-cloak>
         <summary class="muted" style="cursor:pointer;font-size:.82rem">
           เสียงที่ใช้: <b x-text="voice ? voice.name : '—'"></b> · เปลี่ยนเสียง
         </summary>
@@ -63,11 +63,16 @@
       </details>
 
       <p class="muted" style="font-size:.8rem;margin:0">
-        เสียงนี้สร้างจากตัวอ่านของเครื่องคุณ ไม่ใช่เสียงจริงในห้องสอบ —
-        ใช้ฝึกจับใจความและความเร็วได้ แต่ไม่ใช่การซ้อมเสียงจริง
-        <span x-show="remoteVoice" x-cloak>
+        <span x-show="usingFile" x-cloak>
+          บทสนทนามีผู้พูดสองคน เสียงเดียวกันทุกเครื่อง —
+          ไม่ใช่เสียงจริงในห้องสอบ แต่ใช้ฝึกจับใจความและความเร็วได้
+        </span>
+        <span x-show="!usingFile">
+          เสียงนี้สร้างจากตัวอ่านของเครื่องคุณ ไม่ใช่เสียงจริงในห้องสอบ —
+          ใช้ฝึกจับใจความและความเร็วได้ แต่ไม่ใช่การซ้อมเสียงจริง
+        </span>
+        <span x-show="remoteVoice && !usingFile" x-cloak>
           <br>⚠️ เครื่องนี้ไม่มีเสียงจีนแบบออฟไลน์ ใช้เสียงจากคลาวด์ของเบราว์เซอร์อยู่
-          — ต้องต่อเน็ตถึงจะเล่นได้
         </span>
       </p>
     </div>
@@ -77,7 +82,7 @@
   ทางออกเมื่อเครื่องไม่มีเสียงจีน — ปล่อยให้ตันคือทำให้ทั้งพาร์ทใช้ไม่ได้
   แต่ต้องบอกให้ชัดว่ากดแล้วมันไม่ใช่การฝึกฟังอีกต่อไป
   {% endcomment %}
-  <template x-if="!supported || !voice">
+  <template x-if="!ready">
     <div class="stack" style="gap:var(--s1)">
       <div class="note warn">
         <b>เครื่องนี้อ่านภาษาจีนไม่ได้</b> —

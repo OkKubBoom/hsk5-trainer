@@ -27,6 +27,7 @@ from . import listen_mock
 from . import vocab_review as vocab_review_engine
 from . import dictation as dictation_engine
 from . import listen_explain
+from . import listening as listening_parser
 from . import weekly as weekly_engine
 from . import mock as mock_engine
 from . import reading as reading_engine
@@ -1091,9 +1092,12 @@ def listen_script(request, question_id):
         except (ValueError, IndexError):
             return JsonResponse({"script": "", "error": "ไม่มีประโยคนี้"}, status=404)
 
-    return JsonResponse(
-        {"script": question.audio_script, "turns": question.audio_turns or []},
-        json_dumps_params={"ensure_ascii": False})
+    return JsonResponse({
+        "script": question.audio_script,
+        "turns": question.audio_turns or [],
+        # ไฟล์ที่อัดไว้ล่วงหน้า — ว่างแปลว่ายังไม่มี ให้เบราว์เซอร์อ่านเองเหมือนเดิม
+        "audio": listening_parser.audio_url(question.source_ref),
+    }, json_dumps_params={"ensure_ascii": False})
 
 
 # ── ประวัติรายวัน ──────────────────────────────────────────

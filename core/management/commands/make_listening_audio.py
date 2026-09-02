@@ -1,0 +1,124 @@
+"""สร้างไฟล์เสียงข้อฟังด้วย Kokoro — รันบนเครื่องพัฒนาเท่านั้น
+
+    python manage.py make_listening_audio            # ดูว่าจะสร้างกี่ไฟล์
+    python manage.py make_listening_audio --apply    # สร้างจริง
+
+**ทำไมอัดไฟล์ไว้ ไม่ให้เบราว์เซอร์อ่านสด**
+  เสียงดีกว่ามาก — ตัวอ่านของเบราว์เซอร์เป็นเสียงสังเคราะห์รุ่นเก่า
+  ทุกคนได้ยินเหมือนกัน — เดิมเสียงขึ้นกับว่าใครเปิดจากเครื่องอะไร คุมไม่ได้เลย
+  มีผู้พูดสองคนจริง — เดิมมีเสียงเดียว ต้องปลอมเป็นผู้ชายด้วยการลดระดับเสียง
+
+**เครื่องมือที่ต้องมี** (ไม่ได้อยู่ใน requirements เพราะเซิร์ฟเวอร์ไม่ต้องใช้)
+    pip install sherpa-onnx soundfile numpy
+    ดาวน์โหลด kokoro-int8-multi-lang-v1_1 จาก
+    https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models
+    แตกไฟล์ไว้ที่ data/tts/kokoro-int8-multi-lang-v1_1/  (อยู่ใน .gitignore)
+
+**เสียงที่เลือก** เจ้าของระบบฟังเทียบ 12 เสียงแล้วเลือกเอง — หญิง 28 · ชาย 81
+วัดได้ว่าห่างกัน 117 Hz ซึ่งมากพอให้แยกออกว่าใครพูด (คำถาม 男的/女的 ต้องใช้)
+
+⚠️ ลิขสิทธิ์ — เสียงที่ได้แปลงจากบทข้อสอบจริง จึงเป็นของลิขสิทธิ์เหมือนตัวบท
+ใช้ฝึกส่วนตัวได้ ห้ามเข้าเวอร์ชันขาย (D6) ต่อให้ตัวโมเดล Kokoro จะเป็น Apache-2.0
+"""
+import subprocess
+import tempfile
+from pathlib import Path
+
+from django.conf import settings
+from django.core.management.base import BaseCommand
+
+from core import listening as parser
+from core.models import Question, QuestionStatus, Section
+
+MODEL_DIR = Path(settings.BASE_DIR) / "data" / "tts" / "kokoro-int8-multi-lang-v1_1"
+OUT_DIR = Path(settings.BASE_DIR) / "static" / "listening"
+
+FEMALE_SID, MALE_SID = 28, 81
+# ต้องเท่ากับที่ static/js/listen.js ใช้ ไม่งั้นเปลี่ยนมาใช้ไฟล์แล้วจังหวะจะเพี้ยน
+GAP_TURN, GAP_QUESTION = 0.38, 0.85
+QUESTION_SPEED = 0.94       # คำถามเป็นเสียงผู้บรรยาย อ่านช้ากว่าคู่สนทนานิดหนึ่ง
+BITRATE = "32000"           # AAC โมโน — เสียงพูดที่ 32k ฟังไม่ออกว่าถูกบีบ
+
+
+class Command(BaseCommand):
+    help = "สร้างไฟล์เสียงข้อฟังด้วย Kokoro (เครื่องพัฒนาเท่านั้น)"
+
+    def add_arguments(self, parser_):
+        parser_.add_argument("--apply", action="store_true", help="สร้างจริง")
+        parser_.add_argument("--force", action="store_true", help="สร้างทับไฟล์เดิม")
+
+    def handle(self, *args, **opts):
+        rows = list(
+            Question.objects
+            .filter(section=Section.LISTENING, status=QuestionStatus.ACTIVE)
+            .exclude(audio_turns=[]).order_by("source_ref")
+        )
+        todo = [q for q in rows
+                if opts["force"] or not (OUT_DIR / f"{parser.audio_slug(q.source_ref)}.m4a").exists()]
+
+        self.stdout.write(f"ข้อฟังที่พร้อม {len(rows)} ข้อ · ยังไม่มีไฟล์ {len(todo)} ข้อ")
+        if not opts["apply"]:
+            self.stdout.write("เติม --apply เพื่อสร้างจริง")
+            return
+        if not todo:
+            self.stdout.write(self.style.SUCCESS("มีไฟล์ครบแล้ว ไม่ต้องทำอะไร"))
+            return
+        if not MODEL_DIR.is_dir():
+            self.stderr.write(f"ไม่พบโมเดลที่ {MODEL_DIR} — อ่านวิธีติดตั้งที่หัวไฟล์นี้")
+            return
+
+        tts, sr = self._engine()
+        OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+        for n, question in enumerate(todo, start=1):
+            self._render(tts, sr, question)
+            if n % 25 == 0 or n == len(todo):
+                self.stdout.write(f"  {n}/{len(todo)}")
+
+        total = sum(f.stat().st_size for f in OUT_DIR.glob("*.m4a"))
+        self.stdout.write(self.style.SUCCESS(
+            f"เสร็จ — ไฟล์ทั้งหมด {len(list(OUT_DIR.glob('*.m4a')))} · {total / 1024 / 1024:.1f} MB"
+        ))
+
+    def _engine(self):
+        import sherpa_onnx
+
+        d = str(MODEL_DIR)
+        cfg = sherpa_onnx.OfflineTtsConfig(
+            model=sherpa_onnx.OfflineTtsModelConfig(
+                kokoro=sherpa_onnx.OfflineTtsKokoroModelConfig(
+                    model=f"{d}/model.int8.onnx", voices=f"{d}/voices.bin",
+                    tokens=f"{d}/tokens.txt",
+                    lexicon=f"{d}/lexicon-zh.txt,{d}/lexicon-us-en.txt",
+                    data_dir=f"{d}/espeak-ng-data", dict_dir=f"{d}/dict", lang="zh"),
+                num_threads=6),
+            rule_fsts=f"{d}/phone-zh.fst,{d}/date-zh.fst,{d}/number-zh.fst",
+            max_num_sentences=1)
+        tts = sherpa_onnx.OfflineTts(cfg)
+        return tts, tts.sample_rate
+
+    def _render(self, tts, sr, question):
+        import numpy as np
+        import soundfile as sf
+
+        turns = question.audio_turns or []
+        chunks = []
+        for i, turn in enumerate(turns):
+            sid = MALE_SID if turn["who"] == "m" else FEMALE_SID
+            speed = QUESTION_SPEED if turn["who"] == "q" else 1.0
+            audio = tts.generate(turn["text"], sid=sid, speed=speed)
+            chunks.append(np.asarray(audio.samples, dtype=np.float32))
+
+            nxt = turns[i + 1] if i + 1 < len(turns) else None
+            if nxt:
+                gap = GAP_QUESTION if nxt["who"] == "q" else GAP_TURN
+                chunks.append(np.zeros(int(gap * sr), dtype=np.float32))
+
+        out = OUT_DIR / f"{parser.audio_slug(question.source_ref)}.m4a"
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
+            sf.write(tmp.name, np.concatenate(chunks), sr)
+            # afconvert มากับ macOS อยู่แล้ว ไม่ต้องลง ffmpeg เพิ่ม
+            subprocess.run(["afconvert", "-f", "m4af", "-d", "aac", "-b", BITRATE,
+                            "-c", "1", tmp.name, str(out)],
+                           check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            Path(tmp.name).unlink(missing_ok=True)
