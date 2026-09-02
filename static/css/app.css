@@ -615,6 +615,15 @@ textarea{
 .pytoggle[aria-pressed="true"]{border-color:var(--accent); color:var(--accent-ink); background:var(--accent-soft)}
 .pystate{font-family:var(--font-mono); font-size:0.6875rem; opacity:.7}
 
+/* แบบที่อยู่บนแถบบน — กว้างตามเนื้อหา ไม่ใช่เต็มแถว
+   ปุ่มนี้ถูกกดบ่อยที่สุดในระบบ จึงต้องอยู่ในระยะนิ้วโป้งเสมอโดยไม่ต้องเปิดเมนูก่อน */
+.pytoggle.top{
+  width:auto; flex:none; min-height:34px; padding:0 10px; gap:7px;
+  background:var(--surface); white-space:nowrap;
+}
+/* จอแคบ: เหลือแค่ไอคอนกับสถานะ คำว่า "พินอิน" ตัดทิ้งเพื่อไม่ให้เบียดชิปวันสอบ */
+@media (max-width:520px){ .pylabel{display:none} }
+
 /* ── คำสำคัญท้ายเฉลย: 汉字 · พินอิน · คำแปล ──
    จอแคบให้คำแปลตกลงบรรทัดใหม่ แทนที่จะบีบจนอ่านไม่ออก */
 .kvrow{
@@ -630,11 +639,14 @@ textarea{
 }
 
 /* ── แถบนับถอยหลังวันสอบ — มุมซ้ายบนของพื้นที่เนื้อหา ── */
-.examstrip{
-  display:flex; gap:var(--s1); flex-wrap:wrap;
+/* แถบบน — นับถอยหลังชิดซ้าย สวิตช์พินอินชิดขวา
+   ตรึงติดจอไม่ได้ เพราะบังบทอ่านตอนทำข้อสอบบนจอมือถือ */
+.topbar{
+  display:flex; align-items:center; gap:var(--s2);
   padding:var(--s1) var(--s3) 0;
   max-width:880px; margin:0 auto; width:100%;
 }
+.examstrip{display:flex; gap:var(--s1); flex-wrap:wrap; flex:1; min-width:0}
 .examchip{
   display:inline-flex; align-items:baseline; gap:6px;
   padding:4px 10px; border-radius:999px; font-size:var(--t-sm);

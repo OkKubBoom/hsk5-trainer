@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap">
-  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=7">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=8">
 
   {# ติดตั้งลงจอโฮมได้ — ผู้เรียนใช้บนมือถือเป็นหลัก (D5) #}
   <link rel="manifest" href="{% url 'manifest' %}">
@@ -161,16 +161,6 @@
     </div>
     {% endif %}
 
-    <button type="button" class="pytoggle" @click="showPinyin = !showPinyin"
-            :aria-pressed="showPinyin ? 'true' : 'false'">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
-        <path x-show="!showPinyin" d="m3 3 18 18"/>
-      </svg>
-      <span class="grow" x-text="showPinyin ? 'ซ่อนพินอิน' : 'แสดงพินอิน'">แสดงพินอิน</span>
-      <span class="pystate" x-text="showPinyin ? 'เปิด' : 'ปิด'">ปิด</span>
-    </button>
-
     <div class="sidebar-foot navgroup">
       <a class="userbox {% if nav == 'profile' %}on{% endif %}" href="{% url 'profile' %}">
         <span class="avatar">{{ user.first_name|default:user.username|slice:":1" }}</span>
@@ -221,21 +211,38 @@
               aria-label="บัญชีของฉัน">{{ user.first_name|default:user.username|slice:":1" }}</button>
     </header>
 
-    {% if exam_rounds %}
     {% comment %}
-    นับถอยหลังวันสอบ อยู่บนทุกหน้าเพราะจำนวนวันที่เหลือเปลี่ยนความหมายของทุกอย่างบนจอ
-    ชิดซ้ายตามที่ต้องการ และไม่ตรึงติดจอ เพราะบังเนื้อหาตอนทำข้อสอบ
+    แถบบน — นับถอยหลังวันสอบ (ชิดซ้าย) กับสวิตช์พินอิน (ชิดขวา)
+
+    สวิตช์พินอินย้ายมาจากท้ายแถบเมนูซ้าย เพราะเป็นปุ่มที่กดบ่อยที่สุดในระบบ
+    ผู้เรียนเปิด-ปิดหลายครั้งต่อชุดฝึก (เดาก่อน → เปิดดูเฉลยเสียง → ปิดใหม่)
+    แต่เดิมอยู่ท้ายเมนู บนมือถือต้องเปิดแผ่นเมนูก่อนทุกครั้ง = สามจังหวะต่อหนึ่งครั้งที่กด
+
+    แถบนี้ขึ้นเสมอแม้ไม่มีวันสอบ (บัญชีผู้ดูแลไม่มีโปรไฟล์ผู้เรียน)
+    ไม่งั้นสวิตช์จะหายไปทั้งหน้าสำหรับคนกลุ่มนั้น
     {% endcomment %}
-    <div class="examstrip">
-      {% for e in exam_rounds %}
-        <span class="examchip lv-{{ e.level }}">
-          <span class="examlabel">{{ e.label }}</span>
-          <b class="mono">{% if e.passed %}ผ่านไปแล้ว{% else %}{{ e.days }} วัน{% endif %}</b>
-          <span class="examdate mono">{{ e.date|date:"j M" }}</span>
-        </span>
-      {% endfor %}
+    <div class="topbar">
+      <div class="examstrip">
+        {% for e in exam_rounds %}
+          <span class="examchip lv-{{ e.level }}">
+            <span class="examlabel">{{ e.label }}</span>
+            <b class="mono">{% if e.passed %}ผ่านไปแล้ว{% else %}{{ e.days }} วัน{% endif %}</b>
+            <span class="examdate mono">{{ e.date|date:"j M" }}</span>
+          </span>
+        {% endfor %}
+      </div>
+
+      <button type="button" class="pytoggle top" @click="showPinyin = !showPinyin"
+              :aria-pressed="showPinyin ? 'true' : 'false'"
+              :title="showPinyin ? 'ซ่อนพินอิน' : 'แสดงพินอิน'">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+          <path x-show="!showPinyin" d="m3 3 18 18"/>
+        </svg>
+        <span class="pylabel">พินอิน</span>
+        <span class="pystate" x-text="showPinyin ? 'เปิด' : 'ปิด'">ปิด</span>
+      </button>
     </div>
-    {% endif %}
 
     <main>
       <div class="wrap stack">
@@ -285,17 +292,6 @@
       <button type="button" class="btn ghost sm" @click="more = false" style="width:auto">ปิด</button>
     </div>
     {# บนมือถือไม่มีแถบข้าง สวิตช์พินอินจึงต้องมาอยู่ที่นี่ด้วย #}
-    <button type="button" class="pytoggle" style="margin-bottom:var(--s2)"
-            @click="showPinyin = !showPinyin"
-            :aria-pressed="showPinyin ? 'true' : 'false'">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
-        <path x-show="!showPinyin" d="m3 3 18 18"/>
-      </svg>
-      <span class="grow" x-text="showPinyin ? 'ซ่อนพินอิน' : 'แสดงพินอิน'">แสดงพินอิน</span>
-      <span class="pystate" x-text="showPinyin ? 'เปิด' : 'ปิด'">ปิด</span>
-    </button>
-
     <div class="navgroup">
       <a class="navlink" href="{% url 'profile' %}">โปรไฟล์ของฉัน</a>
       <a class="navlink" href="{% url 'weekly' %}">สรุปสัปดาห์</a>
