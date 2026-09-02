@@ -238,3 +238,38 @@ class ExplainTests(TestCase):
                                 {"question": q, "lx": listen_explain.explain(q)})
         self.assertNotIn("hitline", html)
         self.assertIn("ต้องฟังแล้วสรุปเอง", html)
+
+
+class FixtureFallbackTests(TestCase):
+    """บนเซิร์ฟเวอร์ไม่มี data/exam_corpus/ (อยู่ใน .gitignore และ .dockerignore)
+    ถ้าไม่มีทางสำรอง คำสั่งจะเงียบแล้วไม่ทำอะไร และไม่มีใครรู้ว่าทำไมข้อฟังไม่โผล่
+    """
+
+    def test_มีไฟล์สำรองอยู่ในรีโปจริง(self):
+        import json
+        from pathlib import Path
+
+        from django.conf import settings
+
+        path = Path(settings.BASE_DIR) / "data" / "listening_fixture.json"
+        self.assertTrue(path.exists(), "ไม่มี listening_fixture.json — รัน export_listening")
+
+        data = json.loads(path.read_text(encoding="utf-8"))
+        self.assertGreaterEqual(sum(len(v) for v in data.values()), 200)
+
+    def test_ไฟล์สำรองแปลงกลับเป็นข้อได้ครบทุกช่อง(self):
+        """ถ้าโครงของ ListeningItem เปลี่ยนแล้วไม่ได้ export ใหม่ จะพังตรงนี้"""
+        import json
+        from pathlib import Path
+
+        from django.conf import settings
+
+        data = json.loads(
+            (Path(settings.BASE_DIR) / "data" / "listening_fixture.json")
+            .read_text(encoding="utf-8"))
+        rows = next(iter(data.values()))
+        item = listening.ListeningItem(**rows[0])
+
+        self.assertTrue(item.script)
+        self.assertTrue(item.question_zh)
+        self.assertTrue(listening.speech_text(item))

@@ -11,6 +11,11 @@
 **ชุดที่ไม่มีบทถอดเสียงจะไม่ถูกแตะ** — ยังเป็น draft ต่อไป ซึ่งถูกแล้ว
 ปล่อยให้ active โดยไม่มีเสียง = ผู้เรียนเจอข้อที่ตอบไม่ได้จริงแล้วถูกนับว่าผิด
 
+**บนเซิร์ฟเวอร์ไม่มี data/exam_corpus/** — โฟลเดอร์นั้นอยู่ทั้งใน .gitignore และ
+.dockerignore จึงไม่ติดไปกับ image คำสั่งนี้จึงอ่านจาก data/listening_fixture.json แทน
+ซึ่งสร้างจากเครื่องพัฒนาด้วย `python manage.py export_listening` แล้ว commit ขึ้นไป
+ถ้ามีทั้งสองแหล่ง จะใช้ของจริงจาก exam_corpus ก่อนเสมอ เพราะเป็นต้นทาง
+
 ⚠️ ลิขสิทธิ์ — บททั้งหมดมาจากข้อสอบจริง commercial_safe = False (D6)
 """
 import json
@@ -26,6 +31,7 @@ from core.models import (
 )
 
 CORPUS = Path(settings.BASE_DIR) / "data" / "exam_corpus"
+FIXTURE = Path(settings.BASE_DIR) / "data" / "listening_fixture.json"
 
 
 class Command(BaseCommand):
@@ -37,20 +43,12 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **opts):
-        files = sorted(CORPUS.glob("H51*.json"))
-        if opts["papers"]:
-            wanted = set(opts["papers"])
-            files = [f for f in files if f.stem in wanted]
-        if not files:
-            self.stderr.write("ไม่พบไฟล์ข้อสอบใน data/exam_corpus/")
+        papers = self._read(opts.get("papers"))
+        if papers is None:
             return
 
         filled = activated = missing_q = no_script = 0
-        for path in files:
-            raw = path.read_text(encoding="utf-8").replace("昀", "最")
-            doc = json.loads(raw)
-            paper = doc["meta"]["paper"]
-            items = parser.parse((doc.get("listening") or {}).get("transcript") or "")
+        for paper, items in papers:
             if not items:
                 no_script += 1
                 self.stdout.write(f"  {paper}: ไม่มีบทถอดเสียง — ข้ามไป ข้อยังเป็น draft")
@@ -107,6 +105,45 @@ class Command(BaseCommand):
             self.stdout.write(f"⚠️ มีบท {missing_q} ข้อที่หาคำถามคู่กันไม่เจอ — รัน import_exams ก่อน")
         if not opts["apply"]:
             self.stdout.write("เติม --apply เพื่อเขียนจริง")
+
+    # ── หาแหล่งบทถอดเสียง ────────────────────────────────
+
+    def _read(self, wanted) -> list[tuple[str, list]] | None:
+        """คืน [(ชื่อชุด, รายการข้อ)] จากแหล่งที่หาเจอ — None เมื่อไม่เจอเลย
+
+        ลอง exam_corpus ก่อนเพราะเป็นต้นทางจริง ถ้าไม่มี (เช่นบนเซิร์ฟเวอร์)
+        ค่อยใช้ไฟล์สรุปที่ export ไว้ ไม่สลับลำดับนี้ ไม่งั้นแก้ที่ต้นทางแล้วไม่มีผล
+        """
+        wanted = set(wanted or [])
+        files = sorted(CORPUS.glob("H51*.json")) if CORPUS.is_dir() else []
+        if files:
+            out = []
+            for path in files:
+                if wanted and path.stem not in wanted:
+                    continue
+                raw = path.read_text(encoding="utf-8").replace("昀", "最")
+                doc = json.loads(raw)
+                out.append((doc["meta"]["paper"],
+                            parser.parse((doc.get("listening") or {}).get("transcript") or "")))
+            self.stdout.write(f"อ่านจาก {CORPUS.name}/ ({len(out)} ชุด)")
+            return out
+
+        if FIXTURE.exists():
+            data = json.loads(FIXTURE.read_text(encoding="utf-8"))
+            self.stdout.write(f"อ่านจาก {FIXTURE.name} (ไม่พบ exam_corpus บนเครื่องนี้)")
+            out = []
+            for paper, rows in data.items():
+                if wanted and paper not in wanted:
+                    continue
+                out.append((paper, [parser.ListeningItem(**r) for r in rows]))
+            return out
+
+        self.stderr.write(
+            "ไม่พบบทถอดเสียงเลย — ต้องมี data/exam_corpus/ (เครื่องพัฒนา) "
+            "หรือ data/listening_fixture.json (เซิร์ฟเวอร์)\n"
+            "สร้างไฟล์หลังด้วย: python manage.py export_listening"
+        )
+        return None
 
     def _group(self, cache, paper, item):
         """ชุดเนื้อหาที่เก็บบทไว้ให้ดูตอนเฉลย

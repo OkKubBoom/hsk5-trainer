@@ -111,6 +111,8 @@
 - `data/exam_corpus/` — ข้อสอบ 9 ชุดที่แยกโครงสร้างแล้ว (โจทย์/ตัวเลือก/เฉลย/สคริปต์ฟัง)
   ⚠️ `commercial_safe=false` · อยู่ใน .gitignore แล้ว ห้าม commit
   `synonym_sets.json` = กลุ่มคำใกล้เคียง 100 กลุ่มที่ดึงจากตัวเลือกจริงของ 阅读第一部分
+  ⚠️ โฟลเดอร์นี้ **ไม่ติดไปกับ image** (อยู่ใน .dockerignore) — คำสั่งที่ต้องใช้บนเซิร์ฟเวอร์
+  ต้องอ่านจากไฟล์ที่ commit ไว้แทน เช่น `data/exam_fixture.json` · `data/listening_fixture.json`
 
 ---
 
@@ -148,6 +150,7 @@ source .venv/bin/activate
 python manage.py migrate
 python manage.py seed_hsk5          # ใส่คำศัพท์ + 近义词 + 完成句子 ตั้งต้น
 python manage.py import_vocab       # นำเข้าคำศัพท์ 2,496 คำจาก data/vocab/hsk5_merged.json
+python manage.py export_listening   # (เครื่องพัฒนา) ทำ data/listening_fixture.json ให้ deploy ไปด้วยได้
 python manage.py import_listening --apply   # เติมบทถอดเสียงให้ข้อฟัง แล้วเปิดใช้ข้อที่พร้อม
 python manage.py make_icons         # สร้างไอคอน PWA (ทำครั้งเดียว ไฟล์อยู่ใน static/icons/)
 python manage.py make_scenes        # สร้างภาพโจทย์เรียงความข้อ 100 (static/scenes/ + data/essay_scenes.json)
