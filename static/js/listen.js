@@ -13,6 +13,8 @@ window.listenPlayer = function (questionId, opts) {
   opts = opts || {};
   return {
     script: '',
+    turns: [],
+    runId: 0,
     plays: 0,
     playing: false,
     loading: false,
@@ -81,12 +83,8 @@ window.listenPlayer = function (questionId, opts) {
      * เพราะปุ่มนี้กดตอนไหนก็ได้ รวมถึงตอนยังไม่ได้เริ่มทำข้อ */
     preview() {
       if (!this.supported || !this.voice) return;
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance('你好，这是听力练习的声音。');
-      u.voice = this.voice;
-      u.lang = this.voice.lang;
-      u.rate = this.rate;
-      speechSynthesis.speak(u);
+      this.stop();
+      speechSynthesis.speak(this.utter('你好，这是听力练习的声音。', 'n'));
     },
 
     async load() {
@@ -99,7 +97,9 @@ window.listenPlayer = function (questionId, opts) {
       try {
         const res = await fetch(url, { headers: { 'X-Requested-With': 'fetch' } });
         if (!res.ok) throw new Error(res.status);
-        this.script = (await res.json()).script || '';
+        const body = await res.json();
+        this.script = body.script || '';
+        this.turns = body.turns || [];
       } catch (e) {
         this.error = 'โหลดบทไม่สำเร็จ ลองกดใหม่อีกครั้ง';
       }
@@ -113,21 +113,71 @@ window.listenPlayer = function (questionId, opts) {
       if (!(await this.load())) return;
 
       speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(this.script);
-      u.lang = (this.voice && this.voice.lang) || 'zh-CN';
-      if (this.voice) u.voice = this.voice;
-      u.rate = this.rate;
+      this.plays += 1;
+      if (this.turns.length) return this.speakTurns();
+
+      const u = this.utter(this.script, 'n');
       u.onstart = () => { this.playing = true; };
       u.onend = () => { this.playing = false; };
-      u.onerror = () => {
-        this.playing = false;
-        this.error = 'เล่นเสียงไม่สำเร็จ — ลองกดอีกครั้ง หรือเปิดเสียงเครื่องดู';
-      };
-      this.plays += 1;
       speechSynthesis.speak(u);
     },
 
+    /* สร้างคำสั่งอ่านหนึ่งช่วง — แยกเสียงผู้พูดด้วยระดับเสียง
+     *
+     * เครื่องส่วนใหญ่มีเสียงจีนที่ใช้ได้จริงตัวเดียว (บน Mac คือ Tingting)
+     * จะสลับเป็นเสียงผู้ชายจริงๆ ไม่ได้ จึงลดระดับเสียงลงแทนเมื่อเป็นตาผู้ชายพูด
+     * ไม่ได้ทำให้เหมือนผู้ชายจริง แต่ทำให้ *แยกออกว่าเปลี่ยนคนพูดแล้ว*
+     * ซึ่งคือสิ่งที่คำถามอย่าง "ผู้ชายหมายความว่าอะไร" ต้องใช้
+     *
+     * คำถามท้ายข้อใช้ระดับเสียงปกติและช้าลงนิด เพราะเป็นเสียงผู้บรรยาย ไม่ใช่คู่สนทนา
+     */
+    utter(text, who) {
+      const u = new SpeechSynthesisUtterance(text);
+      if (this.voice) { u.voice = this.voice; u.lang = this.voice.lang; }
+      else u.lang = 'zh-CN';
+      u.rate = who === 'q' ? this.rate * 0.94 : this.rate;
+      u.pitch = who === 'm' ? 0.72 : 1;
+      u.onerror = (e) => {
+        if (e.error === 'interrupted' || e.error === 'canceled') return;  // เรากดหยุดเอง
+        this.playing = false;
+        this.error = 'เล่นเสียงไม่สำเร็จ — ลองกดอีกครั้ง หรือเปิดเสียงเครื่องดู';
+      };
+      return u;
+    },
+
+    /* เล่นทีละช่วง พร้อมเว้นจังหวะ
+     *
+     * ข้อสอบจริงมีช่องว่างระหว่างคนพูด และเว้นนานกว่านั้นก่อนอ่านคำถาม
+     * ถ้าอ่านรวดเดียวไม่หยุด ผู้เรียนจะไม่รู้ว่าคำถามเริ่มตรงไหน
+     * แล้วพลาดทั้งข้อทั้งที่ฟังบทออกครบทุกคำ
+     */
+    speakTurns() {
+      /* ใช้ *ตัวเลข* เป็นเครื่องหมายรอบ ไม่ใช่ object
+         Alpine ห่อทุก object ที่เก็บใน x-data ด้วย Proxy การเทียบ !== กับตัวต้นฉบับ
+         จึงเป็นจริงเสมอ แม้เป็นรอบเดียวกัน — เคยทำให้เสียงไม่เล่นเลยสักช่วง */
+      const id = ++this.runId;
+      this.playing = true;
+
+      const step = (i) => {
+        if (this.runId !== id) return;             // มีคนกดหยุดหรือกดเล่นใหม่
+        if (i >= this.turns.length) { this.playing = false; return; }
+
+        const turn = this.turns[i];
+        const u = this.utter(turn.text, turn.who);
+        u.onend = () => {
+          if (this.runId !== id) return;
+          const next = this.turns[i + 1];
+          // เว้นนานกว่าก่อนคำถาม เพราะเป็นการเปลี่ยนบทบาท ไม่ใช่แค่เปลี่ยนคนพูด
+          const gap = !next ? 0 : (next.who === 'q' ? 850 : 380);
+          setTimeout(() => step(i + 1), gap);
+        };
+        speechSynthesis.speak(u);
+      };
+      step(0);
+    },
+
     stop() {
+      this.runId += 1;                 // ตัดคิวก่อน ไม่งั้น onend จะสั่งเล่นช่วงถัดไปต่อ
       if (this.supported) speechSynthesis.cancel();
       this.playing = false;
     },

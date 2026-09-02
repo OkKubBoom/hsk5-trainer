@@ -1091,8 +1091,9 @@ def listen_script(request, question_id):
         except (ValueError, IndexError):
             return JsonResponse({"script": "", "error": "ไม่มีประโยคนี้"}, status=404)
 
-    return JsonResponse({"script": question.audio_script},
-                        json_dumps_params={"ensure_ascii": False})
+    return JsonResponse(
+        {"script": question.audio_script, "turns": question.audio_turns or []},
+        json_dumps_params={"ensure_ascii": False})
 
 
 # ── ประวัติรายวัน ──────────────────────────────────────────

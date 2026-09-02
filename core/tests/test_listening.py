@@ -115,6 +115,47 @@ def make_listening_question(script="下雨了。男的是什么意思？", answe
     return q
 
 
+class TurnTests(TestCase):
+    """แยกบทเป็นช่วงพูด — อ่านรวดเดียวด้วยเสียงเดียวฟังยากกว่าของจริง"""
+
+    def setUp(self):
+        self.items = {i.number: i for i in listening.parse(TRANSCRIPT)}
+
+    def test_รู้ว่าใครพูดช่วงไหน(self):
+        turns = listening.speech_turns(self.items[1])
+        self.assertEqual([t["who"] for t in turns], ["f", "m", "q"])
+
+    def test_ไม่มีชื่อผู้พูดปนอยู่ในข้อความที่จะอ่าน(self):
+        """ปล่อยไว้ผู้เรียนจะได้ยินคำว่า "หนวี่" นำทุกประโยค ซึ่งไม่มีในห้องสอบ
+
+        เช็คเฉพาะช่วงบทสนทนา — ตัวคำถามขึ้นต้นด้วย 男 ได้ตามปกติ
+        เพราะ 男的 แปลว่า "ผู้ชายคนนั้น" เป็นเนื้อคำถาม ไม่ใช่ป้ายชื่อผู้พูด
+        """
+        for turn in listening.speech_turns(self.items[1]):
+            if turn["who"] == "q":
+                continue
+            self.assertFalse(turn["text"].startswith(("女：", "男：", "女:", "男:")))
+
+    def test_คำถามอยู่ช่วงสุดท้ายเสมอ(self):
+        """เครื่องเล่นเว้นจังหวะยาวก่อนช่วง q — ถ้าลำดับเพี้ยนจะเว้นผิดที่"""
+        for n in (1, 2, 21, 31):
+            turns = listening.speech_turns(self.items[n])
+            self.assertEqual(turns[-1]["who"], "q", f"ข้อ {n}")
+
+    def test_บทเล่าเรื่องไม่มีผู้พูดใช้_n(self):
+        turns = listening.speech_turns(self.items[33])
+        self.assertEqual(turns[0]["who"], "n")
+
+    def test_ต่อกลับเป็นบทเดิมได้ครบ(self):
+        """ช่วงพูดกับบทเต็มต้องเป็นเนื้อเดียวกัน ไม่งั้นที่ได้ยินกับที่เห็นตอนเฉลยจะไม่ตรงกัน"""
+        import re
+
+        item = self.items[21]
+        joined = "".join(t["text"] for t in listening.speech_turns(item))
+        strip = lambda t: re.sub(r"[，。！？、]", "", t)
+        self.assertEqual(strip(joined), strip(listening.speech_text(item)))
+
+
 class DisplayTests(TestCase):
     def test_ห้ามแสดงบทพูดก่อนตอบ(self):
         """ข้อฟังมี group ที่เก็บบทไว้เหมือนข้ออ่าน — ถ้าไม่ดักไว้บทจะถูกพิมพ์ขึ้นจอ

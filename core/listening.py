@@ -211,3 +211,29 @@ def speech_text(item: ListeningItem) -> str:
     if item.question_zh:
         parts.append(item.question_zh)
     return "".join(_end_stop(p) for p in parts if p)
+
+
+# ── แยกบทเป็นช่วงพูด เพื่อให้เล่นทีละคน ─────────────────────
+
+def speech_turns(item: ListeningItem) -> list[dict]:
+    """แยกบทเป็นช่วงๆ พร้อมบอกว่าใครพูด — ใช้เล่นเสียงทีละช่วง
+
+    **ทำไมต้องแยก ทั้งที่ speech_text() ต่อเป็นก้อนเดียวได้อยู่แล้ว**
+    ข้อสอบจริงเป็นบทสนทนาสองคนสลับกันพูด มีจังหวะเงียบคั่น
+    แต่ถ้าส่งเป็นสตริงเดียวให้ตัวอ่านออกเสียง จะได้เสียงคนเดียวพูดรวดเดียวไม่หยุด
+    ซึ่ง *ฟังยากกว่าของจริง* ไม่ใช่แค่ไม่เหมือน — ผู้เรียนแยกไม่ออกว่าประโยคไหน
+    เป็นของใคร แล้วคำถามอย่าง "ผู้ชายหมายความว่าอะไร" ก็ตอบไม่ได้ทั้งที่ฟังออกทุกคำ
+
+    ค่า who: "f" หญิง · "m" ชาย · "q" คำถามท้ายข้อ · "n" บทเล่าเรื่องที่ไม่มีผู้พูด
+    """
+    turns = []
+    for line in item.lines:
+        m = SPEAKER.match(line)
+        text = SPEAKER.sub("", line).strip()
+        if not text:
+            continue
+        turns.append({"who": {"女": "f", "男": "m"}.get(m.group(1), "n") if m else "n",
+                      "text": _end_stop(text)})
+    if item.question_zh:
+        turns.append({"who": "q", "text": _end_stop(item.question_zh)})
+    return turns

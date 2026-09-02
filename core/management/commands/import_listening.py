@@ -73,6 +73,7 @@ class Command(BaseCommand):
                 if opts["apply"]:
                     group = self._group(groups, paper, item)
                     question.audio_script = speech
+                    question.audio_turns = parser.speech_turns(item)
                     question.group = group
                     # โจทย์จริงคือคำถามที่อ่านท้ายบท ไม่ใช่ข้อความ placeholder
                     if item.question_zh:
@@ -82,7 +83,8 @@ class Command(BaseCommand):
                         question.status = QuestionStatus.ACTIVE
                         act += 1
                     question.save(update_fields=[
-                        "audio_script", "group", "prompt_zh", "prompt_th", "status", "updated_at",
+                        "audio_script", "audio_turns", "group", "prompt_zh", "prompt_th",
+                        "status", "updated_at",
                     ])
                 elif can_open and question.status == QuestionStatus.DRAFT:
                     act += 1
