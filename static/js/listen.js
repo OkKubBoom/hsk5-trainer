@@ -17,8 +17,11 @@ window.listenPlayer = function (questionId, opts) {
     playing: false,
     loading: false,
     rate: 1,
+    voiceName: localStorage.getItem('listenVoice') || '',
     supported: typeof window.speechSynthesis !== 'undefined',
     voice: null,
+    voices: [],
+    remoteVoice: false,
     error: '',
     revealed: false,
 
@@ -26,6 +29,8 @@ window.listenPlayer = function (questionId, opts) {
       const saved = parseFloat(localStorage.getItem('listenRate'));
       if (saved >= 0.5 && saved <= 1.5) this.rate = saved;
       this.$watch('rate', (v) => localStorage.setItem('listenRate', v));
+      // จำเสียงที่เลือกไว้ — คนละเครื่องมีเสียงคนละชุด จึงเก็บเป็นชื่อ ไม่ใช่ลำดับ
+      this.$watch('voiceName', (v) => { localStorage.setItem('listenVoice', v); this.pickVoice(); });
       if (this.supported) this.pickVoice();
       // รายชื่อเสียงบางเบราว์เซอร์มาทีหลัง ต้องรอสัญญาณ ไม่ใช่เช็คครั้งเดียวแล้วยอมแพ้
       if (this.supported && speechSynthesis.onvoiceschanged !== undefined) {
@@ -39,14 +44,49 @@ window.listenPlayer = function (questionId, opts) {
     pickVoice() {
       const all = speechSynthesis.getVoices() || [];
       const zh = all.filter((v) => (v.lang || '').toLowerCase().startsWith('zh'));
-      // จีนกลางแผ่นดินใหญ่ก่อนเสมอ — เสียงไต้หวัน/กวางตุ้งออกเสียงต่างจากที่ใช้สอบ
-      this.voice =
-        zh.find((v) => /zh[-_]cn/i.test(v.lang)) ||
-        zh.find((v) => /zh[-_]hans/i.test(v.lang)) ||
-        zh[0] || null;
+      this.voices = zh.slice().sort((a, b) => this.rank(a) - this.rank(b));
+
+      // ผู้เรียนเลือกเองแล้วให้ใช้ของที่เลือก ไม่ใช่ของที่ระบบคิดว่าดีที่สุด
+      this.voice = this.voices.find((v) => v.name === this.voiceName) || this.voices[0] || null;
+      this.remoteVoice = !!(this.voice && this.voice.localService === false);
       if (!this.voice && all.length) {
         this.error = 'เครื่องนี้ไม่มีเสียงภาษาจีนติดตั้งอยู่';
       }
+    },
+
+    /* เรียงเสียงจากฟังรู้เรื่องที่สุดไปน้อยที่สุด
+     *
+     * ตัวเลือกแรกสำคัญมาก เพราะคนส่วนใหญ่ไม่กดเปลี่ยน — เดิมโค้ดหยิบตัวแรกที่เจอ
+     * ซึ่งบน macOS คือ Eddy/Flo/Grandma ที่เป็น "เสียงเล่น" ของ Apple
+     * ออกแบบมาให้ตลก ไม่ได้ออกแบบมาให้ฟังชัด ผู้เรียนจึงฟังไม่รู้เรื่องตั้งแต่ข้อแรก
+     *
+     * เกณฑ์: อยู่ในเครื่อง > จีนแผ่นดินใหญ่ > ไม่ใช่เสียงเล่น > เป็นเสียงมาตรฐานที่รู้จัก
+     */
+    rank(v) {
+      const name = (v.name || '').toLowerCase();
+      const NOVELTY = ['eddy', 'flo', 'grandma', 'grandpa', 'reed', 'rocko',
+                       'sandy', 'shelley', 'superstar', 'bubbles', 'jester'];
+      const KNOWN_GOOD = ['ting-ting', 'tingting', '婷婷', 'li-mu', 'lilian', 'yu-shu',
+                          'meijia', 'huihui', 'yaoyao', 'kangkang', 'xiaoxiao', 'yunxi',
+                          '普通话', 'mandarin'];
+      let score = 0;
+      if (v.localService === false) score += 8;                       // ต้องต่อเน็ต + ข้อความออกนอกเครื่อง
+      if (!/zh[-_](cn|hans)/i.test(v.lang)) score += 4;               // ไต้หวัน/กวางตุ้ง ออกเสียงคนละแบบ
+      if (NOVELTY.some((n) => name.includes(n))) score += 2;          // เสียงเล่นของ Apple
+      if (!KNOWN_GOOD.some((n) => name.includes(n))) score += 1;      // ไม่ใช่เสียงมาตรฐานที่รู้จัก
+      return score;
+    },
+
+    /* ประโยคตัวอย่างสำหรับลองเสียง — ตั้งใจใช้ประโยคของเราเอง ไม่ใช่บทจากข้อสอบ
+     * เพราะปุ่มนี้กดตอนไหนก็ได้ รวมถึงตอนยังไม่ได้เริ่มทำข้อ */
+    preview() {
+      if (!this.supported || !this.voice) return;
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance('你好，这是听力练习的声音。');
+      u.voice = this.voice;
+      u.lang = this.voice.lang;
+      u.rate = this.rate;
+      speechSynthesis.speak(u);
     },
 
     async load() {

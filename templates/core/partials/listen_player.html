@@ -35,9 +35,40 @@
         </span>
       </div>
 
+      {% comment %}
+      เลือกเสียงเองได้ — แต่ละเครื่องมีเสียงจีนคนละชุด และคุณภาพต่างกันมาก
+      บน macOS เสียงอย่าง Eddy/Flo/Grandma เป็น "เสียงเล่น" ที่ฟังไม่รู้เรื่อง
+      ระบบเรียงตัวที่ฟังชัดที่สุดขึ้นก่อนให้แล้ว แต่ต้องให้เปลี่ยนเองได้อยู่ดี
+      เพราะคำว่า "ฟังชัด" ของแต่ละคนไม่เหมือนกัน
+      {% endcomment %}
+      <details x-show="voices.length > 1" x-cloak>
+        <summary class="muted" style="cursor:pointer;font-size:.82rem">
+          เสียงที่ใช้: <b x-text="voice ? voice.name : '—'"></b> · เปลี่ยนเสียง
+        </summary>
+        <div class="row" style="gap:var(--s1);flex-wrap:wrap;margin-top:var(--s1)">
+          <select x-model="voiceName" aria-label="เลือกเสียงอ่าน"
+                  style="padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-family:inherit;max-width:100%">
+            <template x-for="v in voices" :key="v.name">
+              <option :value="v.name"
+                      x-text="v.name + ' · ' + v.lang + (v.localService === false ? ' · ต้องต่อเน็ต' : '')"></option>
+            </template>
+          </select>
+          <button type="button" class="btn ghost sm" style="width:auto" @click="preview()">
+            ลองฟังเสียงนี้
+          </button>
+        </div>
+        <p class="muted" style="font-size:.78rem;margin-top:6px">
+          ระบบเรียงเสียงที่น่าจะฟังชัดที่สุดไว้บนสุด · เลือกแล้วจำไว้ให้ทุกหน้า
+        </p>
+      </details>
+
       <p class="muted" style="font-size:.8rem;margin:0">
         เสียงนี้สร้างจากตัวอ่านของเครื่องคุณ ไม่ใช่เสียงจริงในห้องสอบ —
         ใช้ฝึกจับใจความและความเร็วได้ แต่ไม่ใช่การซ้อมเสียงจริง
+        <span x-show="remoteVoice" x-cloak>
+          <br>⚠️ เครื่องนี้ไม่มีเสียงจีนแบบออฟไลน์ ใช้เสียงจากคลาวด์ของเบราว์เซอร์อยู่
+          — ต้องต่อเน็ตถึงจะเล่นได้
+        </span>
       </p>
     </div>
   </template>
