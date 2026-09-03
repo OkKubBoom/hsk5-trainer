@@ -17,6 +17,11 @@
 **เสียงที่เลือก** เจ้าของระบบฟังเทียบ 12 เสียงแล้วเลือกเอง — หญิง 28 · ชาย 81
 วัดได้ว่าห่างกัน 117 Hz ซึ่งมากพอให้แยกออกว่าใครพูด (คำถาม 男的/女的 ต้องใช้)
 
+**บทเล่าเรื่อง (ข้อ 36-45) สลับเพศผู้บรรยายตามเลขข้อ**
+ข้อสอบจริงใช้ทั้งผู้บรรยายชายและหญิง ถ้าใช้เสียงเดียวตลอด ผู้เรียนจะชินกับเสียงนั้น
+แล้วเจอผู้บรรยายชายในห้องสอบจริงจะฟังยากขึ้นทันที ทั้งที่ซ้อมมาแล้วเป็นร้อยข้อ
+สลับตามเลขข้อ ไม่ใช่สุ่ม เพื่อให้สร้างไฟล์ใหม่กี่ครั้งก็ได้ผลเดิม
+
 ⚠️ ลิขสิทธิ์ — เสียงที่ได้แปลงจากบทข้อสอบจริง จึงเป็นของลิขสิทธิ์เหมือนตัวบท
 ใช้ฝึกส่วนตัวได้ ห้ามเข้าเวอร์ชันขาย (D6) ต่อให้ตัวโมเดล Kokoro จะเป็น Apache-2.0
 """
@@ -80,6 +85,19 @@ class Command(BaseCommand):
             f"เสร็จ — ไฟล์ทั้งหมด {len(list(OUT_DIR.glob('*.m4a')))} · {total / 1024 / 1024:.1f} MB"
         ))
 
+    def _narrator(self, source_ref: str) -> int:
+        """ผู้บรรยายของข้อนี้ — สลับชายหญิงตามเลขข้อ
+
+        ใช้เลขข้อ ไม่ใช่การสุ่ม เพราะต้องสร้างไฟล์ใหม่แล้วได้ผลเดิมทุกครั้ง
+        ไม่งั้นไฟล์ที่สร้างคนละรอบจะเสียงไม่เหมือนกันโดยไม่มีใครรู้
+        """
+        slug = parser.audio_slug(source_ref)
+        try:
+            number = int(slug.rsplit("-", 1)[-1])
+        except (ValueError, IndexError):
+            return FEMALE_SID
+        return MALE_SID if number % 2 else FEMALE_SID
+
     def _engine(self):
         import sherpa_onnx
 
@@ -102,9 +120,10 @@ class Command(BaseCommand):
         import soundfile as sf
 
         turns = question.audio_turns or []
+        narrator = self._narrator(question.source_ref)
         chunks = []
         for i, turn in enumerate(turns):
-            sid = MALE_SID if turn["who"] == "m" else FEMALE_SID
+            sid = {"m": MALE_SID, "f": FEMALE_SID}.get(turn["who"], narrator)
             speed = QUESTION_SPEED if turn["who"] == "q" else 1.0
             audio = tts.generate(turn["text"], sid=sid, speed=speed)
             chunks.append(np.asarray(audio.samples, dtype=np.float32))
