@@ -151,6 +151,7 @@ python manage.py migrate
 python manage.py seed_hsk5          # ใส่คำศัพท์ + 近义词 + 完成句子 ตั้งต้น
 python manage.py import_vocab       # นำเข้าคำศัพท์ 2,496 คำจาก data/vocab/hsk5_merged.json
 python manage.py export_listening   # (เครื่องพัฒนา) ทำ data/listening_fixture.json ให้ deploy ไปด้วยได้
+python manage.py make_listening_audio --apply   # (เครื่องพัฒนา) อัดเสียงข้อฟังด้วย Kokoro — ต้องมีโมเดลใน data/tts/
 python manage.py import_listening --apply   # เติมบทถอดเสียงให้ข้อฟัง แล้วเปิดใช้ข้อที่พร้อม
 python manage.py make_icons         # สร้างไอคอน PWA (ทำครั้งเดียว ไฟล์อยู่ใน static/icons/)
 python manage.py make_scenes        # สร้างภาพโจทย์เรียงความข้อ 100 (static/scenes/ + data/essay_scenes.json)
@@ -181,7 +182,9 @@ python manage.py test               # ทดสอบ SRS + drill engine
 - [x] **Sprint 3** — พาร์ทฟังใช้งานได้แล้ว: ข้อสอบฟัง 225 ข้อ · 听写 724 ประโยค
   `core/listening.py` แยกบทถอดเสียงรายข้อ · `core/listen_drill.py` หน้าฝึกฟัง ·
   `core/listen_explain.py` ชี้ประโยคที่มีคำตอบ · `core/dictation.py` เทียบตัวอักษร
-  เสียงมาจากตัวอ่านของเบราว์เซอร์ (`static/js/listen.js`) ไม่มีไฟล์เสียงในระบบ
+  เสียงเป็นไฟล์ที่อัดไว้ล่วงหน้าด้วย Kokoro ใน `static/listening/` (225 ไฟล์ · 26 MB)
+  หญิง sid 28 · ชาย sid 81 — เจ้าของระบบฟังเทียบเองแล้วเลือก
+  ข้อที่ไม่มีไฟล์ถอยไปใช้ตัวอ่านของเบราว์เซอร์เอง (`static/js/listen.js`)
   ⚠️ เหลืออีก 180 ข้อจาก 4 ชุด (H51327/328/330/332) ที่ **ไม่มีบทถอดเสียงในไฟล์** ยังเป็น draft
 - [x] **Sprint 4** — หน้าความคืบหน้ากลุ่ม (`/progress/`) + สรุปรายสัปดาห์ (`/weekly/`)
 - [~] Sprint 5 — **deploy ขึ้น Railway แล้ว** (ไม่ใช่ VPS ตาม D5 เดิม — Railway ถูกและง่ายกว่า)
