@@ -14,6 +14,8 @@
     https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models
     แตกไฟล์ไว้ที่ data/tts/kokoro-int8-multi-lang-v1_1/  (อยู่ใน .gitignore)
 
+**ความเร็วและจังหวะวัดจากไฟล์เสียงข้อสอบจริง** ไม่ได้ตั้งเอง — ดูค่าคงที่ข้างล่าง
+
 **เสียงที่เลือก** เจ้าของระบบฟังเทียบ 12 เสียงแล้วเลือกเอง — หญิง 28 · ชาย 81
 วัดได้ว่าห่างกัน 117 Hz ซึ่งมากพอให้แยกออกว่าใครพูด (คำถาม 男的/女的 ต้องใช้)
 
@@ -39,9 +41,31 @@ MODEL_DIR = Path(settings.BASE_DIR) / "data" / "tts" / "kokoro-int8-multi-lang-v
 OUT_DIR = Path(settings.BASE_DIR) / "static" / "listening"
 
 FEMALE_SID, MALE_SID = 28, 81
-# ต้องเท่ากับที่ static/js/listen.js ใช้ ไม่งั้นเปลี่ยนมาใช้ไฟล์แล้วจังหวะจะเพี้ยน
-GAP_TURN, GAP_QUESTION = 0.38, 0.85
-QUESTION_SPEED = 0.94       # คำถามเป็นเสียงผู้บรรยาย อ่านช้ากว่าคู่สนทนานิดหนึ่ง
+
+# ── ตัวเลขทั้งหมดข้างล่างวัดจากไฟล์เสียงข้อสอบจริง H51001 (30 นาที 17 วินาที) ──
+#
+# วิธีวัด: แปลงเป็น wav → หาช่วงที่มีเสียงด้วยพลังงานต่อหน้าต่าง 20 ms
+# → เอาจำนวนตัวอักษรจีนหารด้วยเวลาที่ *มีเสียงพูดจริง* (ไม่นับช่วงเงียบ)
+#
+# ⚠️ กับดักที่เกือบทำพลาด: บทยาวข้อ 31-45 ต้นฉบับอ่าน *ครั้งเดียว* ต่อกลุ่ม
+# แต่ไฟล์ของเราอ่านซ้ำทุกข้อที่ใช้บทนั้น ถ้านับตัวอักษรฝั่งต้นฉบับแบบเดียวกับของเรา
+# จะได้ว่าต้นฉบับพูดเร็วกว่า ทั้งที่ความจริงคือ *ช้ากว่า* — ต้องนับบทยาวครั้งเดียว
+#
+# ผลที่วัดได้ (ตัวอักษรจีนต่อวินาทีของเวลาที่มีเสียง):
+#   ต้นฉบับ พาร์ท 1  ~3.2   ต้นฉบับ พาร์ท 2  3.65   รวม 3.43
+#   ของเราตอนนั้น    4.52  → เร็วกว่าข้อสอบจริง 1.3 เท่า
+PART1_SPEED = 0.71          # ข้อ 1-20 บทสนทนาสั้น ต้นฉบับอ่านช้าและชัดกว่า
+PART2_SPEED = 0.81          # ข้อ 21-45 บทยาว ต้นฉบับอ่านกระชับขึ้น
+QUESTION_SPEED_RATIO = 0.94  # คำถามเป็นเสียงผู้บรรยาย ช้ากว่าคู่สนทนานิดหนึ่ง
+
+# ช่วงเงียบในข้อเดียวกันของต้นฉบับ: กลาง 0.58 วิ · 75% อยู่ที่ 0.88 วิ
+GAP_TURN, GAP_QUESTION = 0.55, 0.90
+
+# ช่วงให้ฝนคำตอบของจริงคือ 16.2 วินาที (วัดได้ 45 ครั้งพอดี = 45 ข้อ)
+# **ไม่ใส่ในไฟล์โดยตั้งใจ** — ข้อสอบต้องมีเพราะเทปหยุดไม่ได้ แต่ระบบเรา
+# ให้ผู้เรียนกดเองว่าจะไปข้อต่อไปเมื่อไหร่ ใส่ไปจะกลายเป็นเวลาตายที่ต้องนั่งรอเปล่าๆ
+REAL_ANSWER_GAP = 16.2
+
 BITRATE = "32000"           # AAC โมโน — เสียงพูดที่ 32k ฟังไม่ออกว่าถูกบีบ
 
 
@@ -98,6 +122,20 @@ class Command(BaseCommand):
             return FEMALE_SID
         return MALE_SID if number % 2 else FEMALE_SID
 
+    def _part_speed(self, source_ref: str) -> float:
+        """ความเร็วของพาร์ทที่ข้อนี้อยู่ — วัดจากข้อสอบจริง ไม่ได้ตั้งเอง
+
+        ข้อสอบจริงพาร์ท 1 อ่านช้ากว่าพาร์ท 2 ชัดเจน เพราะเป็นบทสนทนาสั้น
+        ที่ต้องจับใจความให้ทันในรอบเดียว ถ้าใช้ความเร็วเดียวทั้งฉบับ
+        พาร์ท 1 จะยากเกินจริง และพาร์ท 2 จะง่ายเกินจริง
+        """
+        slug = parser.audio_slug(source_ref)
+        try:
+            number = int(slug.rsplit("-", 1)[-1])
+        except (ValueError, IndexError):
+            return PART2_SPEED
+        return PART1_SPEED if number <= 20 else PART2_SPEED
+
     def _engine(self):
         import sherpa_onnx
 
@@ -121,10 +159,11 @@ class Command(BaseCommand):
 
         turns = question.audio_turns or []
         narrator = self._narrator(question.source_ref)
+        base = self._part_speed(question.source_ref)
         chunks = []
         for i, turn in enumerate(turns):
             sid = {"m": MALE_SID, "f": FEMALE_SID}.get(turn["who"], narrator)
-            speed = QUESTION_SPEED if turn["who"] == "q" else 1.0
+            speed = base * (QUESTION_SPEED_RATIO if turn["who"] == "q" else 1.0)
             audio = tts.generate(turn["text"], sid=sid, speed=speed)
             chunks.append(np.asarray(audio.samples, dtype=np.float32))
 
