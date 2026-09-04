@@ -31,8 +31,3 @@ __pycache__/
 
 # โมเดล TTS — ใหญ่ 211MB และดาวน์โหลดใหม่ได้ ไม่ต้องเก็บในรีโป
 /data/tts/
-
-# ไฟล์เสียงข้อฟัง — สร้างใหม่ได้ด้วย make_listening_audio จึงไม่เก็บใน git
-# เก็บไว้ใน GitHub Release แทน แล้ว Dockerfile ดึงตอน build (ดู LISTENING_AUDIO_URL)
-# เหตุผล: git เก็บทุกเวอร์ชันตลอดกาล ปรับเสียงทีนึงประวัติโต 50 MB ถาวร
-/static/listening/
