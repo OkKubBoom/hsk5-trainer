@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}คำนอกคลัง HSK5 · HSK5 Trainer{% endblock %}
+{% block mobile_title %}คำนอกคลัง{% endblock %}
+{% block content %}
+<div class="stack">
+
+  <div class="stack" style="gap:6px">
+    <span class="eyebrow">คลังคำศัพท์</span>
+    <h1>คำนอกคลัง HSK5</h1>
+  </div>
+
+  <div class="note" style="border-left-color:var(--partial)">
+    สำนวนและคำระดับ HSK6 ขึ้นไปที่โผล่ในบทอ่าน/บทฟังของ<b>ข้อสอบจริง</b> —
+    ไม่ได้อยู่ในลิสต์คำศัพท์ HSK5 ที่ต้องท่อง ข้อสอบตั้งใจให้เดาจากบริบท
+    แต่รู้ไว้ก็อ่านได้เร็วขึ้น คำแปลมาจากคำอธิบายเฉลยของข้อที่คำนั้นโผล่
+  </div>
+
+  <form method="get" class="stack" style="gap:10px">
+    <div class="search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" name="q" value="{{ query }}" class="grow"
+             placeholder="ค้นด้วยตัวอักษรจีน พินอิน หรือคำแปลไทย เช่น 旗鼓相当 · สูสี">
+      {% if query %}<a class="muted" href="{% url 'vocab_beyond' %}" style="text-decoration:none">ล้าง</a>{% endif %}
+    </div>
+  </form>
+
+  {% if page.paginator.count %}
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>คำ</th><th>pinyin</th><th>ความหมาย</th><th>เจอในชุด</th></tr></thead>
+      <tbody>
+        {% for w in page %}
+        <tr>
+          <td class="cell-word" data-label="คำ"><span class="zh" style="font-size:1.2rem">{{ w.hanzi }}</span></td>
+          <td class="mono muted" data-label="pinyin">{{ w.pinyin|default:"—" }}</td>
+          <td data-label="ความหมาย">{{ w.meaning_th }}</td>
+          <td class="mono muted" data-label="เจอในชุด" style="font-size:.78rem">{{ w.papers|join:" · " }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row list-tools">
+    {% include "core/partials/per_page.html" %}
+    <span class="muted grow" style="text-align:right;font-size:.82rem">
+      {{ page.start_index }}–{{ page.end_index }} จาก {{ page.paginator.count }}
+    </span>
+  </div>
+
+  {% include "core/partials/pager.html" %}
+  {% else %}
+  <div class="card empty">
+    <h3>ไม่เจอคำที่ค้น</h3>
+    <p class="muted">ลองพิมพ์สั้นลง — หรือคำนี้อาจอยู่ในคลัง HSK1-5 ให้ค้นที่หน้าคลังคำศัพท์แทน</p>
+    <a class="btn ghost" href="{% url 'vocab_list' %}?q={{ query|urlencode }}">ค้นในคลังคำศัพท์</a>
+  </div>
+  {% endif %}
+
+  <p class="muted" style="font-size:.82rem">
+    รวม {{ total }} คำ · คำแปลดึงมาจากคำอธิบายเฉลย ซึ่งเดิมเห็นได้เฉพาะหลังตอบข้อนั้นแล้ว
+  </p>
+
+  <div class="note" style="border-left-color:var(--missing)">
+    <span class="ai-star">✱✱✱</span>
+    <b>คำแปลเขียนโดย AI ยังไม่มีครูตรวจ</b> —
+    ถ้าเจอคำที่แปลแปลกๆ ให้แย้งที่หน้าคำอธิบายของข้อที่คำนั้นโผล่ (คอลัมน์ขวาสุดบอกว่าชุดไหน)
+  </div>
+</div>
+{% endblock %}

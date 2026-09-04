@@ -1,0 +1,34 @@
+{# คำนอกคลัง (สำนวน/HSK6+) ที่ตรงกับคำค้น — ดูเหตุผลที่ core/glossary.py #}
+{% if beyond %}
+<div class="card stack" style="border-left:3px solid var(--partial)">
+  <div class="row">
+    <h3 class="grow">คำนอกคลัง HSK5 ที่ตรงกับ “{{ query }}”</h3>
+    <span class="pill">{{ beyond_total }} คำ</span>
+  </div>
+  <p class="muted" style="font-size:.82rem">
+    คำพวกนี้ไม่อยู่ในลิสต์คำศัพท์ HSK5 แต่โผล่ในบทอ่าน/บทฟังของข้อสอบจริง
+    ข้อสอบตั้งใจให้เดาจากบริบท ไม่ได้บังคับว่าต้องท่อง
+  </p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>คำ</th><th>pinyin</th><th>ความหมาย</th><th>เจอในชุด</th></tr></thead>
+      <tbody>
+        {% for w in beyond %}
+        <tr>
+          <td class="cell-word" data-label="คำ"><span class="zh" style="font-size:1.2rem">{{ w.hanzi }}</span></td>
+          <td class="mono muted" data-label="pinyin">{{ w.pinyin|default:"—" }}</td>
+          <td data-label="ความหมาย">{{ w.meaning_th }}</td>
+          <td class="mono muted" data-label="เจอในชุด" style="font-size:.78rem">{{ w.papers|join:" · " }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if beyond_total > beyond|length %}
+    <div><a class="btn ghost sm" style="width:auto"
+            href="{% url 'vocab_beyond' %}?q={{ query|urlencode }}">ดูครบทั้ง {{ beyond_total }} คำ</a></div>
+  {% else %}
+    <div><a class="btn ghost sm" style="width:auto" href="{% url 'vocab_beyond' %}">ดูคำนอกคลังทั้งหมด</a></div>
+  {% endif %}
+</div>
+{% endif %}

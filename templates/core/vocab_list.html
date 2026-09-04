@@ -27,6 +27,12 @@
     </div>
   </form>
 
+  {# ลิงก์นี้ต้องเห็นตลอด — คำแปลของคำเกินระดับมีในระบบอยู่แล้ว แต่เดิมค้นไม่เจอ #}
+  <p class="muted" style="font-size:.82rem;margin:0">
+    หาคำที่ไม่อยู่ในลิสต์ HSK5 (สำนวน · คำ HSK6 ขึ้นไป) ที่โผล่ในข้อสอบจริง →
+    <a href="{% url 'vocab_beyond' %}">คำนอกคลัง {{ beyond_all }} คำ</a>
+  </p>
+
   <button type="button" class="filter-toggle" @click="filters = !filters" :aria-expanded="filters">
     <span>ตัวกรอง · HSK{{ level }}{% if found_values %} · พบ {{ found_values|length }} ค่า{% endif %}</span>
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" :style="filters && 'transform:rotate(180deg)'"><path d="m6 9 6 6 6-6"/></svg>
@@ -122,12 +128,14 @@
   </div>
 
   {% include "core/partials/pager.html" %}
+  {% include "core/partials/beyond_hits.html" %}
   {% else %}
   <div class="card empty">
     <h3>ไม่เจอคำที่ค้น</h3>
     <p class="muted">ลองพิมพ์สั้นลง หรือเปลี่ยนระดับ HSK ด้านบน — คำที่ค้นอาจอยู่คนละระดับ</p>
     <a class="btn ghost" href="?level={{ level }}&sort={{ sort }}">ล้างการค้นหา</a>
   </div>
+  {% include "core/partials/beyond_hits.html" %}
   {% endif %}
 
   <p class="muted" style="font-size:.82rem">

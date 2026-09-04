@@ -73,6 +73,7 @@ urlpatterns = [
     path("explanation/<int:question_id>/note/", views.explanation_note, name="explanation_note"),
     path("vocab/<int:vocab_id>/note/", views.vocab_note, name="vocab_note"),
     path("explanation/review/", views.explanation_review, name="explanation_review"),
+    path("vocab/beyond/", views.vocab_beyond, name="vocab_beyond"),
     path("vocab/teacher/", views.vocab_teacher, name="vocab_teacher"),
     path("essay/queue/list/", views.essay_queue, name="essay_queue"),
     path("essay/queue/<int:pk>/answer/", views.essay_queue_answer, name="essay_queue_answer"),

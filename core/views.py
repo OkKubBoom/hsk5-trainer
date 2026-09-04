@@ -19,6 +19,7 @@ from . import diagnose
 from . import essay as essay_engine
 from . import essay_grader
 from . import drill as drill_engine
+from . import glossary as glossary_engine
 from . import grammar as grammar_engine
 from . import progress as progress_engine
 from . import writing as writing_engine
@@ -1248,12 +1249,35 @@ def vocab_list(request):
         .annotate(n=Count("id")).values_list("hsk_level", "n")
     )
     page, qs = _page(request, words)
+    # คำนอกคลัง (สำนวน/HSK6+) — ตารางโผล่เฉพาะตอนค้นหา ถ้าโผล่ตลอดจะกลบรายการหลัก
+    # แต่ลิงก์ต้องเห็นตลอด ไม่งั้นไม่มีใครรู้ว่ามีหน้านี้ แล้วก็ออกไปเปิดแอปอื่นถามเหมือนเดิม
+    all_beyond = glossary_engine.rows()
+    beyond = glossary_engine.search(all_beyond, query) if query else []
     return render(request, "core/vocab_list.html", {
         "nav": "vocab", "page": page, "querystring": qs, "level": level, "sort": sort,
+        "beyond": beyond[:12], "beyond_total": len(beyond), "beyond_all": len(all_beyond),
         "query": query, "per_page": _per_page(request), "per_choices": PER_PAGE_CHOICES,
         "found_chips": found_chips, "found_values": found_values, "found_clear_url": found_clear_url,
         "sorts": [(k, v[0]) for k, v in SORTS.items()],
         "levels": [(lv, counts.get(lv, 0)) for lv in range(1, 7)],
+    })
+
+
+@login_required
+def vocab_beyond(request):
+    """คำนอกคลัง — สำนวนและคำ HSK6+ ที่โผล่ในข้อสอบจริง
+
+    คำแปลมาจากช่อง key_vocab ของคำอธิบายเฉลย ซึ่งเดิมเห็นได้เฉพาะหลังตอบข้อนั้น
+    หน้านี้เปิดให้ค้นได้ตลอดเวลา ดูเหตุผลเต็มที่ core/glossary.py
+    """
+    query = (request.GET.get("q") or "").strip()
+    items = glossary_engine.rows()
+    total = len(items)
+    items = glossary_engine.search(items, query)
+    page, qs = _page(request, items)
+    return render(request, "core/vocab_beyond.html", {
+        "nav": "vocab", "page": page, "querystring": qs, "query": query,
+        "total": total, "per_page": _per_page(request), "per_choices": PER_PAGE_CHOICES,
     })
 
 
