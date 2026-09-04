@@ -136,13 +136,20 @@ def due_queryset(learner, now: datetime | None = None):
 
 
 def new_queryset(learner):
-    """การ์ดที่ยังไม่เคยเรียน เรียงตามความถี่ของคำ (คำที่เจอบ่อยมาก่อน)"""
-    return (
+    """การ์ดที่ยังไม่เคยเรียน เรียงตามความถี่ของคำ (คำที่เจอบ่อยมาก่อน)
+
+    กรองตามระดับที่ผู้เรียนเลือกไว้ — ดูเหตุผลที่ LearnerProfile.vocab_levels
+    ว่าทำไมกรองเฉพาะคำใหม่ ไม่กรองของที่ถึงกำหนดทบทวน
+    """
+    qs = (
         Card.objects
         .filter(learner=learner, state=CardState.NEW)
         .select_related("vocab")
-        .order_by("vocab__frequency_rank", "vocab__hanzi")
     )
+    levels = getattr(learner, "vocab_levels", None) or []
+    if levels:
+        qs = qs.filter(vocab__hsk_level__in=levels)
+    return qs.order_by("vocab__frequency_rank", "vocab__hanzi")
 
 
 def new_quota_today(learner, now: datetime | None = None) -> int:

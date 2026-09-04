@@ -62,6 +62,43 @@
   </dl>
 </div>
 
+{# ─── ระดับคำศัพท์ที่จะเรียนใหม่ ─── #}
+<div class="card stack">
+  <div class="row">
+    <h3 class="grow">ระดับคำศัพท์ที่จะเรียนใหม่</h3>
+    <span class="pill {% if learner.vocab_levels %}accent{% endif %}">
+      {% if learner.vocab_levels %}เลือกบางระดับ{% else %}ทุกระดับ{% endif %}
+    </span>
+  </div>
+  <p class="muted">
+    เลือกว่าจะให้ชุดฝึกรายวันหยิบ <b>คำใหม่</b> จากระดับไหนบ้าง —
+    คำที่ถึงกำหนดทบทวนแล้วยังมาตามปกติทุกระดับ ไม่ถูกกรองออก
+    เพราะถ้ากรองด้วย การ์ดระดับที่ปิดไว้จะค้างอยู่ตลอดไปโดยไม่มีวันได้ทบทวน
+  </p>
+
+  {% if levels %}
+  <form method="post" class="stack" style="gap:var(--s2)">
+    {% csrf_token %}
+    <input type="hidden" name="form" value="levels">
+    <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+      {% for row in levels %}
+        <label class="pill" style="cursor:pointer;gap:6px">
+          <input type="checkbox" name="levels" value="{{ row.level }}" {% if row.on %}checked{% endif %}>
+          HSK{{ row.level }} <span class="muted">· เหลือ {{ row.count }} คำ</span>
+        </label>
+      {% endfor %}
+    </div>
+    <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+      <button type="submit" class="btn" style="width:auto">บันทึก</button>
+      <span class="muted">ตอนนี้เหลือคำใหม่ให้เรียน {{ new_available }} คำ</span>
+    </div>
+    <p class="muted">ติ๊กครบทุกระดับ (หรือไม่ติ๊กเลย) = เรียนทุกระดับตามปกติ</p>
+  </form>
+  {% else %}
+  <p class="muted">ยังไม่มีคำใหม่เหลือในคลัง — ทุกการ์ดถูกเปิดเรียนไปหมดแล้ว</p>
+  {% endif %}
+</div>
+
 {# ─── จำลองสอบ ─── #}
 <div class="card stack">
   <div class="row">

@@ -1414,11 +1414,33 @@ def grammar(request):
 
 @login_required
 def profile(request):
-    """หน้าโปรไฟล์ของคนที่ล็อกอินอยู่ — ดูอย่างเดียว ยังแก้ไขไม่ได้
+    """หน้าโปรไฟล์ของคนที่ล็อกอินอยู่
 
     ตัวเลขทั้งหมดดึงสดจากฐานข้อมูล ไม่ได้เก็บซ้ำไว้ที่ไหน
+    แก้ได้อย่างเดียวคือระดับคำศัพท์ที่จะเรียนใหม่ — เหตุผลที่ให้แก้เฉพาะอันนี้
+    อยู่ที่ LearnerProfile.vocab_levels
     """
     learner = _learner(request)
+
+    if learner and request.method == "POST" and request.POST.get("form") == "levels":
+        picked = sorted({int(v) for v in request.POST.getlist("levels")
+                         if v.isdigit() and 1 <= int(v) <= 6})
+        # ติ๊กครบทุกระดับที่มี = เก็บเป็นว่าง แปลว่า "ทุกระดับ"
+        # ไม่งั้นถ้าวันหลังมีคำระดับใหม่เข้าคลัง มันจะถูกกันออกโดยที่ไม่มีใครตั้งใจ
+        if picked and picked == [r["level"] for r in _vocab_level_rows(learner)]:
+            picked = []
+        learner.vocab_levels = picked
+        learner.save(update_fields=["vocab_levels", "updated_at"])
+        left = srs.new_queryset(learner).count()
+        messages.info(
+            request,
+            ("เรียนทุกระดับ" if not picked else
+             "เลือกระดับ " + " · ".join(f"HSK{n}" for n in picked))
+            + f" — เหลือคำใหม่ให้เรียน {left} คำ "
+            "(ของที่ค้างทบทวนอยู่ยังมาตามปกติทุกระดับ)",
+        )
+        return redirect("profile")
+
     context = {"nav": "profile", "learner": learner}
 
     if learner:
@@ -1436,8 +1458,31 @@ def profile(request):
             "accuracy": round(correct / answered * 100) if answered else None,
             "coaches": learner.coaches.all(),
             "mock": mock_engine.stats(learner),
+            "levels": _vocab_level_rows(learner),
+            "new_available": srs.new_queryset(learner).count(),
         })
     return render(request, "core/profile.html", context)
+
+
+def _vocab_level_rows(learner) -> list[dict]:
+    """ระดับที่มีในคลัง พร้อมจำนวนคำใหม่ที่เหลือของแต่ละระดับ
+
+    แสดงจำนวนไว้ด้วย เพราะการเลือกระดับโดยไม่รู้ว่าเหลือกี่คำ
+    อาจปิดไปจนไม่เหลือคำใหม่เลยแล้วงงว่าทำไมชุดฝึกสั้นลง
+    """
+    from django.db.models import Count
+
+    counts = dict(
+        Card.objects.filter(learner=learner, state="new")
+        .values_list("vocab__hsk_level")
+        .annotate(n=Count("id"))
+    )
+    picked = set(learner.vocab_levels or [])
+    return [
+        {"level": lv, "count": counts.get(lv, 0),
+         "on": (lv in picked) if picked else True}
+        for lv in sorted(counts) if lv
+    ]
 
 
 # ── ความคืบหน้าของกลุ่ม ────────────────────────────────────
