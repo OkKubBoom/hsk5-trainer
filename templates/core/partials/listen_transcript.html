@@ -8,8 +8,28 @@
 ประโยคที่ชี้มาจากการนับตัวอักษรที่ซ้ำกับคำตอบ ไม่ใช่ของที่ AI แต่งขึ้น
 ข้อที่คำตอบเป็นการตีความ ไม่ได้พูดตรงๆ ในบท ระบบจะไม่ชี้เลย ซึ่งถูกแล้ว
 {% endcomment %}
-<div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)">
-  <span class="wlab">บทที่ได้ยิน</span>
+<div class="stack" style="gap:var(--s1);padding-top:var(--s2);border-top:1px solid var(--line)"
+     x-data="listenPlayer({{ question.pk }})" x-init="init()">
+  {% comment %}
+  ปุ่มฟังซ้ำในหน้าเฉลย — ผู้เรียนขอมาเอง เพราะตอนอ่านบทแล้วอยากฟังตามไปด้วย
+  ว่าคำที่ฟังไม่ออกจริงๆ แล้วออกเสียงยังไง ซึ่งเป็นจังหวะที่เรียนรู้ได้มากที่สุด
+  ก่อนหน้านี้ต้องกดข้อต่อไปแล้วย้อนกลับมา ซึ่งไม่มีใครทำ
+  {% endcomment %}
+  <div class="row" style="gap:var(--s1);flex-wrap:wrap">
+    <span class="wlab grow">บทที่ได้ยิน</span>
+    <template x-if="ready">
+      <button type="button" class="btn ghost sm" style="width:auto"
+              @click="playing ? stop() : play()" :disabled="loading">
+        <template x-if="!playing">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </template>
+        <template x-if="playing">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+        </template>
+        <span x-text="loading ? 'กำลังโหลด…' : (playing ? 'หยุด' : 'ฟังอีกครั้ง')">ฟังอีกครั้ง</span>
+      </button>
+    </template>
+  </div>
 
   <p class="zh" style="font-size:var(--t-lead);line-height:2.1">
     {% for s in lx.sentences %}<span class="{% if lx.answer_sentence and forloop.counter0 == lx.answer_sentence.index %}hitline{% endif %}">{{ s }}</span>{% endfor %}

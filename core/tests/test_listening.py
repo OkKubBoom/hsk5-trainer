@@ -369,3 +369,40 @@ class AudioFileTests(TestCase):
         q.save()
         self.assertEqual(listening.audio_url(q.source_ref), "")
         self.assertTrue(q.audio_script)      # ยังมีบทให้เบราว์เซอร์อ่าน
+
+
+class SeedOverwriteTests(TestCase):
+    """seed_hsk5 ต้องไม่เขียนทับคำศัพท์ที่นำเข้ามาแล้ว
+
+    เดิม update_or_create เขียนทับ example_zh โดยไม่แตะ example_th
+    → ประโยคจีนกับคำแปลไทยเป็นคนละเรื่องกัน 70 คำบน prod
+    และเขียนทับ tags ทั้งก้อน → ป้าย human_verified ที่ครูตรวจแล้วหายหมด
+    """
+
+    def test_ไม่เขียนทับตัวอย่างและป้ายของคำที่มีอยู่แล้ว(self):
+        from django.core.management import call_command
+
+        from core.models import Standard, VocabItem
+
+        # 此外 อยู่ใน seed_vocab.txt — จำลองว่า import_vocab เขียนไว้ก่อนแล้ว
+        v = VocabItem.objects.create(
+            hanzi="此外", standard=Standard.V2, pinyin="cǐwài",
+            meaning_th="นอกจากนี้", hsk_level=5,
+            example_zh="我会说英语，此外还会一点儿汉语。",
+            example_th="ฉันพูดภาษาอังกฤษได้ นอกจากนี้ยังพูดภาษาจีนได้นิดหน่อย",
+            tags=["conn", "human_verified"])
+
+        call_command("seed_hsk5", verbosity=0)
+
+        v.refresh_from_db()
+        self.assertIn("此外还会", v.example_zh, "ประโยคจีนถูกเขียนทับ")
+        self.assertIn("ภาษาจีนได้นิดหน่อย", v.example_th)
+        self.assertIn("human_verified", v.tags, "ป้ายที่ครูตรวจแล้วหายไป")
+
+    def test_ยังสร้างคำใหม่ที่ยังไม่มีในฐาน(self):
+        from django.core.management import call_command
+
+        from core.models import VocabItem
+
+        call_command("seed_hsk5", verbosity=0)
+        self.assertTrue(VocabItem.objects.filter(hanzi="此外").exists())

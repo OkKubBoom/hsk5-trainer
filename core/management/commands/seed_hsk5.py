@@ -60,10 +60,25 @@ class Command(BaseCommand):
         self.stdout.write(f"  สเปกข้อสอบ           {len(specs)}")
 
     def _vocab(self):
-        """seed_vocab.txt รูปแบบ:  汉字|pinyin|ความหมายไทย|ประโยคตัวอย่าง|แท็ก"""
+        """seed_vocab.txt รูปแบบ:  汉字|pinyin|ความหมายไทย|ประโยคตัวอย่าง|แท็ก
+
+        **เติมเฉพาะคำที่ยังไม่มี ห้ามเขียนทับของเดิม**
+
+        ไฟล์นี้เป็นชุดตั้งต้นเขียนมือ 109 คำ ส่วน import_vocab นำเข้า 2,206 คำ
+        พร้อมคำแปล ตัวอย่างจีน *และตัวอย่างไทยที่คู่กัน*
+
+        เดิมคำสั่งนี้ update_or_create แล้วเขียนทับ example_zh โดยไม่แตะ example_th
+        → ประโยคจีนกับคำแปลไทยเป็นคนละประโยคกัน 70 คำ
+          (ผู้ใช้เจอเองที่ 与其 กับ 此外 — จีนพูดเรื่องหนึ่ง ไทยแปลอีกเรื่อง)
+        และเขียนทับ tags ทั้งก้อนด้วย [tag] เดียว → ป้าย needs_review / human_verified
+        ที่ครูตรวจไว้แล้วหายทั้งหมด 94 คำ ทุกครั้งที่รัน bootstrap ซ้ำ
+
+        bootstrap รัน seed_hsk5 *หลัง* import_vocab เสมอ ความเสียหายจึงเกิดบน prod
+        แต่ไม่เกิดบนเครื่องพัฒนาที่รัน import_vocab ทีหลัง — ซ่อนอยู่จนผู้ใช้เจอ
+        """
         path = DATA_DIR / "seed_vocab.txt"
         lines = [l for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
-        vocab_map, created = {}, 0
+        vocab_map, created, kept = {}, 0, 0
         for rank, line in enumerate(lines, start=1):
             parts = [p.strip() for p in line.split("|")]
             if len(parts) < 3:
@@ -71,22 +86,26 @@ class Command(BaseCommand):
             hanzi, pinyin, meaning = parts[0], parts[1], parts[2]
             example = parts[3] if len(parts) > 3 else ""
             tag = parts[4] if len(parts) > 4 else "misc"
-            obj, was_created = VocabItem.objects.update_or_create(
+
+            existing = VocabItem.objects.filter(hanzi=hanzi, standard=Standard.V2).first()
+            if existing:
+                # ของที่มีอยู่แล้วสมบูรณ์กว่าเสมอ — แตะแค่ลำดับความสำคัญ
+                if not existing.frequency_rank:
+                    existing.frequency_rank = rank
+                    existing.save(update_fields=["frequency_rank", "updated_at"])
+                vocab_map[hanzi] = existing
+                kept += 1
+                continue
+
+            vocab_map[hanzi] = VocabItem.objects.create(
                 hanzi=hanzi, standard=Standard.V2,
-                defaults={
-                    "pinyin": pinyin,
-                    "meaning_th": meaning,
-                    "example_zh": example,
-                    "tags": [tag],
-                    "hsk_level": 5,
-                    "frequency_rank": rank,
-                    "source_type": SourceType.HAND_WRITTEN,
-                    "commercial_safe": True,
-                },
+                pinyin=pinyin, meaning_th=meaning, example_zh=example,
+                tags=[tag], hsk_level=5, frequency_rank=rank,
+                source_type=SourceType.HAND_WRITTEN, commercial_safe=True,
             )
-            vocab_map[hanzi] = obj
-            created += int(was_created)
-        self.stdout.write(f"  คำศัพท์              {len(vocab_map)} (ใหม่ {created})")
+            created += 1
+        self.stdout.write(
+            f"  คำศัพท์              {len(vocab_map)} (สร้างใหม่ {created} · มีอยู่แล้วไม่แตะ {kept})")
         return vocab_map
 
     def _synonym_groups(self, groups, vocab_map):
