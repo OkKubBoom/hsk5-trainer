@@ -12,7 +12,24 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# curl ใช้ดึงไฟล์เสียงข้อฟังตอน build (ดูด้านล่าง) — image ฐานไม่มีมาให้
+RUN apt-get update && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY . .
+
+# ── ไฟล์เสียงข้อฟัง — ไม่ได้อยู่ใน git ───────────────────────────
+#
+# ไฟล์เสียง 949 ไฟล์ (~50 MB) เป็น *ผลลัพธ์ที่สร้างใหม่ได้* จาก
+# data/listening_fixture.json + โมเดล Kokoro ไม่ใช่ซอร์สโค้ด จึงไม่ควรอยู่ใน git
+# เคยใส่ไว้แล้วประวัติบวมเป็น 185 MB เพราะ git เก็บทุกเวอร์ชันไว้ตลอดกาล
+# ปรับเสียงทีนึงก็ +50 MB ถาวร ลบไฟล์ทิ้งก็ไม่หาย
+#
+# **ดาวน์โหลดไม่สำเร็จต้องไม่ทำให้ build พัง** — ถ้าไม่มีไฟล์เสียง
+# ระบบถอยไปใช้ตัวอ่านของเบราว์เซอร์เองอยู่แล้ว (static/js/listen.js)
+# ยอมให้เสียงแย่ลงชั่วคราว ดีกว่าเว็บล่มทั้งเว็บเพราะโหลดไฟล์เสียงไม่ได้
+ARG LISTENING_AUDIO_URL=""
+RUN if [ -n "$LISTENING_AUDIO_URL" ]; then       echo "กำลังดึงไฟล์เสียงข้อฟัง…" &&       (curl -fsSL --retry 3 --max-time 300 "$LISTENING_AUDIO_URL" | tar xz -C static/         && echo "ได้ไฟล์เสียง $(ls static/listening/*.m4a 2>/dev/null | wc -l) ไฟล์"         || echo "⚠️ ดึงไฟล์เสียงไม่สำเร็จ — ระบบจะใช้ตัวอ่านของเบราว์เซอร์แทน") ;     else       echo "ไม่ได้ตั้ง LISTENING_AUDIO_URL — ระบบจะใช้ตัวอ่านของเบราว์เซอร์" ;     fi
 
 # รวมไฟล์ static ตอน build ไม่ใช่ตอนรัน — ค่าพวกนี้เป็นค่าหลอกเฉพาะขั้นตอน build
 RUN DJANGO_SECRET_KEY=build-only-not-used \

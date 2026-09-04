@@ -183,6 +183,9 @@ python manage.py test               # ทดสอบ SRS + drill engine
   `core/listening.py` แยกบทถอดเสียงรายข้อ · `core/listen_drill.py` หน้าฝึกฟัง ·
   `core/listen_explain.py` ชี้ประโยคที่มีคำตอบ · `core/dictation.py` เทียบตัวอักษร
   เสียงเป็นไฟล์ที่อัดไว้ล่วงหน้าด้วย Kokoro ใน `static/listening/` (949 ไฟล์ · 53 MB)
+  ⚠️ **ไฟล์เสียงไม่ได้อยู่ใน git** (อยู่ใน .gitignore) — เป็นผลลัพธ์ที่สร้างใหม่ได้ ไม่ใช่ซอร์ส
+  เก็บเป็น .tar.gz ใน GitHub Release แล้ว Dockerfile ดึงตอน build ผ่าน `LISTENING_AUDIO_URL`
+  ดึงไม่สำเร็จไม่ทำให้ build พัง — ระบบถอยไปใช้ตัวอ่านของเบราว์เซอร์เอง
   ไฟล์ทั้งข้อ 225 · ไฟล์รายประโยคของ 听写 724
   หญิง sid 28 (เจ้าของเลือกเอง) · ชาย sid 95 (วัดจากผู้ประกาศตัวจริง 132.3 Hz)
   ความเร็วและจังหวะวัดจากไฟล์ข้อสอบจริง H51001 — ดูค่าคงที่ใน make_listening_audio.py
