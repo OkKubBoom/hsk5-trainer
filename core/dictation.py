@@ -105,10 +105,38 @@ def compare(expected: str, typed: str) -> dict:
     }
 
 
+def sentence_rows(question: Question) -> list[dict]:
+    """ประโยคที่ฝึกได้ พร้อมบอกว่าใครพูดประโยคนั้น
+
+    แยกจาก audio_turns ทีละช่วง ไม่ใช่ตัดจากบทที่ต่อกันแล้ว เพราะต้องรู้ว่า
+    ประโยคนี้เป็นของผู้หญิงหรือผู้ชาย จะได้อัดเสียงด้วยเสียงที่ถูกคน
+    ถ้าใช้เสียงผิดคน ผู้เรียนจะจำเสียงคำผิดไปเลย ซึ่งแย่กว่าไม่มีเสียง
+
+    ข้อเก่าที่ยังไม่มี audio_turns ถอยไปตัดจากบทรวมเหมือนเดิม (ไม่รู้ว่าใครพูด)
+    """
+    turns = question.audio_turns or []
+    if not turns:
+        body = listen_explain.body_only(question)
+        return [{"index": i, "text": s, "who": "n"}
+                for i, s in enumerate(_fit(listen_explain.sentences(body)))]
+
+    rows = []
+    for turn in turns:
+        if turn.get("who") == "q":
+            continue                       # คำถามอยู่บนจอให้อ่านแล้ว ไม่ใช่สิ่งที่ต้องฟัง
+        for text in _fit(listen_explain.sentences(turn.get("text", ""))):
+            rows.append({"index": len(rows), "text": text, "who": turn.get("who", "n")})
+    return rows
+
+
+def _fit(items) -> list[str]:
+    """เก็บเฉพาะประโยคที่ยาวพอดี — สั้นไปฝึกอะไรไม่ได้ ยาวไปจำไม่ไหว"""
+    return [s for s in items if MIN_CHARS <= len(hanzi_only(s)) <= MAX_CHARS]
+
+
 def sentences_of(question: Question) -> list[str]:
     """ประโยคในบทของข้อนี้ที่ยาวพอดีสำหรับ 听写"""
-    return [s for s in listen_explain.sentences(listen_explain.body_only(question))
-            if MIN_CHARS <= len(hanzi_only(s)) <= MAX_CHARS]
+    return [r["text"] for r in sentence_rows(question)]
 
 
 def pool():

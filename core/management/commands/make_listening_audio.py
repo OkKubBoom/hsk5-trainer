@@ -19,6 +19,10 @@
 **เสียงที่เลือก** เจ้าของระบบฟังเทียบ 12 เสียงแล้วเลือกเอง — หญิง 28 · ชาย 81
 วัดได้ว่าห่างกัน 117 Hz ซึ่งมากพอให้แยกออกว่าใครพูด (คำถาม 男的/女的 ต้องใช้)
 
+**สร้างสองชุด** ไฟล์ทั้งข้อสำหรับหน้าฝึกฟัง/วัดผล และไฟล์รายประโยคสำหรับ 听写
+听写 ขอทีละประโยค ใช้ไฟล์ทั้งข้อไม่ได้ ถ้าไม่มีไฟล์รายประโยคจะตกไปใช้
+ตัวอ่านของเบราว์เซอร์ ซึ่งเสียงต่างกันไปตามเครื่องของแต่ละคน
+
 **บทเล่าเรื่อง (ข้อ 36-45) สลับเพศผู้บรรยายตามเลขข้อ**
 ข้อสอบจริงใช้ทั้งผู้บรรยายชายและหญิง ถ้าใช้เสียงเดียวตลอด ผู้เรียนจะชินกับเสียงนั้น
 แล้วเจอผู้บรรยายชายในห้องสอบจริงจะฟังยากขึ้นทันที ทั้งที่ซ้อมมาแล้วเป็นร้อยข้อ
@@ -34,13 +38,24 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
+from core import dictation
 from core import listening as parser
 from core.models import Question, QuestionStatus, Section
 
 MODEL_DIR = Path(settings.BASE_DIR) / "data" / "tts" / "kokoro-int8-multi-lang-v1_1"
 OUT_DIR = Path(settings.BASE_DIR) / "static" / "listening"
 
-FEMALE_SID, MALE_SID = 28, 81
+# ── เลือกเสียงจากการวัดผู้ประกาศตัวจริง ไม่ใช่จากความรู้สึก ──
+#
+# วัดระดับเสียง (F0) ของผู้ประกาศในไฟล์ข้อสอบจริง H51001 แล้วสแกน Kokoro ทั้ง 103 เสียง
+#   ผู้ประกาศชาย  132.3 Hz  → sid 95 = 131.9 Hz  (ต่าง 0.4)
+#   ผู้ประกาศหญิง 234.4 Hz  → sid 28 = 228.6 Hz  (ต่าง 5.8 — เจ้าของระบบเลือกเองและใกล้พออยู่แล้ว)
+#
+# เดิมใช้ชาย sid 81 = 111.1 Hz ซึ่งต่ำกว่าผู้ประกาศจริง 21 Hz ฟังเป็นคนละคาแรกเตอร์
+#
+# ⚠️ ระดับเสียงบอกได้แค่สูง/ต่ำ บอกไม่ได้ว่าน้ำเสียงเหมือนกันไหม
+# สองเสียงที่ 132 Hz เท่ากันอาจฟังคนละคนโดยสิ้นเชิง ตัวเลขจึงใช้ *คัดตัวเลือก* เท่านั้น
+FEMALE_SID, MALE_SID = 28, 95
 
 # ── ตัวเลขทั้งหมดข้างล่างวัดจากไฟล์เสียงข้อสอบจริง H51001 (30 นาที 17 วินาที) ──
 #
@@ -85,11 +100,20 @@ class Command(BaseCommand):
         todo = [q for q in rows
                 if opts["force"] or not (OUT_DIR / f"{parser.audio_slug(q.source_ref)}.m4a").exists()]
 
+        # ไฟล์รายประโยคของ 听写 — นับแยก เพราะข้อเดียวมีหลายประโยค
+        sentences = []
+        for q in rows:
+            for r in dictation.sentence_rows(q):
+                out = OUT_DIR / f"{parser.sentence_slug(q.source_ref, r['index'])}.m4a"
+                if opts["force"] or not out.exists():
+                    sentences.append((q, r))
+
         self.stdout.write(f"ข้อฟังที่พร้อม {len(rows)} ข้อ · ยังไม่มีไฟล์ {len(todo)} ข้อ")
+        self.stdout.write(f"ประโยคของ 听写 · ยังไม่มีไฟล์ {len(sentences)} ประโยค")
         if not opts["apply"]:
             self.stdout.write("เติม --apply เพื่อสร้างจริง")
             return
-        if not todo:
+        if not todo and not sentences:
             self.stdout.write(self.style.SUCCESS("มีไฟล์ครบแล้ว ไม่ต้องทำอะไร"))
             return
         if not MODEL_DIR.is_dir():
@@ -102,7 +126,12 @@ class Command(BaseCommand):
         for n, question in enumerate(todo, start=1):
             self._render(tts, sr, question)
             if n % 25 == 0 or n == len(todo):
-                self.stdout.write(f"  {n}/{len(todo)}")
+                self.stdout.write(f"  ข้อ {n}/{len(todo)}")
+
+        for n, (question, row) in enumerate(sentences, start=1):
+            self._render_sentence(tts, sr, question, row)
+            if n % 50 == 0 or n == len(sentences):
+                self.stdout.write(f"  ประโยค {n}/{len(sentences)}")
 
         total = sum(f.stat().st_size for f in OUT_DIR.glob("*.m4a"))
         self.stdout.write(self.style.SUCCESS(
@@ -121,6 +150,15 @@ class Command(BaseCommand):
         except (ValueError, IndexError):
             return FEMALE_SID
         return MALE_SID if number % 2 else FEMALE_SID
+
+    def _render_sentence(self, tts, sr, question, row):
+        """หนึ่งประโยคสำหรับ 听写 — ใช้เสียงของคนที่พูดประโยคนั้นจริง"""
+        sid = {"m": MALE_SID, "f": FEMALE_SID}.get(
+            row["who"], self._narrator(question.source_ref))
+        audio = tts.generate(row["text"], sid=sid,
+                             speed=self._part_speed(question.source_ref))
+        out = OUT_DIR / f"{parser.sentence_slug(question.source_ref, row['index'])}.m4a"
+        self._write(audio.samples, sr, out)
 
     def _part_speed(self, source_ref: str) -> float:
         """ความเร็วของพาร์ทที่ข้อนี้อยู่ — วัดจากข้อสอบจริง ไม่ได้ตั้งเอง
@@ -172,10 +210,16 @@ class Command(BaseCommand):
                 gap = GAP_QUESTION if nxt["who"] == "q" else GAP_TURN
                 chunks.append(np.zeros(int(gap * sr), dtype=np.float32))
 
-        out = OUT_DIR / f"{parser.audio_slug(question.source_ref)}.m4a"
+        self._write(np.concatenate(chunks), sr,
+                    OUT_DIR / f"{parser.audio_slug(question.source_ref)}.m4a")
+
+    def _write(self, samples, sr, out: Path):
+        """เขียนเป็น m4a — afconvert มากับ macOS อยู่แล้ว ไม่ต้องลง ffmpeg เพิ่ม"""
+        import numpy as np
+        import soundfile as sf
+
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
-            sf.write(tmp.name, np.concatenate(chunks), sr)
-            # afconvert มากับ macOS อยู่แล้ว ไม่ต้องลง ffmpeg เพิ่ม
+            sf.write(tmp.name, np.asarray(samples, dtype="float32"), sr)
             subprocess.run(["afconvert", "-f", "m4af", "-d", "aac", "-b", BITRATE,
                             "-c", "1", tmp.name, str(out)],
                            check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

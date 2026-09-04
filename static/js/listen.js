@@ -107,8 +107,8 @@ window.listenPlayer = function (questionId, opts) {
         const body = await res.json();
         this.script = body.script || '';
         this.turns = body.turns || [];
-        // 听写 ขอทีละประโยค ใช้ไฟล์ทั้งข้อไม่ได้ ต้องให้เบราว์เซอร์อ่านเอง
-        this.audioUrl = opts.sentence == null ? (body.audio || '') : '';
+        // 听写 มีไฟล์รายประโยคของตัวเอง เอนด์พอยต์ส่งมาให้แล้ว
+        this.audioUrl = body.audio || '';
       } catch (e) {
         this.error = 'โหลดบทไม่สำเร็จ ลองกดใหม่อีกครั้ง';
       }

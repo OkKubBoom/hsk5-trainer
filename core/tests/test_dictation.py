@@ -144,3 +144,62 @@ class FlowTests(TestCase):
     def test_ขอประโยคที่ไม่มีต้องตอบ404(self):
         res = self.client.get(reverse("listen_script", args=[self.question.pk]), {"s": "99"})
         self.assertEqual(res.status_code, 404)
+
+
+class SentenceAudioTests(TestCase):
+    """听写 ต้องใช้ไฟล์เสียงเหมือนหน้าอื่น
+
+    ถ้ายังใช้ตัวอ่านของเบราว์เซอร์ เสียงจะต่างกันไปตามเครื่องของแต่ละคน —
+    Android ได้เสียงของ Google · Windows ได้ของ Microsoft · บางเครื่องไม่มีเสียงจีนเลย
+    ผู้เรียนสองคนฝึกประโยคเดียวกันแล้วได้ยินคนละอย่าง เทียบผลกันไม่ได้
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        VocabItem.objects.create(hanzi="詞", pinyin="ci", meaning_th="ความหมาย", hsk_level=5)
+        from datetime import timedelta
+
+        from django.utils import timezone
+        create_learner(username="sa", password="passpass1",
+                       exam_date=timezone.localdate() + timedelta(days=60))
+        cls.q = Question.objects.create(
+            qtype=QuestionType.LISTENING_MC, section=Section.LISTENING,
+            status=QuestionStatus.ACTIVE, prompt_zh="男的是什么意思？",
+            answer_text="ก", source_ref="H51001 ข้อ 1",
+            audio_script="下雨了，出门时别忘了带伞。放心吧，忘不了。男的是什么意思？",
+            audio_turns=[{"who": "f", "text": "下雨了，出门时别忘了带伞。"},
+                         {"who": "m", "text": "放心吧，忘不了。"},
+                         {"who": "q", "text": "男的是什么意思？"}])
+
+    def test_รู้ว่าประโยคไหนใครพูด(self):
+        """อัดด้วยเสียงผิดคน ผู้เรียนจะจำเสียงคำผิดไปเลย"""
+        rows = dictation.sentence_rows(self.q)
+        self.assertEqual([r["who"] for r in rows], ["f"])   # ของ m สั้นเกินเกณฑ์
+        self.assertIn("带伞", rows[0]["text"])
+
+    def test_ไม่เอาคำถามมาให้พิมพ์(self):
+        for r in dictation.sentence_rows(self.q):
+            self.assertNotIn("男的是什么意思", r["text"])
+
+    def test_ชื่อไฟล์รายประโยคแยกจากไฟล์ทั้งข้อ(self):
+        from core import listening
+
+        self.assertEqual(listening.sentence_slug("H51001 ข้อ 1", 0), "H51001-1-s0")
+        self.assertNotEqual(listening.audio_url("H51001 ข้อ 1"),
+                            listening.audio_url("H51001 ข้อ 1", sentence=0))
+
+    def test_เอนด์พอยต์ส่งไฟล์รายประโยคมาให้(self):
+        self.client.login(username="sa", password="passpass1")
+        body = self.client.get(reverse("listen_script", args=[self.q.pk]), {"s": "0"}).json()
+        self.assertIn("audio", body)
+        self.assertIn("H51001-1-s0", body["audio"])
+
+    def test_ข้อเก่าที่ไม่มี_audio_turns_ยังใช้ได้(self):
+        """ต้องถอยไปตัดจากบทรวมเหมือนเดิม ไม่ใช่ทำให้ข้อนั้นหายไปจากคลัง"""
+        old = Question.objects.create(
+            qtype=QuestionType.LISTENING_MC, section=Section.LISTENING,
+            status=QuestionStatus.ACTIVE, prompt_zh="?", answer_text="ก",
+            audio_script="下雨了，出门时别忘了带伞。", audio_turns=[])
+        rows = dictation.sentence_rows(old)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["who"], "n")

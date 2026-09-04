@@ -1087,8 +1087,12 @@ def listen_script(request, question_id):
     if index is not None:
         parts = dictation_engine.sentences_of(question)
         try:
-            return JsonResponse({"script": parts[int(index)]},
-                                json_dumps_params={"ensure_ascii": False})
+            n = int(index)
+            return JsonResponse({
+                "script": parts[n],
+                # 听写 มีไฟล์เสียงรายประโยคของตัวเอง — ไม่ใช่ไฟล์ทั้งข้อ
+                "audio": listening_parser.audio_url(question.source_ref, sentence=n),
+            }, json_dumps_params={"ensure_ascii": False})
         except (ValueError, IndexError):
             return JsonResponse({"script": "", "error": "ไม่มีประโยคนี้"}, status=404)
 

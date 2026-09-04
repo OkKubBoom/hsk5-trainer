@@ -253,7 +253,13 @@ def audio_slug(source_ref: str) -> str:
     return f"{parts[0]}-{parts[-1]}"
 
 
-def audio_url(source_ref: str) -> str:
+def sentence_slug(source_ref: str, index: int) -> str:
+    """ชื่อไฟล์เสียงรายประโยคของ 听写 — "H51001 ข้อ 21" ประโยคที่ 0 → "H51001-21-s0" """
+    base = audio_slug(source_ref)
+    return f"{base}-s{index}" if base else ""
+
+
+def audio_url(source_ref: str, sentence: int | None = None) -> str:
     """ที่อยู่ไฟล์เสียง — ว่างถ้าข้อนี้ยังไม่มีไฟล์
 
     ผ่าน static() เสมอ เพราะตอน deploy ชื่อไฟล์ถูกเติมแฮช
@@ -261,7 +267,7 @@ def audio_url(source_ref: str) -> str:
     """
     from django.templatetags.static import static
 
-    slug = audio_slug(source_ref)
+    slug = audio_slug(source_ref) if sentence is None else sentence_slug(source_ref, sentence)
     if not slug:
         return ""
     try:
