@@ -107,3 +107,38 @@ class ExplanationNoteTests(TestCase):
 
         note.refresh_from_db()
         self.assertNotEqual(note.status, NoteStatus.ACCEPTED)
+
+
+class DeletedAuthorTests(TestCase):
+    """หน้าตรวจต้องไม่ล่มเมื่อผู้ส่งถูกลบไปแล้ว
+
+    author เป็น SET_NULL — ลบผู้ใช้แล้วโน้ตยังอยู่แต่ไม่มีเจ้าของ
+    เดิมเทมเพลตเรียก n.author.username ตรงๆ ทำให้หน้าทั้งหน้า 500
+    ซึ่งแปลว่าเจ้าของระบบอ่านสิ่งที่ผู้เรียนแย้งมาไม่ได้เลยสักอัน
+    """
+
+    def setUp(self):
+        self.owner = User.objects.create_user("owner", password="x", is_superuser=True)
+        self.question = Question.objects.create(
+            qtype="reading_mc", section=Section.READING,
+            prompt_zh="…", answer_text="ถูก", explanation={"why_correct": "x"},
+        )
+
+    def _note(self, **kw):
+        return ExplanationNote.objects.create(
+            question=self.question, author=None,
+            verdict=NoteVerdict.WRONG, body="เฉลยผิด", **kw)
+
+    def test_pending_note_from_a_deleted_user_renders(self):
+        self._note()
+        self.client.force_login(self.owner)
+        res = self.client.get("/explanation/review/")
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "ผู้ใช้ที่ถูกลบแล้ว")
+
+    def test_handled_note_from_a_deleted_user_renders(self):
+        self._note(status=NoteStatus.ACCEPTED)
+        self.client.force_login(self.owner)
+        res = self.client.get("/explanation/review/")
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "ผู้ใช้ที่ถูกลบแล้ว")

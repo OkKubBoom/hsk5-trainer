@@ -15,7 +15,7 @@
   <div class="card stack" style="gap:var(--s2)">
     <div class="row" style="gap:var(--s1);flex-wrap:wrap">
       <span class="pill {% if note.verdict == 'confirmed' %}ok{% else %}bad{% endif %}">{{ note.get_verdict_display }}</span>
-      <span class="muted">{{ note.author.first_name|default:note.author.username }} · {{ note.created_at|date:"j M · H:i" }}</span>
+      <span class="muted">{% if note.author %}{{ note.author.first_name|default:note.author.username }}{% else %}ผู้ใช้ที่ถูกลบแล้ว{% endif %} · {{ note.created_at|date:"j M · H:i" }}</span>
       <span class="muted" style="margin-left:auto">{{ note.target_label }}</span>
     </div>
 
@@ -82,7 +82,7 @@
         {% for n in handled %}
         <tr>
           <td class="cell-word" data-label="ข้อ">{{ n.target_label }}</td>
-          <td data-label="ผู้ส่ง">{{ n.author.first_name|default:n.author.username|default:"—" }}</td>
+          <td data-label="ผู้ส่ง">{% if n.author %}{{ n.author.first_name|default:n.author.username }}{% else %}<span class="muted">ผู้ใช้ที่ถูกลบแล้ว</span>{% endif %}</td>
           <td data-label="ผลการตรวจ">{{ n.get_verdict_display }}</td>
           <td data-label="สถานะ"><span class="pill {% if n.status == 'accepted' %}ok{% endif %}">{{ n.get_status_display }}</span></td>
         </tr>

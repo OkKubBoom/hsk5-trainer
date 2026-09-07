@@ -17,6 +17,7 @@ window.listenPlayer = function (questionId, opts) {
     audioUrl: '',
     el: null,                 // <audio> ของไฟล์ที่อัดไว้ ถ้ามี
     runId: 0,
+    fellBack: false,          // โหลดไฟล์ที่อัดไว้ไม่สำเร็จ เลยถอยไปใช้เสียงเครื่อง
     plays: 0,
     playing: false,
     loading: false,
@@ -153,8 +154,12 @@ window.listenPlayer = function (questionId, opts) {
           this.audioUrl = '';
           this.el = null;
           this.playing = false;
+          /* บอกให้รู้ว่าถอยไปใช้เสียงเครื่อง — ห้ามถอยเงียบๆ
+           * เคยมีผู้ใช้รายงานว่าเสียงออกผิด (说 เป็น shuò) แล้วตามหาสาเหตุไม่ได้
+           * เพราะหน้าจอไม่ได้บอกว่าตอนนั้นไม่ได้เล่นไฟล์ที่เราอัดไว้ ต้องเดาเอาเอง */
+          this.fellBack = true;
           if (this.supported) this.play();     // ถอยไปใช้ตัวอ่านของเบราว์เซอร์
-          else this.error = 'โหลดไฟล์เสียงไม่สำเร็จ';
+          else this.error = 'โหลดไฟล์เสียงไม่สำเร็จ และเครื่องนี้ไม่มีตัวอ่านออกเสียง';
         });
       }
       this.el.playbackRate = this.rate;
