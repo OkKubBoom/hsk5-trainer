@@ -58,11 +58,18 @@ class Command(BaseCommand):
                 continue
 
             if hanzi in good:
+                # ถ้าคู่ที่มีอยู่ตรงกับของที่ถูกต้องแล้ว = ซ่อมไปแล้ว ห้ามนับซ้ำ
+                # เดิมนับใหม่ทุกครั้งที่รัน ทำให้ดูเหมือนยังพังตลอดกาล
+                # แล้วเจ้าของระบบก็ตรวจไม่ได้ว่าเซิร์ฟเวอร์ซ่อมไปหรือยัง
+                if (v.example_zh, v.example_th) == good[hanzi]:
+                    continue
                 v.example_zh, v.example_th = good[hanzi]
                 restored += 1
                 action = "คืนคู่ที่ถูกต้อง"
             else:
                 # ไม่มีคำแปลที่คู่กัน — ทิ้งคำแปลที่ไม่ตรง เก็บประโยคจีนไว้
+                if not v.example_th:
+                    continue
                 v.example_th = ""
                 cleared += 1
                 action = "ลบคำแปลที่ไม่ตรงทิ้ง"
@@ -70,6 +77,11 @@ class Command(BaseCommand):
             self.stdout.write(f"  {hanzi:<6} {action}")
             if opts["apply"]:
                 v.save(update_fields=["example_zh", "example_th", "updated_at"])
+
+        if not restored and not cleared:
+            self.stdout.write(self.style.SUCCESS(
+                "ไม่มีอะไรต้องซ่อม — ประโยคตัวอย่างกับคำแปลตรงกันครบทุกคำแล้ว"))
+            return
 
         head = "ซ่อมแล้ว" if opts["apply"] else "ดูอย่างเดียว (ยังไม่เขียน) —"
         self.stdout.write(self.style.SUCCESS(
