@@ -79,3 +79,35 @@ class TranscriptFallbackTests(TestCase):
                            {"question": self.q, "lx": None})
         self.assertIn("ยังไม่มีบทถอดเสียง", html)
         self.assertNotIn("ไม่ได้ถูกพูดออกมาตรงๆ", html)
+
+
+class ListeningPromptIsHiddenTests(TestCase):
+    """คำถามของข้อฟังต้องไม่ถูกพิมพ์ให้อ่านตั้งแต่แรก
+
+    ข้อสอบจริง *พูด* คำถามออกมา ไม่ได้พิมพ์ให้อ่าน พิมพ์ให้เห็นตั้งแต่แรก
+    = ซ้อมง่ายกว่าของจริง แล้วคะแนนซ้อมจะสูงกว่าคะแนนสอบจริงโดยไม่มีใครรู้ตัว
+    แต่ต้องเปิดดูได้ ไม่งั้นเครื่องที่เล่นไฟล์เสียงไม่ได้จะตอบไม่ได้เลย
+    """
+
+    def setUp(self):
+        from django.template.loader import render_to_string
+        self.render = render_to_string
+
+    def _html(self, q):
+        dq = drill.build_question({"kind": "question", "id": q.pk, "source": "due"}, 1, 40)
+        return self.render("core/partials/question_body.html", {"q": dq})
+
+    def test_listening_prompt_starts_hidden_but_can_be_opened(self):
+        html = self._html(_listening_question())
+        self.assertIn("อ่านคำถามเป็นตัวอักษร", html)
+        self.assertIn('x-show="showQ"', html)
+
+    def test_reading_prompt_is_always_visible(self):
+        q = Question.objects.create(
+            qtype="reading_mc", section=Section.READING, status=QuestionStatus.ACTIVE,
+            prompt_zh="根据上文，可以知道：", answer_text="ถูก")
+        for i, (text, ok) in enumerate([("ถูก", True), ("ผิด", False)]):
+            QuestionOption.objects.create(question=q, text=text, is_correct=ok, order=i)
+        html = self._html(q)
+        self.assertIn("根据上文", html)
+        self.assertNotIn("อ่านคำถามเป็นตัวอักษร", html)

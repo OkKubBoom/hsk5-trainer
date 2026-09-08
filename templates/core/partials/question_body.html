@@ -28,7 +28,24 @@
   <div class="passage zh">{{ q.passage_html }}</div>
 {% endif %}
 
-{% if q.prompt %}
+{% if q.prompt and q.is_listening %}
+  {% comment %}
+  ข้อสอบจริง **พูด** คำถามออกมา ไม่ได้พิมพ์ให้อ่าน พิมพ์ให้เห็นตั้งแต่แรก
+  = ง่ายกว่าของจริง แล้วคะแนนซ้อมจะสูงกว่าคะแนนสอบจริงโดยไม่มีใครรู้ตัว
+
+  แต่ซ่อนแล้วล็อกตายก็ไม่ได้ — เครื่องที่เล่นไฟล์เสียงไม่ได้จะตอบไม่ได้เลย
+  จึงซ่อนเป็นค่าตั้งต้น แล้วเปิดดูได้ตลอดเวลาด้วยการกดเอง
+  ผู้เรียนที่กดดูรู้ตัวว่ากำลังใช้ตัวช่วย ซึ่งต่างจากการยัดให้ฟรี
+  {% endcomment %}
+  <div x-data="{ showQ: false }" class="stack" style="gap:6px">
+    <button type="button" class="btn ghost sm" style="width:auto" x-show="!showQ"
+            @click="showQ = true">อ่านคำถามเป็นตัวอักษร</button>
+    <p class="qprompt zh" x-show="showQ" x-cloak>{{ q.prompt }}</p>
+    <p class="muted" style="font-size:.8rem" x-show="!showQ">
+      ในห้องสอบจริงคำถามถูก<b>พูด</b>ออกมา ไม่ได้พิมพ์ให้อ่าน — ลองฟังให้ออกก่อน
+    </p>
+  </div>
+{% elif q.prompt %}
   <p class="qprompt zh">{{ q.prompt }}</p>
 {% elif q.answers_whole_passage %}
   {# ข้อสอบจริงชนิดนี้ไม่มีคำถาม — พูดออกมาตรงๆ ดีกว่าปล่อยให้ผู้เรียนมองหาคำถามที่ไม่มีอยู่ #}
