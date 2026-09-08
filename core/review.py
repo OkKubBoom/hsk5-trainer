@@ -200,7 +200,11 @@ def _distractors(vocab: VocabItem, field: str, n: int = 3) -> list[str]:
 def make_question(card: Card, mode: str, index: int, total: int,
                   *, seed: int | None = None) -> ReviewQuestion:
     vocab = card.vocab
-    rng = random.Random(seed if seed is not None else card.pk)
+    # ไม่ผูก seed กับ card.pk — ถ้าผูก การสับไพ่จะเหมือนเดิมทุกครั้งตลอดไป
+    # แปลว่าคำเดียวกันจะมีคำตอบที่ถูกอยู่ช่องเดิมเสมอ ทุกรอบ ทุกวัน
+    # ผู้เรียนจำ "คำนี้ตอบข้อ ข" ได้โดยไม่ต้องรู้ความหมาย — รูรั่วเดียวกับเรื่องลำดับข้อ
+    # ใส่ seed ได้อยู่สำหรับเทสต์ที่ต้องการผลคงที่
+    rng = random.Random(seed)
 
     if mode == ReviewMode.HANZI:
         choices = [vocab.hanzi] + _distractors(vocab, "hanzi")
@@ -263,23 +267,35 @@ def start(learner, *, tier: str = "", window: int = 0, level: int = 0,
 
 def study_cards(session: ReviewSession) -> list[Card]:
     """คำทั้งชุดสำหรับขั้นดู — เรียงตามคิวที่ล็อกไว้ ไม่ใช่ตามฐานข้อมูล
-    เพื่อให้ลำดับที่เห็นตอนดู ตรงกับลำดับที่จะถูกถาม
+
+    ⚠️ ลำดับนี้ **ไม่ตรง** กับลำดับตอนทดสอบโดยตั้งใจ (ดู begin_test)
     """
     queue = session.queue or []
     by_pk = {c.pk: c for c in Card.objects.filter(pk__in=queue).select_related("vocab")}
     return [by_pk[pk] for pk in queue if pk in by_pk]
 
 
-def begin_test(session: ReviewSession) -> ReviewSession:
+def begin_test(session: ReviewSession, *, seed: int | None = None) -> ReviewSession:
     """ผู้เรียนกดว่าจำเสร็จแล้ว — ข้ามขั้นดูไปขั้นทดสอบ
 
     เมื่อข้ามมาแล้วห้ามย้อนกลับไปดูอีก มิฉะนั้นจะเปิดดูเฉลยกลางคันได้
     แล้วตัวเลขความแม่นจะไม่ได้วัดอะไรเลย
+
+    **สลับลำดับคิวก่อนเริ่มทดสอบ** — เดิมถามเรียงตามลำดับเดียวกับตอนดู
+    ผู้ใช้รายงานว่ากลายเป็นการท่อง *ลำดับ* ไม่ใช่ท่อง *คำ*: พอเห็นข้อที่ 3
+    ก็นึกออกเองว่าคือคำที่สามในตาราง โดยไม่ได้อ่านตัวอักษรที่โจทย์ถามเลย
+    ซึ่งทำให้ตัวเลขความแม่นสูงเกินจริง แล้ว SRS ก็ยืดวันทบทวนออกไปตามนั้น
+
+    สลับตอนนี้ ไม่ใช่ตอน start() เพราะขั้นดูต้องใช้คิวเดิมไปแล้ว
+    และตำแหน่งยังเป็น 0 อยู่ จึงสลับได้โดยไม่กระทบข้อที่ทำไปแล้ว
     """
     if session.phase == ReviewPhase.STUDY:
+        queue = list(session.queue or [])
+        random.Random(seed).shuffle(queue)
+        session.queue = queue
         session.phase = ReviewPhase.TEST
         session.studied_at = timezone.now()
-        session.save(update_fields=["phase", "studied_at", "updated_at"])
+        session.save(update_fields=["queue", "phase", "studied_at", "updated_at"])
     return session
 
 

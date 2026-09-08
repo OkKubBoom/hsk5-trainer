@@ -37,6 +37,14 @@ class DrillQuestion:
     blank_no: int | None = None
     total_blanks: int = 0
     answers_whole_passage: bool = False
+    # บทพูดของข้อฟัง — ต้องส่งต่อมาจาก reading.build() ไม่งั้นเครื่องเล่นเสียงไม่ขึ้น
+    # เคยตกหล่นตรงนี้: ข้อฟังในชุดฝึกรายวันไม่มีปุ่มเล่นเลย เห็นแค่คำถามเป็นตัวอักษร
+    # กลายเป็นข้ออ่านที่ตอบไม่ได้ (ผู้ใช้รายงาน: "ฟังอะไร")
+    audio_script: str = ""
+
+    @property
+    def is_listening(self) -> bool:
+        return bool(self.audio_script)
 
 
 # ป้ายบอกว่าทำไมข้อนี้ถึงโผล่มาในชุดวันนี้ — เขียนด้วยภาษาผู้เรียน ไม่ใช่ภาษาระบบ
@@ -135,6 +143,7 @@ def build_question(entry: dict, index: int, total: int) -> DrillQuestion | None:
         passage_html=view.passage_html, blank_no=view.blank_no,
         total_blanks=view.total_blanks,
         answers_whole_passage=view.answers_whole_passage,
+        audio_script=view.audio_script,
     )
 
 

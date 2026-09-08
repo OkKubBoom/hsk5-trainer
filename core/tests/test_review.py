@@ -10,11 +10,11 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from core import review
+from core import review, srs
 from core.accounts import create_learner
 from core.models import (
-    Card, CardState, ErrorLog, Rating, ReviewMode, ReviewPhase, ReviewSession,
-    ReviewLog, VocabItem,
+    Card, CardState, CardType, ErrorLog, LearnerProfile, Rating, ReviewMode,
+    ReviewPhase, ReviewSession, ReviewLog, User, VocabItem,
 )
 
 
@@ -203,3 +203,86 @@ class SafetyTests(ReviewBaseTests):
         stats = review.stats(self.learner)
         self.assertEqual(stats["today_answered"], 1)
         self.assertEqual(stats["today_accuracy"], 100)
+
+
+class ShuffleBeforeTestTests(TestCase):
+    """ขั้นทดสอบต้องสลับลำดับ ไม่ใช่ถามเรียงตามที่เพิ่งดูมา
+
+    ผู้ใช้รายงาน: "ช่วงทดสอบให้มันสุ่มหน่อย มันเรียงกัน มันจำได้"
+    ถามเรียงเดิม = วัดว่าจำ *ลำดับ* ได้ ไม่ใช่จำ *คำ* ได้
+    ความแม่นจะสูงเกินจริง แล้ว SRS ก็ยืดวันทบทวนตามตัวเลขที่หลอกนั้น
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user("kid2", password="x")
+        cls.learner = LearnerProfile.objects.create(
+            user=cls.user, target_exam_date=timezone.localdate() + timedelta(days=90))
+        for i in range(12):
+            v = VocabItem.objects.create(hanzi=f"字{i}", pinyin=f"zi{i}",
+                                         meaning_th=f"ความหมาย{i}", hsk_level=5,
+                                         frequency_rank=i + 1)
+            card = Card.objects.create(learner=cls.learner, vocab=v,
+                                       card_type=CardType.RECOGNIZE)
+            srs.review(card, Rating.GOOD)   # ต้องเป็นการ์ดที่เรียนแล้ว ถึงจะเข้าคิวทบทวน
+
+    def test_test_order_differs_from_study_order(self):
+        session = review.start(self.learner, size=12, seed=1)
+        studied = [c.pk for c in review.study_cards(session)]
+        review.begin_test(session, seed=7)
+        session.refresh_from_db()
+        tested = list(session.queue)
+        self.assertCountEqual(studied, tested, "ต้องเป็นคำชุดเดิม ห้ามเพิ่มหรือหาย")
+        self.assertNotEqual(studied, tested, "ลำดับต้องไม่ตรงกับตอนดู")
+
+    def test_position_still_starts_at_the_beginning(self):
+        session = review.start(self.learner, size=12, seed=1)
+        review.begin_test(session, seed=7)
+        session.refresh_from_db()
+        self.assertEqual(session.position, 0)
+        self.assertEqual(review.current_card(session).pk, session.queue[0])
+
+    def test_shuffling_only_happens_once(self):
+        # กดเริ่มทดสอบซ้ำ (รีเฟรชหน้า) ต้องไม่สลับใหม่ ไม่งั้นข้อที่ทำไปแล้วจะเลื่อน
+        session = review.start(self.learner, size=12, seed=1)
+        review.begin_test(session, seed=7)
+        session.refresh_from_db()
+        first = list(session.queue)
+        review.begin_test(session, seed=99)
+        session.refresh_from_db()
+        self.assertEqual(first, list(session.queue))
+
+
+class ChoiceSlotTests(TestCase):
+    """ตำแหน่งของตัวเลือกที่ถูก ห้ามเหมือนเดิมทุกครั้งของคำเดียวกัน
+
+    เดิมสุ่มด้วย seed = card.pk ซึ่งคงที่ตลอดชีวิตของการ์ดใบนั้น
+    แปลว่าคำเดิมจะมีคำตอบอยู่ช่องเดิมเสมอ ทุกรอบ ทุกวัน
+    ผู้เรียนจำ "คำนี้ตอบข้อ ข" ได้โดยไม่ต้องรู้ความหมาย — รูรั่วเดียวกับเรื่องลำดับข้อ
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user("kid3", password="x")
+        cls.learner = LearnerProfile.objects.create(
+            user=cls.user, target_exam_date=timezone.localdate() + timedelta(days=90))
+        for i in range(8):
+            VocabItem.objects.create(hanzi=f"詞{i}", pinyin=f"ci{i}",
+                                     meaning_th=f"แปล{i}", hsk_level=5, frequency_rank=i + 1)
+        cls.card = Card.objects.create(
+            learner=cls.learner, vocab=VocabItem.objects.first(),
+            card_type=CardType.RECOGNIZE)
+
+    def test_the_correct_answer_moves_around(self):
+        answer = self.card.vocab.meaning_th
+        slots = set()
+        for _ in range(40):
+            q = review.make_question(self.card, ReviewMode.MEANING, 1, 1)
+            slots.add(q.choices.index(answer))
+        self.assertGreater(len(slots), 1,
+                           "คำตอบที่ถูกอยู่ช่องเดิมทุกครั้ง — จำตำแหน่งได้โดยไม่ต้องรู้คำ")
+
+    def test_an_explicit_seed_still_gives_the_same_result(self):
+        a = review.make_question(self.card, ReviewMode.MEANING, 1, 1, seed=5)
+        b = review.make_question(self.card, ReviewMode.MEANING, 1, 1, seed=5)
+        self.assertEqual(a.choices.index(a.answer), b.choices.index(b.answer))

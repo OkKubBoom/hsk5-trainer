@@ -31,6 +31,7 @@
     </template>
   </div>
 
+  {% if lx.sentences %}
   <p class="zh" style="font-size:var(--t-lead);line-height:2.1">
     {% for s in lx.sentences %}<span class="{% if lx.answer_sentence and forloop.counter0 == lx.answer_sentence.index %}hitline{% endif %}">{{ s }}</span>{% endfor %}
   </p>
@@ -43,6 +44,14 @@
     <p class="muted" style="font-size:.82rem">
       ข้อนี้คำตอบไม่ได้ถูกพูดออกมาตรงๆ ต้องฟังแล้วสรุปเอง — เป็นชนิดที่ยากที่สุดของพาร์ทนี้
     </p>
+  {% endif %}
+  {% else %}
+  {# ไม่มีบทให้แสดง — ห้ามตกมาเข้าข้อความ "คำตอบไม่ได้ถูกพูดตรงๆ" ข้างบน
+     เพราะนั่นเป็นการบอกผู้เรียนว่า *ข้อนี้ยาก* ทั้งที่ความจริงคือ *เราไม่มีข้อมูล*
+     ผู้ใช้เจอเองแล้วรายงานว่า "อยากให้มีประโยคที่มันพูดด้วย" #}
+  <p class="muted" style="font-size:.82rem">
+    ระบบยังไม่มีบทถอดเสียงของข้อนี้ — ฟังซ้ำได้ แต่ยังอ่านตามไม่ได้
+  </p>
   {% endif %}
 
   {% if lx.hard_words %}
