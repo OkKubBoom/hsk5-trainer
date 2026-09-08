@@ -1,4 +1,4 @@
-{# การ์ดเฉลย — ปุ่มไปต่ออยู่ติดล่างในระยะนิ้วโป้ง ไม่ต้องเลื่อนหา #}
+{% load hsk %}{# การ์ดเฉลย — ปุ่มไปต่ออยู่ติดล่างในระยะนิ้วโป้ง ไม่ต้องเลื่อนหา #}
 <div id="card" x-data @keydown.window.enter="$el.querySelector('.js-next').click()" class="stack" style="gap:var(--s2)">
 
   <div class="card stack" style="gap:var(--s2);border-color:{% if outcome.is_correct %}var(--ready){% else %}var(--missing){% endif %};border-width:2px">
@@ -36,6 +36,9 @@
       <div class="row" style="gap:var(--s1);flex-wrap:wrap">
         <span class="zh" style="font-size:var(--t-h2)">{{ outcome.vocab.hanzi }}</span>
         <span class="mono muted py">{{ outcome.vocab.pinyin }}</span>
+        {% with p=outcome.vocab|pos_short %}{% if p %}
+          <span class="pill" title="{{ outcome.vocab|pos_title }}">{{ p }}</span>
+        {% endif %}{% endwith %}
         <span class="pill accent" style="margin-left:auto">HSK{{ outcome.vocab.hsk_level }}</span>
       </div>
       {% if outcome.vocab.pinyin_sandhi %}

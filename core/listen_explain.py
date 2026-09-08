@@ -66,7 +66,8 @@ def _vocab_index() -> dict[str, dict]:
     """
     rows = (
         VocabItem.objects.filter(hsk_level__gte=4)
-        .exclude(hanzi="").values("hanzi", "pinyin", "pinyin_sandhi", "meaning_th", "hsk_level")
+        .exclude(hanzi="")
+        .values("hanzi", "pinyin", "pinyin_sandhi", "meaning_th", "hsk_level", "tags")
     )
     return {r["hanzi"]: r for r in rows if len(r["hanzi"]) >= 2}
 

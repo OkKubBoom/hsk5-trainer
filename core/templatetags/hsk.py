@@ -1,6 +1,8 @@
 """ตัวช่วยเล็กๆ สำหรับเทมเพลต — เอาไว้แสดงผลอย่างเดียว ห้ามใส่ตรรกะธุรกิจ"""
 from django import template
 
+from core import pos as pos_engine
+
 register = template.Library()
 
 TOTAL_PAPERS = 9
@@ -29,3 +31,15 @@ def trap_ratio(word):
 def rank_class(index):
     """สามอันดับแรกเน้นให้เห็น — ที่เหลือเรียบ"""
     return "rank top" if index <= 3 else "rank"
+
+
+@register.filter
+def pos_short(vocab):
+    """ตัวย่อชนิดของคำ เช่น "ก. · น." — ดูเหตุผลที่ core/pos.py"""
+    return pos_engine.short(vocab)
+
+
+@register.filter
+def pos_title(vocab):
+    """ชื่อเต็มของชนิดคำ ใช้เป็น tooltip"""
+    return pos_engine.title(vocab)

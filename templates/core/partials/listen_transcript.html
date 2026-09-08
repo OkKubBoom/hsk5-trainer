@@ -1,4 +1,4 @@
-{% comment %}
+{% load hsk %}{% comment %}
 บทที่ได้ยิน + ชี้ประโยคที่มีคำตอบ — แสดงหลังตอบแล้วเท่านั้น
 ต้องการ: question · lx (ผลจาก core.listen_explain.explain)
 
@@ -46,9 +46,11 @@
     </p>
   {% endif %}
   {% else %}
-  {# ไม่มีบทให้แสดง — ห้ามตกมาเข้าข้อความ "คำตอบไม่ได้ถูกพูดตรงๆ" ข้างบน
-     เพราะนั่นเป็นการบอกผู้เรียนว่า *ข้อนี้ยาก* ทั้งที่ความจริงคือ *เราไม่มีข้อมูล*
-     ผู้ใช้เจอเองแล้วรายงานว่า "อยากให้มีประโยคที่มันพูดด้วย" #}
+  {% comment %}
+  ไม่มีบทให้แสดง — ห้ามตกมาเข้าข้อความ "คำตอบไม่ได้ถูกพูดตรงๆ" ข้างบน
+  เพราะนั่นเป็นการบอกผู้เรียนว่า *ข้อนี้ยาก* ทั้งที่ความจริงคือ *เราไม่มีข้อมูล*
+  ผู้ใช้เจอเองแล้วรายงานว่า "อยากให้มีประโยคที่มันพูดด้วย"
+  {% endcomment %}
   <p class="muted" style="font-size:.82rem">
     ระบบยังไม่มีบทถอดเสียงของข้อนี้ — ฟังซ้ำได้ แต่ยังอ่านตามไม่ได้
   </p>
@@ -62,6 +64,7 @@
         <span class="wordchip">
           <span class="zh">{{ w.hanzi }}</span>
           <span class="mono muted py">{{ w.pinyin_sandhi|default:w.pinyin }}</span>
+          {% with p=w|pos_short %}{% if p %}<span class="mono muted" style="font-size:.7rem" title="{{ w|pos_title }}">{{ p }}</span>{% endif %}{% endwith %}
           <span class="muted">{{ w.meaning_th|truncatechars:28 }}</span>
         </span>
       {% endfor %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load hsk %}
 {% block title %}ดูคำก่อนทดสอบ · HSK5 Trainer{% endblock %}
 {% block mobile_title %}ดูคำ {{ cards|length }} คำ{% endblock %}
 {% block content %}
@@ -23,6 +23,10 @@
       <div class="row" style="gap:var(--s1);align-items:baseline">
         <span class="mono muted" style="font-size:.75rem">{{ forloop.counter }}</span>
         <span class="zh grow" style="font-size:1.6rem">{{ c.vocab.hanzi }}</span>
+        {# ชนิดคำอยู่ตรงนี้เพราะภาษาจีนดูจากรูปคำไม่ออก — ดู core/pos.py #}
+        {% with p=c.vocab|pos_short %}{% if p %}
+          <span class="pill" style="font-size:.7rem" title="{{ c.vocab|pos_title }}">{{ p }}</span>
+        {% endif %}{% endwith %}
         <span class="pill accent" style="font-size:.7rem">HSK{{ c.vocab.hsk_level }}</span>
       </div>
       <span class="mono muted py" :class="hide ? 'hidden-cell' : ''">{{ c.vocab.pinyin }}</span>

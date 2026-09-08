@@ -86,7 +86,16 @@
               <span class="py">{{ w.pinyin }}</span>
             {% endif %}
           </td>
-          <td data-label="ความหมาย"><span :class="showMeaning ? '' : 'hidden-cell'">{{ w.meaning_th|truncatechars:70 }}</span></td>
+          <td data-label="ความหมาย">
+            {% comment %}
+            ชนิดคำโชว์เสมอ ไม่ซ่อนตามสวิตช์ "เห็นคำแปล" — มันคือไวยากรณ์ ไม่ใช่คำแปล
+            ปิดคำแปลเพื่อทดสอบตัวเองแล้วยังควรรู้ว่าคำนี้เป็นกริยาหรือนาม
+            {% endcomment %}
+            {% with p=w|pos_short %}{% if p %}
+              <span class="mono muted" style="font-size:.72rem" title="{{ w|pos_title }}">{{ p }}</span>
+            {% endif %}{% endwith %}
+            <span :class="showMeaning ? '' : 'hidden-cell'">{{ w.meaning_th|truncatechars:70 }}</span>
+          </td>
           <td data-label="พบในข้อสอบ">
             <span class="dots" title="พบใน {{ w.exam_papers_count }} จาก 9 ชุด">
               {% for on in w.exam_papers_count|paper_dots %}<i class="{% if on %}on{% endif %}"></i>{% endfor %}
